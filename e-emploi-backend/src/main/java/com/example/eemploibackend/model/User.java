@@ -16,7 +16,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -28,6 +27,7 @@ import java.util.stream.Collectors;
                 "email"
         })
 })
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

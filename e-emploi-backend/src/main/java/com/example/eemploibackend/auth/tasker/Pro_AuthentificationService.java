@@ -1,14 +1,16 @@
-package com.example.eemploibackend.auth;
+package com.example.eemploibackend.auth.tasker;
 
+import com.example.eemploibackend.auth.AuthenticationRequest;
+import com.example.eemploibackend.auth.RegisterRequest;
 import com.example.eemploibackend.config.JwtService;
 import com.example.eemploibackend.exceptions.AppException;
-import com.example.eemploibackend.model.Client;
+import com.example.eemploibackend.model.Professionel;
 import com.example.eemploibackend.model.Role;
 import com.example.eemploibackend.model.RoleName;
 import com.example.eemploibackend.model.User;
 import com.example.eemploibackend.payloads.ApiResponse;
 import com.example.eemploibackend.payloads.JwtAuthenticationResponse;
-import com.example.eemploibackend.repository.ClientRepository;
+import com.example.eemploibackend.repository.ProRepository;
 import com.example.eemploibackend.repository.RoleRepository;
 import com.example.eemploibackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,24 +24,24 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.Collections;
-
 @Service
 @RequiredArgsConstructor
-public class AuthenticationService {
+public class Pro_AuthentificationService {
     private final UserRepository repository;
-    private final ClientRepository clientRepository;
+    private final ProRepository proRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final RoleRepository roleRepository;
     private final AuthenticationManager authenticationManager;
 
-    public ResponseEntity<?> register(RegisterRequest request) {
-        var client = Client.builder()
+    public ResponseEntity<?> register(Pro_RegisterRequest request) {
+        var professionel = Professionel.builder()
                 .name(request.getName())
                 .username(request.getUsername())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .isTasker(false)
+                .description(request.getDescription())
+                .isTasker(true)
                 .build();
         if(repository.existsByUsername(request.getUsername())) {
             return new ResponseEntity(new ApiResponse(false, "Username is already taken!"),
@@ -50,16 +52,16 @@ public class AuthenticationService {
                     HttpStatus.BAD_REQUEST);
         }
 
-            Role userRole = roleRepository.findByName(RoleName.ROLE_GUEST)
+            Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
                     .orElseThrow(() -> new AppException("User Role not set."));
 
-            client.setRoles(Collections.singleton(userRole));
+            professionel.setRoles(Collections.singleton(userRole));
 
-        Client result=clientRepository.save(client);
+        Professionel result=proRepository.save(professionel);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath().path("/users/{username}")
                 .buildAndExpand(result.getUsername()).toUri();
-        var jwtToken = jwtService.generateToken(client);
+        var jwtToken = jwtService.generateToken(professionel);
         return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
     }
 

@@ -3,6 +3,8 @@ package com.example.eemploibackend.controller;
 import com.example.eemploibackend.auth.AuthenticationRequest;
 import com.example.eemploibackend.auth.AuthenticationService;
 import com.example.eemploibackend.auth.RegisterRequest;
+import com.example.eemploibackend.auth.tasker.Pro_AuthentificationService;
+import com.example.eemploibackend.auth.tasker.Pro_RegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,8 +14,8 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @CrossOrigin
 public class AuthenticationController {
-    private final AuthenticationService service;
-
+    private final Pro_AuthentificationService pro_service;
+  private final AuthenticationService service;
     @PostMapping("/signup")
     @ResponseBody
     public ResponseEntity<?> register(
@@ -33,8 +35,8 @@ public class AuthenticationController {
     @PostMapping("/tasker/signup")
     @ResponseBody
     public ResponseEntity<?> taskerregister(
-            @RequestBody RegisterRequest request
+            @RequestBody Pro_RegisterRequest request
     ) {
-        return ResponseEntity.ok(service.register(request)).getBody();
+        return ResponseEntity.ok(pro_service.register(request)).getBody();
     }
 }

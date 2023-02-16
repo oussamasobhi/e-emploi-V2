@@ -26,6 +26,8 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests()
                 .requestMatchers("/auth/**")
                 .permitAll()
+                .requestMatchers("/auth/tasker/**")
+                .permitAll()
                 .requestMatchers("/api/user/checkEmailAvailability","/api/user/checkUsernameAvailability")
                 .permitAll()
                 .requestMatchers(HttpMethod.GET,"/api/users/**","/api/polls/**")
