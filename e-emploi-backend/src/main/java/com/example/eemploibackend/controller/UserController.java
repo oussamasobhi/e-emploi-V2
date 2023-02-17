@@ -3,10 +3,7 @@ package com.example.eemploibackend.controller;
 import com.example.eemploibackend.config.CurrentUser;
 import com.example.eemploibackend.exceptions.ResourceNotFoundException;
 import com.example.eemploibackend.model.User;
-import com.example.eemploibackend.payloads.GuestProfile;
-import com.example.eemploibackend.payloads.Profil;
-import com.example.eemploibackend.payloads.UserProfile;
-import com.example.eemploibackend.payloads.UserSummary;
+import com.example.eemploibackend.payloads.*;
 import com.example.eemploibackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -38,4 +35,17 @@ public class UserController {
         return guestProfile;
     }
 
+    @GetMapping("/user/checkUsernameAvailability")
+    public UserIdentityAvailability checkUsernameAvailability(
+            @RequestParam(value = "username") String username){
+        Boolean isAvailable = !userRepository.existsByUsername(username);
+        return new UserIdentityAvailability(isAvailable);
+    }
+
+    @GetMapping("/user/checkEmailAvailability")
+    public UserIdentityAvailability checkEmailAvailability(
+            @RequestParam(value = "email") String email){
+        Boolean isAvailable = !userRepository.existsByEmail(email);
+        return new UserIdentityAvailability(isAvailable);
+    }
 }
