@@ -1,11 +1,13 @@
-import React from 'react'
+const Home = ({ isAuth, currentUser}) => {
 
-const Home = () => {
-  return (
-    <>
-       This is the homepage
-    </>
-  )
-}
+  if (!isAuth) {
+    return ("No user is authenticated !");
+  }
+  else {
+    return (
+      <p>The user <span className="text-bold">{currentUser.name}</span> is authenticated</p>
+    );
+  }
+};
 
-export default Home
+export default Home;

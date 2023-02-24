@@ -1,41 +1,31 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
-const Login = () => {
-  const API_BASE_URL = "http://localhost:8080/auth"
+const Login = ({onLogin}) => {
+  const navigate = useNavigate();
   const [loginRequest, setLoginRequest] = useState({
     usernameOrEmail: "",
     password: "",
   });
+
   const handleChange = (event) => {
     const value = event.target.value;
     setLoginRequest({ ...loginRequest, [event.target.name]: value });
   };
 
-  const handleSubmit = async (e) =>{
-    e.preventDefault();
-    const response = await fetch(API_BASE_URL + "/signin", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(loginRequest),
-    });
-    if (!response.ok) {
-      throw new Error("Something went wrong");
-    }
-    //save tokens :
-    const tokens = await response.json();
-    console.log(tokens);
+  const goToHome = () => {
+    navigate("/");
   }
 
+
   return (
-    <div className="bg-inherit w-4/12 ">
+    <div className="bg-inherit w-96">
       <h1 className="text-3xl font-bold pb-6 text-center">Se connecter</h1>
-      <div className="flex flex-col p-6 border rounded-md bg-white">
+      <div className="flex flex-col p-6 border rounded-md bg-white lg:1/3">
         <form
-          onSubmit={handleSubmit}
+          onSubmit={(e) =>onLogin(e,loginRequest, goToHome) }
+          //onSubmit={testNav}
           className="flex flex-col mb-4 rounded-md bg-white"
         >
           <label className="font-bold text-gray-800 mb-2">
@@ -75,5 +65,6 @@ const Login = () => {
     </div>
   );
 };
+
 
 export default Login;
