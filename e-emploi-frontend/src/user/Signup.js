@@ -9,7 +9,7 @@ import {
   PASSWORD_MAX_LENGTH,
   PASSWORD_MIN_LENGTH,
 } from "../constant";
-const Signup = () => {
+const Signup = ({ onSignup }) => {
   const API_BASE_URL = "http://localhost:8080";
   const navigate = useNavigate();
   const [nameError, setNameError] = useState("");
@@ -32,26 +32,6 @@ const Signup = () => {
   const handleChange = (event, validateFun) => {
     handleInputChange(event);
     validateFun(event.target.value);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const response = await fetch(API_BASE_URL + "/auth/signup", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(user),
-    });
-    
-    if (!response.ok) {
-      throw new Error("Something went wrong");
-    }
-    const res = await response.json();
-    console.log(res);
-    console.log("Veuillez vous connecter");
-    //redirect to login page
-    navigate("/login");
   };
 
   // Validation Functions
@@ -163,7 +143,7 @@ const Signup = () => {
 
   const checkUsernameAvailability = async (e) => {
     e.preventDefault();
-    const response = await fetch(API_BASE_URL + "/api/user/checkUsernameAvailability?username="+e.target.value, {
+    const response = await fetch(API_BASE_URL + "/api/user/checkUsernameAvailability?username=" + e.target.value, {
       method: "GET",
       headers: {
         "Content-type": "application/json",
@@ -173,14 +153,14 @@ const Signup = () => {
       throw new Error("Something went wrong");
     }
     const res = await response.json();
-    if(!res.available){
+    if (!res.available) {
       setUsernameError("Sorry, this username is already taken !");
     }
   }
 
   const checkEmailAvailability = async (e) => {
     e.preventDefault();
-    const response = await fetch(API_BASE_URL + "/api/user/checkEmailAvailability?email="+e.target.value, {
+    const response = await fetch(API_BASE_URL + "/api/user/checkEmailAvailability?email=" + e.target.value, {
       method: "GET",
       headers: {
         "Content-type": "application/json",
@@ -190,19 +170,23 @@ const Signup = () => {
       throw new Error("Something went wrong");
     }
     const res = await response.json();
-    if(!res.available){
+    if (!res.available) {
       setEmailError("Sorry, this email is already taken !");
     }
+  }
+  const goToLogin = () => {
+    navigate("/login");
   }
 
   return (
     <div className="bg-inherit w-auto">
+
       <h1 className="text-3xl font-bold pb-6 text-center">
         Créer votre compte
       </h1>
       <div className="flex flex-col p-6 border rounded-md bg-white">
         <form
-          onSubmit={handleSubmit}
+          onSubmit={(e) => onSignup(e, user, goToLogin)}
           className="flex flex-col  rounded-md bg-white"
         >
           <div className="flex pb-1">

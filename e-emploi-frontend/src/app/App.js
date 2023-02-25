@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { API_BASE_URL } from "../constant";
+import Notification from "../common/Notification";
 import Home from "../common/Home";
 import Signup from "../user/Signup";
 import Login from "../user/Login";
@@ -10,14 +11,52 @@ import ProSignup from "../user/ProSignup";
 import ResetPassword from "../user/ResetPassword";
 
 function App() {
+  
   const initUser = {
     id: "",
     username: "",
     name: "",
   };
-  const [currentUser, setCurrentUser] = useState(initUser);
+  const [currentUser, setCurrentUser] = useState(() => {
+    const storedUser = JSON.parse(localStorage.getItem("CURRENT_USER"));
+    return storedUser!==initUser? JSON.parse(localStorage.getItem("CURRENT_USER")) : initUser;
+  });
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
+
+  useEffect(() => {
+    if(localStorage.getItem("token") !== ''){
+      setIsAuthenticated(true);
+    }
+  }, []);
    
+  useEffect(() => {
+    localStorage.setItem("IS_AUTHENTICATED", JSON.stringify(isAuthenticated));
+  }, [isAuthenticated]);
+  
+  useEffect(() => {
+    localStorage.setItem("CURRENT_USER", JSON.stringify(currentUser));
+  }, [currentUser])
+
+  const handleSignup = async (e, user, func) => {
+    e.preventDefault();
+    const response = await fetch(API_BASE_URL + "/auth/signup", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
+
+    if (!response.ok) {
+      throw new Error("Something went wrong");
+    }
+    const res = await response.json();
+    console.log(res);
+    console.log("Veuillez vous connecter");
+    notify("Succès","Vous vous êtes bien enregistrés, veuillez vous connecter maintenant !", "success");
+    func();
+  };
 
   const handleLogin = async (e, logReq, func) => {
     e.preventDefault();
@@ -29,12 +68,14 @@ function App() {
       body: JSON.stringify(logReq),
     });
     if (!response.ok) {
+      notify("Erreur","Nom d'utilisateur ou mot de passe incorrect !", "error");
       throw new Error("Nom d'utilisateur ou mot de passe incorrect !");
     }
     //save tokens :
     const jwToken = await response.json();
-    const token = jwToken.tokenType + " " + jwToken.accessToken;
+    let token = jwToken.tokenType + " " + jwToken.accessToken;
     localStorage.setItem('token', jwToken.accessToken);
+    notify("Succès","Vous êtes maintenant connectés","success");
     //load user
     loadCurrentUser(token);
     setIsAuthenticated(true);
@@ -61,27 +102,50 @@ function App() {
       username: res.username,
       name: res.name,
     });
+    localStorage.setItem("CURRENT_USER", JSON.stringify(currentUser));
   };
 
   const handleLogout = (e, func) => {
     e.preventDefault();
-    localStorage.setItem('token', null);
-    if(localStorage.getItem('token')===null){
-      setIsAuthenticated(false);
-    }
+    localStorage.setItem('token', '');
+    setCurrentUser(initUser);
+    setIsAuthenticated(false);
+    notify("Info", "Vous êtes déconnectés !","info")
     func();
   }
+  const [notification, setNotification] = useState({
+    title:"",
+    message:"",
+    type:""
+  })
+  const notify = (title, message, type) =>{
+    setShowNotification(true);
+    setNotification({
+      title:title,
+    message:message,
+    type:type
+    });
+    setTimeout(() => setShowNotification(false),2000);
+  }
 
-
+  
 
   return (
     <>
+    <Notification
+      title={notification.title}
+      message={notification.message}
+      type={notification.type}
+      show={showNotification}
+      onClose={() => setShowNotification(false)}
+    />
+    
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout isAuth={isAuthenticated} onLogout={handleLogout} />}>
             <Route index element={<Home isAuth={isAuthenticated} currentUser={currentUser} />} />
             <Route path="pro/signup" element={<ProSignup />} />
-            <Route path="signup" element={<Signup />} />
+            <Route path="signup" element={<Signup onSignup={handleSignup}/>} />
             <Route path="login" element={<Login onLogin={handleLogin} />} />
             <Route path="forgotten" element={<ResetPassword />} />
             <Route path="*" element={<NotFound />} />

@@ -5,7 +5,6 @@ const Navbar = ({ isAuth, onLogout }) => {
   const navigate = useNavigate();
 
   const goToHome = () => {
-    window.location.reload();
     navigate("/");
   }
   
