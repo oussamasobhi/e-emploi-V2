@@ -30,7 +30,7 @@ public class UserController {
     private Pro_AuthentificationService service;
 
     @GetMapping("/user/me")
-    @PreAuthorize("hasAnyAuthority('USER','GUEST')")
+    @PreAuthorize("hasAnyAuthority('ROLE_USER','ROLE_GUEST')")
     public UserSummary getCurrentUser(@CurrentUser User currentUser) {
         UserSummary userSummary = new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName());
         return userSummary;
