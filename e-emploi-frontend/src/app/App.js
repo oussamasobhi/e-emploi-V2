@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { API_BASE_URL } from "../constant";
 import Notification from "../common/Notification";
 import Home from "../common/Home";
 import Signup from "../user/Signup";
@@ -9,9 +8,9 @@ import Layout from "../common/Layout";
 import NotFound from "../common/NotFound";
 import ProSignup from "../user/ProSignup";
 import ResetPassword from "../user/ResetPassword";
+import { getCurrentUser, login, proSignup, signup } from "../util/APIUtils";
 
 function App() {
-
   const initUser = {
     id: "",
     username: "",
@@ -40,63 +39,38 @@ function App() {
 
   const handleSignup = async (e, user, func) => {
     e.preventDefault();
-    const response = await fetch(API_BASE_URL + "/auth/signup", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(user),
-    });
-
-    if (!response.ok) {
-      throw new Error("Something went wrong");
-    }
-    const res = await response.json();
-    console.log(res);
-    console.log("Veuillez vous connecter");
+    signup(user);
     notify("Succès", "Vous vous êtes bien enregistrés, veuillez vous connecter maintenant !", "success");
     func();
   };
 
   const handleLogin = async (e, logReq, func) => {
     e.preventDefault();
-    const response = await fetch(API_BASE_URL + "/auth/signin", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(logReq),
-    });
-    if (!response.ok) {
-      notify("Erreur", "Nom d'utilisateur ou mot de passe incorrect !", "error");
-      throw new Error("Nom d'utilisateur ou mot de passe incorrect !");
+    /**try {
+      const jwToken = await login(logReq);
+      localStorage.setItem('token', jwToken.accessToken);
+    } catch (error) {
+      notify("Erreur", "Nom d'utilisateur ou mot de passe incorrects", "error");
+    }*/
+    try {
+      const jwToken = await login(logReq);
+      localStorage.setItem('token', jwToken.accessToken);
+    } catch (error) {
+      notify("Erreur", "Nom d'utilisateur ou mot de passe incorrects", "error");
+      throw new Error();
     }
-    //save tokens :
-    const jwToken = await response.json();
-    let token = jwToken.tokenType + " " + jwToken.accessToken;
-    localStorage.setItem('token', jwToken.accessToken);
+
+
+
     notify("Succès", "Vous êtes maintenant connectés", "success");
     //load user
-    loadCurrentUser(token);
+    loadCurrentUser();
     setIsAuthenticated(true);
     func();
   };
 
-  const loadCurrentUser = async (token) => {
-    //setLoading(true);
-    const response = await fetch(API_BASE_URL + "/api/user/me", {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json",
-        "Authorization": token,
-      },
-    });
-    if (!response.ok) {
-      throw new Error("Something went wrong");
-    }
-    const res = await response.json();
-
-    //  setLoading(false);
+  const loadCurrentUser = async () => {
+    const res = await getCurrentUser();
     setCurrentUser({
       id: res.id,
       username: res.username,
@@ -104,6 +78,13 @@ function App() {
     });
     localStorage.setItem("CURRENT_USER", JSON.stringify(currentUser));
   };
+
+  const handleProSignup = async (e, user, func) => {
+    e.preventDefault();
+    proSignup(user);
+    notify("Succès", "Vous vous êtes bien enregistrés, veuillez vous connecter maintenant !", "success");
+    func();
+  }
 
   const handleLogout = (e, func) => {
     e.preventDefault();
@@ -128,8 +109,6 @@ function App() {
     setTimeout(() => setShowNotification(false), 2000);
   }
 
-
-
   return (
     <>
       <Notification
@@ -144,7 +123,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout isAuth={isAuthenticated} onLogout={handleLogout} />}>
             <Route index element={<Home isAuth={isAuthenticated} currentUser={currentUser} />} />
-            <Route path="pro/signup" element={isAuthenticated ? <Navigate to='/' /> : <ProSignup />} />
+            <Route path="pro/signup" element={isAuthenticated ? <Navigate to='/' /> : <ProSignup onProSignup={handleProSignup} />} />
             <Route path="signup" element={isAuthenticated ? <Navigate to="/" /> : <Signup onSignup={handleSignup} />} />
             <Route path="login" element={isAuthenticated ? <Navigate to="/" /> : <Login onLogin={handleLogin} />} />
             <Route path="forgotten" element={<ResetPassword />} />

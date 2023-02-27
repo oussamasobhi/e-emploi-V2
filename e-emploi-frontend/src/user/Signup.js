@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import {
   NAME_MAX_LENGTH,
@@ -9,8 +9,8 @@ import {
   PASSWORD_MAX_LENGTH,
   PASSWORD_MIN_LENGTH,
 } from "../constant";
+import { isAvailableEmail, isAvailableUsername } from "../util/APIUtils";
 const Signup = ({ onSignup }) => {
-  const API_BASE_URL = "http://localhost:8080";
   const navigate = useNavigate();
   const [nameError, setNameError] = useState("");
   const [usernameError, setUsernameError] = useState("");
@@ -23,6 +23,47 @@ const Signup = ({ onSignup }) => {
     email: "",
     password: "",
   });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await isAvailableEmail(user.email);
+      if (!res.available) {
+        setEmailError("Sorry, this email is already taken !");
+      }
+    }
+
+    const EMAIL_REGEX = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
+    setEmailValid(EMAIL_REGEX.test(user.email));
+    if (!user.email) {
+      const errorMsg = "Email may not be empty";
+      setEmailError(errorMsg);
+    } else if (!emailValid && user.email.length < EMAIL_MAX_LENGTH) {
+      let errorMsg = "Email not valid";
+      setEmailError(errorMsg);
+    } else if (user.email.length > EMAIL_MAX_LENGTH) {
+      const errorMsg = `Email is too long (Maximum ${EMAIL_MAX_LENGTH} characters allowed)`;
+      setEmailError(errorMsg);
+    } else {
+      setEmailError("");
+      fetchData();
+    }
+  }, [user.email, emailValid]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await isAvailableUsername(user.username);
+      if (!res.available) {
+        setUsernameError("Sorry, this username is already taken !");
+      }
+    }
+    fetchData();
+  }, [user.username])
+
+  useEffect(() => {
+    setEmailError("");
+  }, [])
+
+
 
   const handleInputChange = (event) => {
     const value = event.target.value;
@@ -143,16 +184,7 @@ const Signup = ({ onSignup }) => {
 
   const checkUsernameAvailability = async (e) => {
     e.preventDefault();
-    const response = await fetch(API_BASE_URL + "/api/user/checkUsernameAvailability?username=" + e.target.value, {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json",
-      }
-    });
-    if (!response.ok) {
-      throw new Error("Something went wrong");
-    }
-    const res = await response.json();
+    const res = await isAvailableUsername(e.target.value);
     if (!res.available) {
       setUsernameError("Sorry, this username is already taken !");
     }
@@ -160,20 +192,12 @@ const Signup = ({ onSignup }) => {
 
   const checkEmailAvailability = async (e) => {
     e.preventDefault();
-    const response = await fetch(API_BASE_URL + "/api/user/checkEmailAvailability?email=" + e.target.value, {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json",
-      }
-    });
-    if (!response.ok) {
-      throw new Error("Something went wrong");
-    }
-    const res = await response.json();
+    const res = await isAvailableEmail(e.target.value);
     if (!res.available) {
       setEmailError("Sorry, this email is already taken !");
     }
   }
+
   const goToLogin = () => {
     navigate("/login");
   }
