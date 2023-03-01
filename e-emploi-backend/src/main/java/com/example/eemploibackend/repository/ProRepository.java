@@ -4,7 +4,9 @@ import com.example.eemploibackend.model.Professionel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface ProRepository extends JpaRepository<Professionel,Long> {
-
+      public Professionel findByUsername(String username);
 }
