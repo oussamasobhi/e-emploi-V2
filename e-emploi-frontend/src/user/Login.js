@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 
-const Login = ({onLogin}) => {
+const Login = ({ onLogin }) => {
   const navigate = useNavigate();
   const [loginRequest, setLoginRequest] = useState({
     usernameOrEmail: "",
@@ -24,7 +24,7 @@ const Login = ({onLogin}) => {
       <h1 className="text-3xl font-bold pb-6 text-center">Se connecter</h1>
       <div className="flex flex-col p-6 border rounded-md bg-white lg:1/3">
         <form
-          onSubmit={(e) =>onLogin(e,loginRequest, goToHome) }
+          onSubmit={(e) => onLogin(e, loginRequest, goToHome)}
           //onSubmit={testNav}
           className="flex flex-col mb-4 rounded-md bg-white"
         >
@@ -57,10 +57,14 @@ const Login = ({onLogin}) => {
             Se connecter
           </button>
         </form>
-        <p className=" pt-5 text-center">OR</p>
-        <div className="py-10 text-center">
+        <div className="py-5 text-center">
+          <p>Vous n'avez pas de compte? <Link to="/signup" className="text-blue-500 underline underline-offset-2 hover:text-blue-600 hover:font-bold">S'inscrire</Link></p>
+        </div>
+        <p className=" pb-5 text-center">OR</p>
+        <div className="pb-5 text-center">
           Se connecter avec google / facebook ...
         </div>
+
       </div>
     </div>
   );

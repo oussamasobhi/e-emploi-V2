@@ -28,20 +28,20 @@ const Signup = ({ onSignup }) => {
     const fetchData = async () => {
       const res = await isAvailableEmail(user.email);
       if (!res.available) {
-        setEmailError("Sorry, this email is already taken !");
+        setEmailError("Désolé, cet adresse email est déjà associé à un compte");
       }
     }
 
     const EMAIL_REGEX = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
     setEmailValid(EMAIL_REGEX.test(user.email));
     if (!user.email) {
-      const errorMsg = "Email may not be empty";
+      const errorMsg = "L'adresse email ne peut pas être vide";
       setEmailError(errorMsg);
     } else if (!emailValid && user.email.length < EMAIL_MAX_LENGTH) {
-      let errorMsg = "Email not valid";
+      let errorMsg = "Cet adresse email n'est pas valide";
       setEmailError(errorMsg);
     } else if (user.email.length > EMAIL_MAX_LENGTH) {
-      const errorMsg = `Email is too long (Maximum ${EMAIL_MAX_LENGTH} characters allowed)`;
+      const errorMsg = `Cet adresse email est trop long (Maximum ${EMAIL_MAX_LENGTH} caractères autorisés)`;
       setEmailError(errorMsg);
     } else {
       setEmailError("");
@@ -53,7 +53,7 @@ const Signup = ({ onSignup }) => {
     const fetchData = async () => {
       const res = await isAvailableUsername(user.username);
       if (!res.available) {
-        setUsernameError("Sorry, this username is already taken !");
+        setUsernameError("Désolé, ce nom d'utilisateur est déjà associé à un compte");
       }
     }
     fetchData();
@@ -79,18 +79,18 @@ const Signup = ({ onSignup }) => {
 
   const validateName = (name) => {
     if (name.length < NAME_MIN_LENGTH) {
-      const errorMsg = `Name is too short (Minimum ${NAME_MIN_LENGTH} characters needed.)`;
+      const errorMsg = `Nom trop court (Minimum ${NAME_MIN_LENGTH} caractères nécessaires)`;
       setNameError(errorMsg);
       return {
         validateStatus: "error",
-        errorMsg: `Name is too short (Minimum ${NAME_MIN_LENGTH} characters needed.)`,
+        errorMsg: `Nom trop court (Minimum ${NAME_MIN_LENGTH} caractères nécessaires)`,
       };
     } else if (name.length > NAME_MAX_LENGTH) {
-      const errorMsg = `Name is too long (Maximum ${NAME_MAX_LENGTH} characters allowed.)`;
+      const errorMsg = `Nom trop long (Maximum ${NAME_MAX_LENGTH} caractères autorisés)`;
       setNameError(errorMsg);
       return {
         validationStatus: "error",
-        errorMsg: `Name is too long (Maximum ${NAME_MAX_LENGTH} characters allowed.)`,
+        errorMsg: `Nom trop long (Maximum ${NAME_MAX_LENGTH} caractères autorisés)`,
       };
     } else {
       setNameError(null);
@@ -103,18 +103,18 @@ const Signup = ({ onSignup }) => {
 
   const validateUsername = (username) => {
     if (username.length < USERNAME_MIN_LENGTH) {
-      const errorMsg = `Username is too short (Minimum ${USERNAME_MIN_LENGTH} characters needed.)`;
+      const errorMsg = `Nom d'utilisateur trop court (Minimum ${USERNAME_MIN_LENGTH} caractères nécessaires)`;
       setUsernameError(errorMsg);
       return {
         validateStatus: "error",
-        errorMsg: `Username is too short (Minimum ${USERNAME_MIN_LENGTH} characters needed.)`,
+        errorMsg: `Nom d'utilisateur trop court (Minimum ${USERNAME_MIN_LENGTH} caractères nécessaires)`,
       };
     } else if (username.length > USERNAME_MAX_LENGTH) {
-      const errorMsg = `Username is too long (Maximum ${USERNAME_MAX_LENGTH} characters allowed.)`;
+      const errorMsg = `Nom d'utilisateur trop long (Maximum ${USERNAME_MAX_LENGTH} caractères autorisés)`;
       setUsernameError(errorMsg);
       return {
         validationStatus: "error",
-        errorMsg: `Username is too long (Maximum ${USERNAME_MAX_LENGTH} characters allowed.)`,
+        errorMsg: `Nom d'utilisateur trop long (Maximum ${USERNAME_MAX_LENGTH} caractères autorisés)`,
       };
     } else {
       setUsernameError(null);
@@ -129,25 +129,25 @@ const Signup = ({ onSignup }) => {
     const EMAIL_REGEX = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
     setEmailValid(EMAIL_REGEX.test(email));
     if (!email) {
-      const errorMsg = "Email may not be empty";
+      const errorMsg = "L'adresse email ne peut pas être vide";
       setEmailError(errorMsg);
       return {
         validateStatus: "error",
-        errorMsg: "Email may not be empty",
+        errorMsg: "L'adresse email ne peut pas être vide",
       };
     } else if (!emailValid && email.length < EMAIL_MAX_LENGTH) {
-      let errorMsg = "Email not valid";
+      let errorMsg = "Cet adresse email n'est pas valide";
       setEmailError(errorMsg);
       return {
         validateStatus: "error",
-        errorMsg: "Email not valid",
+        errorMsg: "Cet adresse email n'est pas valide",
       };
     } else if (email.length > EMAIL_MAX_LENGTH) {
-      const errorMsg = `Email is too long (Maximum ${EMAIL_MAX_LENGTH} characters allowed)`;
+      const errorMsg = `Cet adresse email est trop long (Maximum ${EMAIL_MAX_LENGTH} caractères autorisés)`;
       setEmailError(errorMsg);
       return {
         validateStatus: "error",
-        errorMsg: `Email is too long (Maximum ${EMAIL_MAX_LENGTH} characters allowed)`,
+        errorMsg: `Cet adresse email est trop long (Maximum ${EMAIL_MAX_LENGTH} caractères autorisés)`,
       };
     } else {
       setEmailError(null);
@@ -160,18 +160,18 @@ const Signup = ({ onSignup }) => {
 
   const validatePassword = (password) => {
     if (password.length < PASSWORD_MIN_LENGTH) {
-      const errorMsg = `Password is too short (Minimum ${PASSWORD_MIN_LENGTH} characters needed.)`;
+      const errorMsg = `Mot de passe trop court (Minimum ${PASSWORD_MIN_LENGTH} caractères nécessaires)`;
       setPasswordError(errorMsg);
       return {
         validateStatus: "error",
-        errorMsg: `Password is too short (Minimum ${PASSWORD_MIN_LENGTH} characters needed.)`,
+        errorMsg: `Mot de passe trop court (Minimum ${PASSWORD_MIN_LENGTH} caractères nécessaires)`,
       };
     } else if (password.length > PASSWORD_MAX_LENGTH) {
-      const errorMsg = `Password is too long (Maximum ${PASSWORD_MAX_LENGTH} characters allowed.)`;
+      const errorMsg = `Mot de passe trop long (Maximum ${PASSWORD_MAX_LENGTH} caractères autorisés)`;
       setPasswordError(errorMsg);
       return {
         validationStatus: "error",
-        errorMsg: `Password is too long (Maximum ${PASSWORD_MAX_LENGTH} characters allowed.)`,
+        errorMsg: `Mot de passe trop long (Maximum ${PASSWORD_MAX_LENGTH} caractères autorisés)`,
       };
     } else {
       setPasswordError(null);
@@ -186,7 +186,7 @@ const Signup = ({ onSignup }) => {
     e.preventDefault();
     const res = await isAvailableUsername(e.target.value);
     if (!res.available) {
-      setUsernameError("Sorry, this username is already taken !");
+      setUsernameError("Désolé, ce nom d'utilisateur est déjà associé à un compte");
     }
   }
 
@@ -194,7 +194,7 @@ const Signup = ({ onSignup }) => {
     e.preventDefault();
     const res = await isAvailableEmail(e.target.value);
     if (!res.available) {
-      setEmailError("Sorry, this email is already taken !");
+      setEmailError("Désolé, cet adresse email est déjà associé à un compte");
     }
   }
 
@@ -280,10 +280,11 @@ const Signup = ({ onSignup }) => {
             Créer un compte
           </button>
         </form>
-        <p className="text-center">OR</p>
-        <div className="py-10 text-center">
+        <p className="text-center pt-5">OR</p>
+        <div className="py-5 text-center">
           Sign up sur google et facebook ...
         </div>
+        
       </div>
     </div>
   );
