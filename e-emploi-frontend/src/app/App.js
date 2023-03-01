@@ -9,6 +9,7 @@ import NotFound from "../common/NotFound";
 import ProSignup from "../user/ProSignup";
 import ResetPassword from "../user/ResetPassword";
 import { getCurrentUser, login, proSignup, signup } from "../util/APIUtils";
+import Profile from "../user/Profile";
 
 function App() {
   const initUser = {
@@ -121,11 +122,12 @@ function App() {
 
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Layout isAuth={isAuthenticated} onLogout={handleLogout} />}>
+          <Route path="/" element={<Layout isAuth={isAuthenticated} currentUser={isAuthenticated?currentUser:null} onLogout={handleLogout} />}>
             <Route index element={<Home isAuth={isAuthenticated} currentUser={currentUser} />} />
             <Route path="pro/signup" element={isAuthenticated ? <Navigate to='/' /> : <ProSignup onProSignup={handleProSignup} />} />
             <Route path="signup" element={isAuthenticated ? <Navigate to="/" /> : <Signup onSignup={handleSignup} />} />
             <Route path="login" element={isAuthenticated ? <Navigate to="/" /> : <Login onLogin={handleLogin} />} />
+            <Route path="/profile" element={isAuthenticated ? <Profile/> : <Navigate to="/" />} />
             <Route path="forgotten" element={<ResetPassword />} />
             <Route path="*" element={<NotFound />} />
           </Route>
