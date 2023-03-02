@@ -122,7 +122,7 @@ function App() {
 
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Layout isAuth={isAuthenticated} currentUser={isAuthenticated?currentUser:null} onLogout={handleLogout} />}>
+          <Route path="/" element={<Layout isAuth={isAuthenticated} currentUser={isAuthenticated?currentUser:initUser} onLogout={handleLogout} />}>
             <Route index element={<Home isAuth={isAuthenticated} currentUser={currentUser} />} />
             <Route path="pro/signup" element={isAuthenticated ? <Navigate to='/' /> : <ProSignup onProSignup={handleProSignup} />} />
             <Route path="signup" element={isAuthenticated ? <Navigate to="/" /> : <Signup onSignup={handleSignup} />} />

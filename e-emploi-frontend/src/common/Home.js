@@ -1,13 +1,22 @@
-const Home = ({ isAuth, currentUser}) => {
+import Hero from "./Home/Hero";
+import PhoneNumber from "./Home/PhoneNumber";
+import WhyUs from "./Home/WhyUs";
 
-  if (!isAuth) {
-    return ("No user is authenticated !");
-  }
-  else {
-    return (
-      <p>The user <span className="text-bold">{currentUser.name}</span> is authenticated</p>
-    );
-  }
+const Home = ({ isAuth, currentUser }) => {
+
+  /* if (!isAuth) {
+     return ("No user is authenticated !");
+   }
+   else {*/
+  return (
+    <div className="h-auto">
+      <Hero />
+      <PhoneNumber />
+      <WhyUs />
+    </div>
+
+  );
+  //}
 };
 
 export default Home;
