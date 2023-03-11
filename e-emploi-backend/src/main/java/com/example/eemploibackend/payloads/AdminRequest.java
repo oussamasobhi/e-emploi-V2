@@ -1,18 +1,16 @@
-package com.example.eemploibackend.auth.tasker;
+package com.example.eemploibackend.payloads;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Pro_RegisterRequest {
-    private String name;
+public class AdminRequest {
+    private String nom;
+    private String prenom;
     private String username;
     private String email;
     private String password;
-    private String description;
 }

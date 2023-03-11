@@ -2,13 +2,11 @@ package com.example.eemploibackend.auth;
 
 import com.example.eemploibackend.config.JwtService;
 import com.example.eemploibackend.exceptions.AppException;
-import com.example.eemploibackend.model.Client;
 import com.example.eemploibackend.model.Role;
 import com.example.eemploibackend.model.RoleName;
 import com.example.eemploibackend.model.User;
 import com.example.eemploibackend.payloads.ApiResponse;
 import com.example.eemploibackend.payloads.JwtAuthenticationResponse;
-import com.example.eemploibackend.repository.ClientRepository;
 import com.example.eemploibackend.repository.RoleRepository;
 import com.example.eemploibackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,19 +25,18 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class AuthenticationService {
     private final UserRepository repository;
-    private final ClientRepository clientRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final RoleRepository roleRepository;
     private final AuthenticationManager authenticationManager;
 
     public ResponseEntity<?> register(RegisterRequest request) {
-        var client = Client.builder()
-                .name(request.getName())
+        var user = User.builder()
+                .prenom(request.getPrenom())
+                .nom(request.getNom())
                 .username(request.getUsername())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .isTasker(false)
                 .build();
         if(repository.existsByUsername(request.getUsername())) {
             return new ResponseEntity(new ApiResponse(false, "Username is already taken!"),
@@ -50,16 +47,17 @@ public class AuthenticationService {
                     HttpStatus.BAD_REQUEST);
         }
 
-            Role userRole = roleRepository.findByName(RoleName.ROLE_GUEST)
+            Role userRole = roleRepository.findByName(RoleName.ROLE_STANDARD)
                     .orElseThrow(() -> new AppException("User Role not set."));
 
-            client.setRoles(Collections.singleton(userRole));
+            user.setRoleName(RoleName.ROLE_STANDARD);
+            //user.setRoles(Collections.singleton(userRole));
 
-        Client result=clientRepository.save(client);
+        User result=repository.save(user);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath().path("/users/{username}")
                 .buildAndExpand(result.getUsername()).toUri();
-        var jwtToken = jwtService.generateToken(client);
+        var jwtToken = jwtService.generateToken(user);
         return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
     }
 

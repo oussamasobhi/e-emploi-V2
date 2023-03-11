@@ -1,7 +1,8 @@
 package com.example.eemploibackend.model;
 
 public enum RoleName {
-    ROLE_USER,
+    ROLE_STANDARD,
     ROLE_ADMIN,
-    ROLE_GUEST
+    ROLE_CONDIDAT,
+    ROLE_Pro
 }

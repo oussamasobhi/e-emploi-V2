@@ -1,16 +1,18 @@
 package com.example.eemploibackend;
 
-import com.example.eemploibackend.model.Professionel;
-import com.example.eemploibackend.model.Role;
-import com.example.eemploibackend.model.RoleName;
+import com.example.eemploibackend.model.*;
+import com.example.eemploibackend.repository.AdresseRepository;
 import com.example.eemploibackend.repository.ProRepository;
 import com.example.eemploibackend.repository.RoleRepository;
+import com.example.eemploibackend.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.HashSet;
 
 @Component
@@ -18,12 +20,32 @@ import java.util.HashSet;
 @Order(1)
 public class DatabaseInitializer implements ApplicationRunner {
     private final RoleRepository roleRepository;
-    private final ProRepository proRepository;
+    private final AdresseRepository adresseRepository;
+    private final UserRepository userRepository;
+    private final BCryptPasswordEncoder encoder;
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        Role roleuser= Role.builder().name(RoleName.ROLE_USER).build();
-        Role roleguest=Role.builder().name(RoleName.ROLE_GUEST).build();
-           roleRepository.save(roleguest);
-           roleRepository.save(roleuser);
+        Role roleadmin= Role.builder().name(RoleName.ROLE_ADMIN).build();
+        Role rolestandard=Role.builder().name(RoleName.ROLE_STANDARD).build();
+        Role rolecondidat=Role.builder().name(RoleName.ROLE_CONDIDAT).build();
+        Role rolepro=Role.builder().name(RoleName.ROLE_Pro).build();
+           roleRepository.save(roleadmin);
+           roleRepository.save(rolestandard);
+           roleRepository.save(rolecondidat);
+           roleRepository.save(rolepro);
+        User admin=new User();
+                admin.setNom("sobhi");
+                admin.setPrenom("oussama");
+                admin.setUsername("osamasobhi");
+                admin.setEmail("oussama@admin.com");
+                admin.setPassword(encoder.encode("admin"));
+                 admin.setRoleName(RoleName.ROLE_ADMIN);
+        userRepository.save(admin);
+        Adresse ad=new Adresse();
+        ad.setUser(admin);
+        ad.setPays("maroc");
+        ad.setVille("agadir");
+        adresseRepository.save(ad);
+        admin.setAdresses(Collections.singleton(ad));
     }
 }

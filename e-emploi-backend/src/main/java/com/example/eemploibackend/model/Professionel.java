@@ -6,14 +6,26 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
+import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 @Entity
-@Table(name = "profesionel")
+@SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Table(name = "professionel")
 public class Professionel extends User{
+  private String num_tel;
+  private String CIN;
+  private Byte[] photo_profil;
+  private Date date_naissance;
 
-    private String description;
+@ManyToMany(mappedBy = "prestataires")
+private List<OffreEmploi> offres;
 
     public Set<Review> getReviews() {
         return reviews;
@@ -24,25 +36,14 @@ public class Professionel extends User{
     }
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Review> reviews;
-    @Builder
-    public Professionel(Long id, String name, String username, String email, String password, Boolean isTasker, Set<Role> roles, String description) {
-        super(id, name, username, email, password, isTasker, roles);
-        this.description = description;
-        this.reviews=new HashSet<>();
+
+    public Professionel(Long id, String prenom, String nom, String username, String email, String password, RoleName roleName, String num_tel, String CIN, Byte[] photo_profil, Date date_naissance) {
+        super(id, nom, prenom, username, email, password, roleName);
+        this.num_tel = num_tel;
+        this.CIN = CIN;
+
+        this.photo_profil = photo_profil;
+        this.date_naissance = date_naissance;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Professionel() {
-    }
-
-    public Professionel(String description) {
-        this.description = description;
-    }
 }
