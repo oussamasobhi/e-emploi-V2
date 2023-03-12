@@ -1,19 +1,14 @@
 package com.example.eemploibackend.model;
 
+import com.example.eemploibackend.model.audit.DateAudit;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Data
@@ -21,6 +16,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "users", uniqueConstraints = {
         @UniqueConstraint(columnNames = {
                 "username"
@@ -30,7 +26,7 @@ import java.util.stream.Collectors;
         })
 })
 @Inheritance(strategy = InheritanceType.JOINED)
-public class User implements UserDetails {
+public class User extends DateAudit implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -39,31 +35,33 @@ public class User implements UserDetails {
     private String username;
     private String email;
     private String password;
-
+    private String num_tel;
+     private String CIN;
+      private Byte[] photo_profil;
+     private Date date_naissance;
+        @ManyToMany(mappedBy = "prestataires")
+        private List<OffreEmploi> offres;
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,orphanRemoval = true)
     private Set<Adresse> adresses;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Review> reviews;
 
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    @JoinTable(name = "user_roles",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "role_id"))
-//    private Set<Role> roles = new HashSet<>();
-  private RoleName roleName;
-    public User(Long id, String nom,String prenom, String username, String email, String password,RoleName roleName) {
+    @OneToOne
+  private Role role;
+    public User(Long id, String nom,String prenom, String username, String email, String password,Role role,String CIN) {
+        super();
         this.id = id;
         this.nom = nom;
         this.prenom=prenom;
         this.username = username;
         this.email = email;
         this.password = password;
-        this.roleName=roleName;
+        this.role=role;
         this.reviews=new HashSet<>();
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> authorities= List.of( new SimpleGrantedAuthority(this.getRoleName().name()));
+        List<GrantedAuthority> authorities= List.of( new SimpleGrantedAuthority(this.getRole().getName().name()));
         return authorities;
     }
 

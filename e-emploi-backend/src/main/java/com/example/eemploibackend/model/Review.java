@@ -18,9 +18,6 @@ public class Review {
     private Long id;
     private double rate;
     private String avis;
-    @ManyToOne
-    @JoinColumn(name = "id_pro")
-    private Professionel professionel;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_user")

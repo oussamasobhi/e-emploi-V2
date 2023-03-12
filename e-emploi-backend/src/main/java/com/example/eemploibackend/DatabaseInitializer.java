@@ -2,7 +2,6 @@ package com.example.eemploibackend;
 
 import com.example.eemploibackend.model.*;
 import com.example.eemploibackend.repository.AdresseRepository;
-import com.example.eemploibackend.repository.ProRepository;
 import com.example.eemploibackend.repository.RoleRepository;
 import com.example.eemploibackend.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -12,8 +11,8 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import javax.management.relation.RoleStatus;
 import java.util.Collections;
-import java.util.HashSet;
 
 @Component
 @AllArgsConstructor
@@ -39,7 +38,7 @@ public class DatabaseInitializer implements ApplicationRunner {
                 admin.setUsername("osamasobhi");
                 admin.setEmail("oussama@admin.com");
                 admin.setPassword(encoder.encode("admin"));
-                 admin.setRoleName(RoleName.ROLE_ADMIN);
+        admin.setRole(roleadmin);
         userRepository.save(admin);
         Adresse ad=new Adresse();
         ad.setUser(admin);
