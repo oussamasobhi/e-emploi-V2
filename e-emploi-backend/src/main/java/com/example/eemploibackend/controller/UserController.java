@@ -1,14 +1,11 @@
 package com.example.eemploibackend.controller;
 
-import com.example.eemploibackend.auth.RegisterRequest;
-import com.example.eemploibackend.auth.tasker.Pro_AuthentificationService;
-import com.example.eemploibackend.auth.tasker.Pro_RegisterRequest;
+
 import com.example.eemploibackend.config.CurrentUser;
 import com.example.eemploibackend.exceptions.ResourceNotFoundException;
 import com.example.eemploibackend.model.Professionel;
 import com.example.eemploibackend.model.User;
 import com.example.eemploibackend.payloads.*;
-import com.example.eemploibackend.repository.ClientRepository;
 import com.example.eemploibackend.repository.ProRepository;
 
 import com.example.eemploibackend.repository.UserRepository;
@@ -21,32 +18,34 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin("http://localhost:3000")
+@PreAuthorize("hasAuthority('ROLE_STANDARD')")
 public class UserController {
     @Autowired
     private  UserRepository userRepository;
     @Autowired
     private ProRepository proRepository;
-    @Autowired
-    private ClientRepository clientRepository;
-    @Autowired
-    private Pro_AuthentificationService service;
-
     @GetMapping("/user/me")
-    @PreAuthorize("hasAnyAuthority('ROLE_USER','ROLE_GUEST')")
-    public UserSummary getCurrentUser(@CurrentUser User currentUser) {
-        UserSummary userSummary = new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName());
-        return userSummary;
+    @PreAuthorize("hasAnyAuthority('ROLE_STANDARD','ROLE_CONDIDAT','ROLE_ADMIN','ROLE_Pro')")
+    public User getCurrentUser(@CurrentUser User currentUser) {
+
+        User user = userRepository.findByUsername(currentUser.getUsername())
+                .orElseThrow(() -> new ResourceNotFoundException("User", "username", currentUser.getUsername()));
+        if(user.getRoleName().name().equals("ROLE_Pro")){
+            Professionel professionel=proRepository.findByUsername(currentUser.getUsername());
+            return professionel;
+        }
+        return user;
     }
     @GetMapping("/users/{username}")
-    public Profil getUserProfile(@PathVariable(value = "username") String username) {
+    public User getUserProfile(@PathVariable(value = "username") String username) {
+
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
-        if(user.getIsTasker()) {
-            UserProfile userProfile = new UserProfile(user.getId(), user.getUsername(), user.getName());
-        return userProfile;
+        if(user.getRoleName().name().equals("ROLE_Pro")){
+            Professionel professionel=proRepository.findByUsername(username);
+            return professionel;
         }
-        GuestProfile guestProfile=new GuestProfile(user.getId(),user.getUsername(),user.getName());
-        return guestProfile;
+        return user;
     }
 
     @GetMapping("/user/checkUsernameAvailability")

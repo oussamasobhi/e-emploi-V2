@@ -1,12 +1,9 @@
 package com.example.eemploibackend.services;
 
-import com.example.eemploibackend.auth.RegisterRequest;
-import com.example.eemploibackend.auth.tasker.Pro_RegisterRequest;
+import com.example.eemploibackend.payloads.Pro_RegisterRequest;
 import com.example.eemploibackend.exceptions.ResourceNotFoundException;
-import com.example.eemploibackend.model.Client;
 import com.example.eemploibackend.model.Professionel;
 import com.example.eemploibackend.payloads.ApiResponse;
-import com.example.eemploibackend.repository.ClientRepository;
 import com.example.eemploibackend.repository.ProRepository;
 import com.example.eemploibackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -34,8 +31,13 @@ public class ProService {
                     professionel.setUsername(request.getUsername());
                     professionel.setPassword(passwordEncoder.encode(request.getPassword()));
                     professionel.setEmail(request.getEmail());
-                    professionel.setName(request.getName());
-                    professionel.setDescription(request.getDescription());
+                    professionel.setNom(request.getNom());
+                    professionel.setPrenom(request.getPrenom());
+                    professionel.setCIN(request.getCIN());
+                    professionel.setDate_naissance(request.getDate_naissance());
+                    professionel.setPhoto_profil(request.getImage());
+                    professionel.setNum_tel(request.getNum_tel());
+
                     proRepository.save(professionel);
                     return new ResponseEntity(new ApiResponse(true,
                             "professionel bien modifiée"), HttpStatus.ACCEPTED);

@@ -1,9 +1,7 @@
 package com.example.eemploibackend.controller;
 
-import com.example.eemploibackend.auth.RegisterRequest;
-import com.example.eemploibackend.auth.tasker.Pro_RegisterRequest;
+import com.example.eemploibackend.payloads.Pro_RegisterRequest;
 import com.example.eemploibackend.config.CurrentUser;
-import com.example.eemploibackend.model.Client;
 import com.example.eemploibackend.model.Professionel;
 import com.example.eemploibackend.payloads.ApiResponse;
 import com.example.eemploibackend.repository.ProRepository;
@@ -17,17 +15,15 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/pro")
 @RequiredArgsConstructor
-@PreAuthorize("hasAuthority('ROLE_USER')")
+@PreAuthorize("hasAnyAuthority('ROLE_Pro','ROLE_CONDIDAT')")
 public class ProController {
     private final ProRepository proRepository;
     private final ProService proService;
     @PutMapping("/profile/edit")
-
     public ResponseEntity<?> updatepro(@RequestBody Pro_RegisterRequest request,
                                        @CurrentUser Professionel pro) {
         return proService.updatepro(request,pro);
     }
-
     @DeleteMapping("/profile/delete")
     public ResponseEntity<?> deletepro(@CurrentUser Professionel pro) {
         proRepository.delete(pro);
