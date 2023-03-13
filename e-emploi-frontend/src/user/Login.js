@@ -18,7 +18,6 @@ const Login = ({ onLogin }) => {
     navigate("/");
   }
 
-
   return (
     <div className="flex flex-col w-auto items-center">
       <div className="bg-inherit w-96">
@@ -68,11 +67,7 @@ const Login = ({ onLogin }) => {
 
         </div>
       </div>
-      <div>
-        test
-      </div>
     </div>
-
   );
 };
 
