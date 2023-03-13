@@ -23,5 +23,5 @@ public class OffreEmploi {
             name = "prestataire_offre",
             joinColumns = @JoinColumn(name = "offre_id"),
             inverseJoinColumns = @JoinColumn(name = "pro_id"))
-    private List<Professionel> prestataires;
+    private List<User> prestataires;
 }

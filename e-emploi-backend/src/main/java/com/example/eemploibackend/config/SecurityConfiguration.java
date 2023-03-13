@@ -29,7 +29,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests()
                 .requestMatchers("/auth/**")
                 .permitAll()
-                .requestMatchers("/auth/tasker/**")
+                .requestMatchers("/api/users/**")
                 .permitAll()
                 .requestMatchers("/api/user/checkEmailAvailability","/api/user/checkUsernameAvailability")
                 .permitAll()

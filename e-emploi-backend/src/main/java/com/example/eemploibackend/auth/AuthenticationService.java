@@ -50,8 +50,7 @@ public class AuthenticationService {
             Role userRole = roleRepository.findByName(RoleName.ROLE_STANDARD)
                     .orElseThrow(() -> new AppException("User Role not set."));
 
-            user.setRoleName(RoleName.ROLE_STANDARD);
-            //user.setRoles(Collections.singleton(userRole));
+            user.setRole(userRole);
 
         User result=repository.save(user);
         URI location = ServletUriComponentsBuilder
