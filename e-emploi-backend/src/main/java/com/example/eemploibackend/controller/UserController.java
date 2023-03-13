@@ -18,7 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin("http://localhost:3000")
-@PreAuthorize("hasAuthority('ROLE_STANDARD')")
+//@PreAuthorize("hasAuthority('ROLE_STANDARD')")
 public class UserController {
     @Autowired
     private  UserRepository userRepository;
@@ -36,6 +36,7 @@ public class UserController {
         }
         return user;
     }
+    @PreAuthorize("hasAuthority('ROLE_STANDARD')")
     @GetMapping("/users/{username}")
     public User getUserProfile(@PathVariable(value = "username") String username) {
 
