@@ -13,6 +13,7 @@ public class UserResponse {
     private String username;
     private String email;
     private String CIN;
+    private String role;
     private Date date_naissance;
     private Byte[] photo_profil;
 }
