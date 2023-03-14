@@ -3,6 +3,8 @@ import { API_BASE_URL } from "../constant";
 const request = async (options) => {
   const headers = new Headers({
     "Content-type": "application/json",
+    "Access-Control-Allow-Origin": "http://localhost:3000",
+    "Access-Control-Allow-Credentials": "true",
   });
   if (localStorage.getItem("token") !== "") {
     headers.append("Authorization", "Bearer " + localStorage.getItem("token"));
@@ -54,14 +56,21 @@ export function getCurrentUser() {
 
 export function getUserByUsername(username) {
   return request({
-    url: API_BASE_URL + "/api/user/" + username,
+    url: API_BASE_URL + "/admin/users/" + username,
     method: "GET",
   });
 }
 
-export function getAllUsers(){
+export function getAllUsers() {
   return request({
-    url: API_BASE_URL +"/admin/users",
-    method: "GET"
+    url: API_BASE_URL + "/admin/users",
+    method: "GET",
   });
+}/*
+
+export function updateUser() {
+  return request({
+    url: API_BASE_URL + "/admin/users"
+  })
 }
+*/

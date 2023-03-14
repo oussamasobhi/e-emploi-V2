@@ -1,6 +1,7 @@
 package com.example.eemploibackend.controller;
 
 import com.example.eemploibackend.config.CurrentUser;
+import com.example.eemploibackend.exceptions.ResourceNotFoundException;
 import com.example.eemploibackend.model.User;
 import com.example.eemploibackend.payloads.AdminRequest;
 import com.example.eemploibackend.payloads.ApiResponse;
@@ -32,6 +33,7 @@ public class AdminController {
              return adminService.updateadmin(request,user);
     }
 
+
     @DeleteMapping("/profile/delete")
     public ResponseEntity<?> deleteadmin(@CurrentUser User user) {
         userRepository.delete(user);
@@ -44,5 +46,14 @@ public class AdminController {
                                                    @RequestParam(value = "size", defaultValue = "30") int size){
 
                 return adminService.getAllusers(page, size);
+    }
+
+    @GetMapping("/users/{username}")
+    public User getUserProfile(@PathVariable(value = "username") String username) {
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
+
+        return user;
     }
 }

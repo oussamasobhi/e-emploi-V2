@@ -9,7 +9,7 @@ const Users = () => {
     <div>
       <h1 className="text-center py-3 text-3xl">Gestion des utilisateurs</h1>
       <div className="flex justify-between">
-        <p>
+        <div>
           Afficher
           <span>
             <Listbox value={selectedPage} onChange={setSelectedPage}>
@@ -19,11 +19,17 @@ const Users = () => {
                 </Listbox.Button>
                 <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                   {pages.map((page) => (
-                    <Listbox.Option key={page} value={page} className={({ active }) =>
-                    `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                      active ? 'bg-amber-100 text-amber-900' : 'text-gray-900'
-                    }`
-                  }>
+                    <Listbox.Option
+                      key={page}
+                      value={page}
+                      className={({ active }) =>
+                        `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                          active
+                            ? "bg-amber-100 text-amber-900"
+                            : "text-gray-900"
+                        }`
+                      }
+                    >
                       {page}
                     </Listbox.Option>
                   ))}
@@ -31,7 +37,7 @@ const Users = () => {
               </div>
             </Listbox>
           </span>
-        </p>
+        </div>
       </div>
       <UserList className="relative z-1" />
     </div>

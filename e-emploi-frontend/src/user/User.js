@@ -24,10 +24,13 @@ const User = ({ user, editUser, deleteUser, even }) => {
       <td className="text-left p-3 whitespace-nowrap border border-gray-300">
         {user.cin}
       </td>
+      <td className="text-left p-3 whitespace-nowrap border border-gray-300">
+        {/* user.role */}
+      </td>
       <td className="text-right whitespace-nowrap p-3 border border-gray-300">
         <div className="rounded-sm bg-indigo-600 w-full">
           <button
-            onClick={(e) => editUser(e, user.id)}
+            onClick={(e) => editUser(e, user)}
             className=" py-1 px-3 hover:cursor-pointer text-white hover:bg-indigo-700 rounded-l-sm transition-colors duration-300 ease-in-out"
           >
             Détails
