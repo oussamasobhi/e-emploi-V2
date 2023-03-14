@@ -58,3 +58,10 @@ export function getUserByUsername(username) {
     method: "GET",
   });
 }
+
+export function getAllUsers(){
+  return request({
+    url: API_BASE_URL +"/admin/users",
+    method: "GET"
+  });
+}

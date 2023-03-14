@@ -9,7 +9,7 @@ import NotFound from "../common/NotFound";
 import ResetPassword from "../user/ResetPassword";
 import { getCurrentUser, login, signup } from "../util/APIUtils";
 import Profile from "../user/Profile";
-import Users from "../user/Users";
+import Dashboard from "../admin/Dashboard";
 
 function App() {
   const initUser = {
@@ -78,7 +78,7 @@ function App() {
       id: res.id,
       username: res.username,
       email: res.email,
-      roleName: res.roleName,
+      roleName: res.role.name,
     });
     localStorage.setItem("CURRENT_USER", JSON.stringify(currentUser));
   };
@@ -155,12 +155,12 @@ function App() {
                 )
               }
             />
-            <Route path="users" element={JSON.parse(localStorage.getItem("CURRENT_USER")).roleName === 'ROLE_ADMIN' ? <Users /> : <Navigate to="/" />} />
             <Route
               path="/profile"
               element={<Profile currentUser={currentUser} />}
             />
             <Route path="forgotten" element={<ResetPassword />} />
+            <Route path="dashboard" element={currentUser.roleName==="ROLE_ADMIN"?<Dashboard/>:<Navigate to="/"/>} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>

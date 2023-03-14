@@ -1,46 +1,66 @@
-import { Fragment, useState } from "react";
+{/*import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
-const DetailsUser = () => {
-    const [isOpen, setIsOpen] = useState(false);
-    function openModal(){
-        setIsOpen(true);
-    }
-    function closeModal(){
-      setIsOpen(false);
-    }
-
+const DetailsUser = (isOpen, closeModal, openModal) => {
   return (
     <Transition appear show={isOpen} as={Fragment}>
-      <Dialog
-        as="div"
-        className="fixed inset-0 z-10 overflow-y-auto"
-        onClose={closeModal}
-      >
-        <div className="min-h-screen px-4 text-center">
-          <Transition.Child
-            show={isOpen}
-            enter="transition duration-100 ease-out"
-            enterFrom="transform scale-95 opacity-0"
-            enterTo="transform scale-100 opacity-100"
-            leave="transition duration-75 ease-out"
-            leaveFrom="transform scale-100 opacity-100"
-            leaveTo="transform scale-95 opacity-0"
-            as={Fragment}
-          >
-            <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-md">
-              <Dialog.Title
-                as="h3"
-                className="text-lg font-medium leading leading-6 text-gray-900"
-              >
-                Details de l'utilisateurs
-              </Dialog.Title>
-              <div>Here you put the form</div>
-              <button>
-                Fermer
-              </button>
-            </div>
-          </Transition.Child>
+      <Dialog as="div" className="relative z-8" onClose={closeModal}>
+        <Transition.Child
+          as={Fragment}
+          enter="ease-out duration-300"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="ease-in duration-200"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <div className="fixed inset-0 bg-black bg-opacity-25" />
+        </Transition.Child>
+
+        <div className="fixed inset-0 overflow-y-auto">
+          <div className="flex min-h-full items-center justify-center p-4 text-center">
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0 scale-95"
+              enterTo="opacity-100 scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 scale-100"
+              leaveTo="opacity-0 scale-95"
+            >
+              <Dialog.Panel className="w-full max-w-xl transform overflow-hidden rounded-md bg-white p-6 text-left h-screen mt-32 align-middle border transition-all">
+                <Dialog.Title
+                  as="h3"
+                  className="text-lg font-medium leading-6 text-gray-900"
+                >
+                  Modificaton de votre profil
+                </Dialog.Title>
+                <div className="mt-2">
+                  <p className="text-sm text-gray-500">
+                    Mettez le formulaire pour la modification ici (Nom, Prénom,
+                    ...)
+                  </p>
+                </div>
+
+                <div className="mt-4">
+                  <button
+                    type="button"
+                    className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                    onClick={closeModal}
+                  >
+                    Fermer
+                  </button>
+                  <button
+                    type="button"
+                    className="inline-flex justify-center rounded-md border border-transparent bg-green-100 px-4 py-2 text-sm font-medium text-green-600 hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
+                    onClick={closeModal}
+                  >
+                    Enregistrer
+                  </button>
+                </div>
+              </Dialog.Panel>
+            </Transition.Child>
+          </div>
         </div>
       </Dialog>
     </Transition>
@@ -48,3 +68,4 @@ const DetailsUser = () => {
 };
 
 export default DetailsUser;
+*/}

@@ -52,7 +52,7 @@ const Profile = ({ currentUser }) => {
                     className={({ selected }) =>
                       selected
                         ? "h-full p-2 focus:outline-none bg-white"
-                        : "h-full p-2 focus:outline-none h-full"
+                        : "h-full p-2 focus:outline-none"
                     }
                   >
                     Services
@@ -61,7 +61,7 @@ const Profile = ({ currentUser }) => {
                     className={({ selected }) =>
                       selected
                         ? "h-full p-2 focus:outline-none bg-white"
-                        : "h-full p-2 focus:outline-none h-full"
+                        : "h-full p-2 focus:outline-none "
                     }
                   >
                     Offres d'emploi
