@@ -31,7 +31,6 @@ public class AdminController {
                                        @CurrentUser User user) {
              return adminService.updateadmin(request,user);
     }
-//supprimer un admin
     @DeleteMapping("/profile/delete")
     public ResponseEntity<?> deleteadmin(@CurrentUser User user) {
         userRepository.delete(user);
@@ -59,6 +58,7 @@ public class AdminController {
     return new ResponseEntity(new ApiResponse(true,"user supprimé"),
             HttpStatus.ACCEPTED);
 }
+
     @GetMapping("/users/{username}")
     public User getUserProfile(@PathVariable(value = "username") String username) {
 

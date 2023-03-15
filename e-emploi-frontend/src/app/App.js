@@ -6,26 +6,31 @@ import Signup from "../user/Signup";
 import Login from "../user/Login";
 import Layout from "../common/Layout";
 import NotFound from "../common/NotFound";
-import ProSignup from "../user/ProSignup";
 import ResetPassword from "../user/ResetPassword";
-import { getCurrentUser, login, proSignup, signup } from "../util/APIUtils";
+import { getCurrentUser, login, signup } from "../util/APIUtils";
 import Profile from "../user/Profile";
+import Dashboard from "../admin/Dashboard";
 
 function App() {
   const initUser = {
     id: "",
     username: "",
-    name: "",
+    nom: "",
+    prenom: "",
+    email: "",
+    roleName: "",
   };
   const [currentUser, setCurrentUser] = useState(() => {
     const storedUser = JSON.parse(localStorage.getItem("CURRENT_USER"));
-    return storedUser !== initUser ? JSON.parse(localStorage.getItem("CURRENT_USER")) : initUser;
+    return storedUser !== initUser
+      ? JSON.parse(localStorage.getItem("CURRENT_USER"))
+      : initUser;
   });
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
 
   useEffect(() => {
-    if (localStorage.getItem("token") !== '') {
+    if (localStorage.getItem("token") !== "") {
       setIsAuthenticated(true);
     }
   }, []);
@@ -36,33 +41,28 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem("CURRENT_USER", JSON.stringify(currentUser));
-  }, [currentUser])
+  }, [currentUser]);
 
   const handleSignup = async (e, user, func) => {
     e.preventDefault();
     signup(user);
-    notify("Succès", "Vous vous êtes bien enregistrés, veuillez vous connecter maintenant !", "success");
+    notify(
+      "Succès",
+      "Vous vous êtes bien enregistrés, veuillez vous connecter maintenant !",
+      "success"
+    );
     func();
   };
 
   const handleLogin = async (e, logReq, func) => {
     e.preventDefault();
-    /**try {
-      const jwToken = await login(logReq);
-      localStorage.setItem('token', jwToken.accessToken);
-    } catch (error) {
-      notify("Erreur", "Nom d'utilisateur ou mot de passe incorrects", "error");
-    }*/
     try {
       const jwToken = await login(logReq);
-      localStorage.setItem('token', jwToken.accessToken);
+      localStorage.setItem("token", jwToken.accessToken);
     } catch (error) {
       notify("Erreur", "Nom d'utilisateur ou mot de passe incorrects", "error");
       throw new Error();
     }
-
-
-
     notify("Succès", "Vous êtes maintenant connectés", "success");
     //load user
     loadCurrentUser();
@@ -73,42 +73,39 @@ function App() {
   const loadCurrentUser = async () => {
     const res = await getCurrentUser();
     setCurrentUser({
+      prenom: res.prenom,
+      nom: res.nom,
       id: res.id,
       username: res.username,
-      name: res.name,
+      email: res.email,
+      roleName: res.role.name,
     });
     localStorage.setItem("CURRENT_USER", JSON.stringify(currentUser));
   };
 
-  const handleProSignup = async (e, user, func) => {
-    e.preventDefault();
-    proSignup(user);
-    notify("Succès", "Vous vous êtes bien enregistrés, veuillez vous connecter maintenant !", "success");
-    func();
-  }
-
   const handleLogout = (e, func) => {
     e.preventDefault();
-    localStorage.setItem('token', '');
+    localStorage.setItem("token", "");
     setCurrentUser(initUser);
     setIsAuthenticated(false);
-    notify("Info", "Vous êtes déconnectés !", "info")
+    notify("Info", "Vous êtes déconnectés !", "info");
     func();
-  }
+  };
   const [notification, setNotification] = useState({
     title: "",
     message: "",
-    type: ""
-  })
+    type: "",
+  });
   const notify = (title, message, type) => {
     setShowNotification(true);
     setNotification({
       title: title,
       message: message,
-      type: type
+      type: type,
     });
     setTimeout(() => setShowNotification(false), 2000);
-  }
+  };
+  
 
   return (
     <>
@@ -122,13 +119,48 @@ function App() {
 
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Layout isAuth={isAuthenticated} currentUser={isAuthenticated?currentUser:null} onLogout={handleLogout} />}>
-            <Route index element={<Home isAuth={isAuthenticated} currentUser={currentUser} />} />
-            <Route path="pro/signup" element={isAuthenticated ? <Navigate to='/' /> : <ProSignup onProSignup={handleProSignup} />} />
-            <Route path="signup" element={isAuthenticated ? <Navigate to="/" /> : <Signup onSignup={handleSignup} />} />
-            <Route path="login" element={isAuthenticated ? <Navigate to="/" /> : <Login onLogin={handleLogin} />} />
-            <Route path="/profile" element={isAuthenticated ? <Profile/> : <Navigate to="/" />} />
+          <Route
+            path="/"
+            element={
+              <Layout
+                isAuth={isAuthenticated}
+                currentUser={isAuthenticated ? currentUser : initUser}
+                onLogout={handleLogout}
+              />
+            }
+          >
+            <Route
+              index
+              element={
+                <Home isAuth={isAuthenticated} currentUser={currentUser} />
+              }
+            />
+            <Route
+              path="signup"
+              element={
+                isAuthenticated ? (
+                  <Navigate to="/" />
+                ) : (
+                  <Signup onSignup={handleSignup} />
+                )
+              }
+            />
+            <Route
+              path="login"
+              element={
+                isAuthenticated ? (
+                  <Navigate to="/" />
+                ) : (
+                  <Login onLogin={handleLogin} />
+                )
+              }
+            />
+            <Route
+              path="/profile"
+              element={<Profile currentUser={currentUser} />}
+            />
             <Route path="forgotten" element={<ResetPassword />} />
+            <Route path="dashboard" element={currentUser.roleName==="ROLE_ADMIN"?<Dashboard/>:<Navigate to="/"/>} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
