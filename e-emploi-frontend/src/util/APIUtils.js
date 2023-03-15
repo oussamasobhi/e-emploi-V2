@@ -66,11 +66,12 @@ export function getAllUsers() {
     url: API_BASE_URL + "/admin/users",
     method: "GET",
   });
-}/*
+}
 
-export function updateUser() {
+export function updateUser(username,user) {
   return request({
-    url: API_BASE_URL + "/admin/users"
+    url: API_BASE_URL + "/admin/edit/users" + username,
+    method: "PUT",
+    body: JSON.stringify(user)
   })
 }
-*/

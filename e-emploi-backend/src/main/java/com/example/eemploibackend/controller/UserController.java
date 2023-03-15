@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin("http://localhost:3000")
-//@PreAuthorize("hasAuthority('ROLE_STANDARD')")
 public class UserController {
     @Autowired
-    private  UserRepository userRepository;
+    private UserRepository userRepository;
     @Autowired
     private UserService userService;
+
     @GetMapping("/user/me")
     @PreAuthorize("hasAnyAuthority('ROLE_STANDARD','ROLE_CONDIDAT','ROLE_ADMIN','ROLE_Pro')")
     public User getCurrentUser(@CurrentUser User currentUser) {
@@ -42,26 +42,28 @@ public class UserController {
 
     @GetMapping("/user/checkUsernameAvailability")
     public UserIdentityAvailability checkUsernameAvailability(
-            @RequestParam(value = "username") String username){
+            @RequestParam(value = "username") String username) {
         Boolean isAvailable = !userRepository.existsByUsername(username);
         return new UserIdentityAvailability(isAvailable);
     }
 
     @GetMapping("/user/checkEmailAvailability")
     public UserIdentityAvailability checkEmailAvailability(
-            @RequestParam(value = "email") String email){
+            @RequestParam(value = "email") String email) {
         Boolean isAvailable = !userRepository.existsByEmail(email);
         return new UserIdentityAvailability(isAvailable);
     }
+
     @PutMapping("users/edit")
-    public ResponseEntity<?> updateuser(@RequestBody Pro_RegisterRequest request,@CurrentUser User user){
-        userService.updateuser(request,user.getId());
-        return new ResponseEntity<>(new ApiResponse(true,"user modifié"), HttpStatus.OK);
+    public ResponseEntity<?> updateuser(@RequestBody Pro_RegisterRequest request, @CurrentUser User user) {
+        userService.updateuser(request, user.getId());
+        return new ResponseEntity<>(new ApiResponse(true, "user modifié"), HttpStatus.OK);
     }
+
     @DeleteMapping("users/delete")
-    public ResponseEntity<?> deleteuser(@CurrentUser User user){
+    public ResponseEntity<?> deleteuser(@CurrentUser User user) {
         userRepository.deleteById(user.getId());
-        return new ResponseEntity(new ApiResponse(true,"user supprimé"),
+        return new ResponseEntity(new ApiResponse(true, "user supprimé"),
                 HttpStatus.ACCEPTED);
     }
 }

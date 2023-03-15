@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { getUserByUsername } from "../util/APIUtils";
+import { getUserByUsername, updateUser } from "../util/APIUtils";
 
 const EditUser = ({ username, setResponseUser }) => {
   const initUser = {
@@ -48,22 +48,12 @@ const EditUser = ({ username, setResponseUser }) => {
     setIsOpen(false);
   };
 
-  /*const updateUser = async (e) => {
+  const editUser = async (e) => {
     e.preventDefault();
-    const response = await fetch(USER_API_BASE_URL + "/" + userId, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-    });
-    if (!response.ok) {
-      throw new Error("Something went wrong");
-    }
-    const _user = await response.json();
+    const _user = await updateUser(username, user)
     setResponseUser(_user);
     reset(e);
-  };*/
+  };
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -147,7 +137,7 @@ const EditUser = ({ username, setResponseUser }) => {
                     name="adresse"
                     value={user.adresse}
                     onChange={(e) => handleChange(e)}
-                    className="h-10 w-full border mt-2 px-2 py-2"
+                    className="h-10 w-full border mt-2 px-2 py-2 focus:outline-none"
                   />
                   <label className="block text-gray-600 text-sm font-normal">
                     Téléphone :
@@ -182,7 +172,7 @@ const EditUser = ({ username, setResponseUser }) => {
                   <button
                     type="button"
                     className="inline-flex justify-center rounded-md border border-transparent bg-green-100 px-4 py-2 text-sm font-medium text-green-600 hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
-                    onClick={closeModal}
+                    onClick={editUser}
                   >
                     Enregistrer
                   </button>

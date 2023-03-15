@@ -3,7 +3,7 @@ import { getAllUsers } from "../util/APIUtils";
 import User from "./User";
 import EditUser from "./EditUser";
 
-const UserList = () => {
+const UserList = ({user}) => {
   const [users, setUsers] = useState(null);
   const [username, setUsername] = useState(null);
   const [responseUser, setResponseUser] = useState(null);
@@ -17,7 +17,7 @@ const UserList = () => {
       setUsers(sortedRes);
     };
     fillUserList();
-  }, []);
+  }, [user, responseUser]);
 
   const deleteUser = () => {};
 

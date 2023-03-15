@@ -3,12 +3,10 @@ package com.example.eemploibackend.controller;
 import com.example.eemploibackend.config.CurrentUser;
 import com.example.eemploibackend.exceptions.ResourceNotFoundException;
 import com.example.eemploibackend.model.User;
-import com.example.eemploibackend.payloads.AdminRequest;
-import com.example.eemploibackend.payloads.ApiResponse;
-import com.example.eemploibackend.payloads.PagedResponse;
-import com.example.eemploibackend.payloads.UserResponse;
+import com.example.eemploibackend.payloads.*;
 import com.example.eemploibackend.repository.UserRepository;
 import com.example.eemploibackend.services.AdminService;
+import com.example.eemploibackend.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +24,7 @@ import java.util.List;
 public class AdminController {
     private final AdminService adminService;
     private final UserRepository userRepository;
+    private final UserService userService;
     @PutMapping("/profile/edit")
 
     public ResponseEntity<?> updateadmin(@RequestBody AdminRequest request,
@@ -47,6 +46,20 @@ public class AdminController {
 
                 return adminService.getAllusers(page, size);
     }
+
+    @PutMapping("/users/edit/{username}")
+    public ResponseEntity<?> updateuser(@PathVariable(value="username") String username,@RequestBody Pro_RegisterRequest request){
+        Long id=userRepository.findIdByUsername(username);
+        userService.updateuser(request,id);
+        return new ResponseEntity<>(new ApiResponse(true,"user modifié"), HttpStatus.OK);
+    }
+@DeleteMapping("/users/delete/{username}")
+    public ResponseEntity<?> deleteuser(@PathVariable(value="username") String username){
+    Long id=userRepository.findIdByUsername(username);
+    userRepository.deleteById(id);
+    return new ResponseEntity(new ApiResponse(true,"user supprimé"),
+            HttpStatus.ACCEPTED);
+}
 
     @GetMapping("/users/{username}")
     public User getUserProfile(@PathVariable(value = "username") String username) {
