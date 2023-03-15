@@ -26,13 +26,11 @@ public class AdminController {
     private final UserRepository userRepository;
     private final UserService userService;
     @PutMapping("/profile/edit")
-
+ // modifier un admin
     public ResponseEntity<?> updateadmin(@RequestBody AdminRequest request,
                                        @CurrentUser User user) {
              return adminService.updateadmin(request,user);
     }
-
-
     @DeleteMapping("/profile/delete")
     public ResponseEntity<?> deleteadmin(@CurrentUser User user) {
         userRepository.delete(user);
@@ -53,7 +51,8 @@ public class AdminController {
         userService.updateuser(request,id);
         return new ResponseEntity<>(new ApiResponse(true,"user modifié"), HttpStatus.OK);
     }
-@DeleteMapping("/users/delete/{username}")
+    //suppression d'un utilisateur
+   @DeleteMapping("/users/delete/{username}")
     public ResponseEntity<?> deleteuser(@PathVariable(value="username") String username){
     Long id=userRepository.findIdByUsername(username);
     userRepository.deleteById(id);
