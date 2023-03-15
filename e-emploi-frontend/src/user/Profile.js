@@ -1,10 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Navigate } from "react-router";
 import { Tab } from "@headlessui/react";
 import EditProfil from "./EditProfil";
+import { getCurrentUser } from "../util/APIUtils";
 
-const Profile = ({ currentUser }) => {
-  const [openEdit, setOpenEdit] = useState(false);
+const Profile = ({ currentUser, setCurrentUser }) => {
+  const [openEdit, setOpenEdit] = useState(false);  
+  useEffect(() => {
+    const refreshUser = async () => {
+      const res = await getCurrentUser();
+      setCurrentUser(res);
+    }
+    refreshUser();
+  }, [setCurrentUser])
+  
+
+  const closeModal = () => {
+    setOpenEdit(false);
+  }
+
+  const editProfil = () => {
+    setOpenEdit(true);
+  }
 
   return localStorage.getItem("token") ? (
     <>
@@ -35,15 +52,44 @@ const Profile = ({ currentUser }) => {
                 <h1 className="text-3xl pb-6">Mon compte</h1>
                 <button
                   className="mb-4 px-3 bg-blue-700 text-white text-sm rounded-md border-black"
-                  onClick={() => setOpenEdit(true)}
+                  onClick={editProfil}
                 >
                   Modifier votre profil
                 </button>
               </div>
 
-              <p>
-                Quelques infos *******
-              </p>
+              <div>
+                <table>
+                  <tr>
+                    <td>Nom : </td>
+                    <td>{currentUser.nom}</td>
+                  </tr>
+                  <tr>
+                    <td>Prenom : </td>
+                    <td>{currentUser.prenom}</td>
+                  </tr>
+                  <tr>
+                    <td>Nom d'utilisateur: </td>
+                    <td>{currentUser.username}</td>
+                  </tr>
+                  <tr>
+                    <td>Email : </td>
+                    <td>{currentUser.email}</td>
+                  </tr>
+                  <tr>
+                    <td>Telephone : </td>
+                    <td>{currentUser.num_tel}</td>
+                  </tr>
+                  <tr>
+                    <td>CIN : </td>
+                    <td>{currentUser.cin}</td>
+                  </tr>
+                  {/*<tr>
+                    <td>Adresse : </td>
+                    <td>{currentUser.adresse}</td>
+                  </tr>*/}
+                </table>
+              </div>
             </div>
             <div className="w-full">
               <Tab.Group>
@@ -76,7 +122,7 @@ const Profile = ({ currentUser }) => {
           </div>
         </div>
       </div>
-      <EditProfil open={openEdit} openModal={() => setOpenEdit(true)} closeModal={() => setOpenEdit(false)}/>
+      <EditProfil setCurrentUser={setCurrentUser} closeModal={closeModal} open={openEdit} username={currentUser.username} />
     </>
   ) : (
     <Navigate to="/" />

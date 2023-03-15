@@ -75,3 +75,11 @@ export function updateUser(username,user) {
     body: JSON.stringify(user)
   })
 }
+
+export function updateProfil(user) {
+  return request({
+    url: API_BASE_URL + "/api/users/edit",
+    method: "PUT",
+    body: JSON.stringify(user)
+  })
+}

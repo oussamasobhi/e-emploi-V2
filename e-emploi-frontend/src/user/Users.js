@@ -5,12 +5,12 @@ import { Listbox } from "@headlessui/react";
 const Users = () => {
   const pages = [10, 30, 50, 100];
   const [selectedPage, setSelectedPage] = useState(pages[0]);
-  const [responseUser, setResponseUser] = useState({
+  /*const [responseUser, setResponseUser] = useState({
     nom:"",
     prenom:"",
     username:"",
     email:""
-  })
+  })*/
   return (
     <div>
       <h1 className="text-center py-3 text-3xl">Gestion des utilisateurs</h1>
@@ -45,7 +45,7 @@ const Users = () => {
           </span>
         </div>
       </div>
-      <UserList user={responseUser} className="relative z-1" />
+      <UserList className="relative z-1" />
     </div>
   );
 };

@@ -1,8 +1,67 @@
-import React,{Fragment} from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import { getCurrentUser, updateProfil} from "../util/APIUtils";
 
-const EditProfil = ({open, openModal, closeModal}) => {
-    
+const EditProfil = ({ open, username, setCurrentUser, closeModal }) => {
+  const initUser = {
+    nom: "",
+    prenom: "",
+    username: "",
+    email: "",
+    adresse: "",
+    ville: "",
+    date_naissance: "",
+    num_tel: "",
+    role: "",
+  };
+  const [user, setUser] = useState(initUser);
+  const [isOpen, setIsOpen] = useState(false);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await getCurrentUser();
+        setUser(res);
+        setIsOpen(true);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (username) {
+      fetchData();
+    }
+  }, [username]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await getCurrentUser();
+        setUser(res);
+        setIsOpen(true);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (username) {
+      fetchData();
+    }
+  }, [username]);
+
+  const handleChange = (event) => {
+    const value = event.target.value;
+    setUser({ ...user, [event.target.name]: value });
+  };
+
+  const reset = (e) => {
+    e.preventDefault();
+    closeModal();
+  };
+
+  const editProfil = async (e) => {
+    await updateProfil(user);
+    setCurrentUser(user);
+    reset(e);
+  };
+
   return (
     <Transition appear show={open} as={Fragment}>
       <Dialog as="div" className="relative z-8" onClose={closeModal}>
@@ -34,26 +93,93 @@ const EditProfil = ({open, openModal, closeModal}) => {
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900"
                 >
-                  Modificaton de votre profil
+                  Modificaton d'utilisateur
                 </Dialog.Title>
                 <div className="mt-2">
-                  <p className="text-sm text-gray-500">
-                    Mettez le formulaire pour la modification ici (Nom, Prénom, ...)
-                  </p>
+                  <label className="block text-gray-600 text-sm font-normal">
+                    Nom :
+                  </label>
+                  <input
+                    type="text"
+                    name="nom"
+                    value={user.nom}
+                    onChange={(e) => handleChange(e)}
+                    className="h-10 w-full border mt-2 px-2 py-2"
+                  />
+                  <label className="block text-gray-600 text-sm font-normal">
+                    Prenom :
+                  </label>
+                  <input
+                    type="text"
+                    name="prenom"
+                    value={user.prenom}
+                    onChange={(e) => handleChange(e)}
+                    className="h-10 w-full border mt-2 px-2 py-2"
+                  />
+                  <label className="block text-gray-600 text-sm font-normal">
+                    Nom d'utilisateur:
+                  </label>
+                  <input
+                    type="text"
+                    name="username"
+                    value={user.username}
+                    onChange={(e) => handleChange(e)}
+                    className="h-10 w-full border mt-2 px-2 py-2"
+                  />
+                  <label className="block text-gray-600 text-sm font-normal">
+                    Email :
+                  </label>
+                  <input
+                    type="text"
+                    name="email"
+                    value={user.email}
+                    onChange={(e) => handleChange(e)}
+                    className="h-10 w-full border mt-2 px-2 py-2"
+                  />
+                  {/*<label className="block text-gray-600 text-sm font-normal">
+                    Adresse :
+                  </label>
+                  <input
+                    type="text"
+                    name="adresse"
+                    value={user.adresse}
+                    onChange={(e) => handleChange(e)}
+                    className="h-10 w-full border mt-2 px-2 py-2 focus:outline-none"
+  />*/}
+                  <label className="block text-gray-600 text-sm font-normal">
+                    Téléphone :
+                  </label>
+                  <input
+                    type="text"
+                    name="num_tel"
+                    value={user.num_tel}
+                    onChange={(e) => handleChange(e)}
+                    className="h-10 w-full border mt-2 px-2 py-2"
+                  />
+                  <label className="block text-gray-600 text-sm font-normal">
+                    CIN :
+                  </label>
+                  <input
+                    type="text"
+                    name="cin"
+                    value={user.cin}
+                    onChange={(e) => handleChange(e)}
+                    className="h-10 w-full border mt-2 px-2 py-2"
+                  />
                 </div>
 
                 <div className="mt-4">
                   <button
                     type="button"
                     className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                    onClick={closeModal}
+                    onClick={reset}
                   >
                     Fermer
                   </button>
                   <button
                     type="button"
-                    className="inline-flex justify-center rounded-md border border-transparent bg-green-100 px-4 py-2 text-sm font-medium text-green-600 hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
-                    onClick={closeModal}
+                    className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                    onClick={editProfil}
                   >
                     Enregistrer
                   </button>

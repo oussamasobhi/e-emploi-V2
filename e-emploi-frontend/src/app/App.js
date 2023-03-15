@@ -157,7 +157,7 @@ function App() {
             />
             <Route
               path="/profile"
-              element={<Profile currentUser={currentUser} />}
+              element={<Profile setCurrentUser={setCurrentUser} currentUser={currentUser} />}
             />
             <Route path="forgotten" element={<ResetPassword />} />
             <Route path="dashboard" element={currentUser.roleName==="ROLE_ADMIN"?<Dashboard/>:<Navigate to="/"/>} />

@@ -54,13 +54,13 @@ public class UserController {
         return new UserIdentityAvailability(isAvailable);
     }
 
-    @PutMapping("users/edit")
+    @PutMapping("/users/edit")
     public ResponseEntity<?> updateuser(@RequestBody Pro_RegisterRequest request, @CurrentUser User user) {
         userService.updateuser(request, user.getId());
         return new ResponseEntity<>(new ApiResponse(true, "user modifié"), HttpStatus.OK);
     }
 
-    @DeleteMapping("users/delete")
+    @DeleteMapping("/users/delete")
     public ResponseEntity<?> deleteuser(@CurrentUser User user) {
         userRepository.deleteById(user.getId());
         return new ResponseEntity(new ApiResponse(true, "user supprimé"),
