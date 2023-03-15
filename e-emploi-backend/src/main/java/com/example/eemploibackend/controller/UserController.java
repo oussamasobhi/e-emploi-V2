@@ -30,14 +30,14 @@ public class UserController {
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", currentUser.getUsername()));
         return user;
     }
-    @GetMapping("/users/{username}")
-    public User getUserProfile(@PathVariable(value = "username") String username) {
-
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
-
-        return user;
-    }
+//    @GetMapping("/users/{username}")
+//    public User getUserProfile(@PathVariable(value = "username") String username) {
+//
+//        User user = userRepository.findByUsername(username)
+//                .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
+//
+//        return user;
+//    }
 
     @GetMapping("/user/checkUsernameAvailability")
     public UserIdentityAvailability checkUsernameAvailability(
@@ -63,4 +63,8 @@ public class UserController {
         return new ResponseEntity(new ApiResponse(true,"user supprimé"),
                 HttpStatus.ACCEPTED);
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> b1c92e7476ce45222662b6275efab2e33e341801

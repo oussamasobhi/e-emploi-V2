@@ -3,9 +3,9 @@ import Navbar from "./Navbar";
 
 const Layout = ({ isAuth, currentUser, onLogout}) => {
   return (
-    <div className="font-poppins">
+    <div className="font-poppins relative">
       <Navbar isAuth={isAuth} currentUser={currentUser} onLogout={onLogout}/>
-      <div className="flex justify-center bg-gray-50 pt-6 ">
+      <div className="min-w-full bg-gray-50">
         <Outlet />
       </div>
     </div>
