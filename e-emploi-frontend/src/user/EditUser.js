@@ -2,8 +2,8 @@ import React, { Fragment, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { getUserByUsername } from "../util/APIUtils";
 
-const EditUser = ({ username, setResponseUsr }) => {
-  const [user, setUser] = useState({
+const EditUser = ({ username, setResponseUser }) => {
+  const initUser = {
     nom: "",
     prenom: "",
     username: "",
@@ -12,7 +12,9 @@ const EditUser = ({ username, setResponseUsr }) => {
     ville: "",
     date_naissance: "",
     num_tel: "",
-  });
+    role: "",
+  };
+  const [user, setUser] = useState(initUser);
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {

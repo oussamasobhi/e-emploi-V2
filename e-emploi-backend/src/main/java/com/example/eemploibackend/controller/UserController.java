@@ -58,4 +58,10 @@ public class UserController {
         userService.updateuser(request,user.getId());
         return new ResponseEntity<>(new ApiResponse(true,"user modifié"), HttpStatus.OK);
     }
+    @DeleteMapping("users/delete")
+    public ResponseEntity<?> deleteuser(@CurrentUser User user){
+        userRepository.deleteById(user.getId());
+        return new ResponseEntity(new ApiResponse(true,"user supprimé"),
+                HttpStatus.ACCEPTED);
+    }
 }
