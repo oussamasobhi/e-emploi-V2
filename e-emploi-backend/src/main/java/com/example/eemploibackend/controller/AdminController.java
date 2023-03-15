@@ -1,6 +1,7 @@
 package com.example.eemploibackend.controller;
 
 import com.example.eemploibackend.config.CurrentUser;
+import com.example.eemploibackend.exceptions.ResourceNotFoundException;
 import com.example.eemploibackend.model.User;
 import com.example.eemploibackend.payloads.*;
 import com.example.eemploibackend.repository.UserRepository;
@@ -17,8 +18,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
-//@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 @RequiredArgsConstructor
+@CrossOrigin
 public class AdminController {
     private final AdminService adminService;
     private final UserRepository userRepository;
@@ -43,15 +45,25 @@ public class AdminController {
 
                 return adminService.getAllusers(page, size);
     }
-    @PutMapping("/users/edit")
-    public ResponseEntity<?> updateuser(@RequestBody Pro_RegisterRequest request, @CurrentUser User user){
-        userService.updateuser(request,user.getId());
+    @PutMapping("/users/edit/{username}")
+    public ResponseEntity<?> updateuser(@PathVariable(value="username") String username,@RequestBody Pro_RegisterRequest request){
+        Long id=userRepository.findIdByUsername(username);
+        userService.updateuser(request,id);
         return new ResponseEntity<>(new ApiResponse(true,"user modifié"), HttpStatus.OK);
     }
-@DeleteMapping("/users/delete")
-    public ResponseEntity<?> deleteuser(Long id){
-        userRepository.deleteById(id);
+@DeleteMapping("/users/delete/{username}")
+    public ResponseEntity<?> deleteuser(@PathVariable(value="username") String username){
+    Long id=userRepository.findIdByUsername(username);
+    userRepository.deleteById(id);
     return new ResponseEntity(new ApiResponse(true,"user supprimé"),
             HttpStatus.ACCEPTED);
 }
+    @GetMapping("/users/{username}")
+    public User getUserProfile(@PathVariable(value = "username") String username) {
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
+
+        return user;
+    }
 }

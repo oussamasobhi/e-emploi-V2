@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin("http://localhost:3000")
-//@PreAuthorize("hasAuthority('ROLE_STANDARD')")
 public class UserController {
     @Autowired
     private  UserRepository userRepository;
