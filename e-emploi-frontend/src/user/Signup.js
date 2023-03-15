@@ -1,4 +1,3 @@
-import { ExclamationCircleIcon } from "@heroicons/react/solid";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import {
@@ -248,8 +247,7 @@ const Signup = ({ onSignup }) => {
               </div>
             </div>
 
-            <p className="text-base text-red-600 bg-red-50 w-full mb-2 px-2">
-              <span><ExclamationCircleIcon className="w-6 h-6 text-red-400"/></span>
+            <p className="text-base text-red-600 bg-red-50 w-full mb-2 px-2 truncate flex">              
               {nomError}
             </p>
             <p className="text-base text-red-600 bg-red-50 w-full mb-2 px-2">
