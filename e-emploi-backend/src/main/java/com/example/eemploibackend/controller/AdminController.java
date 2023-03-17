@@ -8,13 +8,14 @@ import com.example.eemploibackend.repository.UserRepository;
 import com.example.eemploibackend.services.AdminService;
 import com.example.eemploibackend.services.UserService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 @RestController
 @RequestMapping("/admin")
@@ -22,6 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @CrossOrigin
 public class AdminController {
+    Logger logger=LoggerFactory.getLogger(AdminController.class);
     private final AdminService adminService;
     private final UserRepository userRepository;
     private final UserService userService;
@@ -47,6 +49,7 @@ public class AdminController {
     @PutMapping("/users/edit/{username}")
     public ResponseEntity<?> updateuser(@PathVariable(value="username") String username,@RequestBody Pro_RegisterRequest request){
         Long id=userRepository.findIdByUsername(username);
+      logger.info("zbii");
         userService.updateuser(request,id);
         return new ResponseEntity<>(new ApiResponse(true,"user modifié"), HttpStatus.OK);
     }

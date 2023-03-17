@@ -19,7 +19,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    public void updateuser(Pro_RegisterRequest request, Long iduser){
+    public void updateuser(Pro_RegisterRequest request,Long iduser){
 
             userRepository.findById(iduser).map(
                 USER ->
@@ -37,18 +37,15 @@ public class UserService {
                              isafieldnull=true;
                              USER.setNom(request.getNom());
                              USER.setPrenom(request.getPrenom());
-                             USER.setUsername(request.getUsername());
-                             USER.setPassword(request.getPassword());
-                             USER.setEmail(request.getEmail());
+                             USER.setPassword(passwordEncoder.encode(request.getPassword()));
                              USER.setCIN(request.getCIN());
                              USER.setDate_naissance(request.getDate_naissance());
                              USER.setPhoto_profil(request.getImage());
                              USER.setNum_tel(request.getNum_tel());
 
-
              if(!isafieldnull) {
                Role role= Role.builder()
-                       .name(RoleName.ROLE_CONDIDAT)
+                      .name(RoleName.ROLE_CONDIDAT)
                        .build();
                  USER.setRole(role);
              }
