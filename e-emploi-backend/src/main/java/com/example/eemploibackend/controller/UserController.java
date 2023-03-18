@@ -31,14 +31,15 @@ public class UserController {
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", currentUser.getUsername()));
         return user;
     }
-//    @GetMapping("/users/{username}")
-//    public User getUserProfile(@PathVariable(value = "username") String username) {
-//
-//        User user = userRepository.findByUsername(username)
-//                .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
-//
-//        return user;
-//    }
+
+    @GetMapping("/users/{username}")
+    public User getUserProfile(@PathVariable(value = "username") String username) {
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
+
+        return user;
+    }
 
     @GetMapping("/user/checkUsernameAvailability")
     public UserIdentityAvailability checkUsernameAvailability(
@@ -55,12 +56,14 @@ public class UserController {
     }
 
     @PutMapping("/users/edit")
+
     public ResponseEntity<?> updateuser(@RequestBody Pro_RegisterRequest request, @CurrentUser User user) {
         userService.updateuser(request, user.getId());
         return new ResponseEntity<>(new ApiResponse(true, "user modifié"), HttpStatus.OK);
     }
 
     @DeleteMapping("/users/delete")
+
     public ResponseEntity<?> deleteuser(@CurrentUser User user) {
         userRepository.deleteById(user.getId());
         return new ResponseEntity(new ApiResponse(true, "user supprimé"),
