@@ -1,11 +1,14 @@
 package com.example.eemploibackend.services;
 
+import com.example.eemploibackend.model.Adresse;
 import com.example.eemploibackend.model.Role;
+import com.example.eemploibackend.payloads.AddressRequest;
 import com.example.eemploibackend.payloads.Pro_RegisterRequest;
 import com.example.eemploibackend.exceptions.ResourceNotFoundException;
 import com.example.eemploibackend.model.RoleName;
 import com.example.eemploibackend.model.User;
 import com.example.eemploibackend.payloads.ApiResponse;
+import com.example.eemploibackend.repository.AdresseRepository;
 import com.example.eemploibackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,11 +16,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
+    private final AdresseRepository adresseRepository;
     private final PasswordEncoder passwordEncoder;
     public void updateuser(Pro_RegisterRequest request,Long iduser){
 
@@ -54,4 +63,14 @@ public class UserService {
                             "utilisateur modifie bien modifiée"), HttpStatus.ACCEPTED);
                 }        );
     }
+    public void ajouteradresse(AddressRequest request,Long id){
+        User user=userRepository.findUserById(id);
+        Adresse adresse= Adresse.builder()
+                .pays(request.getPays())
+                .ville(request.getVille())
+                .user(user)
+                .build();
+        adresseRepository.save(adresse);
+    }
+    public void
 }

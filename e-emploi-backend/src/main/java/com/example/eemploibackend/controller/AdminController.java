@@ -49,7 +49,6 @@ public class AdminController {
     @PutMapping("/users/edit/{username}")
     public ResponseEntity<?> updateuser(@PathVariable(value="username") String username,@RequestBody Pro_RegisterRequest request){
         Long id=userRepository.findIdByUsername(username);
-      logger.info("zbii");
         userService.updateuser(request,id);
         return new ResponseEntity<>(new ApiResponse(true,"user modifié"), HttpStatus.OK);
     }

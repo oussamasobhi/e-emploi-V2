@@ -45,6 +45,5 @@ public class DatabaseInitializer implements ApplicationRunner {
         ad.setPays("maroc");
         ad.setVille("agadir");
         adresseRepository.save(ad);
-        admin.setAdresses(Collections.singleton(ad));
     }
 }
