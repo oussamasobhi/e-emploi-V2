@@ -83,3 +83,10 @@ export function updateProfil(user) {
     body: JSON.stringify(user)
   })
 }
+
+export function deleteCurrentUser() {
+  return request({
+    url:  API_BASE_URL + "/api/users/delete",
+    method: "DELETE"
+  })
+}

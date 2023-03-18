@@ -1,5 +1,5 @@
 import React, { useState, Fragment, useEffect } from "react";
-import { getAllUsers } from "../util/APIUtils";
+import { getAllUsers } from "../../util/APIUtils";
 import User from "./User";
 import EditUser from "./EditUser";
 

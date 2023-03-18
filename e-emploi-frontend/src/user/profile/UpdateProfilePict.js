@@ -1,9 +1,17 @@
-{/*import { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import Avatar from "react-avatar-edit";
 
-const DetailsUser = (isOpen, closeModal, openModal) => {
+const UpdateProfilePict = ({ open, closeModal }) => {
+  const [src, setSrc] = useState(null);
+  function updateProfilPict() {
+    closeModal();
+  }
+  const [profilePict, setProfilePict] = useState(null);
+  const [isOpenProfilePict, setIsOpenProfilePict] = useState(false);
+
   return (
-    <Transition appear show={isOpen} as={Fragment}>
+    <Transition appear show={open} as={Fragment}>
       <Dialog as="div" className="relative z-8" onClose={closeModal}>
         <Transition.Child
           as={Fragment}
@@ -18,7 +26,7 @@ const DetailsUser = (isOpen, closeModal, openModal) => {
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4 text-center">
+          <div className="flex items-center justify-center p-4 text-center">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -28,34 +36,31 @@ const DetailsUser = (isOpen, closeModal, openModal) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-xl transform overflow-hidden rounded-md bg-white p-6 text-left h-screen mt-32 align-middle border transition-all">
+              <Dialog.Panel className="transform overflow-hidden rounded-md bg-white p-6 text-left mt-32 align-middle border transition-all">
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900"
+                  className="text-lg font-medium leading-6 text-gray-900 mb-4"
                 >
-                  Modificaton de votre profil
+                  Modification de la photo de profil
                 </Dialog.Title>
-                <div className="mt-2">
-                  <p className="text-sm text-gray-500">
-                    Mettez le formulaire pour la modification ici (Nom, Prénom,
-                    ...)
-                  </p>
+                <div>
+                  <Avatar width={250} height={280} src={src} />
                 </div>
 
                 <div className="mt-4">
                   <button
                     type="button"
                     className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                    onClick={closeModal}
+                    onClick={updateProfilPict}
                   >
-                    Fermer
+                    Enregistrer
                   </button>
                   <button
                     type="button"
-                    className="inline-flex justify-center rounded-md border border-transparent bg-green-100 px-4 py-2 text-sm font-medium text-green-600 hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
+                    className="inline-flex justify-center mx-4 rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                     onClick={closeModal}
                   >
-                    Enregistrer
+                    Annuler
                   </button>
                 </div>
               </Dialog.Panel>
@@ -67,5 +72,4 @@ const DetailsUser = (isOpen, closeModal, openModal) => {
   );
 };
 
-export default DetailsUser;
-*/}
+export default UpdateProfilePict;

@@ -8,18 +8,13 @@ import Layout from "../common/Layout";
 import NotFound from "../common/NotFound";
 import ResetPassword from "../user/ResetPassword";
 import { getCurrentUser, login, signup } from "../util/APIUtils";
-import Profile from "../user/Profile";
+import Profile from "../user/profile/Profile";
 import Dashboard from "../admin/Dashboard";
+import { initialUser } from "../constant";
+import ReactLoading from "react-loading";
 
 function App() {
-  const initUser = {
-    id: "",
-    username: "",
-    nom: "",
-    prenom: "",
-    email: "",
-    roleName: "",
-  };
+  const initUser = initialUser;
   const [currentUser, setCurrentUser] = useState(() => {
     const storedUser = JSON.parse(localStorage.getItem("CURRENT_USER"));
     return storedUser !== initUser
@@ -28,11 +23,26 @@ function App() {
   });
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  if ("CURRENT_USER" in localStorage) {
+  } else {
+    localStorage.setItem("CURRENT_USER", JSON.stringify(initialUser));
+  }
+  if ("IS_AUTHENTICATED" in localStorage) {
+  } else {
+    localStorage.setItem("IS_AUTHENTICATED", JSON.stringify(false));
+  }
+  if("token" in localStorage){}
+  else{
+    localStorage.setItem("token", "")
+  }
 
   useEffect(() => {
     if (localStorage.getItem("token") !== "") {
       setIsAuthenticated(true);
     }
+    setIsLoading(false);
   }, []);
 
   useEffect(() => {
@@ -46,50 +56,50 @@ function App() {
   const handleSignup = async (e, user, func) => {
     e.preventDefault();
     signup(user);
+    func();
     notify(
       "Succès",
       "Vous vous êtes bien enregistrés, veuillez vous connecter maintenant !",
       "success"
     );
-    func();
   };
 
   const handleLogin = async (e, logReq, func) => {
     e.preventDefault();
     try {
+      setIsLoading(true);
       const jwToken = await login(logReq);
       localStorage.setItem("token", jwToken.accessToken);
     } catch (error) {
+      setIsLoading(false);
       notify("Erreur", "Nom d'utilisateur ou mot de passe incorrects", "error");
+
       throw new Error();
     }
-    notify("Succès", "Vous êtes maintenant connectés", "success");
+
     //load user
     loadCurrentUser();
     setIsAuthenticated(true);
     func();
+    setIsLoading(false);
+    notify("Succès", "Vous êtes maintenant connectés", "success");
   };
 
   const loadCurrentUser = async () => {
     const res = await getCurrentUser();
-    setCurrentUser({
-      prenom: res.prenom,
-      nom: res.nom,
-      id: res.id,
-      username: res.username,
-      email: res.email,
-      roleName: res.role.name,
-    });
+    setCurrentUser(res);
     localStorage.setItem("CURRENT_USER", JSON.stringify(currentUser));
   };
 
   const handleLogout = (e, func) => {
     e.preventDefault();
+    setIsLoading(true);
     localStorage.setItem("token", "");
     setCurrentUser(initUser);
     setIsAuthenticated(false);
-    notify("Info", "Vous êtes déconnectés !", "info");
+    setIsLoading(false);
     func();
+    notify("Info", "Vous êtes déconnectés !", "info");
   };
   const [notification, setNotification] = useState({
     title: "",
@@ -105,7 +115,6 @@ function App() {
     });
     setTimeout(() => setShowNotification(false), 2000);
   };
-  
 
   return (
     <>
@@ -116,6 +125,20 @@ function App() {
         show={showNotification}
         onClose={() => setShowNotification(false)}
       />
+      <div
+        className={
+          isLoading
+            ? "flex items-center w-screen justify-center fixed z-20 top-20"
+            : "hidden items-center w-screen justify-center fixed z-20 top-20"
+        }
+      >
+        <ReactLoading
+          type={"spokes"}
+          color={"#123456"}
+          height={30}
+          width={30}
+        />
+      </div>
 
       <BrowserRouter>
         <Routes>
@@ -123,6 +146,7 @@ function App() {
             path="/"
             element={
               <Layout
+                setIsLoading={setIsLoading}
                 isAuth={isAuthenticated}
                 currentUser={isAuthenticated ? currentUser : initUser}
                 onLogout={handleLogout}
@@ -148,7 +172,7 @@ function App() {
             <Route
               path="login"
               element={
-                isAuthenticated ? (
+                JSON.parse(localStorage.getItem("IS_AUTHENTICATED")) ? (
                   <Navigate to="/" />
                 ) : (
                   <Login onLogin={handleLogin} />
@@ -157,10 +181,27 @@ function App() {
             />
             <Route
               path="/profile"
-              element={<Profile setCurrentUser={setCurrentUser} currentUser={currentUser} />}
+              element={
+                <Profile
+                  setIsAuthenticated={setIsAuthenticated}
+                  setCurrentUser={setCurrentUser}
+                  currentUser={currentUser}
+                  setIsLoading={setIsLoading}
+                  notify={notify}
+                />
+              }
             />
             <Route path="forgotten" element={<ResetPassword />} />
-            <Route path="dashboard" element={currentUser.roleName==="ROLE_ADMIN"?<Dashboard/>:<Navigate to="/"/>} />
+            <Route
+              path="dashboard"
+              element={
+                currentUser.role.name === "ROLE_ADMIN" ? (
+                  <Dashboard />
+                ) : (
+                  <Navigate to="/" />
+                )
+              }
+            />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>

@@ -1,18 +1,14 @@
 import { Popover } from "@headlessui/react";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { initialUser } from "../constant";
 import logo from "../public/image/logo_itako_bsc.jpg";
 
-const Navbar = ({ isAuth, currentUser, onLogout }) => {
+const Navbar = ({ isAuth, currentUser, onLogout, setIsLoading }) => {
   const navigate = useNavigate();
-  const initUser = useState({
-    id: "",
-    username: "",
-    prenom: "",
-    nom: "",
-    email: "",
-    roleName: "",
-  });
+  const initUser = useState(initialUser);
+
+
 
   const goToHome = () => {
     navigate("/");
@@ -26,7 +22,7 @@ const Navbar = ({ isAuth, currentUser, onLogout }) => {
   const [isOpen3, setIsOpen3] = useState(false);
   const [isOpen4, setIsOpen4] = useState(false);
 
-  if (!isAuth)
+  if (JSON.parse(localStorage.getItem("CURRENT_USER")).username.length<=0)
     return (
       <div className="h-16 min-w-full flex justify-between items-center border-b  bg-cyan text-white sticky top-0 z-10">
         <div className="flex flex-row justify-center items-center">
