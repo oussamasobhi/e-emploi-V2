@@ -69,4 +69,13 @@ public class UserController {
         return new ResponseEntity(new ApiResponse(true, "user supprimé"),
                 HttpStatus.ACCEPTED);
     }
+    @PostMapping("users/address/add")
+    public ResponseEntity<?> ajouteradresse(@RequestBody AddressRequest request,@CurrentUser User user){
+        userService.ajouteradresse(request,user.getId());
+        return new ResponseEntity(new ApiResponse(true,"adresse ajouté"),HttpStatus.OK);
+    }
+    @PutMapping("users/address/edit")
+    public ResponseEntity<?> modifieradresse(@RequestBody AddressRequest request,@CurrentUser User user){
+
+    }
 }
