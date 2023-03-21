@@ -2,11 +2,19 @@ import React, { useState, Fragment, useEffect } from "react";
 import { getAllUsers } from "../../util/APIUtils";
 import User from "./User";
 import EditUser from "./EditUser";
+import DeleteUser from "./DeleteUser";
 
 const UserList = () => {
   const [users, setUsers] = useState(null);
-  const [username, setUsername] = useState(null);
-  const [responseUser, setResponseUser] = useState(null);
+  const [user, setUser] = useState(null);
+  const [openEdit, setOpenEdit] = useState(false);
+  const [isOpenDelete, setIsOpenDelete] = useState(false);
+  
+  const refreshList = async () => {
+    const res = (await getAllUsers()).content;
+    const sortedRes = res.sort((a, b) => a.id - b.id);
+    setUsers(sortedRes);
+  }
   
 
   useEffect(() => {
@@ -17,14 +25,26 @@ const UserList = () => {
       setUsers(sortedRes);
     };
     fillUserList();
-  }, [responseUser]);
+  }, []);
 
-  const deleteUser = () => {};
+  const deleteUser = (e,user) => {
+    e.preventDefault();
+    setUser(user);
+    openDelete();
+  };
 
   const editUser = (e, user) => {
     e.preventDefault();
-    setUsername(user.username);
+    setUser(user);
+    setOpenEdit(true);
   };
+  
+  function closeDelete () {
+    setIsOpenDelete(false);
+  }
+  function openDelete(){
+    setIsOpenDelete(true);
+  }
 
   return (
     <>
@@ -79,7 +99,8 @@ const UserList = () => {
           )}
         </table>
       </div>
-      <EditUser setResponseUser={setResponseUser} username={username} />
+      <EditUser selectedUser={user} isOpen={openEdit} refreshList={refreshList}  setIsOpen={setOpenEdit} />
+      <DeleteUser open={isOpenDelete} closeModal={closeDelete} selectedUser={user}/>
     </>
   );
 };

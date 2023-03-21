@@ -1,63 +1,50 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { getUserByUsername, updateUser } from "../../util/APIUtils";
+import { initialUser } from "../../constant";
 
-const EditUser = ({ username, setResponseUser }) => {
-  const initUser = {
-    nom: "",
-    prenom: "",
-    username: "",
-    email: "",
-    adresse: "",
-    ville: "",
-    date_naissance: "",
-    num_tel: "",
-    role: "",
-  };
-  const [user, setUser] = useState(initUser);
-  const [isOpen, setIsOpen] = useState(false);
-
+const EditUser = ({ selectedUser, refreshList, setIsOpen, isOpen }) => {
+  const [user, setUser] = useState(initialUser);
+console.log(selectedUser);
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (username) => {
       try {
-        const res = await getUserByUsername(username);
-        console.log(res);
-        setUser(res);
+        const _user = await getUserByUsername(username);
+        setUser(_user);
         setIsOpen(true);
       } catch (error) {
         console.log(error);
       }
     };
-    if (username) {
-      fetchData();
+    if (selectedUser) {
+      fetchData(selectedUser.username);
     }
-  }, [username]);
+  }, [setIsOpen, selectedUser]);
+
   const handleChange = (event) => {
     const value = event.target.value;
     setUser({ ...user, [event.target.name]: value });
   };
 
-  function closeModal() {
+  const reset = () => {
+    setUser(selectedUser);
     setIsOpen(false);
-  } 
-  function openModal() {
-    setIsOpen(true);
-  }
-  const reset = (e) => {
-    e.preventDefault();
-    setIsOpen(false);
+    refreshList();
   };
 
   const editUser = async (e) => {
     e.preventDefault();
-    const _user = await updateUser(username, user)
-    setResponseUser(_user);
-    reset(e);
+    try {
+      await updateUser(selectedUser.username, user);
+    } catch (error) {
+      console.log(error);
+    }
+    reset();
   };
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-8" onClose={closeModal}>
+      <Dialog as="div" className="relative z-8" onClose={reset}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -88,7 +75,7 @@ const EditUser = ({ username, setResponseUser }) => {
                 >
                   Modificaton d'utilisateur
                 </Dialog.Title>
-                <div className="mt-2">
+                <form className="mt-2" onSubmit={editUser}>
                   <label className="block text-gray-600 text-sm font-normal">
                     Nom :
                   </label>
@@ -129,7 +116,7 @@ const EditUser = ({ username, setResponseUser }) => {
                     onChange={(e) => handleChange(e)}
                     className="h-10 w-full border mt-2 px-2 py-2"
                   />
-                  <label className="block text-gray-600 text-sm font-normal">
+                  {/*<label className="block text-gray-600 text-sm font-normal">
                     Adresse :
                   </label>
                   <input
@@ -138,7 +125,7 @@ const EditUser = ({ username, setResponseUser }) => {
                     value={user.adresse}
                     onChange={(e) => handleChange(e)}
                     className="h-10 w-full border mt-2 px-2 py-2 focus:outline-none"
-                  />
+                  />*/}
                   <label className="block text-gray-600 text-sm font-normal">
                     Téléphone :
                   </label>
@@ -159,24 +146,22 @@ const EditUser = ({ username, setResponseUser }) => {
                     onChange={(e) => handleChange(e)}
                     className="h-10 w-full border mt-2 px-2 py-2"
                   />
-                </div>
-
-                <div className="mt-4">
-                  <button
-                    type="button"
-                    className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                    onClick={reset}
-                  >
-                    Fermer
-                  </button>
-                  <button
-                    type="button"
-                    className="inline-flex justify-center rounded-md border border-transparent bg-green-100 px-4 py-2 text-sm font-medium text-green-600 hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
-                    onClick={editUser}
-                  >
-                    Enregistrer
-                  </button>
-                </div>
+                  <div className="mt-4">
+                    <button
+                      type="button"
+                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      onClick={reset}
+                    >
+                      Fermer
+                    </button>
+                    <button
+                      type="submit"
+                      className="inline-flex justify-center rounded-md border border-transparent bg-green-100 px-4 py-2 text-sm font-medium text-green-600 hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
+                    >
+                      Enregistrer
+                    </button>
+                  </div>
+                </form>
               </Dialog.Panel>
             </Transition.Child>
           </div>

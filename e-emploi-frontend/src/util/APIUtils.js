@@ -3,8 +3,6 @@ import { API_BASE_URL } from "../constant";
 const request = async (options) => {
   const headers = new Headers({
     "Content-type": "application/json",
-    "Access-Control-Allow-Origin": "http://localhost:3000",
-    "Access-Control-Allow-Credentials": "true",
   });
   if (localStorage.getItem("token") !== "") {
     headers.append("Authorization", "Bearer " + localStorage.getItem("token"));
@@ -68,25 +66,32 @@ export function getAllUsers() {
   });
 }
 
-export function updateUser(username,user) {
+export function updateUser(username, user) {
   return request({
-    url: API_BASE_URL + "/admin/edit/users" + username,
+    url: API_BASE_URL + "/admin/users/edit/" + username,
     method: "PUT",
-    body: JSON.stringify(user)
-  })
+    body: JSON.stringify(user),
+  });
 }
 
 export function updateProfil(user) {
   return request({
     url: API_BASE_URL + "/api/users/edit",
     method: "PUT",
-    body: JSON.stringify(user)
-  })
+    body: JSON.stringify(user),
+  });
 }
 
 export function deleteCurrentUser() {
   return request({
-    url:  API_BASE_URL + "/api/users/delete",
+    url: API_BASE_URL + "/api/users/delete",
+    method: "DELETE",
+  });
+}
+
+export function deleteUserByUsername(username) {
+  return request({
+    url: API_BASE_URL + "/admin/users/delete/" + username,
     method: "DELETE"
-  })
+  });
 }

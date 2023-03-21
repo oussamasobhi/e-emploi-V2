@@ -14,12 +14,11 @@ import { initialUser } from "../constant";
 import ReactLoading from "react-loading";
 
 function App() {
-  const initUser = initialUser;
   const [currentUser, setCurrentUser] = useState(() => {
     const storedUser = JSON.parse(localStorage.getItem("CURRENT_USER"));
-    return storedUser !== initUser
+    return storedUser !== initialUser
       ? JSON.parse(localStorage.getItem("CURRENT_USER"))
-      : initUser;
+      : initialUser;
   });
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
@@ -33,9 +32,9 @@ function App() {
   } else {
     localStorage.setItem("IS_AUTHENTICATED", JSON.stringify(false));
   }
-  if("token" in localStorage){}
-  else{
-    localStorage.setItem("token", "")
+  if ("token" in localStorage) {
+  } else {
+    localStorage.setItem("token", "");
   }
 
   useEffect(() => {
@@ -95,7 +94,7 @@ function App() {
     e.preventDefault();
     setIsLoading(true);
     localStorage.setItem("token", "");
-    setCurrentUser(initUser);
+    setCurrentUser(initialUser);
     setIsAuthenticated(false);
     setIsLoading(false);
     func();
@@ -148,7 +147,7 @@ function App() {
               <Layout
                 setIsLoading={setIsLoading}
                 isAuth={isAuthenticated}
-                currentUser={isAuthenticated ? currentUser : initUser}
+                currentUser={isAuthenticated ? currentUser : initialUser}
                 onLogout={handleLogout}
               />
             }
