@@ -190,12 +190,13 @@ function App() {
                 />
               }
             />
+            
             <Route path="forgotten" element={<ResetPassword />} />
             <Route
               path="dashboard"
               element={
                 currentUser.role.name === "ROLE_ADMIN" ? (
-                  <Dashboard />
+                  <Dashboard notify={notify}/>
                 ) : (
                   <Navigate to="/" />
                 )

@@ -1,10 +1,10 @@
 import React from 'react'
 import Users from '../user/admin/Users'
 
-const Dashboard = () => {
+const Dashboard = ({notify}) => {
   return (
     <>
-    <Users/>
+    <Users notify={notify}/>
     </>
   )
 }

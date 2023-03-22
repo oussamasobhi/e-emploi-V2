@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import UserList from "./UserList";
 import { Listbox } from "@headlessui/react";
 
-const Users = () => {
+const Users = ({notify}) => {
   const pages = [10, 30, 50, 100];
   const [selectedPage, setSelectedPage] = useState(pages[0]);
   /*const [responseUser, setResponseUser] = useState({
@@ -45,7 +45,7 @@ const Users = () => {
           </span>
         </div>
       </div>
-      <UserList className="relative z-1" />
+      <UserList notify={notify} className="relative z-1" />
     </div>
   );
 };

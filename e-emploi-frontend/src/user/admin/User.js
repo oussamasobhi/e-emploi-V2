@@ -36,24 +36,26 @@ const User = ({ user, editUser, deleteUser, even }) => {
         {user.cin}
       </td>
       <td className="text-left p-3 whitespace-nowrap border border-gray-300">
-        {(user.role==="ROLE_ADMIN")&& (<p>Administrateur</p>)}
-        {(user.role==="ROLE_STANDARD")&& (<p>Standard</p>)}
+        {user.role === "ROLE_ADMIN" && <p>Administrateur</p>}
+        {user.role === "ROLE_STANDARD" && <p>Standard</p>}
       </td>
       <td className="text-right whitespace-nowrap p-3 border border-gray-300">
-        <div className="rounded-sm bg-indigo-600 w-full">
-          <button
-            onClick={(e) => editUser(e, user)}
-            className=" py-1 px-3 hover:cursor-pointer text-white hover:bg-indigo-700 rounded-l-sm transition-colors duration-300 ease-in-out"
-          >
-            Détails
-          </button>
-          <button
-            onClick={(e) => deleteUser(e, user.id)}
-            className=" py-1 px-3 hover:cursor-pointer text-white hover:bg-indigo-700 rounded-r-sm transition-colors duration-300 ease-in-out"
-          >
-            Supprimer
-          </button>
-        </div>
+        {user.role !== "ROLE_ADMIN" && (
+          <div className="rounded-sm bg-indigo-600 w-full">
+            <button
+              onClick={(e) => editUser(e, user)}
+              className=" py-1 px-3 hover:cursor-pointer text-white hover:bg-indigo-700 rounded-l-sm transition-colors duration-300 ease-in-out"
+            >
+              Détails
+            </button>
+            <button
+              onClick={(e) => deleteUser(e, user.id)}
+              className=" py-1 px-3 hover:cursor-pointer text-white hover:bg-indigo-700 rounded-r-sm transition-colors duration-300 ease-in-out"
+            >
+              Supprimer
+            </button>
+          </div>
+        )}
       </td>
     </tr>
   );

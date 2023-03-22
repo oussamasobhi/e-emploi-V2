@@ -1,26 +1,18 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { getCurrentUser, updateProfil} from "../../util/APIUtils";
+import { getCurrentUser, updateProfil } from "../../util/APIUtils";
+import { initialUser } from "../../constant";
 
 const EditProfil = ({ open, username, setCurrentUser, closeModal }) => {
-  const initUser = {
-    nom: "",
-    prenom: "",
-    username: "",
-    email: "",
-    adresse: "",
-    ville: "",
-    date_naissance: "",
-    num_tel: "",
-    role: "",
-  };
-  const [user, setUser] = useState(initUser);
+  const [user, setUser] = useState(initialUser);
+  const [storedUser, setStoredUser] = useState(initialUser);
   const [isOpen, setIsOpen] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await getCurrentUser();
         setUser(res);
+        setStoredUser(res);
         setIsOpen(true);
       } catch (error) {
         console.log(error);
@@ -31,7 +23,7 @@ const EditProfil = ({ open, username, setCurrentUser, closeModal }) => {
     }
   }, [username]);
 
-  useEffect(() => {
+  /*useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await getCurrentUser();
@@ -44,7 +36,7 @@ const EditProfil = ({ open, username, setCurrentUser, closeModal }) => {
     if (username) {
       fetchData();
     }
-  }, [username]);
+  }, [username]);*/
 
   const handleChange = (event) => {
     const value = event.target.value;
@@ -57,9 +49,14 @@ const EditProfil = ({ open, username, setCurrentUser, closeModal }) => {
   };
 
   const editProfil = async (e) => {
-    await updateProfil(user);
-    setCurrentUser(user);
-    reset(e);
+    try {
+      setUser({...user, password:storedUser.password});
+      await updateProfil(user);
+      setCurrentUser(user);
+      reset(e);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

@@ -3,14 +3,16 @@ import { Dialog, Transition } from "@headlessui/react";
 import { getUserByUsername, updateUser } from "../../util/APIUtils";
 import { initialUser } from "../../constant";
 
-const EditUser = ({ selectedUser, refreshList, setIsOpen, isOpen }) => {
+const EditUser = ({ selectedUser, refreshList, setIsOpen, isOpen, notify }) => {
   const [user, setUser] = useState(initialUser);
-console.log(selectedUser);
+  const [storedUser, setStoredUser] = useState(null);
+ 
   useEffect(() => {
     const fetchData = async (username) => {
       try {
         const _user = await getUserByUsername(username);
         setUser(_user);
+        setStoredUser(_user);
         setIsOpen(true);
       } catch (error) {
         console.log(error);
@@ -20,11 +22,20 @@ console.log(selectedUser);
       fetchData(selectedUser.username);
     }
   }, [setIsOpen, selectedUser]);
+  
+  
 
   const handleChange = (event) => {
     const value = event.target.value;
     setUser({ ...user, [event.target.name]: value });
   };
+  /*const chooseValue = (event) =>{
+    const value = event.target.value;
+    if(value)
+      setUser({ ...user, [event.target.name]: value });
+    else
+      setUser({...user,[event.target.name]:storedUser.event.target.name})
+  }*/
 
   const reset = () => {
     setUser(selectedUser);
@@ -35,11 +46,15 @@ console.log(selectedUser);
   const editUser = async (e) => {
     e.preventDefault();
     try {
+      setUser({...user, password: storedUser.password});
       await updateUser(selectedUser.username, user);
+      reset();
+      notify("Notification","Utilisateur modifié avec succès","success");
     } catch (error) {
       console.log(error);
+      notify("Notification","Echec de suppression","error");
     }
-    reset();
+    
   };
 
   return (
@@ -96,7 +111,7 @@ console.log(selectedUser);
                     onChange={(e) => handleChange(e)}
                     className="h-10 w-full border mt-2 px-2 py-2"
                   />
-                  <label className="block text-gray-600 text-sm font-normal">
+                  {/*<label className="block text-gray-600 text-sm font-normal">
                     Nom d'utilisateur:
                   </label>
                   <input
@@ -116,7 +131,7 @@ console.log(selectedUser);
                     onChange={(e) => handleChange(e)}
                     className="h-10 w-full border mt-2 px-2 py-2"
                   />
-                  {/*<label className="block text-gray-600 text-sm font-normal">
+                  <label className="block text-gray-600 text-sm font-normal">
                     Adresse :
                   </label>
                   <input

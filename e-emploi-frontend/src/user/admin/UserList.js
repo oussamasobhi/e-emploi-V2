@@ -4,9 +4,10 @@ import User from "./User";
 import EditUser from "./EditUser";
 import DeleteUser from "./DeleteUser";
 
-const UserList = () => {
+const UserList = ({notify}) => {
   const [users, setUsers] = useState(null);
-  const [user, setUser] = useState(null);
+  const [userToEdit, setUserToEdit] = useState(null);
+  const [userToDelete, setUserToDelete] = useState(null);
   const [openEdit, setOpenEdit] = useState(false);
   const [isOpenDelete, setIsOpenDelete] = useState(false);
   
@@ -27,15 +28,16 @@ const UserList = () => {
     fillUserList();
   }, []);
 
-  const deleteUser = (e,user) => {
+  const deleteUser = (e,user1) => {
     e.preventDefault();
-    setUser(user);
-    openDelete();
+    setUserToDelete(user1);
+    console.log(userToDelete);
+    setIsOpenDelete(true);
   };
 
   const editUser = (e, user) => {
     e.preventDefault();
-    setUser(user);
+    setUserToEdit(user);
     setOpenEdit(true);
   };
   
@@ -90,8 +92,8 @@ const UserList = () => {
                 <User
                   user={user}
                   key={user.id}
-                  deleteUser={deleteUser}
-                  editUser={editUser}
+                  deleteUser={(e) =>deleteUser(e,user)}
+                  editUser={(e) => editUser(e,user)}
                   even={index % 2 === 0 ? true : false}
                 />
               ))}
@@ -99,8 +101,8 @@ const UserList = () => {
           )}
         </table>
       </div>
-      <EditUser selectedUser={user} isOpen={openEdit} refreshList={refreshList}  setIsOpen={setOpenEdit} />
-      <DeleteUser open={isOpenDelete} closeModal={closeDelete} selectedUser={user}/>
+      <EditUser selectedUser={userToEdit} isOpen={openEdit} refreshList={refreshList}  setIsOpen={setOpenEdit} notify={notify}/>
+      <DeleteUser userToDelete={userToDelete} isOpen={isOpenDelete} refreshList={refreshList}  setIsOpen={setIsOpenDelete} notify={notify}/>
     </>
   );
 };
