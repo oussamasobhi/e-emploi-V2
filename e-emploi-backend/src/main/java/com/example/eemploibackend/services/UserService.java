@@ -1,13 +1,12 @@
 package com.example.eemploibackend.services;
 
+import com.example.eemploibackend.exceptions.AppException;
 import com.example.eemploibackend.model.Adresse;
 import com.example.eemploibackend.model.Role;
-import com.example.eemploibackend.payloads.AddressRequest;
-import com.example.eemploibackend.payloads.Pro_RegisterRequest;
+import com.example.eemploibackend.payloads.*;
 import com.example.eemploibackend.exceptions.ResourceNotFoundException;
 import com.example.eemploibackend.model.RoleName;
 import com.example.eemploibackend.model.User;
-import com.example.eemploibackend.payloads.ApiResponse;
 import com.example.eemploibackend.repository.AdresseRepository;
 import com.example.eemploibackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,10 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +24,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final AdresseRepository adresseRepository;
     private final PasswordEncoder passwordEncoder;
+
     public void updateuser(Pro_RegisterRequest request,Long iduser){
 
             userRepository.findById(iduser).map(
@@ -78,5 +75,29 @@ public class UserService {
           adr.setPays(request.getPays());
           adr.setLibelle_adr(request.getLib_addre());
           adresseRepository.save(adr);
+    }
+    public Boolean resetpassword(ResetPasswordRequest request,Long id){
+        User user=userRepository.findUserById(id);
+       if(passwordEncoder.matches(request.getOldpassword(), user.getPassword())){
+           user.setPassword(passwordEncoder.encode(request.getNewpassword()));
+           userRepository.save(user);
+        return true;
+       }
+       return false;
+    }
+    public UserSummary mapusertoSummary(User user){
+        UserSummary userSummary=new UserSummary();
+        List<Adresse> adresseList=userRepository.findaddressesbyuserid(user.getId());
+        userSummary.setAdresses(adresseList);
+        userSummary.setNom(user.getNom());
+        userSummary.setEmail(user.getEmail());
+        userSummary.setCIN(user.getCIN());
+        userSummary.setSociete(user.getSociete());
+        userSummary.setUsername(user.getUsername());
+        userSummary.setPrenom(user.getPrenom());
+        userSummary.setNum_tel(user.getNum_tel());
+        userSummary.setDate_naissance(user.getDate_naissance());
+        userSummary.setPhoto_profil(user.getPhoto_profil());
+    return userSummary;
     }
 }

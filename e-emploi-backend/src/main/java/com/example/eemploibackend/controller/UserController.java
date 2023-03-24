@@ -9,7 +9,6 @@ import com.example.eemploibackend.payloads.*;
 import com.example.eemploibackend.repository.AdresseRepository;
 import com.example.eemploibackend.repository.UserRepository;
 import com.example.eemploibackend.services.UserService;
-import com.example.eemploibackend.utils.MapperUserSummary;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,14 +26,14 @@ public class UserController {
 
     private final UserService userService;
     private final AdresseRepository adresseRepository;
-    private MapperUserSummary mapperUserSummary;
+
     @GetMapping("/user/me")
     @PreAuthorize("hasAnyAuthority('ROLE_STANDARD','ROLE_CONDIDAT','ROLE_ADMIN','ROLE_Pro')")
     public UserSummary getCurrentUser(@CurrentUser User currentUser) {
 
         User user = userRepository.findByUsername(currentUser.getUsername())
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", currentUser.getUsername()));
-        UserSummary userSummary=mapperUserSummary.mappeusertousersummary(user);
+        UserSummary userSummary=userService.mapusertoSummary(user);
         return userSummary;
     }
 
@@ -43,7 +42,7 @@ public class UserController {
 
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
-        UserSummary userSummary=mapperUserSummary.mappeusertousersummary(user);
+        UserSummary userSummary=userService.mapusertoSummary(user);
         return userSummary;
     }
 
@@ -87,6 +86,18 @@ public class UserController {
     public ResponseEntity<?> supprimeradresse(@PathVariable(value="id") Long id){
         adresseRepository.deleteById(id);
         return new ResponseEntity(new ApiResponse(true,"adresse supprimé"),HttpStatus.OK);
+
+    }
+    // reset password
+    @PostMapping("/resetpassword")
+    public ResponseEntity<?> resetpassword(@RequestBody ResetPasswordRequest request,@CurrentUser User user){
+         Boolean done=userService.resetpassword(request,user.getId());
+         if(done){
+             return new ResponseEntity(new ApiResponse(true,"mot de passe modifié"),HttpStatus.OK);
+         }
+         else{
+             return new ResponseEntity(new ApiResponse(true,"mot de passe ancienne est fausse"),HttpStatus.BAD_REQUEST);
+         }
 
     }
 }
