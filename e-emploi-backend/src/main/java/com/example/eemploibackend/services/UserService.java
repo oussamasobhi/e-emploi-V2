@@ -72,5 +72,11 @@ public class UserService {
                 .build();
         adresseRepository.save(adresse);
     }
-    public void
+    public void modifieradresse(AddressRequest request,Long idaddr){
+          Adresse adr=adresseRepository.findAdresseById(idaddr);
+          adr.setVille(request.getVille());
+          adr.setPays(request.getPays());
+          adr.setLibelle_adr(request.getLib_addre());
+          adresseRepository.save(adr);
+    }
 }

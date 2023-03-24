@@ -6,8 +6,11 @@ import com.example.eemploibackend.exceptions.ResourceNotFoundException;
 import com.example.eemploibackend.model.User;
 import com.example.eemploibackend.payloads.*;
 
+import com.example.eemploibackend.repository.AdresseRepository;
 import com.example.eemploibackend.repository.UserRepository;
 import com.example.eemploibackend.services.UserService;
+import com.example.eemploibackend.utils.MapperUserSummary;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,28 +20,31 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin("http://localhost:3000")
+@RequiredArgsConstructor
 public class UserController {
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private UserService userService;
 
+    private final UserRepository userRepository;
+
+    private final UserService userService;
+    private final AdresseRepository adresseRepository;
+    private MapperUserSummary mapperUserSummary;
     @GetMapping("/user/me")
     @PreAuthorize("hasAnyAuthority('ROLE_STANDARD','ROLE_CONDIDAT','ROLE_ADMIN','ROLE_Pro')")
-    public User getCurrentUser(@CurrentUser User currentUser) {
+    public UserSummary getCurrentUser(@CurrentUser User currentUser) {
 
         User user = userRepository.findByUsername(currentUser.getUsername())
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", currentUser.getUsername()));
-        return user;
+        UserSummary userSummary=mapperUserSummary.mappeusertousersummary(user);
+        return userSummary;
     }
 
     @GetMapping("/users/{username}")
-    public User getUserProfile(@PathVariable(value = "username") String username) {
+    public UserSummary getUserProfile(@PathVariable(value = "username") String username) {
 
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
-
-        return user;
+        UserSummary userSummary=mapperUserSummary.mappeusertousersummary(user);
+        return userSummary;
     }
 
     @GetMapping("/user/checkUsernameAvailability")
@@ -72,8 +78,15 @@ public class UserController {
         userService.ajouteradresse(request,user.getId());
         return new ResponseEntity(new ApiResponse(true,"adresse ajouté"),HttpStatus.OK);
     }
-    @PutMapping("users/address/edit")
-    public ResponseEntity<?> modifieradresse(@RequestBody AddressRequest request,@CurrentUser User user){
+    @PutMapping("users/address/edit/{id}")
+    public ResponseEntity<?> modifieradresse(@PathVariable(value="id") Long id ,@RequestBody AddressRequest request){
+            userService.modifieradresse(request,id);
+            return new ResponseEntity(new ApiResponse(true,"adresse modifié"),HttpStatus.OK);
+    }
+    @DeleteMapping("users/address/delete/{id}")
+    public ResponseEntity<?> supprimeradresse(@PathVariable(value="id") Long id){
+        adresseRepository.deleteById(id);
+        return new ResponseEntity(new ApiResponse(true,"adresse supprimé"),HttpStatus.OK);
 
     }
 }

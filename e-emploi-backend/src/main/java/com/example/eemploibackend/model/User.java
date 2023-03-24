@@ -1,6 +1,7 @@
 package com.example.eemploibackend.model;
 
 import com.example.eemploibackend.model.audit.DateAudit;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -44,6 +45,10 @@ public class User extends DateAudit implements UserDetails{
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Review> reviews;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_societe")
+    @JsonIgnore
+    private Societe societe;
     @OneToOne
   private Role role;
     public User(Long id, String nom,String prenom, String username, String email, String password,Role role,String CIN) {
