@@ -43,7 +43,6 @@ public class UserService {
                              isafieldnull=true;
                              USER.setNom(request.getNom());
                              USER.setPrenom(request.getPrenom());
-                             USER.setPassword(passwordEncoder.encode(request.getPassword()));
                              USER.setCIN(request.getCIN());
                              USER.setDate_naissance(request.getDate_naissance());
                              USER.setPhoto_profil(request.getImage());
