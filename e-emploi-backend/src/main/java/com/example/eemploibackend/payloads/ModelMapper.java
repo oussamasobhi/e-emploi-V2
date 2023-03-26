@@ -15,6 +15,9 @@ public class ModelMapper {
                userResponse.setPhoto_profil(user.getPhoto_profil());
                userResponse.setUsername(user.getUsername());
                userResponse.setRole(user.getRole().getName().name());
+               userResponse.setSociete(user.getSociete());
+               userResponse.setAdresses(user.getAdresses());
+               userResponse.setCompetences(user.getCompetences());
                return userResponse;
     }
 }

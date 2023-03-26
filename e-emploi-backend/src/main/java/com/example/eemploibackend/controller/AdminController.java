@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @CrossOrigin
 public class AdminController {
-    Logger logger=LoggerFactory.getLogger(AdminController.class);
     private final AdminService adminService;
     private final UserRepository userRepository;
     private final UserService userService;

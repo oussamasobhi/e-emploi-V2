@@ -40,17 +40,19 @@ public class User extends DateAudit implements UserDetails{
      private String CIN;
       private Byte[] photo_profil;
      private Date date_naissance;
-        @ManyToMany(mappedBy = "prestataires")
+     @ManyToMany(mappedBy = "prestataires")
         private List<OffreEmploi> offres;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Review> reviews;
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<Adresse> adresses;
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<Competence> competences;
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_societe")
-    @JsonIgnore
     private Societe societe;
     @OneToOne
-  private Role role;
+    private Role role;
     public User(Long id, String nom,String prenom, String username, String email, String password,Role role,String CIN) {
         super();
         this.id = id;

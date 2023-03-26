@@ -41,6 +41,11 @@ public void editsociete(SocieteRequest societeRequest,Long idsociete){
       societe.setJustif_image(societeRequest.getJustif_image());
       societeRepository.save(societe);
 }
+public void supprimersociete(Long idsociete,Long iduser){
+        User user=userRepository.findUserById(iduser);
+         user.setSociete(null);
+        societeRepository.deleteById(idsociete);
+}
 public void updateAdresseSociete(AddressRequest request,Long idaddress){
         Adresse_societe adresseSociete=adresseSocietyRepository.findById(idaddress).orElseThrow();
         adresseSociete.setPays(request.getPays());

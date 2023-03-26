@@ -72,22 +72,7 @@ public class UserController {
         return new ResponseEntity(new ApiResponse(true, "user supprimé"),
                 HttpStatus.ACCEPTED);
     }
-    @PostMapping("users/address/add")
-    public ResponseEntity<?> ajouteradresse(@RequestBody AddressRequest request,@CurrentUser User user){
-        userService.ajouteradresse(request,user.getId());
-        return new ResponseEntity(new ApiResponse(true,"adresse ajouté"),HttpStatus.OK);
-    }
-    @PutMapping("users/address/edit/{id}")
-    public ResponseEntity<?> modifieradresse(@PathVariable(value="id") Long id ,@RequestBody AddressRequest request){
-            userService.modifieradresse(request,id);
-            return new ResponseEntity(new ApiResponse(true,"adresse modifié"),HttpStatus.OK);
-    }
-    @DeleteMapping("users/address/delete/{id}")
-    public ResponseEntity<?> supprimeradresse(@PathVariable(value="id") Long id){
-        adresseRepository.deleteById(id);
-        return new ResponseEntity(new ApiResponse(true,"adresse supprimé"),HttpStatus.OK);
 
-    }
     // reset password
     @PostMapping("/resetpassword")
     public ResponseEntity<?> resetpassword(@RequestBody ResetPasswordRequest request,@CurrentUser User user){

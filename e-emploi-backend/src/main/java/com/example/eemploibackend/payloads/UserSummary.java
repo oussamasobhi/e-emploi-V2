@@ -16,6 +16,7 @@ public class UserSummary {
     private String password;
     private String num_tel;
     private String CIN;
+    private String Role;
     private Byte[] photo_profil;
     private Date date_naissance;
     List<Adresse> adresses;

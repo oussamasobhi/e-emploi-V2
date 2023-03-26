@@ -41,8 +41,8 @@ private final SocieteService societeService;
             HttpStatus.ACCEPTED);
   }
   @DeleteMapping("/{id}/delete")
-  public ResponseEntity<?> deletesociete(@PathVariable(value = "id") Long id){
-        societeRepository.deleteById(id);
+  public ResponseEntity<?> deletesociete(@PathVariable(value = "id") Long id,@CurrentUser User user){
+        societeService.supprimersociete(id,user.getId());
     return new ResponseEntity(new ApiResponse(true, "societe supprimé"),
             HttpStatus.ACCEPTED);
   }

@@ -59,22 +59,7 @@ public class UserService {
                             "utilisateur modifie bien modifiée"), HttpStatus.ACCEPTED);
                 }        );
     }
-    public void ajouteradresse(AddressRequest request,Long id){
-        User user=userRepository.findUserById(id);
-        Adresse adresse= Adresse.builder()
-                .pays(request.getPays())
-                .ville(request.getVille())
-                .user(user)
-                .build();
-        adresseRepository.save(adresse);
-    }
-    public void modifieradresse(AddressRequest request,Long idaddr){
-          Adresse adr=adresseRepository.findAdresseById(idaddr);
-          adr.setVille(request.getVille());
-          adr.setPays(request.getPays());
-          adr.setLibelle_adr(request.getLib_addre());
-          adresseRepository.save(adr);
-    }
+
     public Boolean resetpassword(ResetPasswordRequest request,Long id){
         User user=userRepository.findUserById(id);
        if(passwordEncoder.matches(request.getOldpassword(), user.getPassword())){
@@ -97,6 +82,7 @@ public class UserService {
         userSummary.setNum_tel(user.getNum_tel());
         userSummary.setDate_naissance(user.getDate_naissance());
         userSummary.setPhoto_profil(user.getPhoto_profil());
+        userSummary.setRole(user.getRole().getName().name());
     return userSummary;
     }
 }
