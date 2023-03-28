@@ -12,14 +12,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "sou_categorie")
-public class SousCategorieAnnonce {
+@Table(name = "categorie_3_annonce")
+public class Categorie_3_Annonce {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nom_sous_categorie;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_categorie", nullable = false)
+    @JoinColumn(name = "id_categorie_2", nullable = false)
     @JsonIgnore
-    private CategorieAnnonce categorieAnnonce;
+    private Categorie_2_Annonce categorie2Annonce;
 }
