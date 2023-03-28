@@ -22,9 +22,7 @@ public class CompetenceService {
                 .duree_exp(request.getDuree_exp())
                 .build();
     User user=userRepository.findUserById(iduser);
-    user.getCompetences().add(competence);
     competence.setUser(user);
-    userRepository.save(user);
     competenceRepository.save(competence);
 }
 public void modifiercompetence(CompetenceRequest request,Long idcomp){
