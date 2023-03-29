@@ -19,7 +19,6 @@ export const initialUser = {
   nom: "",
   prenom: "",
   email: "",
-  role: {
-    name: "",
-  },
+  role: "",
+  adresses: [{ pays: "", ville: "", libelle_adr: "" }],
 };

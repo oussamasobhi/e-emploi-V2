@@ -95,3 +95,49 @@ export function deleteUserByUsername(username) {
     method: "DELETE"
   });
 }
+
+export function addAddress(address){
+  return request({
+    url: API_BASE_URL + "/users/address/add",
+    method: "POST",
+    body: JSON.stringify(address)
+  })
+}
+
+export function editAddress(address, id){
+  return request({
+    url: API_BASE_URL + "/users/address/edit/"+id,
+    method: "PUT",
+    body: JSON.stringify(address)
+  })
+}
+
+export function deleteAddress(id){
+  return request({
+    url: API_BASE_URL+"/users/address/delete/"+id,
+    method: "DELETE"
+  })
+}
+
+export function addSociete(societe){
+  return request({
+    url: API_BASE_URL + "/societe/create",
+    method: "POST",
+    body: JSON.stringify(societe)
+  });
+}
+
+export function deleteSociete(id){
+  return request({
+    url: API_BASE_URL + "/societe/"+id+"/delete",
+    method: "DELETE"
+  });
+}
+
+export function updateSociete(id, societe){
+  return request({
+    url: API_BASE_URL + "/societe/"+id+"/edit",
+    method: "PUT",
+    body: JSON.stringify(societe)
+  });
+}

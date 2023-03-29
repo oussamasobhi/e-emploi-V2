@@ -114,6 +114,10 @@ function App() {
     });
     setTimeout(() => setShowNotification(false), 2000);
   };
+  if(!currentUser.role){
+    currentUser.role = {name:"ROLE_STANDARD"};
+  }
+
 
   return (
     <>
@@ -195,7 +199,7 @@ function App() {
             <Route
               path="dashboard"
               element={
-                currentUser.role.name === "ROLE_ADMIN" ? (
+                currentUser.role === "ROLE_ADMIN" ? (
                   <Dashboard notify={notify}/>
                 ) : (
                   <Navigate to="/" />

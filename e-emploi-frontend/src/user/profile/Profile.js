@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Navigate } from "react-router";
-import { Tab } from "@headlessui/react";
 import EditProfil from "./EditProfil";
 import { getCurrentUser } from "../../util/APIUtils";
 import { useNavigate } from "react-router";
@@ -8,6 +7,10 @@ import DeleteFromProfil from "./DeleteFromProfil";
 import { Popover } from "@headlessui/react";
 import Pdp from "../../public/image/logo_itako_bsc.jpg";
 import UpdateProfilePict from "./UpdateProfilePict";
+import AddAddress from "./address/AddAddress";
+import Address from "./address/Address";
+import Societe from "../societe/Societe";
+import AddSociete from "../societe/AddSociete";
 
 const Profile = ({
   setIsAuthenticated,
@@ -21,6 +24,8 @@ const Profile = ({
   const navigate = useNavigate();
   const [profilePict, setProfilePict] = useState(null);
   const [isOpenProfilePict, setIsOpenProfilePict] = useState(false);
+  const [isOpenAddAddress, setIsOpenAddAddress] = useState(false);
+  const [isOpenAddSociete, setIsOpenAddSociete] = useState(false);
 
   useEffect(() => {
     const refreshUser = async () => {
@@ -54,6 +59,25 @@ const Profile = ({
   }
   function openProfilePictPanel() {
     setIsOpenProfilePict(true);
+  }
+
+  function openAddAddress() {
+    setIsOpenAddAddress(true);
+  }
+  function closeAddAddress() {
+    setIsOpenAddAddress(false);
+  }
+  const ajouterAddresse = () => {
+    openAddAddress();
+  };
+  function openAddSociete() {
+    setIsOpenAddSociete(true);
+  }
+  function closeAddSociete() {
+    setIsOpenAddSociete(false);
+  }
+  const ajouterSociete = () => {
+    openAddSociete();
   }
 
   return localStorage.getItem("token") ? (
@@ -123,98 +147,110 @@ const Profile = ({
             </div>
           </div>
         </div>
-        <div className="container w-2/3 py-4">
-          <div className="border bg-white rounded-md px-3 pt-4 pb-8 w-10/12">
-            <div className="pb-12 border-b">
-              <div className="flex justify-between  w-full">
-                <h1 className="text-3xl pb-6">
-                  {currentUser.prenom} {currentUser.nom}
-                </h1>
-                {currentUser.role.name === "ROLE_ADMIN" && (
-                  <button
-                    className="mb-4 px-3 bg-blue-700 text-white text-sm rounded-md border-black"
-                    onClick={goToDashboard}
-                  >
-                    Dashboard
-                  </button>
-                )}
+        <div className="w-2/3 py-4 overflow-y-auto">
+          <div className="container ">
+            <div className="border bg-white rounded-md px-3 pt-4 pb-8 w-10/12">
+              <div className="pb-12 ">
+                <div className="flex justify-between  w-full">
+                  <h1 className="text-3xl pb-6">
+                    {currentUser.prenom} {currentUser.nom}
+                  </h1>
+                  {currentUser.role === "ROLE_ADMIN" && (
+                    <button
+                      className="mb-4 px-3 bg-blue-700 text-white text-sm rounded-md border-black"
+                      onClick={goToDashboard}
+                    >
+                      Dashboard
+                    </button>
+                  )}
+                </div>
 
-                <button
-                  className="mb-4 px-3 bg-blue-700 text-white text-sm rounded-md border-black"
-                  onClick={editProfil}
-                >
-                  Modifier votre profil
-                </button>
-              </div>
+                <div className="border-b">
+                  <h2 className="uppercase py-3 text-gray-700 font-poppins">
+                    INFORMATIONS ET CONTACT
+                  </h2>
+                  <table>
+                    <tbody>
+                      <tr className="h-12">
+                        <td>Nom d'utilisateur: </td>
+                        <td className="pl-20">{currentUser.username}</td>
+                      </tr>
+                      <tr className="h-12">
+                        <td>Email : </td>
+                        <td className="pl-20 text-indigo-600 hover:text-indigo-800 hover:cursor-pointer">
+                          {currentUser.email}
+                        </td>
+                      </tr>
+                      <tr className="h-12">
+                        <td>Telephone : </td>
+                        <td className="pl-20">{currentUser.num_tel}</td>
+                      </tr>
+                      <tr className="h-12">
+                        <td>CIN : </td>
+                        <td className="pl-20">{currentUser.cin}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div className="flex justify-around mb-4">
+                    {!(currentUser.role === "ROLE_ADMIN") && (
+                      <button
+                        type="button"
+                        className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                        onClick={deleteProfil}
+                      >
+                        Supprimer votre compte
+                      </button>
+                    )}
+                    <button
+                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      onClick={editProfil}
+                    >
+                      Modifier
+                    </button>
+                  </div>
+                </div>
+                <div className="border-b">
+                  <div className="flex justify-between">
+                    <h2 className="uppercase py-3 text-gray-700 font-poppins">
+                      ADDRESSES
+                    </h2>
+                    <button
+                      className="inline-flex my-2 justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      onClick={ajouterAddresse}
+                    >
+                      Ajouter
+                    </button>
+                  </div>
 
-              <div>
-                <h2 className="uppercase py-3 text-gray-700 font-poppins">
-                  Informations et contact
-                </h2>
-                <table>
-                  <tbody>
-                    <tr className="h-12">
-                      <td>Nom d'utilisateur: </td>
-                      <td className="pl-20">{currentUser.username}</td>
-                    </tr>
-                    <tr className="h-12">
-                      <td>Email : </td>
-                      <td className="pl-20 text-indigo-600 hover:text-indigo-800 hover:cursor-pointer">
-                        {currentUser.email}
-                      </td>
-                    </tr>
-                    <tr className="h-12">
-                      <td>Telephone : </td>
-                      <td className="pl-20">{currentUser.num_tel}</td>
-                    </tr>
-                    <tr className="h-12">
-                      <td>CIN : </td>
-                      <td className="pl-20">{currentUser.cin}</td>
-                    </tr>
-                    {/*<tr>
-                    <td>Adresse : </td>
-                    <td>{currentUser.adresse}</td>
-                  </tr>*/}
-                  </tbody>
-                </table>
+                  {currentUser.adresses?.map((address, index) => (
+                    <Address
+                      address={address}
+                      key={index}
+                      notify={notify}
+                      setCurrentUser={setCurrentUser}
+                    />
+                  ))}
+                </div>
+                <div className="border-b">
+                  <div className="flex justify-between">
+                    <h2 className="uppercase py-3 text-gray-700 font-poppins">
+                      SOCIETES
+                    </h2>
+                    {!currentUser.societe && (
+                      <button
+                        className="inline-flex my-2 justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                        onClick={ajouterSociete}
+                      >
+                        Ajouter
+                      </button>
+                    )}
+                  </div>
+
+                  {currentUser.societe && (
+                    <Societe societe={currentUser.societe} setCurrentUser={setCurrentUser} notify={notify} />
+                  )}
+                </div>
               </div>
-              {!(currentUser.role.name === "ROLE_ADMIN") && (
-                <button
-                  type="button"
-                  className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                  onClick={deleteProfil}
-                >
-                  Supprimer votre compte
-                </button>
-              )}
-            </div>
-            <div className="w-full">
-              <Tab.Group>
-                <Tab.List className="flex justify-center bg-gray-300 text-gray-600 text-xl font-semibold">
-                  <Tab
-                    className={({ selected }) =>
-                      selected
-                        ? "h-full p-2 focus:outline-none bg-white"
-                        : "h-full p-2 focus:outline-none"
-                    }
-                  >
-                    Services
-                  </Tab>
-                  <Tab
-                    className={({ selected }) =>
-                      selected
-                        ? "h-full p-2 focus:outline-none bg-white"
-                        : "h-full p-2 focus:outline-none "
-                    }
-                  >
-                    Offres d'emploi
-                  </Tab>
-                </Tab.List>
-                <Tab.Panels>
-                  <Tab.Panel>Les services que vous proposez ici</Tab.Panel>
-                  <Tab.Panel>Vos offres d'emplois ici</Tab.Panel>
-                </Tab.Panels>
-              </Tab.Group>
             </div>
           </div>
         </div>
@@ -236,6 +272,13 @@ const Profile = ({
         open={isOpenProfilePict}
         closeModal={closeProfilePictPanel}
       />
+      <AddAddress
+        open={isOpenAddAddress}
+        closeModal={closeAddAddress}
+        notify={notify}
+        setCurrentUser={setCurrentUser}
+      />
+      <AddSociete open={isOpenAddSociete} closeModal={closeAddSociete} notify={notify} setCurrentUser={setCurrentUser}  />
     </>
   ) : (
     <Navigate to="/" />

@@ -111,17 +111,17 @@ const EditUser = ({ selectedUser, refreshList, setIsOpen, isOpen, notify }) => {
                     onChange={(e) => handleChange(e)}
                     className="h-10 w-full border mt-2 px-2 py-2"
                   />
-                  {/*<label className="block text-gray-600 text-sm font-normal">
-                    Nom d'utilisateur:
+                  <label className="block text-gray-600 text-sm font-normal">
+                    Mot de passse :
                   </label>
                   <input
                     type="text"
-                    name="username"
-                    value={user.username}
+                    name="password"
+                    value={user.password}
                     onChange={(e) => handleChange(e)}
                     className="h-10 w-full border mt-2 px-2 py-2"
                   />
-                  <label className="block text-gray-600 text-sm font-normal">
+                  {/*<label className="block text-gray-600 text-sm font-normal">
                     Email :
                   </label>
                   <input

@@ -1,34 +1,24 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, {Fragment} from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { initialUser } from "../../constant";
-import { deleteUserByUsername } from "../../util/APIUtils";
+import { deleteAddress, getCurrentUser } from "../../../util/APIUtils";
 
-const DeleteUser = ({ userToDelete, refreshList, setIsOpen, isOpen, notify }) => {
-  const [user, setUser] = useState(initialUser);
-  useEffect(() => {
-    setUser(userToDelete);
-  }, [userToDelete]);
+const DeleteAddress = ({open, closeModal, address, notify, setCurrentUser}) => {
 
-  const reset = () => {
-    setUser(userToDelete);
-    setIsOpen(false);
-    refreshList();
-  };
-
-  const deleteUser = async (e) => {
-    e.preventDefault();
-    try {
-      await deleteUserByUsername(user.username);
-      notify("Notification","Utilisateur supprimé avec succès","success");
-    } catch (error) {
-      console.log(error);
+    const removeAddress = async () => {
+        try{
+            await deleteAddress(address.id);
+            const res = await getCurrentUser();
+            setCurrentUser(res);
+            closeModal();
+            notify("Notification","Addresse supprimé avec succès !","success");
+        }catch(error){
+            console.log(error);
+        }
     }
-    reset();
-  };
 
   return (
-    <Transition appear show={isOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-8" onClose={reset}>
+    <Transition appear show={open} as={Fragment}>
+      <Dialog as="div" className="relative z-8" onClose={closeModal}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -42,7 +32,7 @@ const DeleteUser = ({ userToDelete, refreshList, setIsOpen, isOpen, notify }) =>
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4 text-center">
+          <div className="flex items-center justify-center p-4 text-center">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -57,23 +47,28 @@ const DeleteUser = ({ userToDelete, refreshList, setIsOpen, isOpen, notify }) =>
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900"
                 >
-                  Modificaton d'utilisateur
+                  Suppression d'addresse
                 </Dialog.Title>
-                <div>Voulez-vous supprimer cet utilisateur?</div>
-                <div className="mt-4">
+                <div className="mt-3">
+                  <p className="text-lg">
+                    Voulez-vous vraiment supprimer cette addresse?
+                  </p>
+                </div>
+
+                <div className="mt-4 w-full flex justify-start">
                   <button
                     type="button"
                     className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                    onClick={reset}
-                  >
-                    Annuler
-                  </button>
-                  <button
-                    type="submit"
-                    className="inline-flex justify-center rounded-md border border-transparent bg-green-100 px-4 py-2 text-sm font-medium text-green-600 hover:bg-green-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2"
-                    onClick={deleteUser}
+                    onClick={removeAddress}
                   >
                     Supprimer
+                  </button>
+                  <button
+                    type="button"
+                    className="inline-flex mx-16 justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                    onClick={closeModal}
+                  >
+                    Annuler
                   </button>
                 </div>
               </Dialog.Panel>
@@ -85,4 +80,4 @@ const DeleteUser = ({ userToDelete, refreshList, setIsOpen, isOpen, notify }) =>
   );
 };
 
-export default DeleteUser;
+export default DeleteAddress;

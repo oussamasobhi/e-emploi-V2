@@ -1,60 +1,38 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { getCurrentUser, updateProfil } from "../../util/APIUtils";
-import { initialUser } from "../../constant";
+import { addSociete, getCurrentUser } from "../../util/APIUtils";
 
-const EditProfil = ({ open, username, setCurrentUser, closeModal }) => {
-  const [user, setUser] = useState(initialUser);
-  const [storedUser, setStoredUser] = useState(initialUser);
-  const [isOpen, setIsOpen] = useState(false);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await getCurrentUser();
-        setUser(res);
-        setStoredUser(res);
-        setIsOpen(true);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    if (username) {
-      fetchData();
-    }
-  }, [username]);
-
-  /*useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await getCurrentUser();
-        setUser(res);
-        setIsOpen(true);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    if (username) {
-      fetchData();
-    }
-  }, [username]);*/
-
+const AddSociete = ({ open, closeModal, setCurrentUser, notify }) => {
+  const [societe, setSociete] = useState({
+    nom_societe: "",
+    num_tel: "",
+    siteweb: "",
+    num_patente: "",
+  });
   const handleChange = (event) => {
     const value = event.target.value;
-    setUser({ ...user, [event.target.name]: value });
+    setSociete({ ...societe, [event.target.name]: value });
   };
-
   const reset = (e) => {
     e.preventDefault();
+    setSociete({
+      nom_societe: "",
+      num_tel: "",
+      siteweb: "",
+      num_patente: "",
+    });
     closeModal();
   };
-
-  const editProfil = async (e) => {
-    try {
-      await updateProfil(user);
-      setCurrentUser(user);
-      reset(e);
-    } catch (error) {
-      console.log(error);
+  const ajouterSociete = async (e) => {
+    e.preventDefault();
+    try{
+        await addSociete(societe);
+        const _user = await getCurrentUser();
+        setCurrentUser(_user);
+        reset(e);
+        notify("Notification","Société ajoutée avec succès !","success");
+    }catch(error){
+        console.log(error);
     }
   };
 
@@ -84,87 +62,57 @@ const EditProfil = ({ open, username, setCurrentUser, closeModal }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-xl transform overflow-hidden rounded-md bg-white p-6 text-left h-screen mt-32 align-middle border transition-all">
+              <Dialog.Panel className="w-full max-w-xl transform overflow-hidden rounded-md bg-white p-6 text-left mt-14 align-middle border transition-all">
                 <Dialog.Title
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900"
                 >
-                  Modificaton d'utilisateur
+                  Ajout de la société
                 </Dialog.Title>
                 <div className="mt-2">
                   <label className="block text-gray-600 text-sm font-normal">
-                    Nom :
+                    Nom de la société :
                   </label>
                   <input
                     type="text"
-                    name="nom"
-                    value={user.nom}
+                    name="nom_societe"
+                    value={societe.nom_societe}
                     onChange={(e) => handleChange(e)}
                     className="h-10 w-full border mt-2 px-2 py-2"
                   />
-                  <label className="block text-gray-600 text-sm font-normal">
-                    Prenom :
-                  </label>
-                  <input
-                    type="text"
-                    name="prenom"
-                    value={user.prenom}
-                    onChange={(e) => handleChange(e)}
-                    className="h-10 w-full border mt-2 px-2 py-2"
-                  />
-                  <label className="block text-gray-600 text-sm font-normal">
-                    Nom d'utilisateur:
-                  </label>
-                  <input
-                    type="text"
-                    name="username"
-                    value={user.username}
-                    onChange={(e) => handleChange(e)}
-                    className="h-10 w-full border mt-2 px-2 py-2"
-                  />
-                  <label className="block text-gray-600 text-sm font-normal">
-                    Email :
-                  </label>
-                  <input
-                    type="text"
-                    name="email"
-                    value={user.email}
-                    onChange={(e) => handleChange(e)}
-                    className="h-10 w-full border mt-2 px-2 py-2"
-                  />
-                  {/*<label className="block text-gray-600 text-sm font-normal">
-                    Adresse :
-                  </label>
-                  <input
-                    type="text"
-                    name="adresse"
-                    value={user.adresse}
-                    onChange={(e) => handleChange(e)}
-                    className="h-10 w-full border mt-2 px-2 py-2 focus:outline-none"
-  />*/}
+
                   <label className="block text-gray-600 text-sm font-normal">
                     Téléphone :
                   </label>
                   <input
                     type="text"
                     name="num_tel"
-                    value={user.num_tel}
+                    value={societe.num_tel}
                     onChange={(e) => handleChange(e)}
                     className="h-10 w-full border mt-2 px-2 py-2"
                   />
                   <label className="block text-gray-600 text-sm font-normal">
-                    CIN :
+                    Site Web :
                   </label>
                   <input
                     type="text"
-                    name="cin"
-                    value={user.cin}
+                    name="siteweb"
+                    value={societe.siteweb}
+                    onChange={(e) => handleChange(e)}
+                    className="h-10 w-full border mt-2 px-2 py-2"
+                  />
+                  <label className="block text-gray-600 text-sm font-normal">
+                    Numéro patente:
+                  </label>
+                  <input
+                    type="text"
+                    name="num_patente"
+                    value={societe.num_patente}
                     onChange={(e) => handleChange(e)}
                     className="h-10 w-full border mt-2 px-2 py-2"
                   />
                 </div>
-
-                <div className="mt-4">
+                <div className="mt-4 flex justify-evenly">
                   <button
                     type="button"
                     className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
@@ -175,7 +123,7 @@ const EditProfil = ({ open, username, setCurrentUser, closeModal }) => {
                   <button
                     type="button"
                     className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                    onClick={editProfil}
+                    onClick={ajouterSociete}
                   >
                     Enregistrer
                   </button>
@@ -189,4 +137,4 @@ const EditProfil = ({ open, username, setCurrentUser, closeModal }) => {
   );
 };
 
-export default EditProfil;
+export default AddSociete;
