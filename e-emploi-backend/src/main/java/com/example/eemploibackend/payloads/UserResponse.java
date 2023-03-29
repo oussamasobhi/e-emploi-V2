@@ -1,6 +1,7 @@
 package com.example.eemploibackend.payloads;
 
 import com.example.eemploibackend.model.Adresse;
+import com.example.eemploibackend.model.Adresse_societe;
 import com.example.eemploibackend.model.Competence;
 import com.example.eemploibackend.model.Societe;
 import lombok.Data;
@@ -23,4 +24,5 @@ public class UserResponse {
     private List<Adresse> adresses;
     private Societe societe;
     private List<Competence> competences;
+    private List<Adresse_societe> adresseSocietes;
 }

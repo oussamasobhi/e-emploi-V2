@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,5 +24,7 @@ public class Societe {
     private String siteweb;
     private String num_patente;
     private Byte[] justif_image;
+    @OneToMany(mappedBy = "societe",cascade = CascadeType.ALL)
+    private List<Adresse_societe> adresses_societes;
 
 }
