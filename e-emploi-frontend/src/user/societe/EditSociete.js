@@ -4,9 +4,10 @@ import { updateSociete, getCurrentUser } from "../../util/APIUtils";
 
 const EditSociete = ({ open, closeModal, notify, setCurrentUser, societe }) => {
   const [newSociete, setNewSociete] = useState(societe);
+
   const handleChange = (event) => {
     const value = event.target.value;
-    setNewSociete({ ...societe, [event.target.name]: value });
+    setNewSociete({ ...newSociete, [event.target.name]: value });
   };
   const reset = (e) => {
     e.preventDefault();
@@ -26,7 +27,7 @@ const EditSociete = ({ open, closeModal, notify, setCurrentUser, societe }) => {
 
   return (
     <Transition appear show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-8" onClose={closeModal}>
+      <Dialog as="div" className="relative z-8" onClose={reset}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
