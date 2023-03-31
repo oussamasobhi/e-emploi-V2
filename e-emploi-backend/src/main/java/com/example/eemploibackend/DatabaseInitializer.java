@@ -18,9 +18,8 @@ public class DatabaseInitializer implements ApplicationRunner {
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
     private final Categorie_2_Annonce_Repository categorie2AnnonceRepository;
-    private final Categorie_3_AnnonceRepository categorie3AnnonceRepository;
+
     private final BCryptPasswordEncoder encoder;
-    private final OffreEmploiRepository offreEmploiRepository;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -48,16 +47,20 @@ public class DatabaseInitializer implements ApplicationRunner {
         Categorie_2_Annonce servicenettoyage= Categorie_2_Annonce.builder()
                 .categorieAnnonce(domicile)
                 .nom_sous_categorie("Service nettoyage")
+                .duree_moy_realisation(4)
+                .tarif_moy_categorie(300)
                 .build();
         categorie2AnnonceRepository.save(servicenettoyage);
         Categorie_2_Annonce serviceartisans= Categorie_2_Annonce.builder()
                 .categorieAnnonce(domicile)
                 .nom_sous_categorie("Service artisans")
+                .duree_moy_realisation(3)
+                .tarif_moy_categorie(200)
                 .build();
         categorie2AnnonceRepository.save(serviceartisans);
-        //categorie: Emplois et competences
+        //categorie: Emplois et services
         CategorieAnnonce emplois_comp= CategorieAnnonce.builder()
-                .nom_categorie("Emplois et competences")
+                .nom_categorie("Emplois et services")
                 .build();
         categoryRepository.save(emplois_comp);
         Categorie_2_Annonce offresemploi= Categorie_2_Annonce.builder()
@@ -67,7 +70,7 @@ public class DatabaseInitializer implements ApplicationRunner {
         categorie2AnnonceRepository.save(offresemploi);
         Categorie_2_Annonce services= Categorie_2_Annonce.builder()
                 .categorieAnnonce(emplois_comp)
-                .nom_sous_categorie("services et prestations")
+                .nom_sous_categorie("services")
                 .build();
         categorie2AnnonceRepository.save(services);
         //categorie 3 : PRODUITS
@@ -75,10 +78,5 @@ public class DatabaseInitializer implements ApplicationRunner {
                 .nom_categorie("produits")
                 .build();
         categoryRepository.save(produit);
-        Categorie_2_Annonce produits= Categorie_2_Annonce.builder()
-                .categorieAnnonce(produit)
-                .nom_sous_categorie("produits-Recherche")
-                .build();
-        categorie2AnnonceRepository.save(produits);
     }
 }

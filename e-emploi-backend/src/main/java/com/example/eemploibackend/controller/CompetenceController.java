@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/users/competence")
@@ -31,5 +32,9 @@ public class CompetenceController {
     public ResponseEntity<?> supprimercompetence(@PathVariable(value="id") Long idcomp){
         competenceService.supprimercompetence(idcomp);
         return new ResponseEntity(new ApiResponse(true,"competence supprimé"),HttpStatus.ACCEPTED);
+    }
+    @GetMapping("/")
+    public List<Competence> getcompetencebyuser(@CurrentUser User user){
+             return competenceService.getcomptencesbyuserid(user.getId());
     }
 }

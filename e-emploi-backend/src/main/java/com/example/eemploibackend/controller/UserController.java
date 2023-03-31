@@ -28,7 +28,7 @@ public class UserController {
     private final AdresseRepository adresseRepository;
 
     @GetMapping("/user/me")
-    @PreAuthorize("hasAnyAuthority('ROLE_STANDARD','ROLE_CONDIDAT','ROLE_ADMIN','ROLE_Pro')")
+ //   @PreAuthorize("hasAnyAuthority('ROLE_STANDARD','ROLE_CONDIDAT','ROLE_ADMIN','ROLE_Pro')")
     public UserSummary getCurrentUser(@CurrentUser User currentUser) {
 
         User user = userRepository.findByUsername(currentUser.getUsername())

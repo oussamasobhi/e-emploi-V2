@@ -18,6 +18,8 @@ public class Categorie_2_Annonce {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nom_sous_categorie;
+    private double tarif_moy_categorie;
+    private double duree_moy_realisation;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_categorie", nullable = false)
     @JsonIgnore

@@ -53,17 +53,26 @@ public class User extends DateAudit implements UserDetails{
     private Societe societe;
     @OneToOne
     private Role role;
-    public User(Long id, String nom,String prenom, String username, String email, String password,Role role,String CIN) {
-        super();
-        this.id = id;
-        this.nom = nom;
-        this.prenom=prenom;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.role=role;
-        this.reviews=new HashSet<>();
-    }
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            },
+            mappedBy = "condidats")
+    @JsonIgnore
+    private List<Annonce> annonces ;
+
+//    public User(Long id, String nom,String prenom, String username, String email, String password,Role role,String CIN) {
+//        super();
+//        this.id = id;
+//        this.nom = nom;
+//        this.prenom=prenom;
+//        this.username = username;
+//        this.email = email;
+//        this.password = password;
+//        this.role=role;
+//        this.reviews=new HashSet<>();
+//    }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities= List.of( new SimpleGrantedAuthority(this.getRole().getName().name()));

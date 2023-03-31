@@ -8,6 +8,8 @@ import com.example.eemploibackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class CompetenceService {
@@ -36,5 +38,8 @@ public void modifiercompetence(CompetenceRequest request,Long idcomp){
 }
 public void supprimercompetence(Long idcomp){
         competenceRepository.deleteById(idcomp);
+}
+public List<Competence> getcomptencesbyuserid(Long iduser){
+        return competenceRepository.findAllByUserId(iduser);
 }
 }

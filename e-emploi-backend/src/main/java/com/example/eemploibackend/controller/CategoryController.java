@@ -20,7 +20,7 @@ import java.util.List;
 @RequestMapping("/category")
 public class CategoryController {
     private final CategoryService categoryService;
-    private final CategoryRepository categoryRepository;
+
 
     @GetMapping("/")
     public List<CategorieAnnonce> getallcategories(){
