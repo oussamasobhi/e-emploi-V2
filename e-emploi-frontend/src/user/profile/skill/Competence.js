@@ -1,11 +1,15 @@
 import { Typography, Button, Modal } from "antd";
 import React, { useState } from "react";
 import { deleteSkill } from "../../../util/APIUtils";
+import EditCompetence from "./EditCompetence";
 
 const Competence = ({ competence, refresh, notify }) => {
   const [isOpenDelete, setIsOpenDelete] = useState(false);
-  const updateCompetence = (e, competence) => {};
-  const removeCompetence = (e, competence) => {
+  const [isOpenEdit, setIsOpenEdit] = useState(false);
+  const updateCompetence = () => {
+    setIsOpenEdit(true);
+  };
+  const removeCompetence = () => {
     openModal();
   };
   function openModal() {
@@ -13,6 +17,9 @@ const Competence = ({ competence, refresh, notify }) => {
   }
   function closeModal() {
     setIsOpenDelete(false);
+  }
+  function closeEdit(){
+    setIsOpenEdit(false);
   }
   const supprimerCompetence = async () => {
     try {
@@ -62,6 +69,8 @@ const Competence = ({ competence, refresh, notify }) => {
           <span className="text-semibold uppercase"> {competence.titre}</span> ?
         </p>
       </Modal>
+      <EditCompetence competence={competence} open={isOpenEdit} refresh={refresh} closeModal={closeEdit}
+      notify={notify}  />
     </>
   );
 };

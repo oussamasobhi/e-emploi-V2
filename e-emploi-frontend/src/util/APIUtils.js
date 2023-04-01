@@ -163,3 +163,34 @@ export function deleteSkill(id){
     method: "DELETE"
   })
 }
+
+export function updateSkill(id, skill){
+  return request({
+    url: API_BASE_URL+"/users/competence/edit/"+id,
+    method: "PUT",
+    body: JSON.stringify(skill)
+  });
+}
+
+export function updateSocieteAdress(id, address){
+  return request({
+    url: API_BASE_URL+"/societe/"+id+"/address/edit",
+    method: "PUT",
+    body: JSON.stringify(address)
+  })
+}
+
+export function deleteSocieteAdress(id){
+  return request({
+    url: API_BASE_URL+"/societe/"+id+"/address/delete",
+    method: "DELETE"
+  })
+}
+
+export function newASocieteAddress(id, address){
+return request({
+  url: API_BASE_URL+"/societe/"+id+"/address/create",
+  method: "POST",
+  body: JSON.stringify(address)
+})
+}

@@ -21,4 +21,7 @@ export const initialUser = {
   email: "",
   role: "",
   adresses: [{ pays: "", ville: "", libelle_adr: "" }],
+  date_naissance: ""
 };
+
+export const dateFormat = 'YYYY-MM-DD';

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { addSkill, getSkills } from "../../util/APIUtils";
 import { Button, Typography } from "antd";
 import Competence from "./skill/Competence";
-import AddCompetence from "./address/AddCompetence";
+import AddCompetence from "./skill/AddCompetence";
 
 const CompetencesPage = ({ notify }) => {
   const [competences, setCompetences] = useState([{}]);

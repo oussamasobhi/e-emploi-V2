@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Typography, Button } from "antd";
+import dayjs from "dayjs";
 
 const PersonalInfoPage = ({ currentUser }) => {
   return (
@@ -28,6 +29,10 @@ const PersonalInfoPage = ({ currentUser }) => {
             <tr>
               <td>CIN : </td>
               <td className="pl-20">{currentUser.cin}</td>
+            </tr>
+            <tr>
+              <td>Date de naissance : </td>
+              <td className="pl-20">{dayjs(currentUser.date_naissance).format("DD MMMM YYYY")}</td>
             </tr>
           </tbody>
         </table>
