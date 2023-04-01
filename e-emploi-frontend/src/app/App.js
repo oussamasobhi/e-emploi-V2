@@ -114,10 +114,8 @@ function App() {
     });
     setTimeout(() => setShowNotification(false), 2000);
   };
-  if(!currentUser.role){
-    currentUser.role = {name:"ROLE_STANDARD"};
-  }
 
+ 
 
   return (
     <>
@@ -165,7 +163,7 @@ function App() {
             <Route
               path="signup"
               element={
-                isAuthenticated ? (
+                localStorage.getItem("token") ? (
                   <Navigate to="/" />
                 ) : (
                   <Signup onSignup={handleSignup} />
@@ -175,7 +173,9 @@ function App() {
             <Route
               path="login"
               element={
-                JSON.parse(localStorage.getItem("IS_AUTHENTICATED")) ? (
+                //JSON.parse(localStorage.getItem("IS_AUTHENTICATED")) ? (
+                //JSON.parse(localStorage.getItem("CURRENT_USER")).username.length <= 0 ? (
+                localStorage.getItem("token") ? (
                   <Navigate to="/" />
                 ) : (
                   <Login onLogin={handleLogin} />
@@ -183,7 +183,7 @@ function App() {
               }
             />
             <Route
-              path="/profile"
+              path="/profile/*"
               element={
                 <Profile
                   setIsAuthenticated={setIsAuthenticated}
@@ -194,13 +194,13 @@ function App() {
                 />
               }
             />
-            
+
             <Route path="forgotten" element={<ResetPassword />} />
             <Route
               path="dashboard"
               element={
                 currentUser.role === "ROLE_ADMIN" ? (
-                  <Dashboard notify={notify}/>
+                  <Dashboard notify={notify} />
                 ) : (
                   <Navigate to="/" />
                 )

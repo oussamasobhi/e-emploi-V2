@@ -6,7 +6,7 @@ import { initialUser } from "../../constant";
 const EditUser = ({ selectedUser, refreshList, setIsOpen, isOpen, notify }) => {
   const [user, setUser] = useState(initialUser);
   const [storedUser, setStoredUser] = useState(null);
- 
+
   useEffect(() => {
     const fetchData = async (username) => {
       try {
@@ -22,8 +22,6 @@ const EditUser = ({ selectedUser, refreshList, setIsOpen, isOpen, notify }) => {
       fetchData(selectedUser.username);
     }
   }, [setIsOpen, selectedUser]);
-  
-  
 
   const handleChange = (event) => {
     const value = event.target.value;
@@ -46,15 +44,14 @@ const EditUser = ({ selectedUser, refreshList, setIsOpen, isOpen, notify }) => {
   const editUser = async (e) => {
     e.preventDefault();
     try {
-      setUser({...user, password: storedUser.password});
+      setUser({ ...user, password: storedUser.password });
       await updateUser(selectedUser.username, user);
       reset();
-      notify("Notification","Utilisateur modifié avec succès","success");
+      notify("Notification", "Utilisateur modifié avec succès", "success");
     } catch (error) {
       console.log(error);
-      notify("Notification","Echec de suppression","error");
+      notify("Notification", "Echec de suppression", "error");
     }
-    
   };
 
   return (
@@ -111,36 +108,6 @@ const EditUser = ({ selectedUser, refreshList, setIsOpen, isOpen, notify }) => {
                     onChange={(e) => handleChange(e)}
                     className="h-10 w-full border mt-2 px-2 py-2"
                   />
-                  <label className="block text-gray-600 text-sm font-normal">
-                    Mot de passse :
-                  </label>
-                  <input
-                    type="text"
-                    name="password"
-                    value={user.password}
-                    onChange={(e) => handleChange(e)}
-                    className="h-10 w-full border mt-2 px-2 py-2"
-                  />
-                  {/*<label className="block text-gray-600 text-sm font-normal">
-                    Email :
-                  </label>
-                  <input
-                    type="text"
-                    name="email"
-                    value={user.email}
-                    onChange={(e) => handleChange(e)}
-                    className="h-10 w-full border mt-2 px-2 py-2"
-                  />
-                  <label className="block text-gray-600 text-sm font-normal">
-                    Adresse :
-                  </label>
-                  <input
-                    type="text"
-                    name="adresse"
-                    value={user.adresse}
-                    onChange={(e) => handleChange(e)}
-                    className="h-10 w-full border mt-2 px-2 py-2 focus:outline-none"
-                  />*/}
                   <label className="block text-gray-600 text-sm font-normal">
                     Téléphone :
                   </label>

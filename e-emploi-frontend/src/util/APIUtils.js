@@ -92,52 +92,74 @@ export function deleteCurrentUser() {
 export function deleteUserByUsername(username) {
   return request({
     url: API_BASE_URL + "/admin/users/delete/" + username,
-    method: "DELETE"
+    method: "DELETE",
   });
 }
 
-export function addAddress(address){
+export function addAddress(address) {
   return request({
     url: API_BASE_URL + "/users/address/add",
     method: "POST",
-    body: JSON.stringify(address)
-  })
+    body: JSON.stringify(address),
+  });
 }
 
-export function editAddress(address, id){
+export function editAddress(address, id) {
   return request({
-    url: API_BASE_URL + "/users/address/edit/"+id,
+    url: API_BASE_URL + "/users/address/edit/" + id,
     method: "PUT",
-    body: JSON.stringify(address)
-  })
+    body: JSON.stringify(address),
+  });
 }
 
-export function deleteAddress(id){
+export function deleteAddress(id) {
   return request({
-    url: API_BASE_URL+"/users/address/delete/"+id,
-    method: "DELETE"
-  })
+    url: API_BASE_URL + "/users/address/delete/" + id,
+    method: "DELETE",
+  });
 }
 
-export function addSociete(societe){
+export function addSociete(societe) {
   return request({
     url: API_BASE_URL + "/societe/create",
     method: "POST",
-    body: JSON.stringify(societe)
+    body: JSON.stringify(societe),
   });
 }
 
-export function deleteSociete(id){
+export function deleteSociete(id) {
   return request({
-    url: API_BASE_URL + "/societe/"+id+"/delete",
-    method: "DELETE"
+    url: API_BASE_URL + "/societe/" + id + "/delete",
+    method: "DELETE",
   });
 }
 
-export function updateSociete(id, societe){
+export function updateSociete(id, societe) {
   return request({
-    url: API_BASE_URL + "/societe/"+id+"/edit",
+    url: API_BASE_URL + "/societe/" + id + "/edit",
     method: "PUT",
-    body: JSON.stringify(societe)
+    body: JSON.stringify(societe),
   });
+}
+
+export function addSkill(skill) {
+  return request({
+    url: API_BASE_URL + "/users/competence/add",
+    method: "POST",
+    body: JSON.stringify(skill),
+  });
+}
+
+export function getSkills() {
+  return request({
+    url: API_BASE_URL + "/users/competence/",
+    method: "GET",
+  });
+}
+
+export function deleteSkill(id){
+  return request({
+    url: API_BASE_URL+ "/users/competence/delete/"+id,
+    method: "DELETE"
+  })
 }

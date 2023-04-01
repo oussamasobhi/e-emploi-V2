@@ -1,21 +1,26 @@
 import { Dialog, Transition } from "@headlessui/react";
+import { Button } from "antd";
 import { Fragment } from "react";
-import { deleteSociete, getCurrentUser } from "../../util/APIUtils";
+import { deleteSociete, getCurrentUser } from "../../../util/APIUtils";
 
-
-const DeleteSociete = ({open, closeModal, societe, notify, setCurrentUser}) => {
-
-    const removeSociete = async () => {
-        try{
-            await deleteSociete(societe.id);
-            const _user = await getCurrentUser();
-            setCurrentUser(_user);
-            closeModal();
-            notify("Notification","Société supprimée avec succès !","success");
-        }catch(error){
-            console.log(error);
-        }
+const DeleteSociete = ({
+  open,
+  closeModal,
+  societe,
+  notify,
+  setCurrentUser,
+}) => {
+  const removeSociete = async () => {
+    try {
+      await deleteSociete(societe.id);
+      const _user = await getCurrentUser();
+      setCurrentUser(_user);
+      closeModal();
+      notify("Notification", "Société supprimée avec succès !", "success");
+    } catch (error) {
+      console.log(error);
     }
+  };
 
   return (
     <Transition appear show={open} as={Fragment}>
@@ -57,20 +62,10 @@ const DeleteSociete = ({open, closeModal, societe, notify, setCurrentUser}) => {
                 </div>
 
                 <div className="mt-4 w-full flex justify-start">
-                  <button
-                    type="button"
-                    className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                    onClick={removeSociete}
-                  >
+                  <Button type="primary" onClick={removeSociete} className="mr-8" >
                     Supprimer
-                  </button>
-                  <button
-                    type="button"
-                    className="inline-flex mx-16 justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                    onClick={closeModal}
-                  >
-                    Annuler
-                  </button>
+                  </Button>
+                  <Button onClick={closeModal}>Annuler</Button>
                 </div>
               </Dialog.Panel>
             </Transition.Child>
@@ -78,7 +73,7 @@ const DeleteSociete = ({open, closeModal, societe, notify, setCurrentUser}) => {
         </div>
       </Dialog>
     </Transition>
-  )
-}
+  );
+};
 
-export default DeleteSociete
+export default DeleteSociete;

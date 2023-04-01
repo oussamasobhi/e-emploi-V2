@@ -7,8 +7,6 @@ const UpdateProfilePict = ({ open, closeModal }) => {
   function updateProfilPict() {
     closeModal();
   }
-  const [profilePict, setProfilePict] = useState(null);
-  const [isOpenProfilePict, setIsOpenProfilePict] = useState(false);
 
   return (
     <Transition appear show={open} as={Fragment}>

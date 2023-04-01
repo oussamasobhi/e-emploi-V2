@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import DeleteSociete from "./DeleteSociete";
 import EditSociete from "./EditSociete";
+import { Button } from "antd";
 
 const Societe = ({ societe, notify, setCurrentUser }) => {
   const [isOpenDeleteSociete, setIsOpenDeleteSociete] = useState(false);
@@ -49,20 +50,18 @@ const Societe = ({ societe, notify, setCurrentUser }) => {
           </tr>
           <tr className="h-12">
             <td>
-              <button
-                className="border text-white bg-blue-600 px-2"
+              <Button
                 onClick={(e) => updateSociete(e, societe)}
               >
                 Modifier
-              </button>
+              </Button>
             </td>
             <td className="pl-20">
-              <button
-                className="border text-white bg-blue-600 px-2"
-                onClick={(e) => removeSociete(e, societe)}
+              <Button
+                onClick={(e) => removeSociete(e, societe)} danger
               >
                 Supprimer
-              </button>
+              </Button>
             </td>
           </tr>
         </tbody>

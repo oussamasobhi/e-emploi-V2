@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import DeleteAddress from "./DeleteAddress";
 import EditAddress from "./EditAddress";
+import { Button, Typography } from "antd";
 
 const Address = ({ address, notify, setCurrentUser }) => {
   const [isOpenDeleteAddress, setIsOpenDeleteAddress] = useState(false);
   const [addressToDelete, setAddressToDelete] = useState(null);
   const [isOpenEditAddress, setIsOpenEditAddress] = useState(false);
-  const [addressToEdit, setAddressToEdit] = useState(false);
+  const [addressToEdit, setAddressToEdit] = useState(null);
 
   const openDeleteAddress = () => {
     setIsOpenDeleteAddress(true);
@@ -21,50 +22,34 @@ const Address = ({ address, notify, setCurrentUser }) => {
   };
   const openEditAddress = () => {
     setIsOpenEditAddress(true);
-  }
+  };
   const closeEditAddress = () => {
     setIsOpenEditAddress(false);
-  }
+  };
   const updateAddress = (e, address) => {
     e.preventDefault();
     setAddressToEdit(address);
     openEditAddress();
-  }
+  };
 
   return (
     <>
-      <table>
-        <tbody>
-          <tr className="h-12">
-            <td>Pays : </td>
-            <td className="pl-20">{address.pays}</td>
-          </tr>
-          <tr className="h-12">
-            <td>Ville : </td>
-            <td className="pl-20">{address.ville}</td>
-          </tr>
-          <tr className="h-12">
-            <td>Rue : </td>
-            <td className="pl-20">{address.libelle_adr}</td>
-          </tr>
-          <tr className="h-12">
-            <td>
-              <button className="border text-white bg-blue-600 px-2"
-              onClick={(e) => updateAddress(e, address)}>
-                Modifier
-              </button>
-            </td>
-            <td className="pl-20">
-              <button
-                className="border text-white bg-blue-600 px-2"
-                onClick={(e) => removeAddress(e, address)}
-              >
-                Supprimer
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div className="flex my-10 border-b-2">
+        <div className="flex-auto flex flex-col">
+          <Typography.Text strong className="text-lg">
+            {address.libelle_adr}
+            {address.lib_addre}
+          </Typography.Text>
+          <Typography.Text className="text-sm font-bold">
+            {address.ville}, {address.pays}
+          </Typography.Text>
+        </div>
+        <Button onClick={(e) => updateAddress(e, address)}>Modifier</Button>
+        <Button onClick={(e) => removeAddress(e, address)} danger className="ml-10">
+          Supprimer
+        </Button>
+      </div>
+
       <DeleteAddress
         open={isOpenDeleteAddress}
         closeModal={closeDeleteAddress}
@@ -73,11 +58,11 @@ const Address = ({ address, notify, setCurrentUser }) => {
         setCurrentUser={setCurrentUser}
       />
       <EditAddress
-      open={isOpenEditAddress}
-      closeModal={closeEditAddress}
-      address={address}
-      notify={notify}
-      setCurrentUser={setCurrentUser}
+        open={isOpenEditAddress}
+        closeModal={closeEditAddress}
+        address={address}
+        notify={notify}
+        setCurrentUser={setCurrentUser}
       />
     </>
   );
