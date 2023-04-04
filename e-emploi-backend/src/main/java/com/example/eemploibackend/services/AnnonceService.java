@@ -1,17 +1,20 @@
 package com.example.eemploibackend.services;
 
+import com.example.eemploibackend.exceptions.BadRequestException;
 import com.example.eemploibackend.model.*;
-import com.example.eemploibackend.payloads.AnnonceRequest;
+import com.example.eemploibackend.payloads.*;
 import com.example.eemploibackend.repository.AnnonceRepository;
 import com.example.eemploibackend.repository.AnnonceUserRepository;
 import com.example.eemploibackend.repository.Categorie_2_Annonce_Repository;
 import com.example.eemploibackend.repository.UserRepository;
 import io.jsonwebtoken.lang.Collections;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -60,6 +63,32 @@ public class AnnonceService {
             annonce.setTarif_final(request.getTarif_final());
             annonceRepository.save(annonce);
             return true;
+        }
+    }
+    public PagedResponse<AnnonceResponse> getaaonnoncesparcategorie(Long idcategory,int page,int size){
+        validatePageNumberAndSize(page, size);
+        // retrieve all annonces
+        Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "createdAt");
+        Page<Annonce> annonces = annonceRepository.findAll(pageable);
+        List<Annonce> result = annonces.getContent()
+                .stream()
+                .filter(i->i.getCategorie2Annonce().getId().equals(idcategory))
+                .collect(Collectors.toList());
+        Page<Annonce> annoncePage = new PageImpl<Annonce>(result);
+        List<AnnonceResponse> allannonces=annoncePage.map((annonce)->{
+                    return ModelMapper.mapannonceToAnnonceResponse(annonce);})
+                .getContent();
+
+        return new PagedResponse<>(allannonces, annoncePage.getNumber(),
+                annoncePage.getSize(), annoncePage.getTotalElements(), annoncePage.getTotalPages(), annoncePage.isLast());
+    }
+    private void validatePageNumberAndSize(int page, int size) {
+        if(page < 0) {
+            throw new BadRequestException("Page number cannot be less than zero.");
+        }
+
+        if(size > 50) {
+            throw new BadRequestException("Page size must not be greater than " + 50);
         }
     }
 }

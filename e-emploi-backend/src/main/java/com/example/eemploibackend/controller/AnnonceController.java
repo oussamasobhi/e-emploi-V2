@@ -3,7 +3,9 @@ package com.example.eemploibackend.controller;
 import com.example.eemploibackend.config.CurrentUser;
 import com.example.eemploibackend.model.User;
 import com.example.eemploibackend.payloads.AnnonceRequest;
+import com.example.eemploibackend.payloads.AnnonceResponse;
 import com.example.eemploibackend.payloads.ApiResponse;
+import com.example.eemploibackend.payloads.PagedResponse;
 import com.example.eemploibackend.repository.AnnonceRepository;
 import com.example.eemploibackend.services.AnnonceService;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +25,7 @@ public class AnnonceController {
                 HttpStatus.ACCEPTED);
     }
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> suprrimerannonce(@RequestParam(value = "id")Long id,
+    public ResponseEntity<?> suprrimerannonce(@PathVariable(value = "id")Long id,
                                               @CurrentUser User user){
         if (annonceService.supprimerannonce(id,user))
         return new ResponseEntity(new ApiResponse(true,"annonce supprimé"),
@@ -34,11 +36,18 @@ public class AnnonceController {
     @PutMapping("/edit/{id}")
     public ResponseEntity<?> modifierannonce(@RequestBody AnnonceRequest request,
                                              @CurrentUser User user,
-                                             @RequestParam(value = "id") Long id){
+                                             @PathVariable(value = "id") Long id){
         if (annonceService.modifierannonce(request,user,id))
             return new ResponseEntity(new ApiResponse(true,"annonce modifié"),
                     HttpStatus.ACCEPTED);
         return new ResponseEntity(new ApiResponse(false,"something goes wrong"),
                 HttpStatus.BAD_REQUEST);
+    }
+    @GetMapping("/category/{id}")
+    public PagedResponse<AnnonceResponse> getannoncespercaregory(@PathVariable(value = "id") Long id,
+                                                                 @RequestParam(value = "page", defaultValue ="0") int page,
+                                                                 @RequestParam(value = "size", defaultValue = "30") int size)
+    {
+     return annonceService.getaaonnoncesparcategorie(id,page,size);
     }
 }
