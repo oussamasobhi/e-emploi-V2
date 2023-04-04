@@ -8,6 +8,7 @@ import com.example.eemploibackend.exceptions.ResourceNotFoundException;
 import com.example.eemploibackend.model.RoleName;
 import com.example.eemploibackend.model.User;
 import com.example.eemploibackend.repository.AdresseRepository;
+import com.example.eemploibackend.repository.RoleRepository;
 import com.example.eemploibackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final AdresseRepository adresseRepository;
     private final PasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
 
     public void updateuser(Pro_RegisterRequest request,Long iduser){
 
@@ -49,10 +51,8 @@ public class UserService {
                              USER.setNum_tel(request.getNum_tel());
 
              if(!isafieldnull) {
-               Role role= Role.builder()
-                      .name(RoleName.ROLE_CONDIDAT)
-                       .build();
-                 USER.setRole(role);
+             Role userRole=roleRepository.findByName(RoleName.ROLE_CONDIDAT).orElseThrow(()->new AppException("USER ROLE NOT SET."));
+                USER.setRole(userRole);
              }
              userRepository.save(USER);
                     return new ResponseEntity(new ApiResponse(true,

@@ -15,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/users/competence")
 @RequiredArgsConstructor
+@CrossOrigin
 public class CompetenceController {
     private final CompetenceService competenceService;
     @PostMapping("/add")

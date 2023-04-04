@@ -19,6 +19,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("societe")
+@CrossOrigin
 public class SocieteController {
   private final SocieteRepository societeRepository;
   private final AdresseSocietyRepository adresseSocietyRepository;

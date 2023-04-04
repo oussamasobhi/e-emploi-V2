@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/annonce")
+@CrossOrigin
 public class AnnonceController {
     private final AnnonceService annonceService;
     @PostMapping("/add")

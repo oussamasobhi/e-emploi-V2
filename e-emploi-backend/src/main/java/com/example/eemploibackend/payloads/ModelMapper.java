@@ -24,7 +24,7 @@ public class ModelMapper {
                userResponse.setSociete(user.getSociete());
                userResponse.setAdresses(user.getAdresses());
                userResponse.setCompetences(user.getCompetences());
-               userResponse.setAdresseSocietes(societe.getAdresses_societes());
+if(societe!=null)   userResponse.setAdresseSocietes(societe.getAdresses_societes());
                return userResponse;
     }
     public static AnnonceResponse mapannonceToAnnonceResponse(Annonce annonce){
