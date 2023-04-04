@@ -3,6 +3,7 @@ package com.example.eemploibackend.controller;
 import com.example.eemploibackend.auth.AuthenticationRequest;
 import com.example.eemploibackend.auth.AuthenticationService;
 import com.example.eemploibackend.auth.RegisterRequest;
+import com.example.eemploibackend.config.LogoutService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
