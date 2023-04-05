@@ -4,11 +4,13 @@ import User from "./User";
 import EditUser from "./EditUser";
 import DeleteUser from "./DeleteUser";
 import { Button, Table } from "antd";
+import { initialUser } from "../../constant";
+import { dayjs } from "dayjs";
 
 const UserList = ({ notify }) => {
   const [users, setUsers] = useState(null);
-  const [userToEdit, setUserToEdit] = useState(null);
-  const [userToDelete, setUserToDelete] = useState(null);
+  const [userToEdit, setUserToEdit] = useState(initialUser);
+  const [userToDelete, setUserToDelete] = useState(initialUser);
   const [openEdit, setOpenEdit] = useState(false);
   const [isOpenDelete, setIsOpenDelete] = useState(false);
 
@@ -68,15 +70,11 @@ const UserList = ({ notify }) => {
       title: "Date de naissance",
       dataIndex: "date_naissance",
       key: "date_naissance",
-
     },
     {
       title: "Adresses",
       dataIndex: "adresses",
       key: "adresses",
-      render: ((_, record) => {
-        <p>{record.lib_addre}</p>
-      })
     },
     {
       title: "Téléphone",
@@ -99,7 +97,7 @@ const UserList = ({ notify }) => {
       key: "actions",
       render: () => (
         <div>
-          <Button onClick={() => {}}>Détails</Button>
+          {/*<Button onClick={() => {}}>Détails</Button>*/}
           <Button onClick={() => {}} danger className="ml-3">
             Supprimer
           </Button>
@@ -107,62 +105,25 @@ const UserList = ({ notify }) => {
       ),
     },
   ];
-  console.log(users);
-  
 
   return (
     <>
       <div className="overflow-x-auto flex flex-col justify-center">
-        {/*<table className="bg-white rounded-md text-sm font-roboto border-collapse table-auto">
-          <thead className="font-bold">
-            <tr>
-              <th className="text-left font-semibold capitalize tracking-wide p-3 border border-gray-300">
-                <input type="checkbox" />
-              </th>
-              <th className="text-left font-semibold capitalize tracking-wide p-3 border border-gray-300">
-                #
-              </th>
-              <th className="text-left font-semibold capitalize tracking-wide p-3 truncate border border-gray-300">
-                Nom et Prenoms
-              </th>
-              <th className="text-left font-semibold capitalize tracking-wide p-3 truncate border border-gray-300">
-                Nom d'utilisateur
-              </th>
-              <th className="text-left font-semibold capitalize tracking-wide p-3 truncate border border-gray-300">
-                Adresse
-              </th>
-              <th className="text-left font-semibold capitalize tracking-wide p-3 truncate border border-gray-300">
-                Téléphone
-              </th>
-              <th className="text-left font-semibold capitalize tracking-wide p-3 truncate border border-gray-300">
-                Date de naissance
-              </th>
-              <th className="text-left font-semibold capitalize tracking-wide p-3 truncate border border-gray-300">
-                CIN
-              </th>
-              <th className="text-left font-semibold capitalize tracking-wide p-3 truncate border border-gray-300">
-                Role
-              </th>
-              <th className="text-right font-semibold capitalize tracking-wide p-3 truncate border border-gray-300">
-                Action
-              </th>
-            </tr>
-          </thead>
-          {users && (
-            <tbody className="bg-white">
-              {users?.map((user, index) => (
-                <User
-                key={index}
-                  user={user}
-                  deleteUser={(e) =>deleteUser(e,user)}
-                  editUser={(e) => editUser(e,user)}
-                  even={index % 2 === 0 ? true : false}
-                />
-              ))}
-            </tbody>
-          )}
-        </table>*/}
-        {users ? <Table dataSource={users} columns={columns} /> : ''}
+        {users ? (
+          <Table
+            dataSource={users}
+            columns={columns}
+            onRow={(record, rowIndex) => {
+              return {
+                onClick: (event) => {
+                  editUser(event, record);
+                },
+              };
+            }}
+          />
+        ) : (
+          ""
+        )}
       </div>
       <EditUser
         selectedUser={userToEdit}
