@@ -1,12 +1,9 @@
 package com.example.eemploibackend.model;
 
 import jakarta.persistence.*;
-import org.apache.logging.log4j.CloseableThreadContext;
 import org.springframework.data.annotation.CreatedDate;
-
 import java.util.Date;
 import java.util.List;
-
 @Entity
 @Table(name = "Offre_emploi")
 public class OffreEmploi {

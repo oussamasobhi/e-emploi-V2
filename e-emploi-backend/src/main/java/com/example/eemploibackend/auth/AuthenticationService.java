@@ -8,7 +8,10 @@ import com.example.eemploibackend.model.User;
 import com.example.eemploibackend.payloads.ApiResponse;
 import com.example.eemploibackend.payloads.JwtAuthenticationResponse;
 import com.example.eemploibackend.repository.RoleRepository;
+import com.example.eemploibackend.repository.TokenRepository;
 import com.example.eemploibackend.repository.UserRepository;
+import com.example.eemploibackend.token.Token;
+import com.example.eemploibackend.token.TokenType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +32,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final RoleRepository roleRepository;
     private final AuthenticationManager authenticationManager;
+    private final TokenRepository tokenRepository;
 
     public ResponseEntity<?> register(RegisterRequest request) {
         var user = User.builder()
@@ -70,6 +74,30 @@ public class AuthenticationService {
         var user = repository.findByUsernameOrEmail(request.getUsernameOrEmail(),request.getUsernameOrEmail())
                 .orElseThrow();
         var jwtToken = jwtService.generateToken(user);
+        revokeAllUserTokens(user);
+        saveUserToken(user, jwtToken);
         return ResponseEntity.ok(new JwtAuthenticationResponse(jwtToken));
+    }
+
+    private void saveUserToken(User user, String jwtToken) {
+        var token = Token.builder()
+                .user(user)
+                .token(jwtToken)
+                .tokenType(TokenType.BEARER)
+                .expired(false)
+                .revoked(false)
+                .build();
+        tokenRepository.save(token);
+    }
+
+    private void revokeAllUserTokens(User user) {
+        var validUserTokens = tokenRepository.findAllValidTokenByUser(user.getId());
+        if (validUserTokens.isEmpty())
+            return;
+        validUserTokens.forEach(token -> {
+            token.setExpired(true);
+            token.setRevoked(true);
+        });
+        tokenRepository.saveAll(validUserTokens);
     }
 }

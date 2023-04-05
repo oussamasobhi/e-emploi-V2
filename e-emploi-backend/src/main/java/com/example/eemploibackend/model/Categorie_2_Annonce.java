@@ -8,24 +8,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Builder
-@Table(name = "reviews")
-public class Review {
+@Table(name = "categorie_2_annonce")
+public class Categorie_2_Annonce {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private double rate;
-    private String avis;
-
+    private String nom_sous_categorie;
+    private double tarif_moy_categorie;
+    private double duree_moy_realisation;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_user")
-    private User user;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_annonce", nullable = false)
+    @JoinColumn(name = "id_categorie", nullable = false)
     @JsonIgnore
-    private Annonce annonce;
+    private CategorieAnnonce categorieAnnonce;
 }

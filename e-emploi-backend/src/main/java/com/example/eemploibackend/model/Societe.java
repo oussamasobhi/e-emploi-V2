@@ -7,25 +7,24 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Builder
-@Table(name = "reviews")
-public class Review {
+@Table(name = "societe")
+public class Societe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private double rate;
-    private String avis;
+    private String nom_societe;
+    private String num_tel;
+    private String siteweb;
+    private String num_patente;
+    private Byte[] justif_image;
+    @OneToMany(mappedBy = "societe",cascade = CascadeType.ALL)
+    private List<Adresse_societe> adresses_societes;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_user")
-    private User user;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_annonce", nullable = false)
-    @JsonIgnore
-    private Annonce annonce;
 }

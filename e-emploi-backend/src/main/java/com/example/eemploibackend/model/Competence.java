@@ -7,25 +7,24 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Entity
 @Builder
-@Table(name = "reviews")
-public class Review {
+@Entity
+@Table(name = "competence")
+@AllArgsConstructor
+@NoArgsConstructor
+public class Competence {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private double rate;
-    private String avis;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_user")
-    private User user;
-
+    private String titre;
+    private String niveauscolaire;
+    private String duree_formation;
+    private Date date_obtention;
+    private String duree_exp;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_annonce", nullable = false)
+    @JoinColumn(name = "id_user", nullable = false)
     @JsonIgnore
-    private Annonce annonce;
+    private User user;
 }

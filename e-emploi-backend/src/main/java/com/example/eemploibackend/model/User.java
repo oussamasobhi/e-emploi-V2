@@ -1,6 +1,8 @@
 package com.example.eemploibackend.model;
 
 import com.example.eemploibackend.model.audit.DateAudit;
+import com.example.eemploibackend.token.Token;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -39,25 +41,41 @@ public class User extends DateAudit implements UserDetails{
      private String CIN;
       private Byte[] photo_profil;
      private Date date_naissance;
-        @ManyToMany(mappedBy = "prestataires")
+     @ManyToMany(mappedBy = "prestataires")
         private List<OffreEmploi> offres;
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,orphanRemoval = true)
-    private Set<Adresse> adresses;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Review> reviews;
-
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<Adresse> adresses;
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<Competence> competences;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_societe")
+    private Societe societe;
     @OneToOne
-  private Role role;
-    public User(Long id, String nom,String prenom, String username, String email, String password,Role role,String CIN) {
-        super();
-        this.id = id;
-        this.nom = nom;
-        this.prenom=prenom;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.role=role;
-        this.reviews=new HashSet<>();
+    private Role role;
+
+    @OneToMany(mappedBy = "user")
+    private List<Token> tokens;
+    @OneToMany(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<AnnonceUser> annonceUsers;
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<Annonce> annoncescrees;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        return id != null && id.equals(((User) o).getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

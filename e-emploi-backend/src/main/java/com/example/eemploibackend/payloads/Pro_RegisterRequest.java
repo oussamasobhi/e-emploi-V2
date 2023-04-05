@@ -16,7 +16,6 @@ public class Pro_RegisterRequest {
     private String prenom;
     private String username;
     private String email;
-    private String password;
     private String num_tel;
     private String CIN;
     private Date date_naissance;

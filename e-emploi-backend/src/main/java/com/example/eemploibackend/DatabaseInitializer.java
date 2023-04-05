@@ -1,18 +1,13 @@
 package com.example.eemploibackend;
 
 import com.example.eemploibackend.model.*;
-import com.example.eemploibackend.repository.AdresseRepository;
-import com.example.eemploibackend.repository.RoleRepository;
-import com.example.eemploibackend.repository.UserRepository;
+import com.example.eemploibackend.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
-
-import javax.management.relation.RoleStatus;
-import java.util.Collections;
 
 @Component
 @AllArgsConstructor
@@ -21,7 +16,11 @@ public class DatabaseInitializer implements ApplicationRunner {
     private final RoleRepository roleRepository;
     private final AdresseRepository adresseRepository;
     private final UserRepository userRepository;
+    private final CategoryRepository categoryRepository;
+    private final Categorie_2_Annonce_Repository categorie2AnnonceRepository;
+
     private final BCryptPasswordEncoder encoder;
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
         Role roleadmin= Role.builder().name(RoleName.ROLE_ADMIN).build();
@@ -40,11 +39,44 @@ public class DatabaseInitializer implements ApplicationRunner {
                 admin.setPassword(encoder.encode("admin"));
         admin.setRole(roleadmin);
         userRepository.save(admin);
-        Adresse ad=new Adresse();
-        ad.setUser(admin);
-        ad.setPays("maroc");
-        ad.setVille("agadir");
-        adresseRepository.save(ad);
-        admin.setAdresses(Collections.singleton(ad));
+        // categorie 1 : DOMICILE
+        CategorieAnnonce domicile= CategorieAnnonce.builder()
+                .nom_categorie("Domicile")
+                .build();
+        categoryRepository.save(domicile);
+        Categorie_2_Annonce servicenettoyage= Categorie_2_Annonce.builder()
+                .categorieAnnonce(domicile)
+                .nom_sous_categorie("Service nettoyage")
+                .duree_moy_realisation(4)
+                .tarif_moy_categorie(300)
+                .build();
+        categorie2AnnonceRepository.save(servicenettoyage);
+        Categorie_2_Annonce serviceartisans= Categorie_2_Annonce.builder()
+                .categorieAnnonce(domicile)
+                .nom_sous_categorie("Service artisans")
+                .duree_moy_realisation(3)
+                .tarif_moy_categorie(200)
+                .build();
+        categorie2AnnonceRepository.save(serviceartisans);
+        //categorie: Emplois et services
+        CategorieAnnonce emplois_comp= CategorieAnnonce.builder()
+                .nom_categorie("Emplois et services")
+                .build();
+        categoryRepository.save(emplois_comp);
+        Categorie_2_Annonce offresemploi= Categorie_2_Annonce.builder()
+                .categorieAnnonce(emplois_comp)
+                .nom_sous_categorie("offres emplois")
+                .build();
+        categorie2AnnonceRepository.save(offresemploi);
+        Categorie_2_Annonce services= Categorie_2_Annonce.builder()
+                .categorieAnnonce(emplois_comp)
+                .nom_sous_categorie("services")
+                .build();
+        categorie2AnnonceRepository.save(services);
+        //categorie 3 : PRODUITS
+        CategorieAnnonce produit= CategorieAnnonce.builder()
+                .nom_categorie("produits")
+                .build();
+        categoryRepository.save(produit);
     }
 }
