@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="ProjectModuleManager">
-    <modules>
-      <module fileurl="file://$PROJECT_DIR$/e-emploi-backend/e-emploi-backend.iml" filepath="$PROJECT_DIR$/e-emploi-backend/e-emploi-backend.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/e-emploi_project.iml" filepath="$PROJECT_DIR$/.idea/e-emploi_project.iml" />
-    </modules>
-  </component>
-</project>
