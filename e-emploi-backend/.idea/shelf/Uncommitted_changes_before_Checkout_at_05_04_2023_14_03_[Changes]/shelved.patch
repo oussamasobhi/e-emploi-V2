@@ -1,0 +1,13 @@
+Index: src/main/java/com/example/eemploibackend/repository/AdresseRepository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.eemploibackend.repository;\r\n\r\nimport com.example.eemploibackend.model.Adresse;\r\nimport org.springframework.data.jpa.repository.JpaRepository;\r\nimport org.springframework.data.jpa.repository.Query;\r\nimport org.springframework.stereotype.Repository;\r\n\r\n@Repository\r\npublic interface AdresseRepository extends JpaRepository<Adresse,Long> {\r\n    @Query(\"SELECT A from Adresse A where A.id=?1\")\r\n    Adresse findAdresseById(Long id);\r\n}\r\n
+===================================================================
+diff --git a/src/main/java/com/example/eemploibackend/repository/AdresseRepository.java b/src/main/java/com/example/eemploibackend/repository/AdresseRepository.java
+--- a/src/main/java/com/example/eemploibackend/repository/AdresseRepository.java	
++++ b/src/main/java/com/example/eemploibackend/repository/AdresseRepository.java	
+@@ -10,3 +10,4 @@
+     @Query("SELECT A from Adresse A where A.id=?1")
+     Adresse findAdresseById(Long id);
+ }
++
