@@ -45,6 +45,12 @@ export function login(loginRequest) {
     body: JSON.stringify(loginRequest),
   });
 }
+export function logout(){
+  return request({
+    url: API_BASE_URL+"/auth/logout",
+    method: "POST"
+  })
+}
 export function getCurrentUser() {
   return request({
     url: API_BASE_URL + "/api/user/me",
@@ -193,4 +199,11 @@ return request({
   method: "POST",
   body: JSON.stringify(address)
 })
+}
+
+export function getListAnnonces(id){
+  return request({
+    url: API_BASE_URL+"/annonce/category/"+id,
+    method: "GET"
+  })
 }

@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Navigate } from "react-router";
 import { getCurrentUser } from "../../util/APIUtils";
-import { useNavigate } from "react-router";
 import LayoutProfile from "./LayoutProfile";
 import { Routes, Route } from "react-router";
 import AddressPage from "./AddressPage";
@@ -19,9 +18,8 @@ const Profile = ({
   current,
   setCurrent,
   onClick,
+  breadcrumbItems
 }) => {
-  const navigate = useNavigate();
-
   useEffect(() => {
     const refreshUser = async () => {
       const res = await getCurrentUser();
@@ -41,6 +39,7 @@ const Profile = ({
               setCurrentUser={setCurrentUser}
               currentUser={currentUser}
               notify={notify}
+              breadcrumbItems={breadcrumbItems}
             />
           }
         >
@@ -88,7 +87,8 @@ const Profile = ({
               />
             }
           />
-          <Route path="skills" element={<CompetencesPage notify={notify} />} />
+          <Route path="skills" element={<CompetencesPage notify={notify} />}
+           />
         </Route>
       </Routes>
     </>

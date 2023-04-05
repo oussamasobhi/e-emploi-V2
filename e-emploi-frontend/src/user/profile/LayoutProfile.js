@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Navigate, Outlet } from "react-router";
+import { Navigate, Outlet, useLocation } from "react-router";
 import { getCurrentUser } from "../../util/APIUtils";
 import { Popover } from "@headlessui/react";
 import UpdateProfilePict from "./UpdateProfilePict";
-import { Avatar, Menu, Typography } from "antd";
+import { Avatar, Breadcrumb, Menu, Typography } from "antd";
 import { UserOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 const LayoutProfile = ({
   setIsAuthenticated,
   currentUser,
   setCurrentUser,
   setIsLoading,
-  notify,
+  notify
 }) => {
   const [profilePict, setProfilePict] = useState(null);
   const [isOpenProfilePict, setIsOpenProfilePict] = useState(false);
@@ -30,7 +31,6 @@ const LayoutProfile = ({
   function openProfilePictPanel() {
     setIsOpenProfilePict(true);
   }
-
   const sideMenuItems = [
     {
       label: <a href="/profile">Mon Compte</a>,
@@ -56,6 +56,28 @@ const LayoutProfile = ({
       key: "dashboard",
     });
   }
+   //Breadcrumbs
+   const itemsNameMap = {
+    "/profile": "Profil",
+    "/profile/edit": "Mis à jour",
+    "/profile/skills": "Compétences",
+    "/profile/address": "Adresses",
+    "/profile/company": "Société",
+  };
+  const location = useLocation();
+  const currentUrl = location.pathname.split("/").filter((i) => i);
+  const extraBreadcrumbItems = currentUrl.map((_, index) => {
+    const url = `/${currentUrl.slice(0, index + 1).join("/")}`;
+    return {
+      title: <Link to={url}>{itemsNameMap[url]}</Link>,
+    };
+  });
+  const breadcrumbItems = [
+    {
+      title: <Link to="/">Home</Link>,
+    },
+  ].concat(extraBreadcrumbItems);
+
 
   return localStorage.getItem("token") ? (
     <>
@@ -108,9 +130,7 @@ const LayoutProfile = ({
             <div className="border bg-white rounded-md px-3 w-10/12">
               <div className="pb-6">
                 <div className="flex justify-between  w-full">
-                  <Typography.Title level={4}>
-                    {currentUser.prenom} {currentUser.nom}
-                  </Typography.Title>
+                  <Breadcrumb items={breadcrumbItems}/>
                 </div>
                 <Outlet />
               </div>

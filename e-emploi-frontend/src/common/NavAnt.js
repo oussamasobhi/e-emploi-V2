@@ -1,33 +1,47 @@
 import { HomeFilled } from "@ant-design/icons";
-import { Menu } from "antd";
+import { Button, Menu } from "antd";
 import { useState } from "react";
 import logo from "../public/image/logo_itako_bsc.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Header } from "antd/es/layout/layout";
 
 const NavAnt = ({ goToHome, currentUser, goToProfile, logout }) => {
-  const connectedChildItems = [
+  const navigate = useNavigate();
+  const goToLogin = () => {
+    navigate("/login");
+  };
+  let connectedChildItems = [
     {
       label: <span onClick={goToProfile}>Mon Compte</span>,
       key: "mon_compte",
     },
     {
-      label: <a href="/profile/address">Mes adresses</a>,
-      key: "mes_addresses",
+      label: <a href="#">Mes commandes</a>,
+      key: "mes_commandes",
     },
     {
-      label: <a href="/profile/company">Ma société</a>,
-      key: "ma_societe",
+      label: <a href="#">Mes recherches</a>,
+      key: "mes_recherches",
     },
     {
-      label: <a href="/profile/skills">Mes compétences</a>,
-      key: "mes_competences",
+      label: <a href="#">Mes propositions</a>,
+      key: "mes_propositions",
     },
     {
-      label: <span onClick={logout}>Déconnexion</span>,
+      label: (
+        <a onClick={(e) => logout(e, goToLogin)}>
+          Déconnexion
+        </a>
+      ),
       key: "deconnexion",
     },
   ];
+  if (currentUser.role === "ROLE_ADMIN") {
+    connectedChildItems.push({
+      label: <a href="/dashboard">Dashboard</a>,
+      key: "dashboard",
+    });
+  }
   const connectedItems = {
     label: <span>{currentUser.prenom}</span>,
     key: "prenom_user",
@@ -77,29 +91,29 @@ const NavAnt = ({ goToHome, currentUser, goToProfile, logout }) => {
       icon: <HomeFilled />,
     },
     {
-      label: "Domicile",
+      label: "Domicile" ,
       key: "domicile",
       children: [
         {
-          label: "Service Nettoyage",
+          label: <a href="/domicile/nettoyage">Services Nettoyages</a>,
           key: "houseKeeper",
         },
         {
-          label: "Service Artisan",
+          label: <a href="/domicile/artisan">Service Artisan</a>,
           key: "artisan",
         },
       ],
     },
     {
-      label: "Emplois et Compétences",
+      label: "Emplois et Services",
       key: "emp_services",
       children: [
         {
-          label: "Offres d'emploi",
+          label: <a href="/emp_serv/emploi">Offres d'mploi</a>,
           key: "offre_emploi",
         },
         {
-          label: "Compétences listes",
+          label: <a href="/emp_serv/service">Services</a>,
           key: "compet_list",
         },
       ],

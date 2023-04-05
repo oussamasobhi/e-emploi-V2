@@ -32,7 +32,7 @@ const PersonalInfoPage = ({ currentUser }) => {
             </tr>
             <tr>
               <td>Date de naissance : </td>
-              <td className="pl-20">{dayjs(currentUser.date_naissance).format("DD MMMM YYYY")}</td>
+              <td className="pl-20">{currentUser.date_naissance?dayjs(currentUser.date_naissance).format("DD MMMM YYYY") : ""}</td>
             </tr>
           </tbody>
         </table>

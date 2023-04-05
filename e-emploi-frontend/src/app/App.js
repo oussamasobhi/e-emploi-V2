@@ -7,11 +7,13 @@ import Login from "../user/Login";
 import Layout from "../common/Layout";
 import NotFound from "../common/NotFound";
 import ResetPassword from "../user/ResetPassword";
-import { getCurrentUser, login, signup } from "../util/APIUtils";
+import { getCurrentUser, login, logout, signup } from "../util/APIUtils";
 import Profile from "../user/profile/Profile";
 import Dashboard from "../admin/Dashboard";
 import { initialUser } from "../constant";
 import ReactLoading from "react-loading";
+import Domicile from "../domicile/Domicile";
+import EmploiService from "../emploi_servce/EmploiService";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(() => {
@@ -93,6 +95,7 @@ function App() {
   const handleLogout = (e, func) => {
     e.preventDefault();
     setIsLoading(true);
+    logout();
     localStorage.setItem("token", "");
     setCurrentUser(initialUser);
     setIsAuthenticated(false);
@@ -114,8 +117,6 @@ function App() {
     });
     setTimeout(() => setShowNotification(false), 2000);
   };
-
- 
 
   return (
     <>
@@ -173,8 +174,6 @@ function App() {
             <Route
               path="login"
               element={
-                //JSON.parse(localStorage.getItem("IS_AUTHENTICATED")) ? (
-                //JSON.parse(localStorage.getItem("CURRENT_USER")).username.length <= 0 ? (
                 localStorage.getItem("token") ? (
                   <Navigate to="/" />
                 ) : (
@@ -206,6 +205,8 @@ function App() {
                 )
               }
             />
+            <Route path="domicile/*" element={<Domicile />} />
+            <Route path="emp_serv/*" element={<EmploiService />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
