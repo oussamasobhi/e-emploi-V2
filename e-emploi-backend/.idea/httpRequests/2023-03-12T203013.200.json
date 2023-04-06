@@ -1,0 +1,31 @@
+{
+  "content": [
+    {
+      "id": 2,
+      "nom": "sobhi",
+      "prenom": "oussama",
+      "num_tel": null,
+      "username": "osamasobhi",
+      "email": "oussama@admin.com",
+      "date_naissance": null,
+      "photo_profil": null,
+      "cin": null
+    },
+    {
+      "id": 1,
+      "nom": null,
+      "prenom": "tyj",
+      "num_tel": null,
+      "username": null,
+      "email": null,
+      "date_naissance": null,
+      "photo_profil": null,
+      "cin": "rth"
+    }
+  ],
+  "page": 0,
+  "size": 30,
+  "totalElements": 2,
+  "totalPages": 1,
+  "last": true
+}

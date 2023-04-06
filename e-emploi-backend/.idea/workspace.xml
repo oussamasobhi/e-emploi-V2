@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="dbf275fd-2ea8-4dd2-97e9-3e1fb5943394" name="Changes" comment="fix git bugs and import late changes" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JUnit5 Test Class" />
+        <option value="Class" />
+        <option value="Enum" />
+        <option value="Interface" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="main" />
+      </map>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Use Maven wrapper" />
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2Ljp3QuZ9qYzJGxi5Eqgf3CMnyx" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "last_opened_file_path": "C:/Users/oussa/Desktop/PFA/e-emploi_project/e-emploi-frontend",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.26551723",
+    "settings.editor.selected.configurable": "com.haulmont.jpb.viewMode",
+    "spring.configuration.checksum": "24aec670f13966ce36fdbeb674382ad3",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.example.eemploibackend.utils" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.EEmploiBackendApplication">
+    <configuration name="generated-requests | #5" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="5" requestIdentifier="#5" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="generated-requests | #6" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="6" requestIdentifier="#6" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="MapperUserSummaryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="e-emploi-backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.eemploibackend.utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.eemploibackend.utils" />
+      <option name="MAIN_CLASS_NAME" value="com.example.eemploibackend.utils.MapperUserSummaryTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MapperUserSummaryTest.mappeusertousersummary" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="e-emploi-backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.eemploibackend.utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.eemploibackend.utils" />
+      <option name="MAIN_CLASS_NAME" value="com.example.eemploibackend.utils.MapperUserSummaryTest" />
+      <option name="METHOD_NAME" value="mappeusertousersummary" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestBootstrappingEntityManager" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="e-emploi-backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.eemploibackend.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.eemploibackend" />
+      <option name="MAIN_CLASS_NAME" value="com.example.eemploibackend.TestBootstrappingEntityManager" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EEmploiBackendApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="e-emploi-backend" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.eemploibackend.EEmploiBackendApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.TestBootstrappingEntityManager" />
+        <item itemvalue="JUnit.MapperUserSummaryTest.mappeusertousersummary" />
+        <item itemvalue="JUnit.MapperUserSummaryTest" />
+        <item itemvalue="HTTP Request.generated-requests | #6" />
+        <item itemvalue="HTTP Request.generated-requests | #5" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="dbf275fd-2ea8-4dd2-97e9-3e1fb5943394" name="Changes" comment="" />
+      <created>1676394153513</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1676394153513</updated>
+      <workItem from="1676394155394" duration="14170000" />
+      <workItem from="1676457710844" duration="1347000" />
+      <workItem from="1676462589178" duration="12788000" />
+      <workItem from="1676508402329" duration="671000" />
+      <workItem from="1676509525399" duration="193000" />
+      <workItem from="1676516415241" duration="7083000" />
+      <workItem from="1676560300158" duration="15714000" />
+      <workItem from="1676637773364" duration="5983000" />
+      <workItem from="1676651055486" duration="6731000" />
+      <workItem from="1676715191182" duration="111000" />
+      <workItem from="1676715458428" duration="83000" />
+      <workItem from="1676748024352" duration="1697000" />
+      <workItem from="1676798936303" duration="3944000" />
+      <workItem from="1677071332603" duration="160000" />
+      <workItem from="1677256297139" duration="697000" />
+      <workItem from="1677257081155" duration="2048000" />
+      <workItem from="1677302370204" duration="2009000" />
+      <workItem from="1677334318522" duration="3253000" />
+      <workItem from="1677424847364" duration="18000" />
+      <workItem from="1677603141273" duration="282000" />
+      <workItem from="1677782676134" duration="576000" />
+      <workItem from="1677861146971" duration="572000" />
+      <workItem from="1677941932022" duration="9112000" />
+      <workItem from="1678036047730" duration="2190000" />
+      <workItem from="1678467956702" duration="6232000" />
+      <workItem from="1678537776188" duration="2113000" />
+      <workItem from="1678540565619" duration="5166000" />
+      <workItem from="1678556254187" duration="3623000" />
+      <workItem from="1678569098161" duration="1350000" />
+      <workItem from="1678612871819" duration="5088000" />
+      <workItem from="1678637723452" duration="16946000" />
+      <workItem from="1678746760692" duration="595000" />
+      <workItem from="1678825112056" duration="1508000" />
+      <workItem from="1678876778530" duration="2339000" />
+      <workItem from="1678881076246" duration="9830000" />
+      <workItem from="1678953274087" duration="54000" />
+      <workItem from="1679059561945" duration="23651000" />
+      <workItem from="1679125758922" duration="1909000" />
+      <workItem from="1679156953522" duration="320000" />
+      <workItem from="1679157671651" duration="8967000" />
+      <workItem from="1679355281524" duration="2579000" />
+      <workItem from="1679428124229" duration="5488000" />
+      <workItem from="1679439798036" duration="2238000" />
+      <workItem from="1679494887547" duration="2287000" />
+      <workItem from="1679600872484" duration="8646000" />
+      <workItem from="1679671578013" duration="5757000" />
+      <workItem from="1679691011923" duration="7438000" />
+      <workItem from="1679773362858" duration="1757000" />
+      <workItem from="1679778148335" duration="3842000" />
+      <workItem from="1679842010062" duration="5813000" />
+      <workItem from="1680016767047" duration="10792000" />
+      <workItem from="1680098156806" duration="3581000" />
+      <workItem from="1680269932186" duration="5735000" />
+      <workItem from="1680279104049" duration="10316000" />
+      <workItem from="1680386311292" duration="1230000" />
+      <workItem from="1680552979171" duration="12302000" />
+      <workItem from="1680612516755" duration="6378000" />
+      <workItem from="1680629734353" duration="8971000" />
+      <workItem from="1680701379707" duration="485000" />
+      <workItem from="1680701966028" duration="973000" />
+      <workItem from="1680703044792" duration="441000" />
+      <workItem from="1680703557138" duration="487000" />
+      <workItem from="1680704136344" duration="314000" />
+      <workItem from="1680704496339" duration="528000" />
+      <workItem from="1680705209645" duration="847000" />
+      <workItem from="1680706178524" duration="4119000" />
+      <workItem from="1680710385056" duration="659000" />
+      <workItem from="1680711123947" duration="292000" />
+      <workItem from="1680711504670" duration="3092000" />
+    </task>
+    <task id="LOCAL-00001" summary="crud on users">
+      <created>1678838741043</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1678838741043</updated>
+    </task>
+    <task id="LOCAL-00002" summary="fix git bugs and import late changes">
+      <created>1680702601481</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1680702601482</updated>
+    </task>
+    <task id="LOCAL-00003" summary="fix git bugs and import late changes">
+      <created>1680702652023</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1680702652023</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="backend" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="crud on users" />
+    <MESSAGE value="fix git bugs and import late changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix git bugs and import late changes" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="org.hibernate.LazyInitializationException" package="org.hibernate" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

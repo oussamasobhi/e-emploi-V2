@@ -1,6 +1,7 @@
 package com.example.eemploibackend.model;
 
 import com.example.eemploibackend.model.audit.DateAudit;
+import com.example.eemploibackend.token.Token;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -53,6 +54,9 @@ public class User extends DateAudit implements UserDetails{
     private Societe societe;
     @OneToOne
     private Role role;
+
+    @OneToMany(mappedBy = "user")
+    private List<Token> tokens;
     @OneToMany(
             mappedBy = "user",
             cascade = CascadeType.ALL,
