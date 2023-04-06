@@ -198,12 +198,27 @@ return request({
   url: API_BASE_URL+"/societe/"+id+"/address/create",
   method: "POST",
   body: JSON.stringify(address)
-})
+});
 }
 
 export function getListAnnonces(id){
   return request({
     url: API_BASE_URL+"/annonce/category/"+id,
     method: "GET"
-  })
+  });
+}
+
+export function getCategories(){
+  return request({
+    url: API_BASE_URL+"/category/",
+    method: "GET"
+  });
+}
+
+export function createAnnonce(annonce){
+  return request({
+    url: API_BASE_URL+"/annonce/add",
+    method: "POST",
+    body: JSON.stringify(annonce)
+  });
 }

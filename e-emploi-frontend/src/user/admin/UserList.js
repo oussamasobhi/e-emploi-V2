@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { getAllUsers } from "../../util/APIUtils";
-import User from "./User";
-import EditUser from "./EditUser";
-import DeleteUser from "./DeleteUser";
-import { Button, Table } from "antd";
+import DetailsUser from "./DetailsUser";
+import { Table } from "antd";
 import { initialUser } from "../../constant";
-import { dayjs } from "dayjs";
+import dayjs from "dayjs";
 
 const UserList = ({ notify }) => {
   const [users, setUsers] = useState(null);
   const [userToEdit, setUserToEdit] = useState(initialUser);
-  const [userToDelete, setUserToDelete] = useState(initialUser);
   const [openEdit, setOpenEdit] = useState(false);
-  const [isOpenDelete, setIsOpenDelete] = useState(false);
 
   const refreshList = async () => {
     const res = (await getAllUsers()).content;
@@ -30,25 +26,11 @@ const UserList = ({ notify }) => {
     fillUserList();
   }, []);
 
-  const deleteUser = (e, user1) => {
-    e.preventDefault();
-    setUserToDelete(user1);
-    console.log(userToDelete);
-    setIsOpenDelete(true);
-  };
-
-  const editUser = (e, user) => {
+  const detailsUser = (e, user) => {
     e.preventDefault();
     setUserToEdit(user);
     setOpenEdit(true);
   };
-
-  function closeDelete() {
-    setIsOpenDelete(false);
-  }
-  function openDelete() {
-    setIsOpenDelete(true);
-  }
 
   const columns = [
     {
@@ -70,11 +52,29 @@ const UserList = ({ notify }) => {
       title: "Date de naissance",
       dataIndex: "date_naissance",
       key: "date_naissance",
+      render: (_, record) => (
+        <>
+          {record.date_naissance
+            ? dayjs(record.date_naissance).format("YYYY-MM-DD")
+            : ""}
+        </>
+      ),
     },
     {
       title: "Adresses",
       dataIndex: "adresses",
       key: "adresses",
+      render: (_, record) => (
+        <>
+          {record.adresses?.map((adr) => (
+            <>
+              <p className="text-sm leading-3">
+                {adr.libelle_adr} ({adr.pays}, {adr.ville})
+              </p>
+            </>
+          ))}
+        </>
+      ),
     },
     {
       title: "Téléphone",
@@ -91,19 +91,6 @@ const UserList = ({ notify }) => {
       dataIndex: "role",
       key: "role",
     },
-    {
-      title: "Actions",
-      dataIndex: "",
-      key: "actions",
-      render: () => (
-        <div>
-          {/*<Button onClick={() => {}}>Détails</Button>*/}
-          <Button onClick={() => {}} danger className="ml-3">
-            Supprimer
-          </Button>
-        </div>
-      ),
-    },
   ];
 
   return (
@@ -115,9 +102,7 @@ const UserList = ({ notify }) => {
             columns={columns}
             onRow={(record, rowIndex) => {
               return {
-                onClick: (event) => {
-                  editUser(event, record);
-                },
+                onClick: (event) => detailsUser(event, record),
               };
             }}
           />
@@ -125,18 +110,12 @@ const UserList = ({ notify }) => {
           ""
         )}
       </div>
-      <EditUser
+      <DetailsUser
         selectedUser={userToEdit}
+        setSelectedUser={setUserToEdit}
         isOpen={openEdit}
         refreshList={refreshList}
         setIsOpen={setOpenEdit}
-        notify={notify}
-      />
-      <DeleteUser
-        userToDelete={userToDelete}
-        isOpen={isOpenDelete}
-        refreshList={refreshList}
-        setIsOpen={setIsOpenDelete}
         notify={notify}
       />
     </>

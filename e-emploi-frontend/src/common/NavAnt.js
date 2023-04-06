@@ -28,20 +28,10 @@ const NavAnt = ({ goToHome, currentUser, goToProfile, logout }) => {
       key: "mes_propositions",
     },
     {
-      label: (
-        <a onClick={(e) => logout(e, goToLogin)}>
-          Déconnexion
-        </a>
-      ),
+      label: <a onClick={(e) => logout(e, goToLogin)}>Déconnexion</a>,
       key: "deconnexion",
     },
   ];
-  if (currentUser.role === "ROLE_ADMIN") {
-    connectedChildItems.push({
-      label: <a href="/dashboard">Dashboard</a>,
-      key: "dashboard",
-    });
-  }
   const connectedItems = {
     label: <span>{currentUser.prenom}</span>,
     key: "prenom_user",
@@ -61,7 +51,6 @@ const NavAnt = ({ goToHome, currentUser, goToProfile, logout }) => {
     ),
     children: connectedChildItems,
   };
-
   const connItems = [
     JSON.parse(localStorage.getItem("CURRENT_USER")).username.length <= 0
       ? {
@@ -91,7 +80,7 @@ const NavAnt = ({ goToHome, currentUser, goToProfile, logout }) => {
       icon: <HomeFilled />,
     },
     {
-      label: "Domicile" ,
+      label: "Domicile",
       key: "domicile",
       children: [
         {
@@ -166,6 +155,15 @@ const NavAnt = ({ goToHome, currentUser, goToProfile, logout }) => {
             items={connItems}
             className="flex-auto items-center justify-center"
           />
+          {!(
+            JSON.parse(localStorage.getItem("CURRENT_USER")).username.length <=
+            0
+          ) && (
+            <Link to="/annonce/create">
+              <Button type="primary">Ajouter une annonce</Button>
+            </Link>
+          )}
+
           <Menu
             onClick={onClick}
             selectedKeys={[current]}
