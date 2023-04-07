@@ -1,6 +1,7 @@
 package com.example.eemploibackend.payloads;
 
 import com.example.eemploibackend.model.Categorie_2_Annonce;
+import com.example.eemploibackend.model.User;
 import lombok.Data;
 
 import java.sql.Date;
@@ -13,4 +14,5 @@ public class AnnonceResponse {
     private Date date_fin_annonce;
     private String categorie2Annonce;
     private String categorieAnnonce;
+    private UserResponse userResponse;
 }
