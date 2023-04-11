@@ -21,7 +21,7 @@ const Layout = ({
         setCurrent={setCurrent}
         onClick={onClick}
       />
-      <div className="min-w-full bg-gray-50">
+      <div className="min-w-full">
         <Outlet />
       </div>
     </div>

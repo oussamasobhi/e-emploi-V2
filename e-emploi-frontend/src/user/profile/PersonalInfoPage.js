@@ -42,6 +42,9 @@ const PersonalInfoPage = ({ currentUser }) => {
           </Button>
         </div>
       </div>
+      <div className="mt-14"> 
+         {/*TODO*/} Liste de mes annonces ...
+      </div>
     </>
   );
 };

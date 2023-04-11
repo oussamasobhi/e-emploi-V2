@@ -15,6 +15,7 @@ import ReactLoading from "react-loading";
 import Domicile from "../domicile/Domicile";
 import EmploiService from "../emploi_servce/EmploiService";
 import CreateAnnonce from "../annonce/CreateAnnonce";
+import Annonce from "../annonce/Annonce";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(() => {
@@ -208,7 +209,10 @@ function App() {
             />
             <Route path="domicile/*" element={<Domicile />} />
             <Route path="emp_serv/*" element={<EmploiService />} />
-            <Route path="annonce/create" element={<CreateAnnonce notify={notify} /> } />
+            <Route
+              path="annonce/*"
+              element={<Annonce notify={notify} />}
+            />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>

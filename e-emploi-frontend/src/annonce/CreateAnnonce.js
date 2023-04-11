@@ -6,6 +6,7 @@ import {
   Select,
   Typography,
   Button,
+  Radio,
 } from "antd";
 import React, { useEffect, useState } from "react";
 import TextArea from "antd/es/input/TextArea";
@@ -40,6 +41,7 @@ const CreateAnnonce = ({ notify }) => {
     tarif_depart: "",
     tarif_final: "",
     date_fin_annonce: "",
+    id_categorieAnnonce: "",
     id_categorie2Annonce: "",
   });
 
@@ -50,6 +52,7 @@ const CreateAnnonce = ({ notify }) => {
     };
     loadCategories();
   }, []);
+
   const handleChange = (changedValue, allValues) => {
     const key = Object.keys(changedValue)[0];
     setAnnonce({ ...annonce, [key]: changedValue[key] });
@@ -57,11 +60,12 @@ const CreateAnnonce = ({ notify }) => {
   const creerAnnonce = async () => {
     try {
       //await form.validateFields();
+      console.log(annonce);
       await createAnnonce(annonce);
       navigate("/");
       notify("Notification", "Annonce créée ", "info");
     } catch (error) {
-        notify("Notification", "Invalid", "error");
+      notify("Notification", "Invalid", "error");
       console.log(error);
     }
   };
@@ -69,11 +73,12 @@ const CreateAnnonce = ({ notify }) => {
 
   return (
     <>
-      <div className="mx-20 bg-white">
+      <div className="mx-auto px-auto">
         <Typography.Title level={3} className="text-center">
           Créer une annonce
         </Typography.Title>
         <Form
+          className="flex-none"
           form={form}
           onValuesChange={handleChange}
           labelCol={{
@@ -108,26 +113,61 @@ const CreateAnnonce = ({ notify }) => {
               },
             ]}
           >
-            <TextArea />
+            <TextArea rows={5} />
           </Form.Item>
           <Form.Item label="Tarif de départ" name="tarif_depart">
-            <InputNumber />
+            <InputNumber className="w-full" />
           </Form.Item>
           <Form.Item label="Tarif final" name="tarif_final">
-            <InputNumber />
+            <InputNumber className="w-full" />
           </Form.Item>
           <Form.Item label="Date de fin de l'annonce" name="date_fin_annonce">
-            <DatePicker />
+            <DatePicker className="w-full" />
           </Form.Item>
-          <Form.Item label="Categorie" name="id_categorie2Annonce">
-            <Select>
-              {categories2?.map((categorie, index) => (
+          <Form.Item label="Catégorie" name="id_categorieAnnonce">
+            <Select className="w-full">
+              {categories?.map((categorie, index) => (
                 <Select.Option key={categorie.id} value={categorie.id}>
-                  {categorie.label}
+                  {categorie.nom_categorie}
                 </Select.Option>
               ))}
             </Select>
           </Form.Item>
+          {(annonce.id_categorieAnnonce === 1 ||
+            annonce.id_categorieAnnonce === 2) && (
+            <Form.Item label="Sous catégorie">
+              {annonce.id_categorieAnnonce === 1 && (
+                <>
+                  <Radio.Group
+                    onChange={(e) => {
+                      setAnnonce({
+                        ...annonce,
+                        ["id_categorie2Annonce"]: e.target.value,
+                      });
+                    }}
+                  >
+                    <Radio value={1}>Services Nettoyages</Radio>
+                    <Radio value={2}>Services Artisans</Radio>
+                  </Radio.Group>
+                </>
+              )}
+              {annonce.id_categorieAnnonce === 2 && (
+                <>
+                  <Radio.Group
+                    onChange={(e) => {
+                      setAnnonce({
+                        ...annonce,
+                        ["id_categorie2Annonce"]: e.target.value,
+                      });
+                    }}
+                  >
+                    <Radio value={3}>Offres d'emploi</Radio>
+                    <Radio value={4}>Services </Radio>
+                  </Radio.Group>
+                </>
+              )}
+            </Form.Item>
+          )}
           <Form.Item className="flex justify-end">
             <Button type="primary" htmlType="submit" onClick={creerAnnonce}>
               Ajouter
