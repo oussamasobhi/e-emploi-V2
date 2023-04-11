@@ -28,6 +28,7 @@ if(societe!=null)   userResponse.setAdresseSocietes(societe.getAdresses_societes
                return userResponse;
     }
     public static AnnonceResponse mapannonceToAnnonceResponse(Annonce annonce){
+        UserResponse userResponse=ModelMapper.mapUserToUserResponse(annonce.getUser());
         AnnonceResponse annonceResponse=new AnnonceResponse();
         annonceResponse.setTitre_annonce(annonce.getTitre_annonce());
         annonceResponse.setCategorie2Annonce(annonce.getCategorie2Annonce().getNom_sous_categorie());
@@ -36,6 +37,7 @@ if(societe!=null)   userResponse.setAdresseSocietes(societe.getAdresses_societes
         annonceResponse.setDescription(annonce.getDescription());
         annonceResponse.setTarif_depart(annonce.getTarif_depart());
         annonceResponse.setTarif_final(annonce.getTarif_final());
+        annonceResponse.setUserResponse(userResponse);
     return annonceResponse;
     }
 }

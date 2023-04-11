@@ -4,6 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="0c78ef94-4883-4712-a972-81995058eabd" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/ant.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" />
@@ -233,12 +234,43 @@
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_05_04_2023_16_09_[Changes]1/shelved.patch" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_05_04_2023_16_09__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+=======
+    <list default="true" id="dbf275fd-2ea8-4dd2-97e9-3e1fb5943394" name="Changes" comment="fix git bugs and import late changes">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/eemploibackend/controller/AnnonceUserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/eemploibackend/controller/SousCategorieController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/eemploibackend/payloads/PostuleAnnonceRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/eemploibackend/services/AnnonceUserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/eemploibackend/services/SousCategorieService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/89ae313d-6643-4dff-afe0-2cb3b36780dd.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/89ae313d-6643-4dff-afe0-2cb3b36780dd.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/eemploibackend/config/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/eemploibackend/config/SecurityConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/eemploibackend/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/eemploibackend/controller/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/eemploibackend/payloads/AnnonceResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/eemploibackend/payloads/AnnonceResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/eemploibackend/payloads/ModelMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/eemploibackend/payloads/ModelMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/eemploibackend/repository/Categorie_2_Annonce_Repository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/eemploibackend/repository/Categorie_2_Annonce_Repository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/eemploibackend/repository/CategoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/eemploibackend/repository/CategoryRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/eemploibackend/services/AnnonceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/eemploibackend/services/AnnonceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+>>>>>>> 6ca1623c93740e65dc7ea8c033d342ede4334bce
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+<<<<<<< HEAD
+=======
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JUnit5 Test Class" />
+        <option value="Enum" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+>>>>>>> 6ca1623c93740e65dc7ea8c033d342ede4334bce
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
@@ -265,6 +297,10 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+<<<<<<< HEAD
+=======
+    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
+>>>>>>> 6ca1623c93740e65dc7ea8c033d342ede4334bce
     &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
     &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
     &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
@@ -272,6 +308,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+<<<<<<< HEAD
     &quot;last_opened_file_path&quot;: &quot;D:/DOCS/ENSA/CYCLE INGENIEUR/SEMESTRE 4/THEORIE DES LANGAGES/TP/tp2/tp2compil/Analex&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
@@ -282,6 +319,91 @@
 }</component>
   <component name="RunManager">
     <configuration name="EEmploiBackendApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+=======
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/oussa/Desktop/PFA/e-emploi_project/e-emploi-frontend&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.26551723&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.haulmont.jpb.viewMode&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;24aec670f13966ce36fdbeb674382ad3&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
+    ]
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.example.eemploibackend.utils" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.EEmploiBackendApplication">
+    <configuration name="generated-requests | #5" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="5" requestIdentifier="#5" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="generated-requests | #6" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="6" requestIdentifier="#6" runType="Run single request">
+      <method v="2" />
+    </configuration>
+    <configuration name="MapperUserSummaryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="e-emploi-backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.eemploibackend.utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.eemploibackend.utils" />
+      <option name="MAIN_CLASS_NAME" value="com.example.eemploibackend.utils.MapperUserSummaryTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MapperUserSummaryTest.mappeusertousersummary" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="e-emploi-backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.eemploibackend.utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.eemploibackend.utils" />
+      <option name="MAIN_CLASS_NAME" value="com.example.eemploibackend.utils.MapperUserSummaryTest" />
+      <option name="METHOD_NAME" value="mappeusertousersummary" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestBootstrappingEntityManager" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="e-emploi-backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.eemploibackend.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.eemploibackend" />
+      <option name="MAIN_CLASS_NAME" value="com.example.eemploibackend.TestBootstrappingEntityManager" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EEmploiBackendApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+>>>>>>> 6ca1623c93740e65dc7ea8c033d342ede4334bce
       <module name="e-emploi-backend" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.eemploibackend.EEmploiBackendApplication" />
       <method v="2">
@@ -296,6 +418,7 @@
       <created>1680744647449</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
+<<<<<<< HEAD
       <updated>1680744647449</updated>
       <workItem from="1680744648797" duration="257000" />
       <workItem from="1680773404696" duration="27000" />
@@ -309,6 +432,80 @@
       <workItem from="1680903753475" duration="3562000" />
       <workItem from="1680963521948" duration="694000" />
       <workItem from="1681226997348" duration="3604000" />
+=======
+      <updated>1676394153513</updated>
+      <workItem from="1676394155394" duration="14170000" />
+      <workItem from="1676457710844" duration="1347000" />
+      <workItem from="1676462589178" duration="12788000" />
+      <workItem from="1676508402329" duration="671000" />
+      <workItem from="1676509525399" duration="193000" />
+      <workItem from="1676516415241" duration="7083000" />
+      <workItem from="1676560300158" duration="15714000" />
+      <workItem from="1676637773364" duration="5983000" />
+      <workItem from="1676651055486" duration="6731000" />
+      <workItem from="1676715191182" duration="111000" />
+      <workItem from="1676715458428" duration="83000" />
+      <workItem from="1676748024352" duration="1697000" />
+      <workItem from="1676798936303" duration="3944000" />
+      <workItem from="1677071332603" duration="160000" />
+      <workItem from="1677256297139" duration="697000" />
+      <workItem from="1677257081155" duration="2048000" />
+      <workItem from="1677302370204" duration="2009000" />
+      <workItem from="1677334318522" duration="3253000" />
+      <workItem from="1677424847364" duration="18000" />
+      <workItem from="1677603141273" duration="282000" />
+      <workItem from="1677782676134" duration="576000" />
+      <workItem from="1677861146971" duration="572000" />
+      <workItem from="1677941932022" duration="9112000" />
+      <workItem from="1678036047730" duration="2190000" />
+      <workItem from="1678467956702" duration="6232000" />
+      <workItem from="1678537776188" duration="2113000" />
+      <workItem from="1678540565619" duration="5166000" />
+      <workItem from="1678556254187" duration="3623000" />
+      <workItem from="1678569098161" duration="1350000" />
+      <workItem from="1678612871819" duration="5088000" />
+      <workItem from="1678637723452" duration="16946000" />
+      <workItem from="1678746760692" duration="595000" />
+      <workItem from="1678825112056" duration="1508000" />
+      <workItem from="1678876778530" duration="2339000" />
+      <workItem from="1678881076246" duration="9830000" />
+      <workItem from="1678953274087" duration="54000" />
+      <workItem from="1679059561945" duration="23651000" />
+      <workItem from="1679125758922" duration="1909000" />
+      <workItem from="1679156953522" duration="320000" />
+      <workItem from="1679157671651" duration="8967000" />
+      <workItem from="1679355281524" duration="2579000" />
+      <workItem from="1679428124229" duration="5488000" />
+      <workItem from="1679439798036" duration="2238000" />
+      <workItem from="1679494887547" duration="2287000" />
+      <workItem from="1679600872484" duration="8646000" />
+      <workItem from="1679671578013" duration="5757000" />
+      <workItem from="1679691011923" duration="7438000" />
+      <workItem from="1679773362858" duration="1757000" />
+      <workItem from="1679778148335" duration="3842000" />
+      <workItem from="1679842010062" duration="5813000" />
+      <workItem from="1680016767047" duration="10792000" />
+      <workItem from="1680098156806" duration="3581000" />
+      <workItem from="1680269932186" duration="5735000" />
+      <workItem from="1680279104049" duration="10316000" />
+      <workItem from="1680386311292" duration="1230000" />
+      <workItem from="1680552979171" duration="12302000" />
+      <workItem from="1680612516755" duration="6378000" />
+      <workItem from="1680629734353" duration="8971000" />
+      <workItem from="1680701379707" duration="485000" />
+      <workItem from="1680701966028" duration="973000" />
+      <workItem from="1680703044792" duration="441000" />
+      <workItem from="1680703557138" duration="487000" />
+      <workItem from="1680704136344" duration="314000" />
+      <workItem from="1680704496339" duration="528000" />
+      <workItem from="1680705209645" duration="847000" />
+      <workItem from="1680706178524" duration="4119000" />
+      <workItem from="1680710385056" duration="659000" />
+      <workItem from="1680711123947" duration="292000" />
+      <workItem from="1680711504670" duration="4677000" />
+      <workItem from="1680779967551" duration="3888000" />
+      <workItem from="1680866359259" duration="6562000" />
+>>>>>>> 6ca1623c93740e65dc7ea8c033d342ede4334bce
     </task>
     <servers />
   </component>

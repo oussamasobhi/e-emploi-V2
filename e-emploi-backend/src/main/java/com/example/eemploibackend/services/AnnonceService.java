@@ -38,10 +38,6 @@ public class AnnonceService {
                 .user(user)
                 .build();
         annonceRepository.save(annonce);
-    //    annonceUser.setId(new AnnonceUserID(annonce.getId(), user.getId()));
-    //    annonceUser.setAnnonce(annonce);
-    //    annonceUser.setUser(user);
-    //   annonceUserRepository.save(annonceUser);
     }
     public Boolean supprimerannonce(Long idannonce,User user){
          Annonce annonce=annonceRepository.findAnnoncebyuser(user.getId(),idannonce);
