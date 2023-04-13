@@ -1,48 +1,51 @@
-import React, { useState } from "react";
-import { Form, Input, Button } from "antd";
-import { addAddress, getCurrentUser } from "../../../util/APIUtils";
-import { Modal } from "antd";
+import React, {useState} from 'react';
+import { Modal, Button, Form, Input } from 'antd';
+import { getCurrentUser, addAddress} from '../../util/APIUtils';
+import { useNavigate } from 'react-router';
 
-const AddAddress = ({ open, closeModal, setCurrentUser, notify }) => {
-  const [address, setAddress] = useState({
-    pays: "",
-    ville: "",
-    lib_addre: "",
-  });
-  const handleChange = (changedValue, allValues) => {
-    const key = Object.keys(changedValue)[0];
-    setAddress({ ...address, [key]: changedValue[key] });
-  };
-  const reset = (e) => {
-    e.preventDefault();
-    setAddress({
-      pays: "",
-      ville: "",
-      lib_addre: "",
-    });
-    closeModal();
-  };
-
-  const ajouterAddresse = async () => {
-    try {
-      await addAddress(address);
-      const res = await getCurrentUser();
-      setCurrentUser(res);
-      setAddress({
+const NewAddress = ({open, closeModal, setCurrentUser, notify}) => {
+    const [address, setAddress] = useState({
         pays: "",
         ville: "",
         lib_addre: "",
       });
-      closeModal();
-      notify("Notification", "Adresse ajouté avec succès !", "success");
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
+      const handleChange = (changedValue, allValues) => {
+        const key = Object.keys(changedValue)[0];
+        setAddress({ ...address, [key]: changedValue[key] });
+      };
+
+      const reset = (e) => {
+        e.preventDefault();
+        setAddress({
+          pays: "",
+          ville: "",
+          lib_addre: "",
+        });
+        closeModal();
+      };
+    
+      const ajouterAddresse = async () => {
+        try {
+          await addAddress(address);
+          const res = await getCurrentUser();
+          setCurrentUser(res);
+          setAddress({
+            pays: "",
+            ville: "",
+            lib_addre: "",
+          });
+          closeModal();
+          notify("Notification", "Adresse ajouté avec succès !", "success");
+        } catch (error) {
+          console.log(error);
+        }
+      };
+
+
 
   return (
-    <>
-      <Modal
+    <Modal
         open={open}
         title="Ajout d'un adresse"
         footer={[
@@ -90,8 +93,7 @@ const AddAddress = ({ open, closeModal, setCurrentUser, notify }) => {
           </div>
         </Form>
       </Modal>
-    </>
-  );
-};
+  )
+}
 
-export default AddAddress;
+export default NewAddress

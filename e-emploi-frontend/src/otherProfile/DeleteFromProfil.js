@@ -1,8 +1,8 @@
 import React from "react";
-import { deleteCurrentUser } from "../../util/APIUtils";
+import { deleteCurrentUser } from "../util/APIUtils";
 import { useNavigate } from "react-router";
-import { initialUser } from "../../constant";
-import { isAvailableUsername } from "../../util/APIUtils";
+import { initialUser } from "../constant";
+import { isAvailableUsername } from "../util/APIUtils";
 import { Modal } from "antd";
 
 const DeleteFromProfil = ({

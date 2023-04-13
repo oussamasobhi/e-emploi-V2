@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Form, Button,  Modal, Input } from "antd";
-import { addSociete, getCurrentUser } from "../../../util/APIUtils";
+import { Form, Button, Modal, Input } from "antd";
+import { addSociete, getCurrentUser } from "../../util/APIUtils";
 
-const AddSociete = ({ open, closeModal, setCurrentUser, notify }) => {
+const NewSociete = ({ open, closeModal, setCurrentUser, notify }) => {
   const [societe, setSociete] = useState({
     nom_societe: "",
     num_tel: "",
@@ -37,7 +37,6 @@ const AddSociete = ({ open, closeModal, setCurrentUser, notify }) => {
       console.log(error);
     }
   };
-
   return (
     <>
       <Modal
@@ -113,4 +112,4 @@ const AddSociete = ({ open, closeModal, setCurrentUser, notify }) => {
   );
 };
 
-export default AddSociete;
+export default NewSociete;

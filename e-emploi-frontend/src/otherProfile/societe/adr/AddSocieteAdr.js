@@ -1,38 +1,43 @@
 import React, { useState } from "react";
-import { Modal, Button, Form, Input } from "antd";
-import { editAddress } from "../../../util/APIUtils";
+import { Input, Form, Modal, Button } from "antd";
+import { newASocieteAddress } from "../../../util/APIUtils";
 import { getCurrentUser } from "../../../util/APIUtils";
 
-const EditAddress = ({ open, closeModal, notify, setCurrentUser, address }) => {
-  const [newAddress, setNewAddress] = useState(address);
-  const handleChange = (changedValue, allValues) => {
-    const key = Object.keys(changedValue)[0];
-    setNewAddress({ ...newAddress, [key]: changedValue[key] });
-  };
-  const reset = (e) => {
-    e.preventDefault();
-    setNewAddress(address);
-    closeModal();
-  };
-
-  const modifierAddresse = async () => {
-    try {
-      await editAddress(newAddress, address.id);
-      const res = await getCurrentUser();
-      setCurrentUser(res);
-      closeModal();
-      notify("Notification", "Addresse modifié avec succès !", "success");
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
+const AddSocieteAdr = ({ open, closeModal, societe, setCurrentUser, notify }) => {
+    const [newAddress, setNewAddress] = useState({
+        libelle_adr: "",
+        pays: "",
+        ville: "",
+      });
+      const reset = () => {
+        setNewAddress({
+          libelle_adr: "",
+          pays: "",
+          ville: "",
+        });
+        closeModal();
+      };
+      const handleChange = (changedValue, allValues) => {
+        const key = Object.keys(changedValue)[0];
+        setNewAddress({ ...newAddress, [key]: changedValue[key] });
+      };
+      const ajouterAddresse = async () => {
+        try{
+            await newASocieteAddress(societe.id, newAddress);
+            const _user = await getCurrentUser();
+            setCurrentUser(_user);
+            closeModal();
+            notify("Notification", "Adresse ajouté avec succès !", "info");
+        }catch(error){
+            console.log(error);
+        }
+      };
   return (
     <Modal
+      title="Ajout d'adresse"
       open={open}
-      title="Modification d'un adresse"
       footer={[
-        <Button type="primary" onClick={modifierAddresse}>
+        <Button type="primary" onClick={ajouterAddresse}>
           Enregistrer
         </Button>,
         <Button onClick={reset}>Fermer</Button>,
@@ -79,7 +84,7 @@ const EditAddress = ({ open, closeModal, notify, setCurrentUser, address }) => {
         </div>
       </Form>
     </Modal>
-  );
-};
+  )
+}
 
-export default EditAddress;
+export default AddSocieteAdr

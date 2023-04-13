@@ -3,12 +3,13 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { getListAnnonces } from "../../util/APIUtils";
 import { Table, Typography } from "antd";
+import { Link } from "react-router-dom";
 
 const Nettoyage = () => {
   const [annonces, setAnnonces] = useState(null);
   useEffect(() => {
     const loadAnnonces = async () => {
-      const res = (await getListAnnonces(1)).content;
+      const res = (await getListAnnonces(1,"",10000)).content;
       setAnnonces(res);
     };
     loadAnnonces();
@@ -28,6 +29,16 @@ const Nettoyage = () => {
         title: "Description",
         dataIndex: "description",
         key: "description"
+    },
+    {
+      title: "Utilisateur",
+      dataIndex: "userResponse",
+      key: "utilisateur",
+      render: ((_,record) => (
+        <>
+        <Link to={"/"+record.userResponse.username} >{record.userResponse.nom}</Link>
+        </>
+      ))
     },
     {
         title: "Tarif",

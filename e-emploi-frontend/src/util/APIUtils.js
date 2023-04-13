@@ -65,6 +65,13 @@ export function getUserByUsername(username) {
   });
 }
 
+export function userGetUserByUsername(username){
+  return request({
+    url: API_BASE_URL +"/api/users/"+username,
+    method: "GET"
+  })
+}
+
 export function getAllUsers() {
   return request({
     url: API_BASE_URL + "/admin/users",
@@ -201,9 +208,9 @@ return request({
 });
 }
 
-export function getListAnnonces(id){
+export function getListAnnonces(id, search, max_tarif){
   return request({
-    url: API_BASE_URL+"/annonce/category/"+id,
+    url: API_BASE_URL+"/annonce/category/"+id+"?search="+search+"&max_tarif_dep="+max_tarif,
     method: "GET"
   });
 }
@@ -221,4 +228,4 @@ export function createAnnonce(annonce){
     method: "POST",
     body: JSON.stringify(annonce)
   });
-}
+} 

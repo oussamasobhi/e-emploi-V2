@@ -10,7 +10,7 @@ const Navbar = ({ isAuth, currentUser, onLogout, setIsLoading }) => {
   };
 
   const goToProfile = () => {
-    navigate("/profile");
+    navigate("/"+currentUser.username);
   };
   const goToLogin = () => {
     navigate("/login");

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { updateSociete, getCurrentUser } from "../../../util/APIUtils";
-import {Form, Input, Button, Modal} from "antd";
+import { updateSociete, getCurrentUser } from "../../util/APIUtils";
+import { Form, Input, Button, Modal } from "antd";
 
 const EditSociete = ({ open, closeModal, notify, setCurrentUser, societe }) => {
   const [newSociete, setNewSociete] = useState(societe);
@@ -83,7 +83,7 @@ const EditSociete = ({ open, closeModal, notify, setCurrentUser, societe }) => {
               required: false,
             },
           ]}
-          initialValue={newSociete.siteweb}          
+          initialValue={newSociete.siteweb}
         >
           <Input />
         </Form.Item>

@@ -1,12 +1,13 @@
+import React from "react";
+import { deleteSociete, getCurrentUser } from "../../util/APIUtils";
 import { Modal } from "antd";
-import { deleteSociete, getCurrentUser } from "../../../util/APIUtils";
 
 const DeleteSociete = ({
   open,
   closeModal,
   societe,
   notify,
-  setCurrentUser,
+  setCurrentUser
 }) => {
   const removeSociete = async () => {
     try {
@@ -29,7 +30,10 @@ const DeleteSociete = ({
       okText="Supprimer"
       cancelText="Annuler"
     >
-      <p>Voulez-vous vraiment supprimer la société <span className="uppercase">{societe.nom_societe}</span> ?</p>
+      <p>
+        Voulez-vous vraiment supprimer la société{" "}
+        <span className="uppercase">{societe.nom_societe}</span> ?
+      </p>
     </Modal>
   );
 };

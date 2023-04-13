@@ -8,14 +8,13 @@ import Layout from "../common/Layout";
 import NotFound from "../common/NotFound";
 import ResetPassword from "../user/ResetPassword";
 import { getCurrentUser, login, logout, signup } from "../util/APIUtils";
-import Profile from "../user/profile/Profile";
 import Dashboard from "../admin/Dashboard";
 import { initialUser } from "../constant";
 import ReactLoading from "react-loading";
 import Domicile from "../domicile/Domicile";
 import EmploiService from "../emploi_servce/EmploiService";
-import Profil2 from "../user/profile/Profil2";
 import Annonce from "../annonce/Annonce";
+import OtherProfile from "../otherProfile/OtherProfile";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(() => {
@@ -183,19 +182,7 @@ function App() {
                 )
               }
             />
-            <Route
-              path="/profile/*"
-              element={
-                <Profile
-                  setIsAuthenticated={setIsAuthenticated}
-                  setCurrentUser={setCurrentUser}
-                  currentUser={currentUser}
-                  setIsLoading={setIsLoading}
-                  notify={notify}
-                />
-              }
-            />
-
+            
             <Route path="forgotten" element={<ResetPassword />} />
             <Route
               path="dashboard"
@@ -209,12 +196,20 @@ function App() {
             />
             <Route path="domicile/*" element={<Domicile />} />
             <Route path="emp_serv/*" element={<EmploiService />} />
-            <Route
-              path="annonce/*"
-              element={<Annonce notify={notify} />}
-            />
+            <Route path="annonce/*" element={<Annonce notify={notify} />} />
             <Route path="*" element={<NotFound />} />
-            <Route path="/:username" element={<Profil2 />} />
+            <Route
+              path="/:username/*"
+              element={
+                <OtherProfile
+                  setIsAuthenticated={setIsAuthenticated}
+                  setCurrentUser={setCurrentUser}
+                  currentUser={currentUser}
+                  setIsLoading={setIsLoading}
+                  notify={notify}
+                />
+              }
+            />
           </Route>
         </Routes>
       </BrowserRouter>

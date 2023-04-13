@@ -1,40 +1,65 @@
 import React, { useState } from "react";
-import { Button, Input, Form, Modal, Space, DatePicker } from "antd";
-import { updateSkill } from "../../../util/APIUtils";
+import {
+  Modal,
+  Button,
+  Form,
+  Input,
+  Space,
+  DatePicker,
+} from "antd";
+import { addSkill } from "../../util/APIUtils";
 
-import dayjs from "dayjs";
-import { dateFormat } from "../../../constant";
+const AddCompetence = ({ open, closeModal, refresh, notify }) => {
+  const initCompetence = {
+    titre: "",
+    niveauscolaire: "",
+    duree_formation: "",
+    date_obtention: "",
+    duree_exp: "",
+  };
+  const [competence, setCompetence] = useState({
+    titre: "",
+    niveauscolaire: "",
+    duree_formation: "",
+    date_obtention: "",
+    duree_exp: "",
+  });
+  const handleChange = (changedValue, allValues) => {
+    const key = Object.keys(changedValue)[0];
+    setCompetence({ ...competence, [key]: changedValue[key] });
+  };
+  const reset = (e) => {
+    e.preventDefault();
+    setCompetence({
+      titre: "",
+      niveauscolaire: "",
+      duree_formation: "",
+      date_obtention: "",
+      duree_exp: "",
+    });
+    closeModal();
+  };
 
-const EditCompetence = ({competence, open, refresh, closeModal, notify}) => {
-    const [newCompetence, setNewCompetence] = useState(competence);
-    const handleChange = (changedValue, allValues) => {
-        const key = Object.keys(changedValue)[0];
-        setNewCompetence({ ...competence, [key]: changedValue[key] });
-      };
-      const reset = (e) => {
-        e.preventDefault();
-        setNewCompetence(competence);
-        closeModal();
-      };
-      const modifierCompetence = async (event) => {
-        event.preventDefault();
-        try {
-          await updateSkill(competence.id, newCompetence);
-          refresh();
-          reset(event);
-          notify("Notification", "Compétence modifiée avec succès", "success");
-        } catch (error) {
-          console.log(error);
-        }
-      };
-    
+  const ajouterCompetence = async (event) => {
+    event.preventDefault();
+    try {
+      console.log(competence.date_obtention);
+      await addSkill(competence);
+      refresh();
+      reset(event);
+      notify("Notification", "Nouvelle compétence ajoutée", "success");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Modal
       open={open}
       title="Ajout d'une Compétence"
       onCancel={reset}
       footer={[
-        <Button type="primary" onClick={modifierCompetence}>
+        <Button type="primary" onClick={ajouterCompetence}>
           Enregistrer
         </Button>,
         <Button onClick={reset}>Fermer</Button>,
@@ -63,7 +88,7 @@ const EditCompetence = ({competence, open, refresh, closeModal, notify}) => {
                 message: "Champ titre obligatoire ",
               },
             ]}
-            initialValue={competence.titre}
+            initialValue={initCompetence.titre}
           >
             <Input />
           </Form.Item>
@@ -75,7 +100,7 @@ const EditCompetence = ({competence, open, refresh, closeModal, notify}) => {
                 required: false,
               },
             ]}
-            initialValue={competence.niveauscolaire}
+            initialValue={initCompetence.niveauscolaire}
           >
             <Input className="w-full" />
           </Form.Item>
@@ -87,7 +112,7 @@ const EditCompetence = ({competence, open, refresh, closeModal, notify}) => {
                 required: false,
               },
             ]}
-            initialValue={competence.duree_formation}
+            initialValue={initCompetence.duree_formation}
           >
             <Input className="w-full" />
           </Form.Item>
@@ -99,7 +124,7 @@ const EditCompetence = ({competence, open, refresh, closeModal, notify}) => {
                 required: false,
               },
             ]}
-            initialValue={competence.duree_exp}
+            initialValue={initCompetence.duree_exp}
           >
             <Input className="w-full" />
           </Form.Item>
@@ -111,8 +136,9 @@ const EditCompetence = ({competence, open, refresh, closeModal, notify}) => {
                 required: false,
               },
             ]}
+            initialValue={initCompetence.date_obtention}
           >
-            <DatePicker defaultValue={dayjs(competence.date_obtention, dateFormat)} format={dateFormat} className="w-full" />
+            <DatePicker className="w-full" />
           </Form.Item>
         </Space>
       </Form>
@@ -120,4 +146,4 @@ const EditCompetence = ({competence, open, refresh, closeModal, notify}) => {
   );
 };
 
-export default EditCompetence;
+export default AddCompetence;

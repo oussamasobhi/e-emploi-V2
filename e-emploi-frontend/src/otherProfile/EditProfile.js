@@ -1,43 +1,35 @@
 import React, { useState } from "react";
 import { Button, Input, Typography, Form, DatePicker, Space } from "antd";
 import { useNavigate } from "react-router";
-import { getCurrentUser, updateProfil } from "../../util/APIUtils";
+import { getCurrentUser, updateProfil } from "../util/APIUtils";
 import DeleteFromProfil from "./DeleteFromProfil";
 import dayjs from "dayjs";
-import { dateFormat } from "../../constant";
+import { dateFormat } from "../constant";
+import { Navigate, useParams } from "react-router";
 
-const UpdateProfil = ({
+const EditProfile = ({
   currentUser,
   setCurrentUser,
   setIsLoading,
   setIsAuthenticated,
   notify,
 }) => {
+  const { username } = useParams();
   const navigate = useNavigate();
   const [user, setUser] = useState(currentUser);
   const [openDelete, setOpenDelete] = useState(false);
-  const openDeleteAlert = () => {
-    setOpenDelete(true);
-  };
-  const closeDeleteAlert = () => {
-    setOpenDelete(false);
-  };
+  
   //setUser({ ...user, ["date_naissance"]:"" });
 
   const handleChange = (changedValue, allValues) => {
     const key = Object.keys(changedValue)[0];
-      setUser({ ...user, [key]: changedValue[key] });
+    setUser({ ...user, [key]: changedValue[key] });
   };
 
   const reset = (e) => {
     e.preventDefault();
-    navigate("/profile");
+    navigate("/" + username);
   };
-  /* const onChange = (date, dateString) => {
-   // console.log( "change :"+ dateString);
-    setUser({ ...user, ["date_naissance"]: dateString});
-   // console.log(user.date_naissance)
-  };*/
   const editProfil = async (e) => {
     try {
       console.log(user);
@@ -45,18 +37,19 @@ const UpdateProfil = ({
       console.log(res);
       const _user = await getCurrentUser();
       setCurrentUser(_user);
-      reset(e);
+
       notify("Notification", "Profil modifié avec succès", "success");
+      reset(e);
     } catch (error) {
       console.log(error);
     }
   };
 
   const deleteProfil = () => {
-    openDeleteAlert();
+   setOpenDelete(true);
   };
 
-  return (
+  return currentUser.username === username ? (
     <>
       <Typography.Title level={3} className="uppercase text-center">
         Modification de vos informations
@@ -184,13 +177,15 @@ const UpdateProfil = ({
       </Form>
       <DeleteFromProfil
         open={openDelete}
-        closeModal={closeDeleteAlert}
+        closeModal={() => setOpenDelete(false)}
         setIsAuthenticated={setIsAuthenticated}
         setIsLoading={setIsLoading}
         notify={notify}
       />
     </>
+  ) : (
+    <Navigate to={"/" + username} />
   );
 };
 
-export default UpdateProfil;
+export default EditProfile;

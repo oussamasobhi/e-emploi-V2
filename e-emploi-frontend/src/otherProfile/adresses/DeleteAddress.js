@@ -1,6 +1,6 @@
-import React from "react";
-import { Modal } from "antd";
-import { deleteAddress, getCurrentUser } from "../../../util/APIUtils";
+import React from 'react';
+import { deleteAddress, getCurrentUser } from '../../util/APIUtils';
+import { Modal } from 'antd';
 
 const DeleteAddress = ({
   open,
@@ -9,7 +9,7 @@ const DeleteAddress = ({
   notify,
   setCurrentUser,
 }) => {
-  const removeAddress = async () => {
+  const removeAddress =async () => {
     try {
       await deleteAddress(address.id);
       const res = await getCurrentUser();
@@ -19,8 +19,7 @@ const DeleteAddress = ({
     } catch (error) {
       console.log(error);
     }
-  };
-
+  }
   return (
     <Modal
       title="Suppression d'adresse"
@@ -32,7 +31,7 @@ const DeleteAddress = ({
     >
       <p>Voulez-vous vraiment supprimer cette adresse ?</p>
     </Modal>
-  );
-};
+  )
+}
 
-export default DeleteAddress;
+export default DeleteAddress

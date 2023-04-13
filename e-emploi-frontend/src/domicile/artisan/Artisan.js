@@ -8,7 +8,7 @@ const Artisan = () => {
   const [annonces, setAnnonces] = useState(null);
   useEffect(() => {
     const loadAnnonces = async () => {
-      const res = (await getListAnnonces(2)).content;
+      const res = (await getListAnnonces(2,"",1000)).content;
       setAnnonces(res);
     };
     loadAnnonces();
@@ -26,6 +26,16 @@ const Artisan = () => {
       key: "description",
     },
     {
+      title: "Utilisateur",
+      dataIndex: "userResponse",
+      key: "utilisateur",
+      render: ((_,record) => (
+        <>
+        <Link to={"/"+record.userResponse.username} >{record.userResponse.prenom} {record.userResponse.nom}</Link>
+        </>
+      ))
+    },
+    {
       title: "Tarif",
       dataIndex: "tarif_depart",
       key: "tarif_depart",
@@ -35,20 +45,6 @@ const Artisan = () => {
       dataIndex: "date_fin_annonce",
       key: "date_fin",
     },
-    {
-      title: "Utilisateur",
-      dataIndex: "userResponse",
-      key: "user",
-      render : (_, record) => (
-        <>
-          {record.userResponse && (
-            <Link to="#">
-              {record.userResponse.nom}
-            </Link>
-          )}
-        </>
-      )
-    }
   ];
 
   return (

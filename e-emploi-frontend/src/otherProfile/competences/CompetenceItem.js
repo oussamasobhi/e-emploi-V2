@@ -1,31 +1,22 @@
 import { Typography, Button, Modal } from "antd";
 import React, { useState } from "react";
-import { deleteSkill } from "../../../util/APIUtils";
+import { deleteSkill } from "../../util/APIUtils";
 import EditCompetence from "./EditCompetence";
 
-const Competence = ({ competence, refresh, notify }) => {
+const CompetenceItem = ({ competence, refresh, notify, isCurrentUser }) => {
   const [isOpenDelete, setIsOpenDelete] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
   const updateCompetence = () => {
     setIsOpenEdit(true);
   };
   const removeCompetence = () => {
-    openModal();
-  };
-  function openModal() {
     setIsOpenDelete(true);
-  }
-  function closeModal() {
-    setIsOpenDelete(false);
-  }
-  function closeEdit(){
-    setIsOpenEdit(false);
-  }
+  };
   const supprimerCompetence = async () => {
     try {
       await deleteSkill(competence.id);
       refresh();
-      closeModal();
+      setIsOpenDelete(false);
       notify("Notification", "Compétence supprimée avec succès");
     } catch (error) {
       console.log(error);
@@ -44,23 +35,27 @@ const Competence = ({ competence, refresh, notify }) => {
             <p>Durée de formation : {competence.duree_formation} </p>
             <p>Niveau scolaire : {competence.niveauscolaire} </p>
           </div>
-          <Button onClick={(e) => updateCompetence(e, competence)}>
-            Modifier
-          </Button>
-          <Button
-            onClick={(e) => removeCompetence(e, competence)}
-            danger
-            className="ml-10"
-          >
-            Supprimer
-          </Button>
+          {isCurrentUser && (
+            <>
+              <Button onClick={(e) => updateCompetence(e, competence)}>
+                Modifier
+              </Button>
+              <Button
+                onClick={(e) => removeCompetence(e, competence)}
+                danger
+                className="ml-10"
+              >
+                Supprimer
+              </Button>
+            </>
+          )}
         </div>
       </div>
       <Modal
         title="Suppression de compétence"
         open={isOpenDelete}
         onOk={supprimerCompetence}
-        onCancel={closeModal}
+        onCancel={() => setIsOpenDelete(false)}
         okText="Supprimer"
         cancelText="Annuler"
       >
@@ -69,10 +64,15 @@ const Competence = ({ competence, refresh, notify }) => {
           <span className="text-semibold uppercase"> {competence.titre}</span> ?
         </p>
       </Modal>
-      <EditCompetence competence={competence} open={isOpenEdit} refresh={refresh} closeModal={closeEdit}
-      notify={notify}  />
+      <EditCompetence
+        competence={competence}
+        open={isOpenEdit}
+        refresh={refresh}
+        closeModal={() => setIsOpenEdit(false)}
+        notify={notify}
+      />
     </>
   );
 };
 
-export default Competence;
+export default CompetenceItem;
