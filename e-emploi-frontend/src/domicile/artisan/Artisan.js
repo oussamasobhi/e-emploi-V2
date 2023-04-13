@@ -2,6 +2,7 @@ import React from "react";
 import { getListAnnonces } from "../../util/APIUtils";
 import { useEffect, useState } from "react";
 import {Typography, Table} from "antd";
+import { Link } from "react-router-dom";
 
 const Artisan = () => {
   const [annonces, setAnnonces] = useState(null);
@@ -34,6 +35,20 @@ const Artisan = () => {
       dataIndex: "date_fin_annonce",
       key: "date_fin",
     },
+    {
+      title: "Utilisateur",
+      dataIndex: "userResponse",
+      key: "user",
+      render : (_, record) => (
+        <>
+          {record.userResponse && (
+            <Link to="#">
+              {record.userResponse.nom}
+            </Link>
+          )}
+        </>
+      )
+    }
   ];
 
   return (

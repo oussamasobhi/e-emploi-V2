@@ -8,16 +8,12 @@ import PersonalInfoPage from "./PersonalInfoPage";
 import Societepage from "./SocietePage";
 import CompetencesPage from "./CompetencesPage";
 import UpdateProfil from "./UpdateProfil";
-
 const Profile = ({
   setIsAuthenticated,
   currentUser,
   setCurrentUser,
   setIsLoading,
   notify,
-  current,
-  setCurrent,
-  onClick,
   breadcrumbItems
 }) => {
   useEffect(() => {
@@ -89,6 +85,7 @@ const Profile = ({
           />
           <Route path="skills" element={<CompetencesPage notify={notify} />}
            />
+           
         </Route>
       </Routes>
     </>

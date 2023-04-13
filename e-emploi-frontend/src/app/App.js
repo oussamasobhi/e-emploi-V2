@@ -14,7 +14,7 @@ import { initialUser } from "../constant";
 import ReactLoading from "react-loading";
 import Domicile from "../domicile/Domicile";
 import EmploiService from "../emploi_servce/EmploiService";
-import CreateAnnonce from "../annonce/CreateAnnonce";
+import Profil2 from "../user/profile/Profil2";
 import Annonce from "../annonce/Annonce";
 
 function App() {
@@ -214,6 +214,7 @@ function App() {
               element={<Annonce notify={notify} />}
             />
             <Route path="*" element={<NotFound />} />
+            <Route path="/:username" element={<Profil2 />} />
           </Route>
         </Routes>
       </BrowserRouter>
