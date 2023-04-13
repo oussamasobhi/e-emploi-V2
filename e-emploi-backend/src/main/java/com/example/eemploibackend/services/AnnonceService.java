@@ -61,20 +61,27 @@ public class AnnonceService {
             return true;
         }
     }
-    public PagedResponse<AnnonceResponse> getaaonnoncesparcategorie(Long idcategory,int page,int size){
+    public PagedResponse<AnnonceResponse> getaaonnoncesparcategorie(Long idcategory,int page,int size,String search,
+                                                                    double max_tarif_dep,double min_tarif_dep){
         validatePageNumberAndSize(page, size);
         // retrieve all annonces
         Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "createdAt");
-        Page<Annonce> annonces = annonceRepository.findAll(pageable);
+       Page<Annonce> annonces=null;
+ //       if(search.equals("")) {
+ //           annonces = annonceRepository.findAll(pageable);
+//        }
+ //       else {
+            annonces=annonceRepository.findByTitreOrDescription(search,max_tarif_dep,min_tarif_dep,pageable);
+ //       }
         List<Annonce> result = annonces.getContent()
                 .stream()
-                .filter(i->i.getCategorie2Annonce().getId().equals(idcategory))
+                .filter(i -> i.getCategorie2Annonce().getId().equals(idcategory))
                 .collect(Collectors.toList());
         Page<Annonce> annoncePage = new PageImpl<Annonce>(result);
-        List<AnnonceResponse> allannonces=annoncePage.map((annonce)->{
-                    return ModelMapper.mapannonceToAnnonceResponse(annonce);})
+        List<AnnonceResponse> allannonces = annoncePage.map((annonce) -> {
+                    return ModelMapper.mapannonceToAnnonceResponse(annonce);
+                })
                 .getContent();
-
         return new PagedResponse<>(allannonces, annoncePage.getNumber(),
                 annoncePage.getSize(), annoncePage.getTotalElements(), annoncePage.getTotalPages(), annoncePage.isLast());
     }
