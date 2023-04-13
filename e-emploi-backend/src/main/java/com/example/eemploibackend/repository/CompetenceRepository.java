@@ -14,4 +14,7 @@ public interface CompetenceRepository extends JpaRepository<Competence,Long> {
     Competence findCompetenceById(Long id);
     @Query("SELECT c from Competence c where c.user.id=?1")
     List<Competence> findAllByUserId(Long iduser);
-}
+
+    @Query("SELECT C from Competence C where C.user.username=?1")
+    List<Competence> findAllByUsername(String username);
+ }

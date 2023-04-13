@@ -72,7 +72,7 @@ public class AnnonceService {
 //        }
  //       else {
             annonces=annonceRepository.findByTitreOrDescription(search,max_tarif_dep,min_tarif_dep,pageable);
- //       }
+ //        }
         List<Annonce> result = annonces.getContent()
                 .stream()
                 .filter(i -> i.getCategorie2Annonce().getId().equals(idcategory))
