@@ -2,10 +2,7 @@ package com.example.eemploibackend.services;
 
 import com.example.eemploibackend.exceptions.BadRequestException;
 import com.example.eemploibackend.exceptions.ResourceNotFoundException;
-import com.example.eemploibackend.model.Annonce;
-import com.example.eemploibackend.model.AnnonceUser;
-import com.example.eemploibackend.model.AnnonceUserID;
-import com.example.eemploibackend.model.User;
+import com.example.eemploibackend.model.*;
 import com.example.eemploibackend.payloads.PostuleAnnonceRequest;
 import com.example.eemploibackend.repository.AnnonceRepository;
 import com.example.eemploibackend.repository.AnnonceUserRepository;
@@ -30,6 +27,7 @@ public class AnnonceUserService {
                 .user(user)
                 .duree_propose_real(request.getDuree_prop_real())
                 .tarif_nego(request.getTarif_nego())
+                .statusAnnonce(StatusAnnonce.Demande_Envoyé)
                 .build();
         annonceUserRepository.save(annonceUser);
     }
