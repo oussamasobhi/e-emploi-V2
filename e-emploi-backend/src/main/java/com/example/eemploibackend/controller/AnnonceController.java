@@ -47,8 +47,11 @@ public class AnnonceController {
     @GetMapping("/category/{id}")
     public PagedResponse<AnnonceResponse> getannoncespercaregory(@PathVariable(value = "id") Long id,
                                                                  @RequestParam(value = "page", defaultValue ="0") int page,
-                                                                 @RequestParam(value = "size", defaultValue = "30") int size)
+                                                                 @RequestParam(value = "size", defaultValue = "30") int size,
+                                                                 @RequestParam(value = "search") String search,
+                                                                 @RequestParam(value = "max_tarif_dep",defaultValue = "10")double max_tarif_dep,
+                                                                 @RequestParam(value = "min_tarif_dep",defaultValue = "0")double min_tarif_dep)
     {
-     return annonceService.getaaonnoncesparcategorie(id,page,size);
+     return annonceService.getaaonnoncesparcategorie(id,page,size,search,max_tarif_dep,min_tarif_dep);
     }
 }
