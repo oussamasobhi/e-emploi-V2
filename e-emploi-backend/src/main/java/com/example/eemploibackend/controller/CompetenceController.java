@@ -38,4 +38,8 @@ public class CompetenceController {
     public List<Competence> getcompetencebyuser(@CurrentUser User user){
              return competenceService.getcomptencesbyuserid(user.getId());
     }
+    @GetMapping("/{username}")
+    public List<Competence> getcompetence(@PathVariable(value = "username") String username){
+        return competenceService.getcompetencebyusername(username);
+    }
 }

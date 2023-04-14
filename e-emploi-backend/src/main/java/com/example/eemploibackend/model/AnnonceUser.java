@@ -29,7 +29,7 @@ public class AnnonceUser {
     private double duree_valide_real;
     private double duree_real_final;
     private double tarif_nego;
-    // annonce status a faire
+    private StatusAnnonce statusAnnonce;
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

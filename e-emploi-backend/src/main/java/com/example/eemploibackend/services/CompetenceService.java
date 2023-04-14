@@ -42,4 +42,5 @@ public void supprimercompetence(Long idcomp){
 public List<Competence> getcomptencesbyuserid(Long iduser){
         return competenceRepository.findAllByUserId(iduser);
 }
+public List<Competence> getcompetencebyusername(String username){return competenceRepository.findAllByUsername(username);}
 }
