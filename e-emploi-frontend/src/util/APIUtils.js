@@ -45,11 +45,11 @@ export function login(loginRequest) {
     body: JSON.stringify(loginRequest),
   });
 }
-export function logout(){
+export function logout() {
   return request({
-    url: API_BASE_URL+"/auth/logout",
-    method: "POST"
-  })
+    url: API_BASE_URL + "/auth/logout",
+    method: "POST",
+  });
 }
 export function getCurrentUser() {
   return request({
@@ -65,11 +65,11 @@ export function getUserByUsername(username) {
   });
 }
 
-export function userGetUserByUsername(username){
+export function userGetUserByUsername(username) {
   return request({
-    url: API_BASE_URL +"/api/users/"+username,
-    method: "GET"
-  })
+    url: API_BASE_URL + "/api/users/" + username,
+    method: "GET",
+  });
 }
 
 export function getAllUsers() {
@@ -170,62 +170,93 @@ export function getSkills() {
   });
 }
 
-export function deleteSkill(id){
+export function getSkillsByUsername(username) {
   return request({
-    url: API_BASE_URL+ "/users/competence/delete/"+id,
-    method: "DELETE"
-  })
+    url: API_BASE_URL + "/users/competence/" + username,
+    method: "GET",
+  });
 }
 
-export function updateSkill(id, skill){
+export function deleteSkill(id) {
   return request({
-    url: API_BASE_URL+"/users/competence/edit/"+id,
+    url: API_BASE_URL + "/users/competence/delete/" + id,
+    method: "DELETE",
+  });
+}
+
+export function updateSkill(id, skill) {
+  return request({
+    url: API_BASE_URL + "/users/competence/edit/" + id,
     method: "PUT",
-    body: JSON.stringify(skill)
+    body: JSON.stringify(skill),
   });
 }
 
-export function updateSocieteAdress(id, address){
+export function updateSocieteAdress(id, address) {
   return request({
-    url: API_BASE_URL+"/societe/"+id+"/address/edit",
+    url: API_BASE_URL + "/societe/" + id + "/address/edit",
     method: "PUT",
-    body: JSON.stringify(address)
-  })
-}
-
-export function deleteSocieteAdress(id){
-  return request({
-    url: API_BASE_URL+"/societe/"+id+"/address/delete",
-    method: "DELETE"
-  })
-}
-
-export function newASocieteAddress(id, address){
-return request({
-  url: API_BASE_URL+"/societe/"+id+"/address/create",
-  method: "POST",
-  body: JSON.stringify(address)
-});
-}
-
-export function getListAnnonces(id, search, max_tarif){
-  return request({
-    url: API_BASE_URL+"/annonce/category/"+id+"?search="+search+"&max_tarif_dep="+max_tarif,
-    method: "GET"
+    body: JSON.stringify(address),
   });
 }
 
-export function getCategories(){
+export function deleteSocieteAdress(id) {
   return request({
-    url: API_BASE_URL+"/category/",
-    method: "GET"
+    url: API_BASE_URL + "/societe/" + id + "/address/delete",
+    method: "DELETE",
   });
 }
 
-export function createAnnonce(annonce){
+export function newASocieteAddress(id, address) {
   return request({
-    url: API_BASE_URL+"/annonce/add",
+    url: API_BASE_URL + "/societe/" + id + "/address/create",
     method: "POST",
-    body: JSON.stringify(annonce)
+    body: JSON.stringify(address),
   });
-} 
+}
+
+export function getListAnnonces(id, page, size, search, min_tarif, max_tarif) {
+  if (page === undefined || page === null) page = 0;
+  if (size === undefined || size === null) size = 30;
+  if (max_tarif === undefined || max_tarif === null) max_tarif = 10000;
+  if (min_tarif === undefined || min_tarif === null) min_tarif = 0;
+  if (search === undefined || search === null) search = "";
+  return request({
+    url:
+      API_BASE_URL +
+      "/annonce/category/" +
+      id +
+      "?page=" +
+      page +
+      "&size=" +
+      size +
+      "&search=" +
+      search +
+      "&min_tarif_dep=" +
+      min_tarif +
+      "&max_tarif_dep=" +
+      max_tarif,
+    method: "GET",
+  });
+}
+
+export function getCategories() {
+  return request({
+    url: API_BASE_URL + "/category/",
+    method: "GET",
+  });
+}
+export function getSousCategories(id) {
+  return request({
+    url: API_BASE_URL + "/categorie/" + id + "/all",
+    method: "GET",
+  });
+}
+
+export function createAnnonce(annonce) {
+  return request({
+    url: API_BASE_URL + "/annonce/add",
+    method: "POST",
+    body: JSON.stringify(annonce),
+  });
+}

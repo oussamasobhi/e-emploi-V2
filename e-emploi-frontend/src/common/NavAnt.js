@@ -16,19 +16,19 @@ const NavAnt = ({ goToHome, currentUser, goToProfile, logout }) => {
       key: "mon_compte",
     },
     {
-      label: <a href="#">Mes commandes</a>,
+      label: <Link to="#">Mes commandes</Link>,
       key: "mes_commandes",
     },
     {
-      label: <a href="#">Mes recherches</a>,
+      label: <Link to="#">Mes recherches</Link>,
       key: "mes_recherches",
     },
     {
-      label: <a href="#">Mes propositions</a>,
+      label: <Link to="#">Mes propositions</Link>,
       key: "mes_propositions",
     },
     {
-      label: <a onClick={(e) => logout(e, goToLogin)}>Déconnexion</a>,
+      label: <Link onClick={(e) => logout(e, goToLogin)}>Déconnexion</Link>,
       key: "deconnexion",
     },
   ];
@@ -84,11 +84,11 @@ const NavAnt = ({ goToHome, currentUser, goToProfile, logout }) => {
       key: "domicile",
       children: [
         {
-          label: <a href="/domicile/nettoyage">Services Nettoyages</a>,
+          label: <Link to="/domicile/nettoyage">Services Nettoyages</Link>,
           key: "houseKeeper",
         },
         {
-          label: <a href="/domicile/artisan">Service Artisan</a>,
+          label: <Link to="/domicile/artisan">Service Artisan</Link>,
           key: "artisan",
         },
       ],
@@ -98,11 +98,11 @@ const NavAnt = ({ goToHome, currentUser, goToProfile, logout }) => {
       key: "emp_services",
       children: [
         {
-          label: <a href="/emp_serv/emploi">Offres d'mploi</a>,
+          label: <Link to="/emp_serv/emploi">Offres d'mploi</Link>,
           key: "offre_emploi",
         },
         {
-          label: <a href="/emp_serv/service">Services</a>,
+          label: <Link to="/emp_serv/service">Services</Link>,
           key: "compet_list",
         },
       ],

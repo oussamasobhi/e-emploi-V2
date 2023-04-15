@@ -8,6 +8,10 @@ import Competences from "./competences/Competences";
 import Societe from "./societe/Societe";
 import Adresse from "./adresses/Adresse";
 import { useNavigate } from "react-router";
+import Artisan from "../domicile/artisan/Artisan";
+import Nettoyage from "../domicile/nettoyage/Nettoyage";
+import Emploi from "../emploi_servce/emploi/Emploi";
+import Service from "../emploi_servce/service/Service";
 
 const OtherProfile = ({
   setIsAuthenticated,
@@ -30,7 +34,7 @@ const OtherProfile = ({
       }
     };
     loadUser();
-  }, [username]);
+  }, [username, navigate]);
   
   if (!user) return <p>Loading...</p>;
   else
@@ -87,6 +91,10 @@ const OtherProfile = ({
                 />
               }
             />
+            <Route path="artisan" element={<Artisan currentUser={currentUser} />} />
+            <Route path="nettoyage" element={<Nettoyage currentUser={currentUser} />} />
+            <Route path="emploi" element={<Emploi currentUser={currentUser} />} />
+            <Route path="service" element={<Service currentUser={currentUser} />} />
           </Route>
         </Routes>
       </>

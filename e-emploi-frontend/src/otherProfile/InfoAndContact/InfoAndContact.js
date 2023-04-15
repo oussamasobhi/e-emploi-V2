@@ -16,6 +16,18 @@ const InfoAndContact = ({ currentUser, user }) => {
           </Typography.Title>
           <table>
             <tbody>
+            <tr>
+                <td>Nom : </td>
+                <td className="pl-20">
+                {isCurrentUser && currentUser.nom}
+                  {!isCurrentUser && user.nom}</td>
+              </tr>
+               <tr>
+                <td>Prénoms : </td>
+                <td className="pl-20">
+                {isCurrentUser && currentUser.prenom}
+                  {!isCurrentUser && user.prenom}</td>
+              </tr>
               <tr>
                 <td>Nom d'utilisateur: </td>
                 <td className="pl-20">
@@ -65,7 +77,6 @@ const InfoAndContact = ({ currentUser, user }) => {
             </div>
           )}
         </div>
-        <div className="mt-14">{/*TODO*/} Liste d'annonces ...</div>
       </>
     );
 };

@@ -3,8 +3,17 @@ import { Typography, Table } from "antd";
 import { getListAnnonces } from "../util/APIUtils";
 import { Link } from "react-router-dom";
 
-const ESContent = () => {
+const ESContent = ({currentUser}) => {
   const [annonces, setAnnonces] = useState(null);
+  const [filteredAnnonces, setFilteredAnnonces] = useState(null);
+  useEffect(() => {
+    if (annonces) {
+      var annoncesToShow = annonces.filter(function (annonce) {
+        return annonce.userResponse.username !== currentUser.username;
+      });
+      setFilteredAnnonces(annoncesToShow);
+    }
+  }, [annonces, currentUser.username]);
   useEffect(() => {
     const loadAnnonces = async () => {
       const res = (await getListAnnonces(3,"",10000)).content;
@@ -31,7 +40,7 @@ const ESContent = () => {
       key: "utilisateur",
       render: ((_,record) => (
         <>
-        <Link to={"/"+record.userResponse.username} >{record.userResponse.nom}</Link>
+        <Link to={"/"+record.userResponse.username} > {record.userResponse.prenom} {record.userResponse.nom}</Link>
         </>
       ))
     },
@@ -55,7 +64,7 @@ const ESContent = () => {
   return (
     <>
       <Typography.Title level={3}>Emplois</Typography.Title>
-      <Table dataSource={annonces} columns={empServColumns} />
+      <Table dataSource={filteredAnnonces} columns={empServColumns} />
     </>
   );
 };

@@ -2,60 +2,148 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { getListAnnonces } from "../../util/APIUtils";
-import { Table, Typography } from "antd";
+import { Typography, Table, Input, Button, InputNumber, Form } from "antd";
 import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useForm } from "antd/es/form/Form";
+import {DeleteOutlined, EditOutlined, SearchOutlined} from "@ant-design/icons";
 
-const Nettoyage = () => {
+const Nettoyage = ({ currentUser }) => {
   const [annonces, setAnnonces] = useState(null);
+  const [filteredAnnonces, setFilteredAnnonces] = useState(null);
+  const { username } = useParams();
+  const [isProfile, setIsProfile] = useState(false);
+  useEffect(() => {
+    if (username) {
+      setIsProfile(true);
+    }
+  }, [username]);
+
+  useEffect(() => {
+    if (annonces) {
+      if (!isProfile) {
+        let annoncesToShow = annonces.filter(function (annonce) {
+          return annonce.userResponse.username !== currentUser.username;
+        });
+        setFilteredAnnonces(annoncesToShow);
+      } else {
+        let annoncesToShow = annonces.filter(function (annonce) {
+          return annonce.userResponse.username === username;
+        });
+        setFilteredAnnonces(annoncesToShow);
+      }
+    }
+  }, [annonces, currentUser.username, username, isProfile]);
+
   useEffect(() => {
     const loadAnnonces = async () => {
-      const res = (await getListAnnonces(1,"",10000)).content;
+      const res = (await getListAnnonces(1)).content;
       setAnnonces(res);
     };
     loadAnnonces();
   }, []);
 
-  if (annonces) {
-    console.log(annonces);
-  };
-
   const nettoyageColumns = [
     {
-        title: "Titre",
-        dataIndex: "titre_annonce",
-        key: "titre"
+      title: "Titre",
+      dataIndex: "titre_annonce",
+      key: "titre",
     },
     {
-        title: "Description",
-        dataIndex: "description",
-        key: "description"
+      title: "Description",
+      dataIndex: "description",
+      key: "description",
     },
     {
       title: "Utilisateur",
       dataIndex: "userResponse",
       key: "utilisateur",
-      render: ((_,record) => (
+      render: (_, record) => (
         <>
-        <Link to={"/"+record.userResponse.username} >{record.userResponse.nom}</Link>
+          <Link to={"/" + record.userResponse.username}>
+            {" "}
+            {record.userResponse.prenom} {record.userResponse.nom}
+          </Link>
         </>
-      ))
+      ),
     },
     {
-        title: "Tarif",
-        dataIndex: "tarif_depart",
-        key: "tarif_depart"
+      title: "Tarif",
+      dataIndex: "tarif_depart",
+      key: "tarif_depart",
     },
     {
-        title: "Date de fin",
-        dataIndex: "date_fin_annonce",
-        key: "date_fin"
-    }
+      title: "Action",
+      key: "action",
+      render: () => (
+        <>
+          {!isProfile && <Button type="primary">Postuler</Button>}
+          {isProfile && (
+            <>
+             <Button ><EditOutlined/> </Button>
+              <Button danger className="ml-3" ><DeleteOutlined/> </Button>
+            </>
+          )}
+        </>
+      ),
+    },
   ];
+
+  //recherche
+  const [form] = useForm();
+  const [recherche, setRecherche] = useState({
+    search: "",
+    min: undefined,
+    max: undefined,
+  });
+  const handleChange = (changedValue, allValues) => {
+    const key = Object.keys(changedValue)[0];
+    setRecherche({ ...recherche, [key]: changedValue[key] });
+  };
+  const onSearch = async () => {
+    console.log(recherche);
+    try {
+      const _search = (
+        await getListAnnonces(
+          1,
+          undefined,
+          undefined,
+          recherche.search,
+          recherche.min,
+          recherche.max
+        )
+      ).content;
+      setAnnonces(_search);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
       <Typography.Title level={3}>Nettoyage</Typography.Title>
-      <Table dataSource={annonces} columns={nettoyageColumns} />
+      <Form form={form} onValuesChange={handleChange} className="flex mb-10">
+        <Form.Item name="search">
+          <Input placeholder="mots clés" />
+        </Form.Item>
+        <Form.Item label="Tarif min" name="min" className="ml-3">
+          <InputNumber />
+        </Form.Item>
+        <Form.Item label="Tarif max" name="max" className="ml-3">
+          <InputNumber />
+        </Form.Item>
+        <Form.Item>
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="ml-6"
+            onClick={onSearch}
+          >
+            <SearchOutlined />
+          </Button>
+        </Form.Item>
+      </Form>
+      <Table dataSource={filteredAnnonces} columns={nettoyageColumns} />
     </>
   );
 };

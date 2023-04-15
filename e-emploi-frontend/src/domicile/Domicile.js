@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import { Route, Routes } from "react-router";
 import LayoutDomicile from "./LayoutDomicile";
 import Nettoyage from "./nettoyage/Nettoyage";
@@ -6,15 +6,15 @@ import Artisan from "./artisan/Artisan";
 import DomicileContent from "./DomicileContent";
 
 
-const Domicile = () => {
+const Domicile = ({currentUser}) => {
  
 
   return (
     <Routes>
       <Route path="/*" element={<LayoutDomicile />}>
-        <Route index element={<DomicileContent/> } />
-        <Route path="nettoyage" element={<Nettoyage />} />
-        <Route path="artisan" element={<Artisan />} />
+        <Route index element={<DomicileContent currentUser={currentUser} /> } />
+        <Route path="nettoyage" element={<Nettoyage currentUser={currentUser}  />} />
+        <Route path="artisan" element={<Artisan currentUser={currentUser} />} />
       </Route>
     </Routes>
   );

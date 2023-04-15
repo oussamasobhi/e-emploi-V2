@@ -194,8 +194,8 @@ function App() {
                 )
               }
             />
-            <Route path="domicile/*" element={<Domicile />} />
-            <Route path="emp_serv/*" element={<EmploiService />} />
+            <Route path="domicile/*" element={<Domicile currentUser={currentUser} />} />
+            <Route path="emp_serv/*" element={<EmploiService currentUser={currentUser} />} />
             <Route path="annonce/*" element={<Annonce notify={notify} />} />
             <Route path="*" element={<NotFound />} />
             <Route

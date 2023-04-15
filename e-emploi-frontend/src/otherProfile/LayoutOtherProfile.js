@@ -12,20 +12,51 @@ const LayoutOtherProfile = ({ currentUser, user }) => {
 
   const sideMenuItems = [
     {
-      label: <a href={"/" + user.username}>Profil</a>,
+      label: <Link to={"/" + user.username}>Profil</Link>,
       key: "profil",
     },
     {
-      label: <a href={"/" + user.username + "/address"}>Adresses</a>,
+      label: <Link to={"/" + user.username + "/address"}>Adresses</Link>,
       key: "addresses",
     },
     {
-      label: <a href={"/" + user.username + "/company"}>Société</a>,
+      label: <Link to={"/" + user.username + "/company"}>Société</Link>,
       key: "societe",
     },
     {
-      label: <a href={"/" + user.username + "/skills"}>Compétences</a>,
+      label: <Link to={"/" + user.username + "/skills"}>Compétences</Link>,
       key: "competences",
+    },
+    {
+      label: "Annonces",
+      key: "annonce",
+      children: [
+        {
+          label: (
+            <Link to={"/" + user.username + "/nettoyage"}>Services Nettoyages</Link>
+          ),
+          key: "nettoyage",
+        },
+        {
+          label: (
+            <Link to={"/" + user.username + "/artisan"}>Sevices Artisans</Link>
+          ),
+          key: "artisan",
+        },
+
+        {
+          label: <Link to={"/" + user.username + "/emploi"}>Offres d'emploi</Link>,
+          key: "emploi",
+        },
+        {
+          label: <Link to={"/" + user.username + "/service"}>Sevices</Link>,
+          key: "service",
+        },
+        {
+          label: "Produits",
+          key: "Produit",
+        },
+      ],
     },
   ];
   if (
@@ -33,7 +64,7 @@ const LayoutOtherProfile = ({ currentUser, user }) => {
     user.username === currentUser.username
   ) {
     sideMenuItems.push({
-      label: <a href="/dashboard">Dashboard</a>,
+      label: <Link to="/dashboard">Dashboard</Link>,
       key: "dashboard",
     });
   }
@@ -45,6 +76,10 @@ const LayoutOtherProfile = ({ currentUser, user }) => {
     ["/" + user.username + "/skills"]: "Compétences",
     ["/" + user.username + "/address"]: "Adresses",
     ["/" + user.username + "/company"]: "Société",
+    ["/" + user.username + "/nettoyage"]: "Services Nettoyages",
+    ["/" + user.username + "/artisan"]: "Services Artisans",
+    ["/" + user.username + "/emploi"]: "Offres d'emploi",
+    ["/" + user.username + "/service"]: "Services",
   };
 
   const currentUrl = location.pathname.split("/").filter((i) => i);
@@ -83,7 +118,7 @@ const LayoutOtherProfile = ({ currentUser, user }) => {
               </div>
             </div>
             <div className="flex flex-col items-center mt-6">
-              <Menu items={sideMenuItems} className="w-56" />
+              <Menu items={sideMenuItems} mode="inline" className="w-56" />
             </div>
           </div>
           <div className="w-2/3 py-4 overflow-y-auto">

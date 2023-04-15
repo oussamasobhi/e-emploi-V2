@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { addSkill, getSkills } from "../../util/APIUtils";
+import { getSkills, getSkillsByUsername } from "../../util/APIUtils";
 import { Button, Typography } from "antd";
 import CompetenceItem from "./CompetenceItem";
 import AddCompetence from "./AddCompetence";
@@ -12,14 +12,14 @@ const Competences = ({ notify, currentUser, user }) => {
   useEffect(() => {
     const loadSkills = async () => {
       try {
-        const res = await getSkills();
+        const res = await getSkillsByUsername(user.username);
         setCompetences(res);
       } catch (error) {
         console.log(error);
       }
     };
     loadSkills();
-  }, []);
+  }, [user.username]);
 
   const ajouterCompetence = () => {
     setIsOpenAdd(true);

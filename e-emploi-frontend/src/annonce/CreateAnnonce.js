@@ -1,5 +1,4 @@
 import {
-  DatePicker,
   Form,
   Input,
   InputNumber,
@@ -10,31 +9,19 @@ import {
 } from "antd";
 import React, { useEffect, useState } from "react";
 import TextArea from "antd/es/input/TextArea";
-import { createAnnonce, getCategories } from "../util/APIUtils";
+import {
+  createAnnonce,
+  getCategories,
+  getSousCategories,
+} from "../util/APIUtils";
 import { useNavigate } from "react-router";
 import { useForm } from "antd/es/form/Form";
 
 const CreateAnnonce = ({ notify }) => {
   const navigate = useNavigate();
   const [categories, setCategories] = useState(null);
-  const [categories2, setCategories2] = useState([
-    {
-      id: 1,
-      label: "Service nettoyage",
-    },
-    {
-      id: 2,
-      label: "Service artisan",
-    },
-    {
-      id: 3,
-      label: "Offres d'emploi",
-    },
-    {
-      id: 4,
-      label: "Services",
-    },
-  ]);
+  const [categories1, setCategories1] = useState(null);
+  const [categories2, setCategories2] = useState(null);
   const [annonce, setAnnonce] = useState({
     titre_annonce: "",
     description: "",
@@ -49,6 +36,10 @@ const CreateAnnonce = ({ notify }) => {
     const loadCategories = async () => {
       const _cat = await getCategories();
       setCategories(_cat);
+      const _souscat1 = await getSousCategories(1);
+      setCategories1(_souscat1);
+      const _souscat2 = await getSousCategories(2);
+      setCategories2(_souscat2);
     };
     loadCategories();
   }, []);
@@ -59,7 +50,6 @@ const CreateAnnonce = ({ notify }) => {
   };
   const creerAnnonce = async () => {
     try {
-      //await form.validateFields();
       console.log(annonce);
       await createAnnonce(annonce);
       navigate("/");
@@ -118,12 +108,12 @@ const CreateAnnonce = ({ notify }) => {
           <Form.Item label="Tarif de départ" name="tarif_depart">
             <InputNumber className="w-full" />
           </Form.Item>
-          <Form.Item label="Tarif final" name="tarif_final">
+          {/*<Form.Item label="Tarif final" name="tarif_final">
             <InputNumber className="w-full" />
           </Form.Item>
           <Form.Item label="Date de fin de l'annonce" name="date_fin_annonce">
             <DatePicker className="w-full" />
-          </Form.Item>
+          </Form.Item>*/}
           <Form.Item label="Catégorie" name="id_categorieAnnonce">
             <Select className="w-full">
               {categories?.map((categorie, index) => (
@@ -146,8 +136,11 @@ const CreateAnnonce = ({ notify }) => {
                       });
                     }}
                   >
-                    <Radio value={1}>Services Nettoyages</Radio>
-                    <Radio value={2}>Services Artisans</Radio>
+                    {categories1?.map((souscat, index) => (
+                      <Radio key={index} value={souscat.id}>
+                        {souscat.nom_sous_categorie}
+                      </Radio>
+                    ))}
                   </Radio.Group>
                 </>
               )}
@@ -161,8 +154,11 @@ const CreateAnnonce = ({ notify }) => {
                       });
                     }}
                   >
-                    <Radio value={3}>Offres d'emploi</Radio>
-                    <Radio value={4}>Services </Radio>
+                    {categories2?.map((souscat, index) => (
+                      <Radio key={index} value={souscat.id}>
+                        {souscat.nom_sous_categorie}
+                      </Radio>
+                    ))}
                   </Radio.Group>
                 </>
               )}

@@ -4,14 +4,21 @@ import { getListAnnonces } from "../util/APIUtils";
 import { Typography, Table } from "antd";
 import { Link } from "react-router-dom";
 
-const DomicileContent = () => {
-  //const [result, setResult] = useState(null);
+const DomicileContent = ({ currentUser }) => {
   const [annonces, setAnnonces] = useState(null);
-
+  const [filteredAnnonces, setFilteredAnnonces] = useState(null);
+  useEffect(() => {
+    if (annonces) {
+      var annoncesToShow = annonces.filter(function (annonce) {
+        return annonce.userResponse.username !== currentUser.username;
+      });
+      setFilteredAnnonces(annoncesToShow);
+    }
+  }, [annonces, currentUser.username]);
   useEffect(() => {
     const loadAnnonces = async () => {
-      const res1 = (await getListAnnonces(1,"",10000)).content;
-      const res2 = (await getListAnnonces(2,"",10000)).content;
+      const res1 = (await getListAnnonces(1, "", 10000)).content;
+      const res2 = (await getListAnnonces(2, "", 10000)).content;
       setAnnonces(res1.concat(res2));
     };
     loadAnnonces();
@@ -32,11 +39,13 @@ const DomicileContent = () => {
       title: "Utilisateur",
       dataIndex: "userResponse",
       key: "utilisateur",
-      render: ((_,record) => (
+      render: (_, record) => (
         <>
-        <Link to={"/"+record.userResponse.username} >{record.userResponse.nom}</Link>
+          <Link to={"/" + record.userResponse.username}>
+            {record.userResponse.prenom} {record.userResponse.nom}
+          </Link>
         </>
-      ))
+      ),
     },
     {
       title: "Tarif",
@@ -58,7 +67,7 @@ const DomicileContent = () => {
   return (
     <>
       <Typography.Title level={3}>Domicile</Typography.Title>
-      <Table dataSource={annonces} columns={nettoyageColumns} />
+      <Table dataSource={filteredAnnonces} columns={nettoyageColumns} />
     </>
   );
 };

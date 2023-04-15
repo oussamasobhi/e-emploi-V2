@@ -5,14 +5,14 @@ import Emploi from "./emploi/Emploi";
 import Service from "./service/Service";
 import { Routes, Route } from "react-router";
 
-const EmploiService = () => {
+const EmploiService = ({currentUser}) => {
   return (
     <Routes>
       <Route path="/*" element={<LayoutES />}>
-        <Route index element={<ESContent />} />
-        <Route path="emploi" element={<Emploi />} />
-        <Route path="service" element={<Service />} />
-      </Route>
+        <Route index element={<ESContent currentUser={currentUser} />} />
+        <Route path="emploi" element={<Emploi currentUser={currentUser} />} />
+        <Route path="service" element={<Service currentUser={currentUser} />} />
+      </Route> 
     </Routes>
   );
 };

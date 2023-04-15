@@ -43,7 +43,6 @@ const AddCompetence = ({ open, closeModal, refresh, notify }) => {
   const ajouterCompetence = async (event) => {
     event.preventDefault();
     try {
-      console.log(competence.date_obtention);
       await addSkill(competence);
       refresh();
       reset(event);

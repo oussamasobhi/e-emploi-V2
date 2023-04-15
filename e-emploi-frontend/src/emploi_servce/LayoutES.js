@@ -1,4 +1,4 @@
-import { Breadcrumb, Layout, Menu } from "antd";
+import { Breadcrumb, Menu } from "antd";
 import React from "react";
 import { Outlet } from "react-router";
 import { Link } from "react-router-dom";
@@ -8,14 +8,13 @@ const LayoutES = () => {
   const sideMenuItems = [
     {
       key: "emploi",
-      label: <a href="/emp_serv/emploi">Offres d'emploi</a>,
+      label: <Link to="/emp_serv/emploi">Offres d'emploi</Link>,
     },
     {
       key: "service",
-      label: <a href="/emp_serv/service">Services</a>,
+      label: <Link to="/emp_serv/service">Services</Link>,
     },
   ];
-
   //Breadcrumbs
   const itemsNameMap = {
     "/emp_serv": "Emplois et Services",

@@ -1,4 +1,4 @@
-import { Breadcrumb, Layout, Menu } from "antd";
+import { Breadcrumb, Menu } from "antd";
 import React from "react";
 import { Outlet } from "react-router";
 import { Link } from "react-router-dom";
@@ -8,11 +8,11 @@ const LayoutDomicile = () => {
   const sideMenuItems = [
     {
       key: "nettoyage",
-      label: <a href="/domicile/nettoyage">Services Nettoyages</a>,
+      label: <Link to="/domicile/nettoyage">Services Nettoyages</Link>,
     },
     {
       key: "artisan",
-      label: <a href="/domicile/artisan">Services Artisans</a>,
+      label: <Link to="/domicile/artisan">Services Artisans</Link>,
     },
   ];
   //Breadcrumbs
