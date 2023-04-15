@@ -78,7 +78,8 @@ const Nettoyage = ({ currentUser }) => {
       render: () => (
         <>
           {!isProfile && <Button type="primary">Postuler</Button>}
-          {isProfile && (
+          {(isProfile && currentUser.username !== username ) && <Button type="primary">Postuler</Button>}
+          {(isProfile && currentUser.username === username ) && (
             <>
              <Button ><EditOutlined/> </Button>
               <Button danger className="ml-3" ><DeleteOutlined/> </Button>
