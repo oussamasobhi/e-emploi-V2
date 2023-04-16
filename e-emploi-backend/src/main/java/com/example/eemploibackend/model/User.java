@@ -45,6 +45,8 @@ public class User extends DateAudit implements UserDetails{
         private List<OffreEmploi> offres;
      @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Review> reviews;
+    @OneToMany(mappedBy = "reviewer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Review> given_reviews;
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<Adresse> adresses;
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
