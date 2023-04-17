@@ -1,13 +1,11 @@
 package com.example.eemploibackend.services;
 
 import com.example.eemploibackend.exceptions.AppException;
-import com.example.eemploibackend.model.Adresse;
-import com.example.eemploibackend.model.Role;
+import com.example.eemploibackend.model.*;
 import com.example.eemploibackend.payloads.*;
 import com.example.eemploibackend.exceptions.ResourceNotFoundException;
-import com.example.eemploibackend.model.RoleName;
-import com.example.eemploibackend.model.User;
 import com.example.eemploibackend.repository.AdresseRepository;
+import com.example.eemploibackend.repository.FileDBRepository;
 import com.example.eemploibackend.repository.RoleRepository;
 import com.example.eemploibackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.util.*;
 
 @Service
@@ -26,7 +25,7 @@ public class UserService {
     private final AdresseRepository adresseRepository;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
-
+    private  final FileDBRepository fileDBRepository;
     public void updateuser(Pro_RegisterRequest request,Long iduser){
 
             userRepository.findById(iduser).map(
@@ -47,7 +46,7 @@ public class UserService {
                              USER.setPrenom(request.getPrenom());
                              USER.setCIN(request.getCIN());
                              USER.setDate_naissance(request.getDate_naissance());
-                             USER.setPhoto_profil(request.getImage());
+                             USER.setImage(request.getImage());
                              USER.setNum_tel(request.getNum_tel());
 
              if(!isafieldnull) {
@@ -81,8 +80,24 @@ public class UserService {
         userSummary.setPrenom(user.getPrenom());
         userSummary.setNum_tel(user.getNum_tel());
         userSummary.setDate_naissance(user.getDate_naissance());
-        userSummary.setPhoto_profil(user.getPhoto_profil());
+        userSummary.setPhoto_profil(user.getImage());
         userSummary.setRole(user.getRole().getName().name());
     return userSummary;
+    }
+    public void addprofilepic(User user, FileDB fileDB){
+        User concerneduser=userRepository.findUserById(user.getId());
+        concerneduser.setImage(fileDB);
+        userRepository.save(concerneduser);
+    }
+    private final String FOLDER_PATH="C:\\Users\\oussa\\Desktop\\PFA\\e-emploi_project\\e-emploi-backend\\src\\main\\resources\\static";
+    public void supprimerpic(String filename){
+        FileDB fileDB= fileDBRepository.findByName(filename).orElseThrow();
+        User user=fileDBRepository.findbyfilename(filename);
+        user.setImage(null);
+        userRepository.save(user);
+        fileDBRepository.deleteById(fileDB.getId());
+        String filePath=FOLDER_PATH+"\\"+filename;
+        File file=new File(filePath);
+        file.delete();
     }
 }

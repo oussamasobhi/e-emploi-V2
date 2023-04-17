@@ -20,8 +20,5 @@ public class FileDB {
     private String name;
 
     private String type;
-
-    @Lob
-    @Column(columnDefinition = "LONGBLOB")
-    private byte[] data;
+    private String filepath;
 }

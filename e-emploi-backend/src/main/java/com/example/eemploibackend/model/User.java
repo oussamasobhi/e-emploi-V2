@@ -39,7 +39,8 @@ public class User extends DateAudit implements UserDetails{
     private String password;
     private String num_tel;
      private String CIN;
-      private Byte[] photo_profil;
+     @OneToOne
+      private FileDB image;
      private Date date_naissance;
      @ManyToMany(mappedBy = "prestataires")
         private List<OffreEmploi> offres;

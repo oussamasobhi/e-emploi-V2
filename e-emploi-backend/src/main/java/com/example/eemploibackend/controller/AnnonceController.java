@@ -2,10 +2,7 @@ package com.example.eemploibackend.controller;
 
 import com.example.eemploibackend.config.CurrentUser;
 import com.example.eemploibackend.model.User;
-import com.example.eemploibackend.payloads.AnnonceRequest;
-import com.example.eemploibackend.payloads.AnnonceResponse;
-import com.example.eemploibackend.payloads.ApiResponse;
-import com.example.eemploibackend.payloads.PagedResponse;
+import com.example.eemploibackend.payloads.*;
 import com.example.eemploibackend.repository.AnnonceRepository;
 import com.example.eemploibackend.services.AnnonceService;
 import lombok.RequiredArgsConstructor;
@@ -53,5 +50,9 @@ public class AnnonceController {
                                                                  @RequestParam(value = "min_tarif_dep",defaultValue = "0")double min_tarif_dep)
     {
      return annonceService.getaaonnoncesparcategorie(id,page,size,search,max_tarif_dep,min_tarif_dep);
+    }
+    @GetMapping("/{id}")
+    public AnnonceResponse getaanoncebyid(@PathVariable(value = "id")Long id){
+        return ModelMapper.mapannonceToAnnonceResponse(annonceService.getannoncebyid(id));
     }
 }

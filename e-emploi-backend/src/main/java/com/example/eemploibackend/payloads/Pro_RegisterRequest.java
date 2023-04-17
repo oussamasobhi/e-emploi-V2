@@ -1,5 +1,6 @@
 package com.example.eemploibackend.payloads;
 
+import com.example.eemploibackend.model.FileDB;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,5 +20,5 @@ public class Pro_RegisterRequest {
     private String num_tel;
     private String CIN;
     private Date date_naissance;
-    private Byte[] image;
+    private FileDB image;
 }
