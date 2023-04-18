@@ -12,7 +12,7 @@ import {
   Tag,
   Select,
 } from "antd";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useForm } from "antd/es/form/Form";
 import {
@@ -20,12 +20,14 @@ import {
   EditOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
+import dayjs from "dayjs";
 
 const Annonce = ({ currentUser }) => {
   const [annonces, setAnnonces] = useState(null);
   const [filteredAnnonces, setFilteredAnnonces] = useState(null);
   const { username } = useParams();
   const [isProfile, setIsProfile] = useState(false);
+  const navigate = useNavigate();
   useEffect(() => {
     if (username) {
       setIsProfile(true);
@@ -71,6 +73,14 @@ const Annonce = ({ currentUser }) => {
       key: "description",
     },
     {
+      title: "Date de création",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (_, record) => (
+        dayjs(record.createdAt).format("YYYY-MM-DD")
+      )
+    },
+    /*{
       title: "Utilisateur",
       dataIndex: "userResponse",
       key: "utilisateur",
@@ -82,7 +92,7 @@ const Annonce = ({ currentUser }) => {
           </Link>
         </>
       ),
-    },
+    },*/
     {
       title: "Tarif",
       dataIndex: "tarif_depart",
@@ -97,21 +107,21 @@ const Annonce = ({ currentUser }) => {
       ),
     },
     {
-      title: "Action",
+      title: "Consulter",
       key: "action",
-      render: () => (
+      render: (_, record) => (
         <>
-          {!isProfile && <Button type="primary">Postuler</Button>}
+          {!isProfile && <Button type="primary" onClick={() => {navigate("/annonce/"+record.id)}} >Détails</Button>}
           {isProfile && currentUser.username !== username && (
-            <Button type="primary">Postuler</Button>
+            <Button type="primary" onClick={() => {navigate("/annonce/"+record.id)}} >Détails</Button>
           )}
           {isProfile && currentUser.username === username && (
             <>
               <Button>
-                <EditOutlined />{" "}
+                <EditOutlined />
               </Button>
               <Button danger className="ml-3">
-                <DeleteOutlined />{" "}
+                <DeleteOutlined />
               </Button>
             </>
           )}
@@ -119,6 +129,7 @@ const Annonce = ({ currentUser }) => {
       ),
     },
   ];
+  if(filteredAnnonces) console.log(filteredAnnonces);
 
   //recherche
   const [form] = useForm();

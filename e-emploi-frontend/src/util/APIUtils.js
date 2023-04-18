@@ -261,3 +261,18 @@ export function createAnnonce(annonce) {
     body: JSON.stringify(annonce),
   });
 }
+
+export function getAnnonceById(id) {
+  return request({
+    url: API_BASE_URL+"/annonce/"+id,
+    method: "GET"
+  })
+}
+
+export function addAnnonceuser(annonceuser){
+  return request({
+    url: API_BASE_URL+"/annonceuser/add",
+    method: "POST",
+    body: JSON.stringify(annonceuser)
+  })
+}

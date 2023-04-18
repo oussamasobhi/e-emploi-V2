@@ -11,7 +11,7 @@ const Annonces = ({ notify, currentUser }) => {
       <Route path="/*" element={<LayoutAnnonce />}>
         <Route path="create" element={<CreateAnnonce notify={notify} />} />
         <Route index element={<Annonce currentUser={currentUser} />} />
-        <Route path=":id" element={<AnnonceDetail />} />
+        <Route path=":id" element={<AnnonceDetail currentUser={currentUser} />} />
       </Route>
     </Routes>
   );

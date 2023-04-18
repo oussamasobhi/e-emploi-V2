@@ -2,24 +2,12 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Typography, Button } from "antd";
 import dayjs from "dayjs";
-import { Widget, addResponseMessage } from "react-chat-widget";
 import "react-chat-widget/lib/styles.css";
-import {Avatar} from "antd";
-import { UserOutlined } from "@ant-design/icons";
 
 const InfoAndContact = ({ currentUser, user }) => {
   const isCurrentUser = currentUser.username === user.username;
 
-  // react-chat-widget
-  useEffect(() => {
-    addResponseMessage("Welcome to this awesome chat!");
-  }, []);
-  const handleNewUserMessage = (newMessage) => {
-    console.log(`New message incoming! ${newMessage}`);
-    // Now send the message throught the backend API
-    //addResponseMessage(response);
-  };
-
+ 
   if (!user) return <p>Loading...</p>;
   else
     return (
@@ -98,12 +86,12 @@ const InfoAndContact = ({ currentUser, user }) => {
             </div>
           )}
         </div>
-        <Widget
+       {/* <Widget
           handleNewUserMessage={handleNewUserMessage}
           profileAvatar={<Avatar icon={<UserOutlined/>} /> }
           title="My new awesome title"
           subtitle="And my cool subtitle"
-        />
+        />*/}
       </>
     );
 };

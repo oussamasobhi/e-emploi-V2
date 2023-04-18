@@ -50,7 +50,6 @@ const CreateAnnonce = ({ notify }) => {
   };
   const creerAnnonce = async () => {
     try {
-      console.log(annonce);
       await createAnnonce(annonce);
       navigate("/");
       notify("Notification", "Annonce créée ", "info");

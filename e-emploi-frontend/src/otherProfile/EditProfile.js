@@ -32,9 +32,7 @@ const EditProfile = ({
   };
   const editProfil = async (e) => {
     try {
-      console.log(user);
-      const res = await updateProfil(user);
-      console.log(res);
+      await updateProfil(user);;
       const _user = await getCurrentUser();
       setCurrentUser(_user);
 
