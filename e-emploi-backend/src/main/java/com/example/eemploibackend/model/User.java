@@ -39,12 +39,15 @@ public class User extends DateAudit implements UserDetails{
     private String password;
     private String num_tel;
      private String CIN;
-      private Byte[] photo_profil;
+     @OneToOne
+      private FileDB image;
      private Date date_naissance;
      @ManyToMany(mappedBy = "prestataires")
         private List<OffreEmploi> offres;
      @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Review> reviews;
+    @OneToMany(mappedBy = "reviewer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Review> given_reviews;
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<Adresse> adresses;
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)

@@ -23,7 +23,9 @@ public class AnnonceService {
     private final AnnonceRepository annonceRepository;
     private final Categorie_2_Annonce_Repository categorie2AnnonceRepository;
     private final UserRepository userRepository;
-
+    public Annonce getannoncebyid(Long id){
+        return annonceRepository.findById(id).orElseThrow();
+    }
     public void ajouterannonce(User user, AnnonceRequest request){
         Categorie_2_Annonce categorie2Annonce=categorie2AnnonceRepository.findCategorie_2_AnnonceById(request.getId_categorie2Annonce());
         AnnonceUser annonceUser= AnnonceUser.builder()

@@ -1,6 +1,7 @@
 package com.example.eemploibackend.payloads;
 
 import com.example.eemploibackend.model.Adresse;
+import com.example.eemploibackend.model.FileDB;
 import com.example.eemploibackend.model.Societe;
 import lombok.Data;
 
@@ -17,7 +18,7 @@ public class UserSummary {
     private String num_tel;
     private String CIN;
     private String Role;
-    private Byte[] photo_profil;
+    private FileDB photo_profil;
     private Date date_naissance;
     List<Adresse> adresses;
     Societe societe;
