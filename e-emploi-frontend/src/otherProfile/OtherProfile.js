@@ -12,6 +12,7 @@ import Artisan from "../domicile/artisan/Artisan";
 import Nettoyage from "../domicile/nettoyage/Nettoyage";
 import Emploi from "../emploi_servce/emploi/Emploi";
 import Service from "../emploi_servce/service/Service";
+import Annonce from "./annonces/Annonce";
 
 const OtherProfile = ({
   setIsAuthenticated,
@@ -91,6 +92,7 @@ const OtherProfile = ({
                 />
               }
             />
+            <Route path="annonce" element={<Annonce currentUser={currentUser} />} />
             <Route path="artisan" element={<Artisan currentUser={currentUser} />} />
             <Route path="nettoyage" element={<Nettoyage currentUser={currentUser} />} />
             <Route path="emploi" element={<Emploi currentUser={currentUser} />} />

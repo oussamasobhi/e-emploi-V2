@@ -2,7 +2,7 @@ import React from "react";
 import { Outlet } from "react-router";
 import { UserOutlined } from "@ant-design/icons";
 import { Navigate } from "react-router";
-import { Avatar, Typography, Menu, Breadcrumb } from "antd";
+import { Avatar, Typography, Menu, Breadcrumb, Tag } from "antd";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router";
 
@@ -28,35 +28,8 @@ const LayoutOtherProfile = ({ currentUser, user }) => {
       key: "competences",
     },
     {
-      label: "Annonces",
-      key: "annonce",
-      children: [
-        {
-          label: (
-            <Link to={"/" + user.username + "/nettoyage"}>Services Nettoyages</Link>
-          ),
-          key: "nettoyage",
-        },
-        {
-          label: (
-            <Link to={"/" + user.username + "/artisan"}>Sevices Artisans</Link>
-          ),
-          key: "artisan",
-        },
-
-        {
-          label: <Link to={"/" + user.username + "/emploi"}>Offres d'emploi</Link>,
-          key: "emploi",
-        },
-        {
-          label: <Link to={"/" + user.username + "/service"}>Sevices</Link>,
-          key: "service",
-        },
-        {
-          label: "Produits",
-          key: "Produit",
-        },
-      ],
+      label: <Link to={"/"+user.username+"/annonce"} >Annonces</Link>,
+      key: "annonce"
     },
   ];
   if (
@@ -76,10 +49,7 @@ const LayoutOtherProfile = ({ currentUser, user }) => {
     ["/" + user.username + "/skills"]: "Compétences",
     ["/" + user.username + "/address"]: "Adresses",
     ["/" + user.username + "/company"]: "Société",
-    ["/" + user.username + "/nettoyage"]: "Services Nettoyages",
-    ["/" + user.username + "/artisan"]: "Services Artisans",
-    ["/" + user.username + "/emploi"]: "Offres d'emploi",
-    ["/" + user.username + "/service"]: "Services",
+    ["/" + user.username + "/annonce"]: "Annonces"
   };
 
   const currentUrl = location.pathname.split("/").filter((i) => i);
@@ -114,6 +84,10 @@ const LayoutOtherProfile = ({ currentUser, user }) => {
                     {currentUser.prenom + " " + currentUser.nom}
                   </Typography>
                 )}
+                {user.role === "ROLE_ADMIN" && (<Tag color="red" className="mt-3" >Administrateur</Tag>) }
+                {user.role === "ROLE_STANDARD" && (<Tag color="red" className="mt-3" >Standard</Tag>) }
+                {user.role === "ROLE_CONDIDAT" && (<Tag color="red" className="mt-3" >Candidat</Tag>) }
+                {user.role === "ROLE_Pro" && (<Tag color="red" className="mt-3" >Professionnel</Tag>) }
                 <p className="text-neutral-500">{/*TO DO*/}</p>
               </div>
             </div>

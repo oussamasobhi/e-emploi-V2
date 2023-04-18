@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import { Modal, Button, Form, Input } from 'antd';
 import { getCurrentUser, addAddress} from '../../util/APIUtils';
-import { useNavigate } from 'react-router';
 
 const NewAddress = ({open, closeModal, setCurrentUser, notify}) => {
     const [address, setAddress] = useState({

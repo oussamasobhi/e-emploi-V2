@@ -216,6 +216,7 @@ export function newASocieteAddress(id, address) {
 }
 
 export function getListAnnonces(id, page, size, search, min_tarif, max_tarif) {
+  if(id===undefined||id===null) id="";
   if (page === undefined || page === null) page = 0;
   if (size === undefined || size === null) size = 30;
   if (max_tarif === undefined || max_tarif === null) max_tarif = 10000;

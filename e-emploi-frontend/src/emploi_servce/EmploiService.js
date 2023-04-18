@@ -3,10 +3,10 @@ import LayoutES from "./LayoutES";
 import ESContent from "./ESContent";
 import Emploi from "./emploi/Emploi";
 import Service from "./service/Service";
-import { Routes, Route } from "react-router";
+import { Routes, Route, Navigate } from "react-router";
 
 const EmploiService = ({currentUser}) => {
-  return (
+  return localStorage.getItem("token") ? (
     <Routes>
       <Route path="/*" element={<LayoutES />}>
         <Route index element={<ESContent currentUser={currentUser} />} />
@@ -14,7 +14,7 @@ const EmploiService = ({currentUser}) => {
         <Route path="service" element={<Service currentUser={currentUser} />} />
       </Route> 
     </Routes>
-  );
+  ) : (<Navigate to="/login"/> ) ;
 };
 
 export default EmploiService;

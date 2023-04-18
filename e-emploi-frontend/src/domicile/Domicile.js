@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router";
+import { Navigate, Route, Routes } from "react-router";
 import LayoutDomicile from "./LayoutDomicile";
 import Nettoyage from "./nettoyage/Nettoyage";
 import Artisan from "./artisan/Artisan";
@@ -9,7 +9,7 @@ import DomicileContent from "./DomicileContent";
 const Domicile = ({currentUser}) => {
  
 
-  return (
+  return localStorage.getItem("token") ? (
     <Routes>
       <Route path="/*" element={<LayoutDomicile />}>
         <Route index element={<DomicileContent currentUser={currentUser} /> } />
@@ -17,7 +17,7 @@ const Domicile = ({currentUser}) => {
         <Route path="artisan" element={<Artisan currentUser={currentUser} />} />
       </Route>
     </Routes>
-  );
+  ) : (<Navigate to="/login" /> );
 };
 
 export default Domicile;

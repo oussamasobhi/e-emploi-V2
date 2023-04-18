@@ -17,8 +17,8 @@ const DomicileContent = ({ currentUser }) => {
   }, [annonces, currentUser.username]);
   useEffect(() => {
     const loadAnnonces = async () => {
-      const res1 = (await getListAnnonces(1, "", 10000)).content;
-      const res2 = (await getListAnnonces(2, "", 10000)).content;
+      const res1 = (await getListAnnonces(1)).content;
+      const res2 = (await getListAnnonces(2)).content;
       setAnnonces(res1.concat(res2));
     };
     loadAnnonces();

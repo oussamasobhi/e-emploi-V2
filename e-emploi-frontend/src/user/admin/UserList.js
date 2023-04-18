@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getAllUsers } from "../../util/APIUtils";
 import DetailsUser from "./DetailsUser";
-import { Table } from "antd";
+import { Table, Tag } from "antd";
 import { initialUser } from "../../constant";
 import dayjs from "dayjs";
 
@@ -90,6 +90,14 @@ const UserList = ({ notify }) => {
       title: "Role",
       dataIndex: "role",
       key: "role",
+      render: (_, record) => (
+        <>
+        {record.role==="ROLE_ADMIN" && <Tag color="#ff0000">Administrateur</Tag> }
+        {record.role==="ROLE_STANDARD" && <Tag color="#00aa00">Standard</Tag> }
+        {record.role==="ROLE_CONDIDAT" && <Tag color="#ffff00">Candidat</Tag> }
+        {record.role==="ROLE_Pro" && <Tag color="#000088">Professionnel</Tag> }
+        </>
+      )
     },
   ];
 

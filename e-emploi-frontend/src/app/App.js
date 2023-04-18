@@ -13,7 +13,7 @@ import { initialUser } from "../constant";
 import ReactLoading from "react-loading";
 import Domicile from "../domicile/Domicile";
 import EmploiService from "../emploi_servce/EmploiService";
-import Annonce from "../annonce/Annonce";
+import Annonces from "../annonce/Annonces";
 import OtherProfile from "../otherProfile/OtherProfile";
 
 function App() {
@@ -196,7 +196,7 @@ function App() {
             />
             <Route path="domicile/*" element={<Domicile currentUser={currentUser} />} />
             <Route path="emp_serv/*" element={<EmploiService currentUser={currentUser} />} />
-            <Route path="annonce/*" element={<Annonce notify={notify} />} />
+            <Route path="annonce/*" element={<Annonces notify={notify} currentUser={currentUser} />} />
             <Route path="*" element={<NotFound />} />
             <Route
               path="/:username/*"

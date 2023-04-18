@@ -9,8 +9,6 @@ const Societe = ({user, currentUser, notify, setCurrentUser }) => {
     setIsOpenAdd(true);
   };
   const isCurrentUser = currentUser.username === user.username;
-  console.log(isCurrentUser);
-  console.log(user)
   return (
     <>
       <div className="border-b">

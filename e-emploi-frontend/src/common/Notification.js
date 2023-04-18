@@ -5,7 +5,6 @@ import {
   InformationCircleIcon,
 } from "@heroicons/react/solid";
 import { Transition } from "@headlessui/react";
-import { Alert, Modal } from "antd";
 
 function Notification({ title, message, type, show, onClose }) {
   const icon = {
