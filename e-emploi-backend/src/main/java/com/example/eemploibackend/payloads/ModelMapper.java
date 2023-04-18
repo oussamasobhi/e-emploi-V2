@@ -1,9 +1,6 @@
 package com.example.eemploibackend.payloads;
 
-import com.example.eemploibackend.model.Adresse_societe;
-import com.example.eemploibackend.model.Annonce;
-import com.example.eemploibackend.model.Societe;
-import com.example.eemploibackend.model.User;
+import com.example.eemploibackend.model.*;
 
 import java.util.List;
 
