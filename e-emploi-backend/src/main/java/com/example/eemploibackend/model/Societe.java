@@ -26,5 +26,4 @@ public class Societe {
     private Byte[] justif_image;
     @OneToMany(mappedBy = "societe",cascade = CascadeType.ALL)
     private List<Adresse_societe> adresses_societes;
-
 }
