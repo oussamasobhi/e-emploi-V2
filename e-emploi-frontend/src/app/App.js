@@ -212,7 +212,7 @@ function App() {
                 />
               }
             />
-            <Route path="/message/*" element={<Chat />} />
+            <Route path="/message/*" element={<Chat currentUser={currentUser} />} />
           </Route>
         </Routes>
       </BrowserRouter>

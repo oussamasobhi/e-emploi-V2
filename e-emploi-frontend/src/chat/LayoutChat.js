@@ -19,8 +19,8 @@ const LayoutChat = () => {
     },
   ];
   return (
-    <div className="flex py-6 font-roboto">
-      <div className="w-96 px-3">
+    <div className="flex  font-roboto">
+      <div className="w-72 py-6 px-3 bg-slate-100">
         <Input.Search />
         <List
           itemLayout="horizontal"
