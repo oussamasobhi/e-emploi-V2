@@ -6,28 +6,42 @@ import { useState } from "react";
 import { SendOutlined } from "@ant-design/icons";
 import { useParams } from "react-router";
 import { userGetUserByUsername } from "../util/APIUtils";
-import Stomp from "stompjs";
+import { over } from "stompjs";
 import SockJS from "sockjs-client";
 import { API_BASE_URL } from "../constant";
 
 var stompClient = null;
 const Chatbox = (currentUser) => {
-  const {username} = useParams();
-const [receiver, setReceiver] = useState(null);
+  const { username } = useParams();
+  const [receiver, setReceiver] = useState(null);
 
-useEffect(() => {
-  const loadReceiver = async () => {
-    try{
-      const _user = userGetUserByUsername(username);
-      setReceiver(_user);
-    }catch(error){
-      console.log(error);
-    }
+  useEffect(() => {
+    const loadReceiver = async () => {
+      try {
+        const _user = await userGetUserByUsername(username);
+        setReceiver(_user);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    loadReceiver();
+  }, [username]);
+
+  useEffect(() => {
+    connect();
+  }, []);
+
+  const connect =()=>{
+    let Sock = new SockJS(API_BASE_URL + "/ws");
+    stompClient = over(Sock);
+    stompClient.connect({}, onConnected, onError);
   }
-  loadReceiver();
-}, [username])
+  const onConnected = () => {}
+  const onError = () => {}
+  
 
 
+  if (receiver) console.log(receiver);
 
   if (!receiver) return <p>Loading...</p>;
   else
@@ -37,8 +51,7 @@ useEffect(() => {
           {receiver.prenom} {receiver.nom}{" "}
         </Typography.Title>
         {/* Message */}
-        
-        
+
         {/* Write message */}
         <div>
           <Form className="flex fixed bottom-0 right-0 mr-3">
