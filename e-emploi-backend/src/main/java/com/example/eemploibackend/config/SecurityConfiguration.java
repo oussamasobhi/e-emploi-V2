@@ -30,6 +30,8 @@ public class SecurityConfiguration {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
+                .requestMatchers("/ws/**","/ws/info")
+                .permitAll()
                 .requestMatchers("/auth/**")
                 .permitAll()
                 .requestMatchers("/api/users/**")
