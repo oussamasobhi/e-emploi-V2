@@ -10,8 +10,8 @@ import java.time.Instant;
 @Data
 @Builder
 public class MessageRequest {
-    private String senderUsername;
-    private String receiverUsername;
+    private String sendername;
+    private String receivername;
     private String content;
     @CreatedDate
     private Instant createdAt;

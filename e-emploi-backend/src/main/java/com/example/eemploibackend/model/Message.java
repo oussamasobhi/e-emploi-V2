@@ -17,12 +17,14 @@ public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
-    @JoinColumn(name = "id_sender", nullable = false)
-    private User sender;
-    @ManyToOne
-    @JoinColumn(name = "id_receiver", nullable = false)
-    private User receiver;
+//    @ManyToOne
+//    @JoinColumn(name = "id_sender", nullable = false)
+//    private User sender;
+//    @ManyToOne
+//    @JoinColumn(name = "id_receiver", nullable = false)
+//    private User receiver;
+    private String sendername;
+    private String receivername;
     private String content;
     @CreatedDate
     private Instant createdAt;

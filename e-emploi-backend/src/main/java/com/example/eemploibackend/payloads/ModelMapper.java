@@ -27,6 +27,8 @@ if(societe!=null)   userResponse.setAdresseSocietes(societe.getAdresses_societes
     public static AnnonceResponse mapannonceToAnnonceResponse(Annonce annonce){
         UserResponse userResponse=ModelMapper.mapUserToUserResponse(annonce.getUser());
         AnnonceResponse annonceResponse=new AnnonceResponse();
+        annonceResponse.setId(annonce.getId());
+        annonceResponse.setCreatedAt(annonce.getCreatedAt());
         annonceResponse.setTitre_annonce(annonce.getTitre_annonce());
         annonceResponse.setCategorie2Annonce(annonce.getCategorie2Annonce().getNom_sous_categorie());
         annonceResponse.setCategorieAnnonce(annonce.getCategorie2Annonce().getCategorieAnnonce().getNom_categorie());

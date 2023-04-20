@@ -5,8 +5,12 @@ import com.example.eemploibackend.model.User;
 import lombok.Data;
 
 import java.sql.Date;
+import java.time.Instant;
+
 @Data
 public class AnnonceResponse {
+    private Long id;
+    private Instant createdAt;
     private String titre_annonce;
     private String description;
     private double tarif_depart;

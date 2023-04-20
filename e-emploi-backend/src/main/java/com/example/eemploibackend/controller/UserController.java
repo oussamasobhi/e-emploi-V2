@@ -23,7 +23,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin
 @RequiredArgsConstructor
 public class UserController {
 
