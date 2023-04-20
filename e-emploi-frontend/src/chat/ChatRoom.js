@@ -1,11 +1,11 @@
-import { Button, Input, Form, Typography } from "antd";
+import { Button, Input, Form, Typography, List, Avatar } from "antd";
 import dayjs from "dayjs";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { SendOutlined } from "@ant-design/icons";
 import { useParams } from "react-router";
-import { userGetUserByUsername } from "../util/APIUtils";
+import { saveMessage, userGetUserByUsername } from "../util/APIUtils";
 import { over } from "stompjs";
 import SockJS from "sockjs-client";
 import { API_BASE_URL } from "../constant";
@@ -47,27 +47,39 @@ const ChatRoom = ({ currentUser }) => {
     let Sock = new SockJS(API_BASE_URL + "/ws");
     stompClient = over(Sock);
     stompClient.connect({}, onConnected, onError);
-    
   };
- 
+  const userJoin = () => {
+    var chatMessage = {
+      sendername: userData.username,
+      status: "JOIN",
+    };
+    stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
+  };
+
   const onConnected = () => {
     setUserData({ ...userData, connected: true });
-    stompClient.subscribe("/user/" + userData.username + "/message", onPrivateMessage);
+    stompClient.subscribe(
+      "/user/" + userData.username + "/private",
+      onPrivateMessage
+    );
+    userJoin();
   };
   const onError = (error) => {
     console.log(error);
   };
+
   const onPrivateMessage = (payload) => {
     console.log(payload);
     var payloadData = JSON.parse(payload.body);
     if (privateChats) {
-      privateChats.push(payloadData);
-      setPrivateChats(new Map(privateChats));
+      let variable = privateChats;
+      variable.push(payloadData);
+      setPrivateChats(variable);
     } else {
       let list = [];
       list.push(payloadData);
-      privateChats.set(payloadData.senderName, list);
-      setPrivateChats(new Map(privateChats));
+      setPrivateChats(list);
+      // setPrivateChats(new Map(privateChats));
     }
   };
 
@@ -80,23 +92,34 @@ const ChatRoom = ({ currentUser }) => {
   const sendPrivateValue = () => {
     if (stompClient) {
       var chatMessage = {
-        senderName: userData.username,
-        receiverName: receiver.username,
-        message: userData.message,
-        status: "MESSAGE",
+        sendername: currentUser.username,
+        receivername: receiver.username,
+        content: userData.message,
+        createdAt: new Date()
       };
       console.log(chatMessage);
-      privateChats.push(chatMessage);
-      setPrivateChats(privateChats);
+      let variable = privateChats;
+      variable.push(chatMessage);
+      setPrivateChats(variable);
+
       stompClient.send("/app/private-message", {}, JSON.stringify(chatMessage));
       setUserData({ ...userData, message: "" });
       resetMessageValue("");
       console.log(privateChats);
+      //storing mesages in DB
+      storeMessage(chatMessage)
     }
   };
+  const storeMessage = async (message) => {
+    try{
+        await saveMessage(message)
+    }catch(error){
+        console.log(error);
+    }
+  }
 
   function resetMessageValue(value) {
-    form.setFieldsValue({ message: value }); // set the value of 'myInput' field to empty
+    form.setFieldsValue({ message: value });
   }
 
   if (!receiver) return <p>Loading...</p>;
@@ -107,9 +130,33 @@ const ChatRoom = ({ currentUser }) => {
           {receiver.prenom} {receiver.nom}{" "}
         </Typography.Title>
         {/* Message */}
-        
-        
+        <List
+          className="chat-list"
+          itemLayout="horizontal"
+          dataSource={privateChats}
+          locale={{ emptyText: " " }}
+          renderItem={(item) => (
+            <List.Item>
+              <List.Item.Meta
+                avatar={
+                  item.sendername === currentUser.username ? (
+                    <Avatar style={{ backgroundColor: "#87d068" }}>ME</Avatar>
+                  ) : (
+                    <Avatar style={{ backgroundColor: "#f56a00" }}>OT</Avatar>
+                  )
+                }
+                title={
+                  item.sendername === currentUser.username
+                    ? currentUser.username
+                    : receiver.username
+                }
+                description={item.content}
+              />
+            </List.Item>
+          )}
+        />
         {/* Write message */}
+
         <div>
           <Form
             form={form}

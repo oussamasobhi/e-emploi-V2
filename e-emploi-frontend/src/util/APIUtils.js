@@ -276,3 +276,11 @@ export function addAnnonceuser(annonceuser){
     body: JSON.stringify(annonceuser)
   })
 }
+
+export function saveMessage(message){
+  return request({
+    url: API_BASE_URL+"/message/add",
+    method: "POST",
+    body: JSON.stringify(message)
+  });
+}
