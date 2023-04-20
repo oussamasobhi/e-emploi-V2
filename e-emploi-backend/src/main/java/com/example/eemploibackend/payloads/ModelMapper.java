@@ -24,9 +24,9 @@ public class ModelMapper {
 if(societe!=null)   userResponse.setAdresseSocietes(societe.getAdresses_societes());
                return userResponse;
     }
-    public static AnnonceResponse mapannonceToAnnonceResponse(Annonce annonce){
-        UserResponse userResponse=ModelMapper.mapUserToUserResponse(annonce.getUser());
-        AnnonceResponse annonceResponse=new AnnonceResponse();
+    public static AnnonceResponse mapannonceToAnnonceResponse(Annonce annonce) {
+        UserResponse userResponse = ModelMapper.mapUserToUserResponse(annonce.getUser());
+        AnnonceResponse annonceResponse = new AnnonceResponse();
         annonceResponse.setId(annonce.getId());
         annonceResponse.setCreatedAt(annonce.getCreatedAt());
         annonceResponse.setTitre_annonce(annonce.getTitre_annonce());
@@ -37,6 +37,6 @@ if(societe!=null)   userResponse.setAdresseSocietes(societe.getAdresses_societes
         annonceResponse.setTarif_depart(annonce.getTarif_depart());
         annonceResponse.setTarif_final(annonce.getTarif_final());
         annonceResponse.setUserResponse(userResponse);
-    return annonceResponse;
+        return annonceResponse;
     }
 }

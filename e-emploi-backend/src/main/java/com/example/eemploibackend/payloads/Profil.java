@@ -5,7 +5,5 @@ public class Profil {
     private String username;
     private String nom;
     private String prenom;
-    private String num_tel;
-
-
+    private String photo_path;
 }

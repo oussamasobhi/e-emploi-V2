@@ -29,7 +29,7 @@ const ChatRoom = ({ currentUser }) => {
   }, [userData.username]);
 
   useEffect(() => {
-    console.log(userData);
+   // console.log(userData);
   }, [userData]);
 
   useEffect(() => {
