@@ -28,7 +28,7 @@ const ChatRoom = ({ currentUser }) => {
     if (userData.username) connect();
   }, [userData.username]);
   useEffect(() => {
-    console.log(userData);
+   // console.log(userData);
   }, [userData]);
 
   useEffect(() => {
