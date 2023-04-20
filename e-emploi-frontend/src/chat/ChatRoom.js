@@ -27,6 +27,7 @@ const ChatRoom = ({ currentUser }) => {
     setUserData({ ...userData, username: currentUser.username });
     if (userData.username) connect();
   }, [userData.username]);
+
   useEffect(() => {
     console.log(userData);
   }, [userData]);
@@ -48,13 +49,7 @@ const ChatRoom = ({ currentUser }) => {
     stompClient = over(Sock);
     stompClient.connect({}, onConnected, onError);
   };
-  const userJoin = () => {
-    var chatMessage = {
-      sendername: userData.username,
-      status: "JOIN",
-    };
-    stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
-  };
+  
 
   const onConnected = () => {
     setUserData({ ...userData, connected: true });
@@ -62,7 +57,6 @@ const ChatRoom = ({ currentUser }) => {
       "/user/" + userData.username + "/private",
       onPrivateMessage
     );
-    userJoin();
   };
   const onError = (error) => {
     console.log(error);
@@ -75,12 +69,15 @@ const ChatRoom = ({ currentUser }) => {
       let variable = privateChats;
       variable.push(payloadData);
       setPrivateChats(variable);
+      console.log("new message");
     } else {
       let list = [];
       list.push(payloadData);
       setPrivateChats(list);
-      // setPrivateChats(new Map(privateChats));
+      console.log("new message");
     }
+    console.log(privateChats);
+    setUserData(userData);
   };
 
   const [form] = useForm();
@@ -95,6 +92,7 @@ const ChatRoom = ({ currentUser }) => {
         sendername: currentUser.username,
         receivername: receiver.username,
         content: userData.message,
+        status: "Envoyé",
         createdAt: new Date()
       };
       console.log(chatMessage);
@@ -107,7 +105,7 @@ const ChatRoom = ({ currentUser }) => {
       resetMessageValue("");
       console.log(privateChats);
       //storing mesages in DB
-      storeMessage(chatMessage)
+      storeMessage(chatMessage);
     }
   };
   const storeMessage = async (message) => {
@@ -121,14 +119,16 @@ const ChatRoom = ({ currentUser }) => {
   function resetMessageValue(value) {
     form.setFieldsValue({ message: value });
   }
+ 
 
-  if (!receiver) return <p>Loading...</p>;
+  if (!receiver && userData.connected!==true) return <p>Loading...</p>;
   else
     return (
       <div className="w-full">
         <Typography.Title level={3}>
           {receiver.prenom} {receiver.nom}{" "}
         </Typography.Title>
+       
         {/* Message */}
         <List
           className="chat-list"
@@ -155,6 +155,7 @@ const ChatRoom = ({ currentUser }) => {
             </List.Item>
           )}
         />
+       
         {/* Write message */}
 
         <div>
