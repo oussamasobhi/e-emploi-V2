@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Outlet } from "react-router";
 import { UserOutlined } from "@ant-design/icons";
 import { Navigate } from "react-router";
-import { Avatar, Typography, Menu, Breadcrumb, Tag } from "antd";
+import { Avatar, Typography, Menu, Breadcrumb, Tag, Button } from "antd";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router";
+import { uploadFile } from "../util/APIUtils";
 
 const LayoutOtherProfile = ({ currentUser, user }) => {
   const location = useLocation();
@@ -28,8 +29,8 @@ const LayoutOtherProfile = ({ currentUser, user }) => {
       key: "competences",
     },
     {
-      label: <Link to={"/"+user.username+"/annonce"} >Annonces</Link>,
-      key: "annonce"
+      label: <Link to={"/" + user.username + "/annonce"}>Annonces</Link>,
+      key: "annonce",
     },
   ];
   if (
@@ -49,7 +50,7 @@ const LayoutOtherProfile = ({ currentUser, user }) => {
     ["/" + user.username + "/skills"]: "Compétences",
     ["/" + user.username + "/address"]: "Adresses",
     ["/" + user.username + "/company"]: "Société",
-    ["/" + user.username + "/annonce"]: "Annonces"
+    ["/" + user.username + "/annonce"]: "Annonces",
   };
 
   const currentUrl = location.pathname.split("/").filter((i) => i);
@@ -64,13 +65,22 @@ const LayoutOtherProfile = ({ currentUser, user }) => {
       title: <Link to="/">Home</Link>,
     },
   ].concat(extraBreadcrumbItems);
+  /*const [file, setFile] = useState("");
+  const addFile = async () => {
+    try{
+      const _file = await uploadFile(`D:/MULTIMEDIA/SARY/a.jpg`);
+      setFile(_file);
+    }catch(error){
+      console.log(error);
+    }
+  }*/
 
   if (!user) return <p>Loading...</p>;
   else
     return localStorage.getItem("token") ? (
       <>
-        <div className="flex min-h-screen font-roboto">
-          <div className="w-1/3 flex flex-col p-4">
+        <div className="grid grid-cols-3 font-roboto h-full ">
+          <div className="flex flex-col p-4 overflow-y-auto ">
             <div className="flex flex-col items-center">
               <div className="bg-white w-56 border rounded-md py-4 flex flex-col items-center">
                 <div className="pb-6 w-3/4 text-center flex justify-center items-center">
@@ -84,18 +94,35 @@ const LayoutOtherProfile = ({ currentUser, user }) => {
                     {currentUser.prenom + " " + currentUser.nom}
                   </Typography>
                 )}
-                {user.role === "ROLE_ADMIN" && (<Tag color="red" className="mt-3" >Administrateur</Tag>) }
-                {user.role === "ROLE_STANDARD" && (<Tag color="red" className="mt-3" >Standard</Tag>) }
-                {user.role === "ROLE_CONDIDAT" && (<Tag color="red" className="mt-3" >Candidat</Tag>) }
-                {user.role === "ROLE_Pro" && (<Tag color="red" className="mt-3" >Professionnel</Tag>) }
-                <p className="text-neutral-500">{/*TO DO*/}</p>
+                {user.role === "ROLE_ADMIN" && (
+                  <Tag color="red" className="mt-3">
+                    Administrateur
+                  </Tag>
+                )}
+                {user.role === "ROLE_STANDARD" && (
+                  <Tag color="red" className="mt-3">
+                    Standard
+                  </Tag>
+                )}
+                {user.role === "ROLE_CONDIDAT" && (
+                  <Tag color="red" className="mt-3">
+                    Candidat
+                  </Tag>
+                )}
+                {user.role === "ROLE_Pro" && (
+                  <Tag color="red" className="mt-3">
+                    Professionnel
+                  </Tag>
+                )}
+              {/*  <p className="text-neutral-500"><Button onClick={() => addFile()} >Ajouter fichier</Button> </p>*/}
               </div>
             </div>
             <div className="flex flex-col items-center mt-6">
               <Menu items={sideMenuItems} mode="inline" className="w-56" />
             </div>
           </div>
-          <div className="w-2/3 py-4 overflow-y-auto">
+
+          <div className="w-2/3 py-4 col-span-2 overflow-y-auto">
             <div className="container ">
               <div className="border bg-white rounded-md px-3 w-10/12">
                 <div className="pb-6">

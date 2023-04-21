@@ -299,3 +299,9 @@ export function getChatUsers(username){
   })
 }
 
+export function uploadFile(file){
+  return request({
+    url: API_BASE_URL+"/upload?file="+file,
+    method: "POST"
+  })
+}

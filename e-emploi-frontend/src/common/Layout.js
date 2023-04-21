@@ -11,7 +11,7 @@ const Layout = ({
   onClick,
 }) => {
   return (
-    <div className="font-poppins flex flex-col">
+    <div className="font-poppins flex flex-col h-screen">
       <Navbar
         setIsLoading={setIsLoading}
         isAuth={isAuth}
@@ -20,8 +20,9 @@ const Layout = ({
         current={current}
         setCurrent={setCurrent}
         onClick={onClick}
+        className="flex-none"
       />
-      <div className="min-w-full sticky bottom-0 top-12 ">
+      <div className="min-w-full shrink max-h-135 overflow-y-auto grow-0">
         <Outlet />
       </div>
     </div>

@@ -1,5 +1,5 @@
-import { Button, Input, Form, List} from "antd";
-import React from "react";
+import { Button, Input, Form, List } from "antd";
+import React, { useRef } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { SendOutlined } from "@ant-design/icons";
@@ -12,8 +12,8 @@ import {
 import { over } from "stompjs";
 import SockJS from "sockjs-client";
 import { API_BASE_URL } from "../constant";
-import { useForm } from "antd/es/form/Form";
 import Msg from "./Msg";
+import AlwaysScrollToBottom from "./AlwaysScrollToTheBottom";
 
 var stompClient = null;
 const ChatRoom = ({ currentUser }) => {
@@ -26,13 +26,24 @@ const ChatRoom = ({ currentUser }) => {
     connected: false,
     message: "",
   });
+  const listRef = useRef();
 
+  useEffect(() => {
+    const scrollToBottom = () => {
+      (listRef?.current)?.scrollToItem(privateChats.length);
+    }
+    scrollToBottom()
+  }, [])
+  
 
-   useEffect(() => {
+  useEffect(() => {
+    
     const loadMessages = async () => {
       try {
         const msg = await getMessages(username, currentUser.username);
-        if (privateChats && msg.length !== privateChats.length) setPrivateChats(msg);
+        if (privateChats && msg.length !== privateChats.length)
+          setPrivateChats(msg);
+        //scrollToBottom();
       } catch (error) {
         console.log(error);
       }
@@ -44,7 +55,8 @@ const ChatRoom = ({ currentUser }) => {
     const loadMessages = async () => {
       try {
         const msg = await getMessages(username, currentUser.username);
-        if (privateChats && msg.length !== privateChats.length) setPrivateChats(msg);
+        if (privateChats && msg.length !== privateChats.length)
+          setPrivateChats(msg);
       } catch (error) {
         console.log(error);
       }
@@ -57,9 +69,6 @@ const ChatRoom = ({ currentUser }) => {
     setUserData({ ...userData, username: currentUser.username });
     if (userData.username) connect();
   }, [userData.username]);
-
-
-  
 
   useEffect(() => {
     const loadReceiver = async () => {
@@ -108,12 +117,10 @@ const ChatRoom = ({ currentUser }) => {
     setUserData(userData);
   };
 
-  const [form] = useForm();
-  const handleChange = (changedValue, allValues) => {
-    const key = Object.keys(changedValue)[0];
-    setUserData({ ...userData, [key]: changedValue[key] });
+  const handleChange = (event) => {
+    const value = event.target.value;
+    setUserData({ ...userData, [event.target.name]: value });
   };
- 
 
   const sendPrivateValue = () => {
     if (stompClient) {
@@ -146,61 +153,45 @@ const ChatRoom = ({ currentUser }) => {
   };
 
   function resetMessageValue(value) {
-    form.setFieldsValue({ message: value });
+    setUserData({ ...userData, message: value });
   }
 
   if (!receiver && userData.connected !== true) return <p>Loading...</p>;
   else
     return (
-      <div className="w-full relative grid gap-0 grid-rows-8 h-135 bg-slate-100">
-        <div className="row-span-1">
+      <div className="w-full relative flex flex-col h-full bg-white">
+        <div className="w-full h-12 bg-gray-100 flex justify-start items-center text-2xl absolute top-0">
           {receiver.prenom} {receiver.nom}{" "}
         </div>
 
         {/* Message */}
-        <List
-          className="overflow-y-auto bg-white"
-          itemLayout="horizontal"
-          dataSource={privateChats}
-          locale={{ emptyText: " " }}
-          renderItem={(item, index) => (
-            <List.Item>
-              <Msg key={index} currentUser={currentUser} message={item} />
-            </List.Item>
-          )}
-        />
-        
+          <List
+            className="overflow-y-auto my-12 h-114"
+            itemLayout="horizontal"
+            dataSource={privateChats}
+            locale={{ emptyText: " " }}
+            //ref={listRef}
+            renderItem={(item, index) => (
+              <List.Item>
+                <Msg key={index} currentUser={currentUser} message={item} />
+              </List.Item>
+            )}
+          >
+            <AlwaysScrollToBottom/>
+          </List>
+
         {/*Write message */}
 
-        <div className="w-full row-span-2 absolute bottom-0 ">
-          <Form
-            form={form}
-            onValuesChange={handleChange}
-            className="flex w-full justify-center items-center mr-3 absolute "
-          >
-            <Form.Item
-              name="message"
-              rules={[
-                {
-                  required: true,
-                  message: " ",
-                },
-              ]}
-              className="md:w-full"
-            >
-              <Input placeholder="Message" />
-            </Form.Item>
-            <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                className="ml-6"
-                onClick={sendPrivateValue}
-              >
-                <SendOutlined />
-              </Button>
-            </Form.Item>
-          </Form>
+        <div className="w-full flex justify-end absolute bottom-0 py-3 bg-gray-100">
+          <Input
+            onChange={handleChange}
+            name="message"
+            value={userData.message}
+            placeholder="Ecrire un message..."
+          />
+          <Button type="primary" onClick={sendPrivateValue}>
+            <SendOutlined />
+          </Button>
         </div>
       </div>
     );

@@ -11,7 +11,7 @@ const Home = ({  currentUser }) => {
     currentUser.roleName === "ROLE_ADMIN"?
     <Navigate to="dashboard"/>
     :(
-    <div className="h-auto">
+    <div className="h-auto overflow-y-auto">
       <Hero />
       <PhoneNumber />
       <WhyUs />

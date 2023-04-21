@@ -7,7 +7,7 @@ import { getChatUsers } from "../util/APIUtils";
 const LayoutChat = ({ currentUser }) => {
  
   const [chatUsers, setChatUsers] = useState(null);
-
+  
   useEffect(() => {
     const loadChatUsers = async () => {
       try {
@@ -25,12 +25,13 @@ const LayoutChat = ({ currentUser }) => {
   }, [chatUsers]);
 
   return (
-    <div className="grid grid-cols-3 font-roboto">
-      <div className="py-6 px-3 bg-slate-100 overflow-y-auto h-135">
-        <Input.Search />
+    <div className="grid grid-cols-3 font-roboto h-full ">
+      <div className="py-6 px-3 bg-gray-100 overflow-y-auto">
+        <Input.Search className="" />
         {chatUsers && (
           <List
             itemLayout="horizontal"
+            locale=" "
             dataSource={chatUsers}
             renderItem={(item, index) => (
               <List.Item>
@@ -53,7 +54,7 @@ const LayoutChat = ({ currentUser }) => {
         )}
       </div>
 
-      <div className="col-span-2 pl-10">
+      <div className="col-span-2 ">
         <Outlet />
       </div>
     </div>
