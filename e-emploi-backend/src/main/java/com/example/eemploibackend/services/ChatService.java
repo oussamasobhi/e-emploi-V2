@@ -31,6 +31,7 @@ public class ChatService {
                 .createdAt(request.getCreatedAt())
                 .sendername(request.getSendername())
                 .receivername(request.getReceivername())
+                .idannonce(request.getIdannonce())
                 .build();
         messageRepository.save(message);
     }
@@ -49,7 +50,7 @@ public class ChatService {
     private UserResponse mapusernametouserrespnse(String username){
         return ModelMapper.mapUserToUserResponse(userRepository.findByUsername(username).orElseThrow());
     }
-    public List<Message> getuserschatmessages(String username,String other){
-        return messageRepository.getchatmessages(username,other);
+    public List<Message> getuserschatmessages(String username,String idannonce){
+        return messageRepository.getchatmessages(username,idannonce);
     }
 }
