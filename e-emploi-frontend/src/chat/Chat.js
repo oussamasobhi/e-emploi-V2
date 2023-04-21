@@ -4,12 +4,13 @@ import ChatRoom from './ChatRoom';
 import LayoutChat from './LayoutChat';
 
 
+
 const Chat = ({currentUser}) => {
   return (
-    <Routes>
-        <Route path='/*' element={<LayoutChat/>} >
+    <Routes >
+        <Route path='/*' element={<LayoutChat currentUser={currentUser}/>} >
             <Route path=":username" element={<ChatRoom currentUser={currentUser} /> } />
-             
+
         </Route>
     </Routes>
   )

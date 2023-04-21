@@ -11,6 +11,7 @@ module.exports = {
         114: "28rem",
         121: "30rem",
         128: "32rem",
+        135: "34rem",
       },
       colors: {
         lime: "#e0fd2c",

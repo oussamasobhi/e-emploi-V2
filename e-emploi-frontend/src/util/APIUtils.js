@@ -284,3 +284,18 @@ export function saveMessage(message){
     body: JSON.stringify(message)
   });
 }
+
+export function getMessages(username1, username2){
+  return request({
+    url: API_BASE_URL+"/message/"+username1+"/chat/"+username2,
+    method: "GET",
+  })
+}
+
+export function getChatUsers(username){
+  return request({
+    url: API_BASE_URL+"/chat-users/"+username,
+    method: "GET"
+  })
+}
+

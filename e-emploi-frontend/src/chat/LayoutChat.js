@@ -1,47 +1,59 @@
 import { Input, List, Avatar } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router";
 import { Link } from "react-router-dom";
+import { getChatUsers } from "../util/APIUtils";
 
-const LayoutChat = () => {
-  const data = [
-    {
-      title: "Ant Design Title 1",
-    },
-    {
-      title: "Ant Design Title 2",
-    },
-    {
-      title: "Ant Design Title 3",
-    },
-    {
-      title: "Ant Design Title 4",
-    },
-  ];
+const LayoutChat = ({ currentUser }) => {
+ 
+  const [chatUsers, setChatUsers] = useState(null);
+
+  useEffect(() => {
+    const loadChatUsers = async () => {
+      try {
+        const res = await getChatUsers(currentUser.username);
+        setChatUsers(res);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    loadChatUsers();
+  }, []);
+
+  useEffect(() => {
+    console.log(chatUsers);
+  }, [chatUsers]);
+
   return (
-    <div className="flex  font-roboto">
-      <div className="w-72 py-6 px-3 bg-slate-100">
+    <div className="grid grid-cols-3 font-roboto">
+      <div className="py-6 px-3 bg-slate-100 overflow-y-auto h-135">
         <Input.Search />
-        <List
-          itemLayout="horizontal"
-          dataSource={data}
-          renderItem={(item, index) => (
-            <List.Item>
-              <List.Item.Meta
-                avatar={
-                  <Avatar
-                    src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`}
-                  />
-                }
-                title={<Link href="#">{item.title}</Link>}
-                description="Ant Design"
-              />
-            </List.Item>
-          )}
-        />
+        {chatUsers && (
+          <List
+            itemLayout="horizontal"
+            dataSource={chatUsers}
+            renderItem={(item, index) => (
+              <List.Item>
+                <List.Item.Meta
+                  avatar={
+                    <Avatar
+                      src={`https://xsgames.co/randomusers/avatar.php?g=pixel&key=${index}`}
+                    />
+                  }
+                  title={
+                    <Link to={"/message/" + item.username}>
+                      {item.nom} {item.prenom}
+                    </Link>
+                  }
+                  description=""
+                />
+              </List.Item>
+            )}
+          />
+        )}
       </div>
 
-      <div className="flex-auto pl-10">
+      <div className="col-span-2 pl-10">
         <Outlet />
       </div>
     </div>

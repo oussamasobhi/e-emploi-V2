@@ -1,15 +1,19 @@
-import { Button, Input, Form, Typography, List, Avatar } from "antd";
-import dayjs from "dayjs";
+import { Button, Input, Form, List} from "antd";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { SendOutlined } from "@ant-design/icons";
 import { useParams } from "react-router";
-import { saveMessage, userGetUserByUsername } from "../util/APIUtils";
+import {
+  getMessages,
+  saveMessage,
+  userGetUserByUsername,
+} from "../util/APIUtils";
 import { over } from "stompjs";
 import SockJS from "sockjs-client";
 import { API_BASE_URL } from "../constant";
 import { useForm } from "antd/es/form/Form";
+import Msg from "./Msg";
 
 var stompClient = null;
 const ChatRoom = ({ currentUser }) => {
@@ -23,14 +27,39 @@ const ChatRoom = ({ currentUser }) => {
     message: "",
   });
 
+
+   useEffect(() => {
+    const loadMessages = async () => {
+      try {
+        const msg = await getMessages(username, currentUser.username);
+        if (privateChats && msg.length !== privateChats.length) setPrivateChats(msg);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    // };
+    loadMessages();
+  }, [privateChats.length]);
+  useEffect(() => {
+    const loadMessages = async () => {
+      try {
+        const msg = await getMessages(username, currentUser.username);
+        if (privateChats && msg.length !== privateChats.length) setPrivateChats(msg);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    // };
+    loadMessages();
+  }, [username]);
+
   useEffect(() => {
     setUserData({ ...userData, username: currentUser.username });
     if (userData.username) connect();
   }, [userData.username]);
 
-  useEffect(() => {
-   // console.log(userData);
-  }, [userData]);
+
+  
 
   useEffect(() => {
     const loadReceiver = async () => {
@@ -49,7 +78,6 @@ const ChatRoom = ({ currentUser }) => {
     stompClient = over(Sock);
     stompClient.connect({}, onConnected, onError);
   };
-  
 
   const onConnected = () => {
     setUserData({ ...userData, connected: true });
@@ -85,6 +113,7 @@ const ChatRoom = ({ currentUser }) => {
     const key = Object.keys(changedValue)[0];
     setUserData({ ...userData, [key]: changedValue[key] });
   };
+ 
 
   const sendPrivateValue = () => {
     if (stompClient) {
@@ -93,7 +122,7 @@ const ChatRoom = ({ currentUser }) => {
         receivername: receiver.username,
         content: userData.message,
         status: "Envoyé",
-        createdAt: new Date()
+        createdAt: new Date(),
       };
       console.log(chatMessage);
       let variable = privateChats;
@@ -109,60 +138,45 @@ const ChatRoom = ({ currentUser }) => {
     }
   };
   const storeMessage = async (message) => {
-    try{
-        await saveMessage(message)
-    }catch(error){
-        console.log(error);
+    try {
+      await saveMessage(message);
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
 
   function resetMessageValue(value) {
     form.setFieldsValue({ message: value });
   }
- 
 
-  if (!receiver && userData.connected!==true) return <p>Loading...</p>;
+  if (!receiver && userData.connected !== true) return <p>Loading...</p>;
   else
     return (
-      <div className="w-full">
-        <Typography.Title level={3}>
+      <div className="w-full relative grid gap-0 grid-rows-8 h-135 bg-slate-100">
+        <div className="row-span-1">
           {receiver.prenom} {receiver.nom}{" "}
-        </Typography.Title>
-       
+        </div>
+
         {/* Message */}
         <List
-          className="chat-list"
+          className="overflow-y-auto bg-white"
           itemLayout="horizontal"
           dataSource={privateChats}
           locale={{ emptyText: " " }}
-          renderItem={(item) => (
+          renderItem={(item, index) => (
             <List.Item>
-              <List.Item.Meta
-                avatar={
-                  item.sendername === currentUser.username ? (
-                    <Avatar style={{ backgroundColor: "#87d068" }}>ME</Avatar>
-                  ) : (
-                    <Avatar style={{ backgroundColor: "#f56a00" }}>OT</Avatar>
-                  )
-                }
-                title={
-                  item.sendername === currentUser.username
-                    ? currentUser.username
-                    : receiver.username
-                }
-                description={item.content}
-              />
+              <Msg key={index} currentUser={currentUser} message={item} />
             </List.Item>
           )}
         />
-       
-        {/* Write message */}
+        
+        {/*Write message */}
 
-        <div>
+        <div className="w-full row-span-2 absolute bottom-0 ">
           <Form
             form={form}
             onValuesChange={handleChange}
-            className="flex fixed bottom-0 right-0 mr-3"
+            className="flex w-full justify-center items-center mr-3 absolute "
           >
             <Form.Item
               name="message"
@@ -172,7 +186,7 @@ const ChatRoom = ({ currentUser }) => {
                   message: " ",
                 },
               ]}
-              className="md:w-96"
+              className="md:w-full"
             >
               <Input placeholder="Message" />
             </Form.Item>

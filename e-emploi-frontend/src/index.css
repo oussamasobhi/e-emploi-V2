@@ -5,4 +5,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 body {
   margin: 0;
+  @apply overflow-y-scroll;
+  scrollbar-width: none; /* Firefox */
+}
+/* Hide scrollbar using TailwindCSS */
+body::-webkit-scrollbar {
+  @apply hidden;
+}
+
+/* For Firefox */
+body::-moz-scrollbar {
+  @apply hidden;
 }
