@@ -23,7 +23,7 @@ public class ChatController {
     private final ChatService chatService;
     @MessageMapping("/private-message")
     public Message recMessage(@Payload Message message){
-        simpMessagingTemplate.convertAndSendToUser(message.getReceivername(),"/private",message);
+        simpMessagingTemplate.convertAndSendToUser(message.getIdannonce(),"/private",message);
         return message;
     }
     @PostMapping("/message/add")
@@ -34,9 +34,9 @@ public class ChatController {
     public List<UserResponse> getchatusersofausername(@PathVariable(value = "username")String username){
         return chatService.getallchatusers(username);
     }
-    @GetMapping("message/{username}/chat/{other}")
-    public List<Message> getchatoftwousers(@PathVariable(value = "username")String username,
-                                           @PathVariable(value = "other")String other){
-            return chatService.getuserschatmessages(username,other);
+    @GetMapping("message/{username}/chat/{idannonce}")
+    public List<Message> getchatoftwousersbyannonce(@PathVariable(value = "username")String username,
+                                           @PathVariable(value = "idannonce")String idannonce){
+            return chatService.getuserschatmessages(username,idannonce);
     }
 }

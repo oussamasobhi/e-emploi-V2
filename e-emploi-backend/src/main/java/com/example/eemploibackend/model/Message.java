@@ -25,6 +25,7 @@ public class Message {
 //    private User receiver;
     private String sendername;
     private String receivername;
+    private String idannonce;
     private String content;
     @CreatedDate
     private Instant createdAt;

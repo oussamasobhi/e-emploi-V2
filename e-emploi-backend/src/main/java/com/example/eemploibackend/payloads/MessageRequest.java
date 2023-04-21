@@ -12,6 +12,7 @@ import java.time.Instant;
 public class MessageRequest {
     private String sendername;
     private String receivername;
+    private String  idannonce;
     private String content;
     @CreatedDate
     private Instant createdAt;
