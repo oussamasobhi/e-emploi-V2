@@ -3,16 +3,17 @@ package com.example.eemploibackend.controller;
 import com.example.eemploibackend.config.CurrentUser;
 import com.example.eemploibackend.model.User;
 import com.example.eemploibackend.payloads.ApiResponse;
+import com.example.eemploibackend.payloads.FilesResponse;
 import com.example.eemploibackend.payloads.PostuleAnnonceRequest;
 import com.example.eemploibackend.services.AnnonceUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 @CrossOrigin
@@ -25,5 +26,10 @@ public class AnnonceUserController {
         annonceUserService.ajouterannonceuser(request,user.getId());
         return new ResponseEntity(new ApiResponse(true,"Vous avez postulé avec succes"),
                 HttpStatus.ACCEPTED);
+    }
+    @GetMapping("/documents/{idannonce}/{iduser}")
+    public List<FilesResponse> getalldocs(@PathVariable(value = "idannonce")Long idannonce,
+                                          @PathVariable(value = "iduser")Long iduser){
+        return annonceUserService.recupererfiles(idannonce,iduser);
     }
 }

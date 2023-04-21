@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -30,6 +31,8 @@ public class AnnonceUser {
     private double duree_real_final;
     private double tarif_nego;
     private StatusAnnonce statusAnnonce;
+    @OneToMany(mappedBy = "annonce_user",cascade = CascadeType.ALL)
+    private List<FileDB> documents;
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
