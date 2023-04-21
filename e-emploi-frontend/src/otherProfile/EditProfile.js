@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Button, Input, Typography, Form, DatePicker, Space } from "antd";
+import { Button, Input, Typography, Form, DatePicker, Space, Upload } from "antd";
 import { useNavigate } from "react-router";
-import { getCurrentUser, updateProfil } from "../util/APIUtils";
+import { getCurrentUser, updateProfil, uploadFile } from "../util/APIUtils";
 import DeleteFromProfil from "./DeleteFromProfil";
 import dayjs from "dayjs";
 import { dateFormat } from "../constant";
 import { Navigate, useParams } from "react-router";
+import { UploadOutlined } from "@ant-design/icons";
 
 const EditProfile = ({
   currentUser,
@@ -18,7 +19,7 @@ const EditProfile = ({
   const navigate = useNavigate();
   const [user, setUser] = useState(currentUser);
   const [openDelete, setOpenDelete] = useState(false);
-  
+
   //setUser({ ...user, ["date_naissance"]:"" });
 
   const handleChange = (changedValue, allValues) => {
@@ -32,7 +33,7 @@ const EditProfile = ({
   };
   const editProfil = async (e) => {
     try {
-      await updateProfil(user);;
+      await updateProfil(user);
       const _user = await getCurrentUser();
       setCurrentUser(_user);
 
@@ -44,9 +45,9 @@ const EditProfile = ({
   };
 
   const deleteProfil = () => {
-   setOpenDelete(true);
+    setOpenDelete(true);
   };
-
+ 
   return currentUser.username === username ? (
     <>
       <Typography.Title level={3} className="uppercase text-center">
@@ -173,6 +174,7 @@ const EditProfile = ({
           </div>
         </Space>{" "}
       </Form>
+      
       <DeleteFromProfil
         open={openDelete}
         closeModal={() => setOpenDelete(false)}

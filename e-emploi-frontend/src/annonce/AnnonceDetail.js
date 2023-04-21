@@ -2,10 +2,10 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router";
-import { getAnnonceById } from "../util/APIUtils";
+import { getAnnonceById, uploadFile } from "../util/APIUtils";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
-import { Button } from "antd";
+import { Button, Image } from "antd";
 
 const AnnonceDetail = ({ currentUser }) => {
   const { id } = useParams();
@@ -31,6 +31,24 @@ const AnnonceDetail = ({ currentUser }) => {
         console.log(error);
     }*/
   };
+  const [fileUploaded, setFileUploaded] = useState(null);
+  useEffect(() => {
+    console.log(fileUploaded);
+  }, [fileUploaded]);
+  const handleFileChange = (event) => {
+    setFileUploaded(event.target.files[0]);
+  };
+  const addFile = async () => {
+    console.log(fileUploaded);
+    const formData = new FormData();
+    formData.append("file", fileUploaded);
+    try {
+      await uploadFile(formData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   //if(annonce.userResponse) console.log(currentUser.username === annonce.userResponse.username);
   if (!annonce) return <p>Loading...</p>;
   else
@@ -38,7 +56,7 @@ const AnnonceDetail = ({ currentUser }) => {
       <>
         <div>
           <div>
-            <p  className="text-xl">Partie annonce</p>
+            <p className="text-xl">Partie annonce</p>
             <p>Titre : {annonce.titre_annonce}</p>
             <p>Description : {annonce.description} </p>{" "}
             <p>Type d'annonce : {annonce.categorie2Annonce} </p>
@@ -46,7 +64,7 @@ const AnnonceDetail = ({ currentUser }) => {
             <p>{dayjs(annonce.createdAt).format("YYYY/MM/DD")} </p>
           </div>
           <div>
-          <p  className="text-xl">Partie utilisateur</p>
+            <p className="text-xl">Partie utilisateur</p>
             <p>
               Nom : {annonce.userResponse.nom} {annonce.userResponse.prenom}
             </p>
@@ -66,8 +84,12 @@ const AnnonceDetail = ({ currentUser }) => {
             </>
           )}
         </div>
+        {/*test adding file*/}
         <div>
-        <p  className="text-xl">Boîte de récéption</p>
+          <input type="file" onChange={handleFileChange} />
+          {fileUploaded && <Image src={fileUploaded} />}
+          <Button onClick={addFile}>Ajouter</Button>
+          <p className="text-xl">Boîte de récéption</p>
         </div>
       </>
     );

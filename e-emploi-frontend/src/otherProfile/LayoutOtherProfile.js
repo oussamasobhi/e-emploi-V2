@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React  from "react";
 import { Outlet } from "react-router";
 import { UserOutlined } from "@ant-design/icons";
 import { Navigate } from "react-router";
-import { Avatar, Typography, Menu, Breadcrumb, Tag, Button } from "antd";
+import { Avatar, Typography, Menu, Breadcrumb, Tag } from "antd";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router";
-import { uploadFile } from "../util/APIUtils";
+
 
 const LayoutOtherProfile = ({ currentUser, user }) => {
   const location = useLocation();
@@ -122,7 +122,7 @@ const LayoutOtherProfile = ({ currentUser, user }) => {
             </div>
           </div>
 
-          <div className="w-2/3 py-4 col-span-2 overflow-y-auto">
+          <div className="py-4 col-span-2 overflow-y-auto">
             <div className="container ">
               <div className="border bg-white rounded-md px-3 w-10/12">
                 <div className="pb-6">

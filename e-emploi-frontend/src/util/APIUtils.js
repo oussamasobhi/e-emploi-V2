@@ -299,9 +299,36 @@ export function getChatUsers(username){
   })
 }
 
+//files
+const fileRequest = async (options) => {
+  const headers = new Headers({
+    //"Content-type": "multipart/form-data;boundary=<calculated when request is sent>",
+    
+  });
+  if (localStorage.getItem("token") !== "") {
+    headers.append("Authorization", "Bearer " + localStorage.getItem("token"));
+  }
+  const defaults = {headers: headers};
+  options = Object.assign({}, defaults, options);
+  const response = await fetch(options.url, options);
+  if (!response.ok) {
+    throw new Error("Something went wrong");
+  }
+  const res = await response.json();
+  return res;
+};
+
+
 export function uploadFile(file){
+  return fileRequest({
+    url: API_BASE_URL+"/upload",
+    method: "POST",
+    body: file
+  })
+}
+export function downloadFile(filename){
   return request({
-    url: API_BASE_URL+"/upload?file="+file,
-    method: "POST"
+    url: API_BASE_URL+"/download/"+filename,
+    method: "GET"
   })
 }
