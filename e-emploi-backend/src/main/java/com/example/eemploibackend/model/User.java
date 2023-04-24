@@ -42,8 +42,7 @@ public class User extends DateAudit implements UserDetails{
      @OneToOne
       private FileDB image;
      private Date date_naissance;
-     @ManyToMany(mappedBy = "prestataires")
-        private List<OffreEmploi> offres;
+
      @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Review> reviews;
     @OneToMany(mappedBy = "reviewer", cascade = CascadeType.ALL, orphanRemoval = true)

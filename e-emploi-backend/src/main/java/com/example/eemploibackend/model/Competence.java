@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.util.List;
+
 @Data
 @Builder
 @Entity
@@ -27,4 +29,7 @@ public class Competence {
     @JoinColumn(name = "id_user", nullable = false)
     @JsonIgnore
     private User user;
+
+    @OneToMany(mappedBy = "competence",cascade = CascadeType.ALL)
+    private List<FileDB> documents;
 }

@@ -10,6 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -41,5 +44,11 @@ public class CompetenceController {
     @GetMapping("/{username}")
     public List<Competence> getcompetence(@PathVariable(value = "username") String username){
         return competenceService.getcompetencebyusername(username);
+    }
+    @PostMapping("/upload/{idcompetence}")
+    public ResponseEntity<?> uploadimage(@RequestParam("file")MultipartFile file,
+                                         @PathVariable(value = "idcompetence")Long idcompetence) throws IOException {
+        competenceService.uploadimage(file,idcompetence);
+        return new ResponseEntity(new ApiResponse(true,"image ajouté"),HttpStatus.ACCEPTED);
     }
 }

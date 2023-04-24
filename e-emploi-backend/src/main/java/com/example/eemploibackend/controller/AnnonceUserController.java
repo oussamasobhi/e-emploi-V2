@@ -11,7 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -31,5 +33,13 @@ public class AnnonceUserController {
     public List<FilesResponse> getalldocs(@PathVariable(value = "idannonce")Long idannonce,
                                           @PathVariable(value = "iduser")Long iduser){
         return annonceUserService.recupererfiles(idannonce,iduser);
+    }
+    @PostMapping("/upload/{idannonce}/{iduser}")
+    public ResponseEntity<?> uploadimage(@RequestParam("file")MultipartFile file,
+                                         @PathVariable(value = "idannonce")Long idannonce,
+                                         @PathVariable(value = "iduser")Long iduser) throws IOException {
+        annonceUserService.upmoadimageAnnonceUser(idannonce,iduser,file);
+        return new ResponseEntity(new ApiResponse(true,"Vous avez uploadé avec succes"),
+                HttpStatus.ACCEPTED);
     }
 }

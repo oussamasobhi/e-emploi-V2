@@ -13,8 +13,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 @Service
@@ -26,6 +28,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
     private  final FileDBRepository fileDBRepository;
+    private final FileStorageService fileStorageService;
     public void updateuser(Pro_RegisterRequest request,Long iduser){
 
             userRepository.findById(iduser).map(
@@ -84,10 +87,13 @@ public class UserService {
         userSummary.setRole(user.getRole().getName().name());
     return userSummary;
     }
-    public void addprofilepic(User user, FileDB fileDB){
-        User concerneduser=userRepository.findUserById(user.getId());
-        concerneduser.setImage(fileDB);
-        userRepository.save(concerneduser);
+    public void addprofilepic(User user, MultipartFile file) throws IOException {
+        FileDB storedfile = fileStorageService.store(file);
+        if (file != null) {
+            User concerneduser = userRepository.findUserById(user.getId());
+            concerneduser.setImage(storedfile);
+            userRepository.save(concerneduser);
+        }
     }
     private final String FOLDER_PATH="C:\\Users\\oussa\\Desktop\\PFA\\e-emploi_project\\e-emploi-backend\\src\\main\\resources\\static";
     public void supprimerpic(String filename){

@@ -94,8 +94,7 @@ public class UserController {
     @PostMapping("/photoprofile/add")
     public ResponseEntity<?> ajouterphotodeprofil(@CurrentUser User user,
                                                   @RequestParam(value = "file") MultipartFile file) throws IOException {
-        FileDB filedb=fileStorageService.store(file);
-        userService.addprofilepic(user,filedb);
+        userService.addprofilepic(user,file);
         return new ResponseEntity(new ApiResponse(true,"Image ajouté"),HttpStatus.OK);
     }
     @DeleteMapping("/photoprofile/delete/{filename}")

@@ -7,10 +7,13 @@ import com.example.eemploibackend.payloads.FilesResponse;
 import com.example.eemploibackend.payloads.PostuleAnnonceRequest;
 import com.example.eemploibackend.repository.AnnonceRepository;
 import com.example.eemploibackend.repository.AnnonceUserRepository;
+import com.example.eemploibackend.repository.FileDBRepository;
 import com.example.eemploibackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +23,8 @@ public class AnnonceUserService {
     private final AnnonceRepository annonceRepository;
     private final UserRepository userRepository;
     private final AnnonceUserRepository annonceUserRepository;
+    private final FileStorageService fileStorageService;
+    private final FileDBRepository fileDBRepository;
     public void ajouterannonceuser(PostuleAnnonceRequest request, Long iduser){
         Annonce annonce=annonceRepository.findById(request.getIdannonce())
                 .orElseThrow(()-> new BadRequestException("annonce not found"));
@@ -56,5 +61,13 @@ public class AnnonceUserService {
                 .filepath(file.getFilepath())
                 .build();
         return filesResponse;
+    }
+    public void upmoadimageAnnonceUser(Long idannonce, Long iduser, MultipartFile file) throws IOException {
+        AnnonceUser annonceUser = annonceUserRepository.findbyuserandannonce(idannonce, iduser);
+        FileDB storedfile = fileStorageService.store(file);
+        if (storedfile != null) {
+            storedfile.setAnnonce_user(annonceUser);
+            fileDBRepository.save(storedfile);
+        }
     }
 }
