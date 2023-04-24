@@ -156,7 +156,7 @@ const ChatRoom = ({ currentUser }) => {
     setUserData({ ...userData, message: value });
   }
 
-  if (!receiver && userData.connected !== true) return <p>Loading...</p>;
+  if (!receiver && !userData.connected) return <p>Loading...</p>;
   else
     return (
       <div className="w-full relative flex flex-col h-full bg-white">
