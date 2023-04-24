@@ -1,5 +1,6 @@
 package com.example.eemploibackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,7 +24,15 @@ public class FileDB {
 
     private String type;
     private String filepath;
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_annonce_user", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumns({
+            @JoinColumn(
+                    name = "user_id",
+                    referencedColumnName = "user_id"),
+            @JoinColumn(
+                    name = "annonce_id",
+                    referencedColumnName = "annonce_id")
+    })
+    @JsonIgnore
     private AnnonceUser annonce_user;
 }

@@ -17,4 +17,6 @@ public interface MessageRepository extends JpaRepository<Message,Long> {
     List<String> getchatsenders(String username);
     @Query("SELECT M from Message M where (M.sendername=?1 and M.idannonce=?2) or (M.idannonce=?2 and M.receivername=?1) order by M.createdAt")
     List<Message> getchatmessages(String username,String idannonce);
+    @Query("SELECT M.sendername FROM Message M where M.idannonce=?1")
+    List<String> getsendersbyidannonce(String idannonce);
 }

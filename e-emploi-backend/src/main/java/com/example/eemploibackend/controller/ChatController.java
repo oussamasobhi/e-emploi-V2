@@ -39,4 +39,8 @@ public class ChatController {
                                            @PathVariable(value = "idannonce")String idannonce){
             return chatService.getuserschatmessages(username,idannonce);
     }
+    @GetMapping("/chat-users/{idannonce}")
+    public List<UserResponse> getchatusersbyannonce(@PathVariable(value = "idannonce")String idannonce){
+        return chatService.getannonceSenders(idannonce);
+    }
 }
