@@ -2,7 +2,12 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useParams } from "react-router";
-import { getAnnonceById, getChatUsers, uploadFile } from "../util/APIUtils";
+import {
+  getAnnonceById,
+  getChatUsers,
+  getChatUsersByAnnonce,
+  uploadFile,
+} from "../util/APIUtils";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import { Button, Image, Tag, Typography } from "antd";
@@ -28,18 +33,13 @@ const AnnonceDetail = ({ currentUser }) => {
   useEffect(() => {
     const loadChatUsers = async () => {
       try {
-        const res = await getChatUsers(currentUser.username);
+        const res = await getChatUsersByAnnonce(id);
         setChatUsers(res);
       } catch (error) {
         console.log(error);
       }
     };
-    if (annonce) {
-      if (annonce.userResponse) {
-        if (annonce.userResponse.username === currentUser.username)
-          loadChatUsers();
-      }
-    }
+    loadChatUsers();
   }, [currentUser]);
   useEffect(() => {
     console.log(chatUsers);
@@ -47,13 +47,6 @@ const AnnonceDetail = ({ currentUser }) => {
 
   if (annonce) console.log(annonce.userResponse);
 
-  const postuler = async () => {
-    /*try{
-        const res = await addAnnonceuser()
-    }catch(error){
-        console.log(error);
-    }*/
-  };
   const [fileUploaded, setFileUploaded] = useState(null);
   useEffect(() => {
     console.log(fileUploaded);
@@ -146,12 +139,7 @@ const AnnonceDetail = ({ currentUser }) => {
               </Link>
             </Button>
           )}
-          {currentUser.username === annonce.userResponse.username && (
-            <>
-              <Button>Modifier</Button>
-              <Button>Supprimer</Button>
-            </>
-          )}
+          
         </div>
         {/*test adding file*/}
         {annonce?.userResponse?.username === currentUser.username && (
@@ -162,7 +150,18 @@ const AnnonceDetail = ({ currentUser }) => {
                 <Button onClick={addFile}>Ajouter</Button>
               </div>
 
-              <p className="text-xl">Messages</p>
+              <p className="text-xl font-semibold">Messages</p>
+              {chatUsers?.map((user) => (
+                <>
+                  {user.username !== currentUser.username && (
+                    <div>
+                      <Link to={"/annonce/" + id + "/" + user.username}>
+                        {user.prenom} {user.nom}
+                      </Link>
+                    </div>
+                  )}
+                </>
+              ))}
             </div>
           </>
         )}

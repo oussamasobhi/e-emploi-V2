@@ -5,9 +5,9 @@ import { Outlet } from "react-router";
 const LayoutAnnonce = () => {
   return (
     <Layout>
-      <Layout.Sider className="">
+     {/* <Layout.Sider className="">
         <div className="bg-white h-full">This is the left part</div>
-      </Layout.Sider>
+      </Layout.Sider>*/}
       <Layout.Content>
         <div className="flex-nowrap justify-center w-auto">
           <Outlet />

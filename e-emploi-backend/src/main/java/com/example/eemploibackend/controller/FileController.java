@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin
 public class FileController {
     private final FileStorageService fileStorageService;
     private final FileDBRepository fileDBRepository;

@@ -44,13 +44,10 @@ const ChatRoom = ({currentUser}) => {
     if (idAnnonce) connect();
     const loadMessages = async () => {
         try{
-            const msg = await getMessages(username, idAnnonce);
-            //console.log(msg);
+            const msg = await getMessages(currentUser.username, idAnnonce, username);
             setPrivateChats(msg);
-        }catch(error){
-            console.log(error)
-        }
-    }
+        }catch(error){console.log(error)}
+      }
     loadMessages();
     console.log(privateChats);
     //if(username, idAnnonce) loadMessages();
@@ -147,7 +144,7 @@ const ChatRoom = ({currentUser}) => {
 
   const loadMessages = async () => {
     try{
-        const msg = await getMessages(username, idAnnonce);
+        const msg = await getMessages(currentUser.username, idAnnonce, username);
         setPrivateChats(msg);
     }catch(error){console.log(error)}
   }
@@ -159,7 +156,7 @@ else
     <div className="w-full relative flex flex-col h-full bg-white">
       <div className="w-full h-12 px-10 bg-gray-100 flex justify-between items-center text-2xl absolute top-0">
        <Typography className="text-xl" >{annonce?.titre_annonce} </Typography>
-       <Typography className="text-lg">{receiver.prenom} {receiver.nom}</Typography> 
+       <Typography className="text-lg">{receiver?.prenom} {receiver?.nom}</Typography> 
       </div>
 
       {/* Message */}

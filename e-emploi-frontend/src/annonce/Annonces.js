@@ -3,9 +3,7 @@ import { Route, Routes } from "react-router";
 import LayoutAnnonce from "./LayoutAnnonce";
 import CreateAnnonce from "./CreateAnnonce";
 import Annonce from "../otherProfile/annonces/Annonce";
-import AnnonceDetail from "./AnnonceDetail";
-import ChatBox from "./ChatBox";
-import Chat from "../chat/Chat";
+import AnnonceRoute from "./AnnonceRoute";
 
 const Annonces = ({ notify, currentUser }) => {
   return (
@@ -13,7 +11,7 @@ const Annonces = ({ notify, currentUser }) => {
       <Route path="/*" element={<LayoutAnnonce />}>
         <Route path="create" element={<CreateAnnonce notify={notify} />} />
         <Route index element={<Annonce currentUser={currentUser} />} />
-        <Route path=":id/*" element={<AnnonceDetail currentUser={currentUser} />} /> 
+        <Route path=":id/*" element={<AnnonceRoute currentUser={currentUser} />} />
       </Route>
     </Routes>
   );

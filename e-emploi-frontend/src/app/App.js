@@ -15,7 +15,6 @@ import Domicile from "../domicile/Domicile";
 import EmploiService from "../emploi_servce/EmploiService";
 import Annonces from "../annonce/Annonces";
 import OtherProfile from "../otherProfile/OtherProfile";
-import Chat from "../chat/Chat";
 
 
 function App() {
@@ -212,7 +211,6 @@ function App() {
                 />
               }
             />
-            <Route path="/message/*" element={<Chat currentUser={currentUser} />} />
           </Route>
         </Routes>
       </BrowserRouter>

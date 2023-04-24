@@ -285,9 +285,9 @@ export function saveMessage(message){
   });
 }
 
-export function getMessages(username1, username2){
+export function getMessages(username, idannonce, username2){
   return request({
-    url: API_BASE_URL+"/message/"+username1+"/chat/"+username2,
+    url: API_BASE_URL+"/message/"+username+"/chat/"+idannonce+"/"+username2,
     method: "GET",
   })
 }
@@ -295,6 +295,13 @@ export function getMessages(username1, username2){
 export function getChatUsers(username){
   return request({
     url: API_BASE_URL+"/chat-users/"+username,
+    method: "GET"
+  })
+}
+
+export function getChatUsersByAnnonce(idAnnonce){
+  return request({
+    url: API_BASE_URL+"/chat-users/"+idAnnonce,
     method: "GET"
   })
 }
@@ -332,3 +339,4 @@ export function downloadFile(filename){
     method: "GET"
   })
 }
+
