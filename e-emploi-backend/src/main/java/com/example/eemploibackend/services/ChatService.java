@@ -53,4 +53,12 @@ public class ChatService {
     public List<Message> getuserschatmessages(String username,String idannonce){
         return messageRepository.getchatmessages(username,idannonce);
     }
+    public List<UserResponse> getannonceSenders(String idannonce){
+        List<String> sendernames=messageRepository.getsendersbyidannonce(idannonce);
+        List<UserResponse> senders=new ArrayList<>();
+        for(String s:sendernames){
+            senders.add(mapusernametouserrespnse(s));
+        }
+        return senders;
+    }
 }
