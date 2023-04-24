@@ -50,8 +50,8 @@ public class ChatService {
     private UserResponse mapusernametouserrespnse(String username){
         return ModelMapper.mapUserToUserResponse(userRepository.findByUsername(username).orElseThrow());
     }
-    public List<Message> getuserschatmessages(String username,String idannonce){
-        return messageRepository.getchatmessages(username,idannonce);
+    public List<Message> getuserschatmessages(String username,String idannonce, String username2){
+        return messageRepository.getchatmessages(username,idannonce,username2);
     }
     public List<UserResponse> getannonceSenders(String idannonce){
         List<String> sendernames=messageRepository.getsendersbyidannonce(idannonce);

@@ -30,14 +30,15 @@ public class ChatController {
     public void addmessage(@RequestBody MessageRequest request){
             chatService.addmessage(request);
     }
-    @GetMapping("/chat-users/{username}")
-    public List<UserResponse> getchatusersofausername(@PathVariable(value = "username")String username){
-        return chatService.getallchatusers(username);
-    }
-    @GetMapping("message/{username}/chat/{idannonce}")
+//    @GetMapping("/chat-users/{username}")
+//    public List<UserResponse> getchatusersofausername(@PathVariable(value = "username")String username){
+//        return chatService.getallchatusers(username);
+//    }
+    @GetMapping("message/{username}/chat/{idannonce}/{username2}")
     public List<Message> getchatoftwousersbyannonce(@PathVariable(value = "username")String username,
-                                           @PathVariable(value = "idannonce")String idannonce){
-            return chatService.getuserschatmessages(username,idannonce);
+                                           @PathVariable(value = "idannonce")String idannonce,
+                                                    @PathVariable(value="username2")String username2){
+            return chatService.getuserschatmessages(username,idannonce,username2);
     }
     @GetMapping("/chat-users/{idannonce}")
     public List<UserResponse> getchatusersbyannonce(@PathVariable(value = "idannonce")String idannonce){
