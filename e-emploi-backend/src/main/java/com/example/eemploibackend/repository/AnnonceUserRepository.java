@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.io.File;
 import java.util.List;
 
 @Repository
@@ -15,4 +16,6 @@ public interface AnnonceUserRepository extends JpaRepository<AnnonceUser, Annonc
     AnnonceUser findbyuserandannonce(Long idannonce,Long iduser);
     @Query("SELECT A.documents from AnnonceUser A where A.id=?1")
     List<FileDB> findfilesbyannonceuser(AnnonceUserID annonceuserid);
+    @Query("SELECT A.documents from AnnonceUser A where A.annonce.id=?1 and A.user.id=?2")
+    List<FileDB> findfilesbyuserandannonce(Long idannonce,Long iduser);
 }

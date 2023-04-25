@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.io.File;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -14,4 +16,6 @@ public interface FileDBRepository extends JpaRepository<FileDB,Long> {
 
     @Query("SELECT U from User U where U.image.name=?1")
     User  findbyfilename(String filaname);
+    @Query("SELECT F from FileDB F where F.competence.id=?1")
+    List<FileDB> findidcompetence(Long idcompetence);
 }

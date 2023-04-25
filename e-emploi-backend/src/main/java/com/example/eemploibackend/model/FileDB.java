@@ -36,7 +36,7 @@ public class FileDB {
     @JsonIgnore
     private AnnonceUser annonce_user;
 
-    @ManyToOne(fetch = FetchType.LAZY,optional = true)
+    @ManyToOne(fetch = FetchType.EAGER,optional = true)
     @JoinColumn(name = "idcompetence",nullable = true)
     private Competence competence;
 }

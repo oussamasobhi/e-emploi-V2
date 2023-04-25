@@ -1,6 +1,7 @@
 package com.example.eemploibackend.controller;
 
 import com.example.eemploibackend.config.CurrentUser;
+import com.example.eemploibackend.model.FileDB;
 import com.example.eemploibackend.model.User;
 import com.example.eemploibackend.payloads.ApiResponse;
 import com.example.eemploibackend.payloads.FilesResponse;
@@ -38,8 +39,14 @@ public class AnnonceUserController {
     public ResponseEntity<?> uploadimage(@RequestParam("file")MultipartFile file,
                                          @PathVariable(value = "idannonce")Long idannonce,
                                          @PathVariable(value = "iduser")Long iduser) throws IOException {
-        annonceUserService.upmoadimageAnnonceUser(idannonce,iduser,file);
-        return new ResponseEntity(new ApiResponse(true,"Vous avez uploadé avec succes"),
-                HttpStatus.ACCEPTED);
+        if(annonceUserService.upmoadimageAnnonceUser(idannonce,iduser,file))
+        return new ResponseEntity(new ApiResponse(true,"Vous avez uploadé avec succes"), HttpStatus.ACCEPTED);
+        return new ResponseEntity(new ApiResponse(false,"Y a un erreur"),
+                HttpStatus.BAD_REQUEST);
+    }
+    @GetMapping("/download/{idannonce}/{iduser}")
+    public List<FileDB> getfilesbyannonceuser(@PathVariable(value = "idannonce")Long idannonce,
+                                              @PathVariable(value = "iduser")Long iduser){
+        return annonceUserService.getallfiles(idannonce,iduser);
     }
 }

@@ -94,13 +94,18 @@ public class UserController {
     @PostMapping("/photoprofile/add")
     public ResponseEntity<?> ajouterphotodeprofil(@CurrentUser User user,
                                                   @RequestParam(value = "file") MultipartFile file) throws IOException {
-        userService.addprofilepic(user,file);
+        if(userService.addprofilepic(user,file))
         return new ResponseEntity(new ApiResponse(true,"Image ajouté"),HttpStatus.OK);
+        return new ResponseEntity(new ApiResponse(true,"ajout a echoué"),HttpStatus.BAD_REQUEST);
     }
     @DeleteMapping("/photoprofile/delete/{filename}")
     public ResponseEntity<?> deletepic(@PathVariable(value = "filename")String filename){
         userService.supprimerpic(filename);
         return new ResponseEntity(new ApiResponse(true,"Image suprimé"),HttpStatus.OK);
+    }
+    @GetMapping("/download/{iduser}")
+    public FileDB getfilebyuserid(@PathVariable(value = "iduser")Long iduser){
+        return userService.getfilebyuserid(iduser);
     }
 }
 
