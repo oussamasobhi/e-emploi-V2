@@ -10,8 +10,8 @@ import {
 } from "../util/APIUtils";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
-import { Button, Image, Tag, Typography } from "antd";
-import { MessageFilled, MessageOutlined } from "@ant-design/icons";
+import { Button, Image, Tag, Typography, List } from "antd";
+import { CheckSquareTwoTone, MessageOutlined } from "@ant-design/icons";
 var relativeTime = require("dayjs/plugin/relativeTime");
 dayjs.extend(relativeTime);
 
@@ -153,17 +153,30 @@ const AnnonceDetail = ({ currentUser }) => {
               </div>
 
               <p className="text-xl font-semibold">Messages</p>
-              {chatUsers?.map((user) => (
+              {/*chatUsers?.map((user) => (
                 <>
                   {user.username !== currentUser.username && (
-                    <div>
+                    <div className="flex justify-between" >
                       <Link to={"/annonce/" + id + "/" + user.username}>
                         {user.prenom} {user.nom}
                       </Link>
+                      <Button type="primary" icon={<CheckSquareTwoTone/> } >Confirmer</Button>
                     </div>
                   )}
                 </>
-              ))}
+              ))*/}
+              {chatUsers && (
+                <List dataSource={chatUsers}
+                renderItem={(user) => (
+                  <div className="flex justify-between" >
+                      <Link to={"/annonce/" + id + "/" + user.username}>
+                        {user.prenom} {user.nom}
+                      </Link>
+                      <Button type="primary" icon={<CheckSquareTwoTone/> } >Confirmer</Button>
+                    </div>
+                )} />
+              )}
+
             </div>
           </>
         )}

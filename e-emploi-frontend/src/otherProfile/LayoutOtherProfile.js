@@ -1,6 +1,6 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Outlet } from "react-router";
-import { UserOutlined } from "@ant-design/icons";
+import { UserOutlined, InboxOutlined } from "@ant-design/icons";
 import { Navigate } from "react-router";
 import {
   Avatar,
@@ -17,7 +17,6 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router";
 import { uploadPdp } from "../util/APIUtils";
 import { API_BASE_URL } from "../constant";
-import myImg from "../../../e-emploi-backend/src/main/resources/static/1682365389982_a1.jpg";
 
 const LayoutOtherProfile = ({ currentUser, user }) => {
   const location = useLocation();
@@ -86,26 +85,26 @@ const LayoutOtherProfile = ({ currentUser, user }) => {
       console.log(error);
     }
   }*/
-  const handleAvatar = () => {
+  
+  const [pdp, setPdp] = useState("");
+  async function ajouterPhoto(event) {
     console.log("avatar clicked !");
-  };
-  const [pdp, setPdp] = useState('');
- async function ajouterPhoto (event) {
     console.log(event.target.files[0]);
-    setPdp(event.target.files[0]);
+    setPdp(URL.createObjectURL(event.target.files[0]));
     const formData = new FormData();
     formData.append("file", event.target.files[0]);
     formData.append("user", currentUser.id);
     try {
       await uploadPdp(formData);
+      console.log("image uploades successfully !");
     } catch (error) {
       console.log(error);
     }
-  };
+  }
+ 
+
   const addPicture = (
-    <div>
-      <input type="file" name="pdp" onChange={ajouterPhoto}  />
-    </div>
+    <input type="file" accept="image/*" onChange={ajouterPhoto} />
   );
 
   if (!user) return <p>Loading...</p>;
@@ -118,16 +117,23 @@ const LayoutOtherProfile = ({ currentUser, user }) => {
               <div className="bg-white w-56 border rounded-md py-4 flex flex-col items-center">
                 <div className="pb-6 w-3/4 text-center flex justify-center items-center ">
                   <Popover placement="bottom" content={addPicture}>
-                    {!pdp && <Avatar
-                      size={128}
-                      icon={<UserOutlined />}
-                      onClick={handleAvatar}
-                      className="hover:cursor-pointer"
-                    />}
-                    {pdp && <Avatar width={400} height={500} src={pdp} />  }
+                    {!pdp && (
+                      <Avatar
+                        size={128}
+                        icon={<UserOutlined />}
+                        className="hover:cursor-pointer"
+                      />
+                    )}
+                    {pdp && (
+                      <Avatar
+                        size={128}
+                        src={pdp}
+                        className="hover:cursor-pointer"
+                      />
+                    )}
                   </Popover>
                 </div>
-                <img src={myImg} />
+
                 {!isCurrentUser && (
                   <Typography>{user.prenom + " " + user.nom}</Typography>
                 )}
