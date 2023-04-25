@@ -340,3 +340,10 @@ export function downloadFile(filename){
   })
 }
 
+export function uploadPdp(photo){
+  return fileRequest({
+    url: API_BASE_URL+"/api/photoprofile/add",
+    method : "POST",
+    body : photo
+  })
+}

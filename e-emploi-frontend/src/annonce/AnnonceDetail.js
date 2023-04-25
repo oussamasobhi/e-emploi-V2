@@ -57,6 +57,8 @@ const AnnonceDetail = ({ currentUser }) => {
   const addFile = async () => {
     console.log(fileUploaded);
     const formData = new FormData();
+    formData.append("annonce_id",annonce.id);
+    formData.append("user_id", currentUser.id)
     formData.append("file", fileUploaded);
     try {
       await uploadFile(formData);

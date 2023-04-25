@@ -1,11 +1,23 @@
-import React  from "react";
+import React, {useState} from "react";
 import { Outlet } from "react-router";
 import { UserOutlined } from "@ant-design/icons";
 import { Navigate } from "react-router";
-import { Avatar, Typography, Menu, Breadcrumb, Tag } from "antd";
+import {
+  Avatar,
+  Typography,
+  Menu,
+  Breadcrumb,
+  Tag,
+  Popover,
+  Button,
+  Image,
+  Upload,
+} from "antd";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router";
-
+import { uploadPdp } from "../util/APIUtils";
+import { API_BASE_URL } from "../constant";
+import myImg from "../../../e-emploi-backend/src/main/resources/static/1682365389982_a1.jpg";
 
 const LayoutOtherProfile = ({ currentUser, user }) => {
   const location = useLocation();
@@ -74,6 +86,27 @@ const LayoutOtherProfile = ({ currentUser, user }) => {
       console.log(error);
     }
   }*/
+  const handleAvatar = () => {
+    console.log("avatar clicked !");
+  };
+  const [pdp, setPdp] = useState('');
+ async function ajouterPhoto (event) {
+    console.log(event.target.files[0]);
+    setPdp(event.target.files[0]);
+    const formData = new FormData();
+    formData.append("file", event.target.files[0]);
+    formData.append("user", currentUser.id);
+    try {
+      await uploadPdp(formData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const addPicture = (
+    <div>
+      <input type="file" name="pdp" onChange={ajouterPhoto}  />
+    </div>
+  );
 
   if (!user) return <p>Loading...</p>;
   else
@@ -83,9 +116,18 @@ const LayoutOtherProfile = ({ currentUser, user }) => {
           <div className="flex flex-col p-4 overflow-y-auto ">
             <div className="flex flex-col items-center">
               <div className="bg-white w-56 border rounded-md py-4 flex flex-col items-center">
-                <div className="pb-6 w-3/4 text-center flex justify-center items-center">
-                  <Avatar size={128} icon={<UserOutlined />} />
+                <div className="pb-6 w-3/4 text-center flex justify-center items-center ">
+                  <Popover placement="bottom" content={addPicture}>
+                    {!pdp && <Avatar
+                      size={128}
+                      icon={<UserOutlined />}
+                      onClick={handleAvatar}
+                      className="hover:cursor-pointer"
+                    />}
+                    {pdp && <Avatar width={400} height={500} src={pdp} />  }
+                  </Popover>
                 </div>
+                <img src={myImg} />
                 {!isCurrentUser && (
                   <Typography>{user.prenom + " " + user.nom}</Typography>
                 )}
@@ -114,7 +156,7 @@ const LayoutOtherProfile = ({ currentUser, user }) => {
                     Professionnel
                   </Tag>
                 )}
-              {/*  <p className="text-neutral-500"><Button onClick={() => addFile()} >Ajouter fichier</Button> </p>*/}
+                {/*  <p className="text-neutral-500"><Button onClick={() => addFile()} >Ajouter fichier</Button> </p>*/}
               </div>
             </div>
             <div className="flex flex-col items-center mt-6">
