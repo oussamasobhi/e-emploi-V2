@@ -87,13 +87,19 @@ public class UserService {
         userSummary.setRole(user.getRole().getName().name());
     return userSummary;
     }
-    public void addprofilepic(User user, MultipartFile file) throws IOException {
+    public Boolean addprofilepic(User user, MultipartFile file) throws IOException {
+        User concerneduser = userRepository.findUserById(user.getId());
+        if(concerneduser==null)
+            return false;
         FileDB storedfile = fileStorageService.store(file);
         if (file != null) {
-            User concerneduser = userRepository.findUserById(user.getId());
             concerneduser.setImage(storedfile);
             userRepository.save(concerneduser);
         }
+        else{
+            return false;
+        }
+        return true;
     }
     private final String FOLDER_PATH="C:\\Users\\oussa\\Desktop\\PFA\\e-emploi_project\\e-emploi-backend\\src\\main\\resources\\static";
     public void supprimerpic(String filename){
@@ -105,5 +111,8 @@ public class UserService {
         String filePath=FOLDER_PATH+"\\"+filename;
         File file=new File(filePath);
         file.delete();
+    }
+    public FileDB getfilebyuserid(Long userid){
+        return userRepository.getfilebyuserid(userid);
     }
 }

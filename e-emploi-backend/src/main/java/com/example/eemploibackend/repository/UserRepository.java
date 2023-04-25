@@ -1,6 +1,7 @@
 package com.example.eemploibackend.repository;
 
 import com.example.eemploibackend.model.Adresse;
+import com.example.eemploibackend.model.FileDB;
 import com.example.eemploibackend.model.RoleName;
 import com.example.eemploibackend.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,4 +25,6 @@ public interface UserRepository extends JpaRepository<User,Long> {
     Boolean existsByEmail(String email);
     @Query("SELECT a from Adresse a where a.user.id=?1")
     List<Adresse> findaddressesbyuserid(Long id);
+    @Query("SELECT U.image from User U where U.id=?1")
+    FileDB getfilebyuserid(Long userid);
 }

@@ -49,12 +49,24 @@ public List<Competence> getcomptencesbyuserid(Long iduser){
         return competenceRepository.findAllByUserId(iduser);
 }
 public List<Competence> getcompetencebyusername(String username){return competenceRepository.findAllByUsername(username);}
- public void uploadimage(MultipartFile file,Long idcompetence) throws IOException {
-        FileDB storedfile=fileStorageService.store(file);
-        if(storedfile!=null) {
-            Competence competence = competenceRepository.findCompetenceById(idcompetence);
+ public Boolean uploadimage(MultipartFile file,Long idcompetence) throws IOException {
+     Competence competence = competenceRepository.findCompetenceById(idcompetence);
+     if(competence==null)
+         return false;
+     FileDB storedfile=fileStorageService.store(file);
+     if(storedfile!=null) {
+
             storedfile.setCompetence(competence);
             fileDBRepository.save(storedfile);
         }
+     else{
+         return false;
+     }
+     return true;
+    }
+    public List<FileDB> recupererfile(Long idcompetence){
+        List<FileDB> files=fileDBRepository.findidcompetence(idcompetence);
+        return files;
+
     }
 }

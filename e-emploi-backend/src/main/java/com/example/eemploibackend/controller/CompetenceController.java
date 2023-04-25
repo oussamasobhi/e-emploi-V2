@@ -2,6 +2,7 @@ package com.example.eemploibackend.controller;
 
 import com.example.eemploibackend.config.CurrentUser;
 import com.example.eemploibackend.model.Competence;
+import com.example.eemploibackend.model.FileDB;
 import com.example.eemploibackend.model.User;
 import com.example.eemploibackend.payloads.ApiResponse;
 import com.example.eemploibackend.payloads.CompetenceRequest;
@@ -48,7 +49,12 @@ public class CompetenceController {
     @PostMapping("/upload/{idcompetence}")
     public ResponseEntity<?> uploadimage(@RequestParam("file")MultipartFile file,
                                          @PathVariable(value = "idcompetence")Long idcompetence) throws IOException {
-        competenceService.uploadimage(file,idcompetence);
+        if(competenceService.uploadimage(file,idcompetence))
         return new ResponseEntity(new ApiResponse(true,"image ajouté"),HttpStatus.ACCEPTED);
+        return new ResponseEntity(new ApiResponse(true,"ajout a echoué"),HttpStatus.BAD_REQUEST);
+    }
+    @GetMapping("/download/{idcompetence}")
+    public List<FileDB> recuperefile(@PathVariable(value = "idcompetence")Long idcompetence){
+        return competenceService.recupererfile(idcompetence);
     }
 }

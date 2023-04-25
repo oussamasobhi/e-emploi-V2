@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,12 +63,20 @@ public class AnnonceUserService {
                 .build();
         return filesResponse;
     }
-    public void upmoadimageAnnonceUser(Long idannonce, Long iduser, MultipartFile file) throws IOException {
+    public Boolean upmoadimageAnnonceUser(Long idannonce, Long iduser, MultipartFile file) throws IOException {
         AnnonceUser annonceUser = annonceUserRepository.findbyuserandannonce(idannonce, iduser);
+        if(annonceUser==null)
+            return false;
         FileDB storedfile = fileStorageService.store(file);
         if (storedfile != null) {
             storedfile.setAnnonce_user(annonceUser);
             fileDBRepository.save(storedfile);
+        }else {
+            return false;
         }
+        return true;
+    }
+    public List<FileDB> getallfiles(Long idannonce,Long iduser){
+        return annonceUserRepository.findfilesbyuserandannonce(idannonce,iduser);
     }
 }
