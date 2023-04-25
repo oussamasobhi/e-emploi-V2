@@ -18,6 +18,7 @@ const AnnonceRoute = ({ currentUser }) => {
     const loadAnnonce = async () => {
       try {
         const _annonce = await getAnnonceById(idAnnonce);
+        console.log(_annonce);
         setAnnonce(_annonce);
       } catch (error) {
         console.log(error);
@@ -27,7 +28,7 @@ const AnnonceRoute = ({ currentUser }) => {
     console.log(annonce);
   }, []);
   useEffect(() => {
-   // console.log(idAnnonce);
+    // console.log(idAnnonce);
     const loadAnnonce = async () => {
       try {
         const _annonce = await getAnnonceById(idAnnonce);
@@ -40,14 +41,19 @@ const AnnonceRoute = ({ currentUser }) => {
     console.log(annonce);
   }, [idAnnonce]);
 
-  return (
-    <Routes>
-      <Route path="/*" element={<LayoutAnnonceDetail />}>
-        <Route index element={<AnnonceDetail currentUser={currentUser} />} />
-        <Route path=":username" element={<ChatRoom annonce={annonce} currentUser={currentUser} />} />
-      </Route>
-    </Routes>
-  );
+  if (!annonce) return <p>Loading...</p>;
+  else
+    return (
+      <Routes>
+        <Route path="/*" element={<LayoutAnnonceDetail />}>
+          <Route index element={<AnnonceDetail currentUser={currentUser} />} />
+          <Route
+            path=":username"
+            element={<ChatRoom annonce={annonce} currentUser={currentUser} />}
+          />
+        </Route>
+      </Routes>
+    );
 };
 
 export default AnnonceRoute;

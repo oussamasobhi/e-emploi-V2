@@ -16,14 +16,28 @@ var relativeTime = require("dayjs/plugin/relativeTime");
 dayjs.extend(relativeTime);
 
 const AnnonceDetail = ({ currentUser }) => {
-  const { id } = useParams();
+  const id = (useParams()).id;
   const [annonce, setAnnonce] = useState(null);
   const [chatUsers, setChatUsers] = useState(null);
   useEffect(() => {
     const loadAnnonce = async () => {
+      console.log(id);
       try {
-        const _annonce = await getAnnonceById(id);
-        setAnnonce(_annonce);
+        const res = await getAnnonceById(id);
+        console.log(res)
+        setAnnonce(res);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    loadAnnonce();
+  }, []);
+  useEffect(() => {
+    const loadAnnonce = async () => {
+      console.log(id);
+      try {
+        const res = await getAnnonceById(id);
+        setAnnonce(res);
       } catch (error) {
         console.log(error);
       }
@@ -47,7 +61,7 @@ const AnnonceDetail = ({ currentUser }) => {
 
   if (annonce) console.log(annonce.userResponse);
 
-  const [fileUploaded, setFileUploaded] = useState(null);
+  /*const [fileUploaded, setFileUploaded] = useState(null);
   useEffect(() => {
     console.log(fileUploaded);
   }, [fileUploaded]);
@@ -65,7 +79,7 @@ const AnnonceDetail = ({ currentUser }) => {
     } catch (error) {
       console.log(error);
     }
-  };
+  };*/
 
   //if(annonce.userResponse) console.log(currentUser.username === annonce.userResponse.username);
   if (!annonce) return <p>Loading...</p>;
@@ -147,10 +161,10 @@ const AnnonceDetail = ({ currentUser }) => {
         {annonce?.userResponse?.username === currentUser.username && (
           <>
             <div className="px-10">
-              <div className="flex justify-between items-start">
+              {/*<div className="flex justify-between items-start">
                 <input type="file" onChange={handleFileChange} />
                 <Button onClick={addFile}>Ajouter</Button>
-              </div>
+        </div>*/}
 
               <p className="text-xl font-semibold">Messages</p>
               {/*chatUsers?.map((user) => (
