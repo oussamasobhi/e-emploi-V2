@@ -1,11 +1,21 @@
 import { Typography, Button, Modal } from "antd";
-import React, { useState } from "react";
-import { deleteSkill } from "../../util/APIUtils";
+import React, { useEffect, useState } from "react";
+import {
+  deleteSkill,
+  getCompetenceFiles,
+  getSkillsByUsername,
+  uploadCompetenceFile,
+} from "../../util/APIUtils";
 import EditCompetence from "./EditCompetence";
+import { PlusCircleOutlined } from "@ant-design/icons";
 
 const CompetenceItem = ({ competence, refresh, notify, isCurrentUser }) => {
   const [isOpenDelete, setIsOpenDelete] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
+  useEffect(() => {
+    console.log(competence);
+  }, [competence]);
+
   const updateCompetence = () => {
     setIsOpenEdit(true);
   };
@@ -22,6 +32,39 @@ const CompetenceItem = ({ competence, refresh, notify, isCurrentUser }) => {
       console.log(error);
     }
   };
+
+  const [fileValue, setFileValue] = useState(null);
+  const [allFiles, setAllFiles] = useState(null);
+
+  useEffect(() => {
+    const loadFiles = async () => {
+      try {
+        const res = await getCompetenceFiles(competence?.id);
+        console.log(res);
+        setAllFiles(res);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if(competence.id!==undefined && competence.id!==null) loadFiles();
+  }, [competence]);
+
+  const handleFileChange = (event) => {
+    setFileValue(event.target.files[0]);
+  };
+  const handleAddFile = async () => {
+    const formData = new FormData();
+    formData.append("file", fileValue);
+    try {
+      const res = await uploadCompetenceFile(competence.id, formData);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+    refresh();
+  };
+ 
+
   return (
     <>
       <div>
@@ -35,6 +78,7 @@ const CompetenceItem = ({ competence, refresh, notify, isCurrentUser }) => {
             <p>Durée de formation : {competence.duree_formation} </p>
             <p>Niveau scolaire : {competence.niveauscolaire} </p>
           </div>
+
           {isCurrentUser && (
             <>
               <Button onClick={(e) => updateCompetence(e, competence)}>
@@ -49,6 +93,12 @@ const CompetenceItem = ({ competence, refresh, notify, isCurrentUser }) => {
               </Button>
             </>
           )}
+        </div>
+        <div className="flex justify-between">
+          <input type="file" name="document" onChange={handleFileChange} />
+          <Button type="text" onClick={handleAddFile}>
+            <PlusCircleOutlined />{" "}
+          </Button>
         </div>
       </div>
       <Modal

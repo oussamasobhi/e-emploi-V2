@@ -366,7 +366,22 @@ export function addPostuleFile(idannonce, iduser, file){
 
 export function getPostuleFiles(idannonce, iduser){
   return request({
-    ur: API_BASE_URL+"/annonceuser/documents/"+idannonce+"/"+iduser,
+    url: API_BASE_URL+"/annonceuser/documents/"+idannonce+"/"+iduser,
     method:"GET",
+  })
+}
+
+export function uploadCompetenceFile(idcomp, file){
+  return fileRequest({
+    url: API_BASE_URL+"/users/competence/upload/"+idcomp,
+    method: "POST",
+    body: file,
+  })
+}
+
+export function getCompetenceFiles(idcomp){
+  return request({
+    url: API_BASE_URL+"/users/competence/download/"+idcomp,
+    method: "GET",
   })
 }
