@@ -77,6 +77,6 @@ public class AnnonceUserService {
         return true;
     }
     public List<FileDB> getallfiles(Long idannonce,Long iduser){
-        return annonceUserRepository.findfilesbyuserandannonce(idannonce,iduser);
+        return fileDBRepository.findfilesbyuserandannonce(idannonce,iduser);
     }
 }
