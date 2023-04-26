@@ -366,7 +366,7 @@ export function addPostuleFile(idannonce, iduser, file){
 
 export function getPostuleFiles(idannonce, iduser){
   return request({
-    url: API_BASE_URL+"/annonceuser/documents/"+idannonce+"/"+iduser,
+    url: API_BASE_URL+"/annonceuser/download/"+idannonce+"/"+iduser,
     method:"GET",
   })
 }

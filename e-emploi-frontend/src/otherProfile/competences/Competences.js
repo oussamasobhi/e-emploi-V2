@@ -27,6 +27,7 @@ const Competences = ({ notify, currentUser, user }) => {
   const refreshSkills = async () => {
     try {
       const res = await getSkills();
+      console.log(res)
       setCompetences(res);
     } catch (error) {
       console.log(error);

@@ -1,4 +1,4 @@
-import { Typography, Button, Modal } from "antd";
+import { Typography, Button, Modal, Image } from "antd";
 import React, { useEffect, useState } from "react";
 import {
   deleteSkill,
@@ -40,13 +40,13 @@ const CompetenceItem = ({ competence, refresh, notify, isCurrentUser }) => {
     const loadFiles = async () => {
       try {
         const res = await getCompetenceFiles(competence?.id);
-        console.log(res);
+        //console.log(res);
         setAllFiles(res);
       } catch (error) {
         console.log(error);
       }
     };
-    if(competence.id!==undefined && competence.id!==null) loadFiles();
+    if (competence.id !== undefined && competence.id !== null) loadFiles();
   }, [competence]);
 
   const handleFileChange = (event) => {
@@ -63,7 +63,17 @@ const CompetenceItem = ({ competence, refresh, notify, isCurrentUser }) => {
     }
     refresh();
   };
- 
+  const [myPath, setMyPath] = useState(null)
+
+    
+    console.log(allFiles);
+    try {
+      allFiles?.map((file) => (
+        <Image src={"../../public/files/"+file.name} />
+      ));
+    } catch (error) {
+      console.log(error);
+    }
 
   return (
     <>
@@ -101,6 +111,9 @@ const CompetenceItem = ({ competence, refresh, notify, isCurrentUser }) => {
           </Button>
         </div>
       </div>
+      {allFiles?.map((file) => (
+        <Image src={require("../../public/files/"+file.name)} />
+      ))}
       <Modal
         title="Suppression de compétence"
         open={isOpenDelete}
