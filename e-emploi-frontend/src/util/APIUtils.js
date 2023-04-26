@@ -347,3 +347,26 @@ export function uploadPdp(photo){
     body : photo
   })
 }
+
+export function addAnnonceUser(postuleAnnonce){
+  return request({
+    url: API_BASE_URL+"/annonceuser/add",
+    method: "POST",
+    body: JSON.stringify(postuleAnnonce)
+  });
+}
+
+export function addPostuleFile(idannonce, iduser, file){
+  return fileRequest({
+    url: API_BASE_URL+"/annonceuser/upload/"+idannonce+"/"+iduser,
+    method: "POST",
+    body: file
+  })
+}
+
+export function getPostuleFiles(idannonce, iduser){
+  return request({
+    ur: API_BASE_URL+"/annonceuser/documents/"+idannonce+"/"+iduser,
+    method:"GET",
+  })
+}

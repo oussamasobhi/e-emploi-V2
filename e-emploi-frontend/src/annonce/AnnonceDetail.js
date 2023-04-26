@@ -4,27 +4,35 @@ import { useState } from "react";
 import { useParams } from "react-router";
 import {
   getAnnonceById,
-  getChatUsers,
   getChatUsersByAnnonce,
-  uploadFile,
+  addAnnonceUser,
+  addPostuleFile,
+  getPostuleFiles,
 } from "../util/APIUtils";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import { Button, Image, Tag, Typography } from "antd";
-import { MessageFilled, MessageOutlined } from "@ant-design/icons";
+import {
+  MessageFilled,
+  MessageOutlined,
+  PlusCircleOutlined,
+} from "@ant-design/icons";
 var relativeTime = require("dayjs/plugin/relativeTime");
 dayjs.extend(relativeTime);
 
 const AnnonceDetail = ({ currentUser }) => {
-  const id = (useParams()).id;
+  const id = useParams().id;
   const [annonce, setAnnonce] = useState(null);
   const [chatUsers, setChatUsers] = useState(null);
+  const [myFiles, setMyFiles] = useState(null);
+  const [fileValue, setFileValue] = useState(null);
+  const [postuleAnnonce, setPostuleAnnonce] = useState(new Map());
   useEffect(() => {
     const loadAnnonce = async () => {
       console.log(id);
       try {
         const res = await getAnnonceById(id);
-        console.log(res)
+        console.log(res);
         setAnnonce(res);
       } catch (error) {
         console.log(error);
@@ -32,6 +40,19 @@ const AnnonceDetail = ({ currentUser }) => {
     };
     loadAnnonce();
   }, []);
+  useEffect(() => {
+    const loadFiles = async () => {
+      try {
+        const res = await getPostuleFiles(annonce.id, currentUser.id);
+        console.log(res);
+        //setMyFiles(res);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (annonce) loadFiles();
+  }, [annonce, currentUser]);
+
   useEffect(() => {
     const loadAnnonce = async () => {
       console.log(id);
@@ -55,33 +76,41 @@ const AnnonceDetail = ({ currentUser }) => {
     };
     loadChatUsers();
   }, [currentUser]);
+
   useEffect(() => {
     console.log(chatUsers);
-  }, [chatUsers]);
+    const createAnnonceUser = async () => {
+      const request = { idannonce: annonce.id };
+      try {
+        const res = await addAnnonceUser(request);
+        console.log(res);
+        //setPostuleAnnonce(postuleAnnonce.set(currentUser.username,  ))}
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (!chatUsers?.some((obj) => obj.username === currentUser.username))
+      if (annonce?.userResponse?.username !== currentUser.username) {
+        createAnnonceUser();
+      }
+  }, [chatUsers, annonce, currentUser]);
 
-  if (annonce) console.log(annonce.userResponse);
-
-  /*const [fileUploaded, setFileUploaded] = useState(null);
-  useEffect(() => {
-    console.log(fileUploaded);
-  }, [fileUploaded]);
   const handleFileChange = (event) => {
-    setFileUploaded(event.target.files[0]);
+    setFileValue(event.target.files[0]);
   };
-  const addFile = async () => {
-    console.log(fileUploaded);
+  const handleAddFile = async () => {
     const formData = new FormData();
-    formData.append("annonce_id",annonce.id);
-    formData.append("user_id", currentUser.id)
-    formData.append("file", fileUploaded);
+    formData.append("file", fileValue);
     try {
-      await uploadFile(formData);
+      if (currentUser) {
+        const res = await addPostuleFile(annonce.id, currentUser.id, formData);
+        console.log(res);
+      }
     } catch (error) {
       console.log(error);
     }
-  };*/
+  };
 
-  //if(annonce.userResponse) console.log(currentUser.username === annonce.userResponse.username);
   if (!annonce) return <p>Loading...</p>;
   else
     return (
@@ -145,17 +174,34 @@ const AnnonceDetail = ({ currentUser }) => {
             </div>
           </div>
           {currentUser.username !== annonce.userResponse.username && (
-            <Button icon={<MessageOutlined />} type="primary">
-              <Link
-                to={
-                  "/annonce/" + annonce.id + "/" + annonce.userResponse.username
-                }
-              >
-                Message
-              </Link>
-            </Button>
+            <div className="flex flex-col">
+              {/*ajouter fichier*/}
+              <div className="flex justify-between">
+                <input
+                  type="file"
+                  name="document"
+                  onChange={handleFileChange}
+                />
+                <Button type="text" onClick={handleAddFile}>
+                  <PlusCircleOutlined />{" "}
+                </Button>
+              </div>
+              <div>
+                <Button icon={<MessageOutlined />} type="primary">
+                  <Link
+                    to={
+                      "/annonce/" +
+                      annonce.id +
+                      "/" +
+                      annonce.userResponse.username
+                    }
+                  >
+                    Message
+                  </Link>
+                </Button>
+              </div>
+            </div>
           )}
-          
         </div>
         {/*test adding file*/}
         {annonce?.userResponse?.username === currentUser.username && (
