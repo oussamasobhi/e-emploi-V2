@@ -1,6 +1,9 @@
 package com.example.eemploibackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerator;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,5 +41,6 @@ public class FileDB {
 
     @ManyToOne(fetch = FetchType.EAGER,optional = true)
     @JoinColumn(name = "idcompetence",nullable = true)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private Competence competence;
 }
