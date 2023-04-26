@@ -45,7 +45,7 @@ const OtherProfile = ({
           <Route
             path="/*"
             element={
-              <LayoutOtherProfile currentUser={currentUser} user={user} />
+              <LayoutOtherProfile setUser={setUser} setCurrentUser={setCurrentUser} currentUser={currentUser} user={user} />
             }
           >
             <Route

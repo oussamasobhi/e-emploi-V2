@@ -111,20 +111,8 @@ const Annonce = ({ currentUser }) => {
       key: "action",
       render: (_, record) => (
         <>
-          {!isProfile && <Button type="primary" onClick={() => {navigate("/annonce/"+record.id)}} >Détails</Button>}
-          {isProfile && currentUser.username !== username && (
-            <Button type="primary" onClick={() => {navigate("/annonce/"+record.id)}} >Détails</Button>
-          )}
-          {isProfile && currentUser.username === username && (
-            <>
-              <Button>
-                <EditOutlined />
-              </Button>
-              <Button danger className="ml-3">
-                <DeleteOutlined />
-              </Button>
-            </>
-          )}
+          <Button type="primary" onClick={() => {navigate("/annonce/"+record.id)}} >Détails</Button>
+          
         </>
       ),
     },

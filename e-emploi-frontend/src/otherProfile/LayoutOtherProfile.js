@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import { Outlet } from "react-router";
 import { UserOutlined } from "@ant-design/icons";
 import { Navigate } from "react-router";
@@ -15,11 +15,10 @@ import {
 } from "antd";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router";
-import { uploadPdp } from "../util/APIUtils";
+import { uploadPdp, getCurrentUser, userGetUserByUsername } from "../util/APIUtils";
 import { API_BASE_URL } from "../constant";
-import myImg from "../../../e-emploi-backend/src/main/resources/static/1682365389982_a1.jpg";
 
-const LayoutOtherProfile = ({ currentUser, user }) => {
+const LayoutOtherProfile = ({ setUser, setCurrentUser, currentUser, user }) => {
   const location = useLocation();
   const isCurrentUser = currentUser.username === user.username;
 
@@ -89,30 +88,44 @@ const LayoutOtherProfile = ({ currentUser, user }) => {
   const handleAvatar = () => {
     console.log("avatar clicked !");
   };
-  const [pdp, setPdp] = useState('');
- async function ajouterPhoto (event) {
-    console.log(event.target.files[0]);
-    setPdp(event.target.files[0]);
+
+  const updateUser = async () => {
+    try {
+      const _user = await userGetUserByUsername(currentUser.username);
+      setUser(_user);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  async function ajouterPhoto(event) {
     const formData = new FormData();
     formData.append("file", event.target.files[0]);
-    formData.append("user", currentUser.id);
     try {
       await uploadPdp(formData);
     } catch (error) {
       console.log(error);
     }
-  };
+    updateUser();
+  }
   const addPicture = (
     <div>
-      <input type="file" name="pdp" onChange={ajouterPhoto}  />
+      <input type="file" name="pdp" onChange={ajouterPhoto} />
     </div>
   );
 
   const [imagePath, setImagePath] = useState(null);
   useEffect(() => {
-    setImagePath(currentUser?.photo_profil?.filepath);
-    
-  }, [currentUser]);
+    try {
+      setImagePath(require("../public/image/" + user.photo_profil.name));
+    } catch (error) {
+      console.log(error);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    console.log(imagePath);
+  }, [imagePath]);
 
   if (!user) return <p>Loading...</p>;
   else
@@ -123,17 +136,47 @@ const LayoutOtherProfile = ({ currentUser, user }) => {
             <div className="flex flex-col items-center">
               <div className="bg-white w-56 border rounded-md py-4 flex flex-col items-center">
                 <div className="pb-6 w-3/4 text-center flex justify-center items-center ">
-                  <Popover placement="bottom" content={addPicture}>
-                    {!pdp && <Avatar
-                      size={128}
-                      icon={<UserOutlined />}
-                      onClick={handleAvatar}
-                      className="hover:cursor-pointer"
-                    />}
-                    {pdp && <Avatar width={400} height={500} src={pdp} />  }
-                  </Popover>
+                  {!isCurrentUser && (
+                    <>
+                      {!imagePath && (
+                        <Avatar
+                          size={128}
+                          icon={<UserOutlined />}
+                          onClick={handleAvatar}
+                          className="hover:cursor-pointer"
+                        />
+                      )}
+                      {imagePath && (
+                        <Avatar
+                          size={128}
+                          src={imagePath}
+                          onClick={handleAvatar}
+                          className="hover:cursor-pointer"
+                        />
+                      )}
+                    </>
+                  )}
+                  {isCurrentUser && (
+                    <Popover placement="bottom" content={addPicture}>
+                      {!imagePath && (
+                        <Avatar
+                          size={128}
+                          icon={<UserOutlined />}
+                          onClick={handleAvatar}
+                          className="hover:cursor-pointer"
+                        />
+                      )}
+                      {imagePath && (
+                        <Avatar
+                          size={128}
+                          src={imagePath}
+                          onClick={handleAvatar}
+                          className="hover:cursor-pointer"
+                        />
+                      )}
+                    </Popover>
+                  )}
                 </div>
-                <img src={myImg} />
                 {!isCurrentUser && (
                   <Typography>{user.prenom + " " + user.nom}</Typography>
                 )}
