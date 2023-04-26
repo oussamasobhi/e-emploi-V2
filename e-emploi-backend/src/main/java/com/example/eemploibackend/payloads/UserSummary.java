@@ -10,6 +10,7 @@ import java.util.List;
 
 @Data
 public class UserSummary {
+    private Long id;
     private String prenom;
     private String nom;
     private String username;

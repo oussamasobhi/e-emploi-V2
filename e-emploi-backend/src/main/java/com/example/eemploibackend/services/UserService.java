@@ -74,6 +74,7 @@ public class UserService {
     public UserSummary mapusertoSummary(User user){
         UserSummary userSummary=new UserSummary();
         List<Adresse> adresseList=userRepository.findaddressesbyuserid(user.getId());
+        userSummary.setId((user.getId()));
         userSummary.setAdresses(adresseList);
         userSummary.setNom(user.getNom());
         userSummary.setEmail(user.getEmail());
