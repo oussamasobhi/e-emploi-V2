@@ -117,7 +117,7 @@ const LayoutOtherProfile = ({ setUser, setCurrentUser, currentUser, user }) => {
   const [imagePath, setImagePath] = useState(null);
   useEffect(() => {
     try {
-      setImagePath(require("../public/image/" + user.photo_profil.name));
+      setImagePath(require("../public/files/" + user.photo_profil.name));
     } catch (error) {
       console.log(error);
     }
