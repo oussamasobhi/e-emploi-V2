@@ -21,8 +21,9 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class FileStorageService {
     private final FileDBRepository fileDBRepository;
-    private final String FOLDER_PATH="C:\\Users\\oussa\\Desktop\\PFA\\e-emploi_project\\e-emploi-backend\\src\\main\\resources\\static";
-  //  private final String FOLDER_PATH = "D:\\DOCS\\ENSA\\CYCLE INGENIEUR\\PFA PROJET\\e-emploi_project\\e-emploi-backend\\src\\main\\resources\\static";
+    //private final String FOLDER_PATH="C:\\Users\\oussa\\Desktop\\PFA\\e-emploi_project\\e-emploi-backend\\src\\main\\resources\\static";
+//    private final String FOLDER_PATH = "D:\\DOCS\\ENSA\\CYCLE INGENIEUR\\PFA PROJET\\e-emploi_project\\e-emploi-backend\\src\\main\\resources\\static";
+    private final String FOLDER_PATH = "D:\\DOCS\\ENSA\\CYCLE INGENIEUR\\PFA PROJET\\e-emploi_project\\e-emploi-frontend\\src\\public\\image";
     public FileDB store(MultipartFile file) throws IOException {
         String filePath=FOLDER_PATH+"\\"+new Date().getTime()+"_"+file.getOriginalFilename();
         FileDB fileDB= FileDB.builder()
