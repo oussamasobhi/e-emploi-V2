@@ -77,6 +77,8 @@ public class AnnonceUserService {
         return true;
     }
     public List<FileDB> getallfiles(Long idannonce,Long iduser){
-        return fileDBRepository.findfilesbyuserandannonce(idannonce,iduser);
+        AnnonceUserID annonceUserID=new AnnonceUserID(iduser,idannonce);
+        List<FileDB> files=fileDBRepository.findfilesbyuserandannonce(idannonce,iduser);
+        return files;
     }
 }
