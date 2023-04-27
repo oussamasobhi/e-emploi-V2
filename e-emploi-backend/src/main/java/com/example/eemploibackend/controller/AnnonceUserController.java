@@ -8,16 +8,20 @@ import com.example.eemploibackend.payloads.FilesResponse;
 import com.example.eemploibackend.payloads.PostuleAnnonceRequest;
 import com.example.eemploibackend.services.AnnonceUserService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @CrossOrigin
 @RequestMapping("/annonceuser")
@@ -47,6 +51,15 @@ public class AnnonceUserController {
     @GetMapping("/download/{idannonce}/{iduser}")
     public List<FileDB> getfilesbyannonceuser(@PathVariable(value = "idannonce")Long idannonce,
                                               @PathVariable(value = "iduser")Long iduser){
-        return annonceUserService.getallfiles(idannonce,iduser);
+        Logger log= LoggerFactory.getLogger(AnnonceUserService.class);
+        List<FileDB> files=annonceUserService.getallfiles(idannonce,iduser);
+        if(files.size()==0){
+
+            log.info("yeww");
+        }
+        else{
+            log.info("ehooo");
+        }
+        return files;
     }
 }
