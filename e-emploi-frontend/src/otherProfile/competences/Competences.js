@@ -3,6 +3,7 @@ import { getSkills, getSkillsByUsername } from "../../util/APIUtils";
 import { Button, Typography } from "antd";
 import CompetenceItem from "./CompetenceItem";
 import AddCompetence from "./AddCompetence";
+import { PlusOutlined } from "@ant-design/icons";
 
 const Competences = ({ notify, currentUser, user }) => {
   const [competences, setCompetences] = useState([{}]);
@@ -42,7 +43,7 @@ const Competences = ({ notify, currentUser, user }) => {
             Compétences
           </Typography.Title>
           {isCurrentUser && (
-            <Button type="primary" onClick={ajouterCompetence}>
+            <Button icon={<PlusOutlined/>} type="primary" onClick={ajouterCompetence}>
               Ajouter
             </Button>
           )}

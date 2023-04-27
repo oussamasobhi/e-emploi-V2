@@ -15,7 +15,11 @@ import {
 } from "antd";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router";
-import { uploadPdp, getCurrentUser, userGetUserByUsername } from "../util/APIUtils";
+import {
+  uploadPdp,
+  getCurrentUser,
+  userGetUserByUsername,
+} from "../util/APIUtils";
 import { API_BASE_URL } from "../constant";
 
 const LayoutOtherProfile = ({ setUser, setCurrentUser, currentUser, user }) => {
@@ -110,7 +114,21 @@ const LayoutOtherProfile = ({ setUser, setCurrentUser, currentUser, user }) => {
   }
   const addPicture = (
     <div>
-      <input type="file" name="pdp" onChange={ajouterPhoto} />
+      <label
+        htmlFor="file-input"
+        className="relative cursor-pointer flex items-center overflow-hidden rounded-md bg-gray-200 text-gray-700 py-1 px-2 text-sm"
+      >
+        <span className="block cursor-pointer">Changer photo de profil</span>
+        <span className="file-name absolute inset-0 z-10 hidden cursor-pointer"></span>
+        <input
+          id="file-input"
+          type="file"
+          className="opacity-0 absolute inset-0 z-20 cursor-pointer w-full h-full"
+          name="pdp"
+          onChange={ajouterPhoto}
+          accept=".jpg, .png"
+        />
+      </label>
     </div>
   );
 
