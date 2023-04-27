@@ -20,9 +20,11 @@ public class ReviewController {
     @PostMapping("/add")
     public ResponseEntity<?> ajouterreview(@RequestBody ReviewRequest request,
                                            @CurrentUser User user){
-        reviewService.ajouterReview(request,user.getId());
+       if(reviewService.ajouterReview(request,user.getId()))
         return new ResponseEntity(new ApiResponse(true, "review ajouté"),
                 HttpStatus.ACCEPTED);
+        return new ResponseEntity(new ApiResponse(false, "faut specifier un rate entre 0 et 5"),
+                HttpStatus.BAD_REQUEST);
     }
     @PutMapping("/edit/{id}")
     public ResponseEntity<?> editreview(@PathVariable(value = "id") Long id,
@@ -36,5 +38,12 @@ public class ReviewController {
         reviewService.supprimerreview(id);
         return new ResponseEntity(new ApiResponse(true, "review suprimé"),
                 HttpStatus.ACCEPTED);
+    }
+    @GetMapping("/{iduser}")
+    public Double getratebyuser(@PathVariable(value = "iduser")Long iduser){
+        double rate=reviewService.getratebyuser(iduser);
+        if(rate>0)
+            return rate;
+        return -1d;
     }
 }
