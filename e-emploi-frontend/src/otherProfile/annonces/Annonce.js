@@ -36,16 +36,18 @@ const Annonce = ({ currentUser }) => {
 
   useEffect(() => {
     if (annonces) {
-      if (!isProfile) {
+      if (isProfile) {
+        /* {
         let annoncesToShow = annonces.filter(function (annonce) {
           return annonce.userResponse.username !== currentUser.username;
         });
         setFilteredAnnonces(annoncesToShow);
-      } else {
-        let annoncesToShow = annonces.filter(function (annonce) {
+      } else*/ let annoncesToShow = annonces.filter(function (annonce) {
           return annonce.userResponse.username === username;
         });
         setFilteredAnnonces(annoncesToShow);
+      } else {
+        setFilteredAnnonces(annonces);
       }
     }
   }, [annonces, currentUser.username, username, isProfile]);
@@ -76,9 +78,7 @@ const Annonce = ({ currentUser }) => {
       title: "Date de création",
       dataIndex: "createdAt",
       key: "createdAt",
-      render: (_, record) => (
-        dayjs(record.createdAt).format("YYYY-MM-DD")
-      )
+      render: (_, record) => dayjs(record.createdAt).format("YYYY-MM-DD"),
     },
     /*{
       title: "Utilisateur",
@@ -111,13 +111,19 @@ const Annonce = ({ currentUser }) => {
       key: "action",
       render: (_, record) => (
         <>
-          <Button type="primary" onClick={() => {navigate("/annonce/"+record.id)}} >Détails</Button>
-          
+          <Button
+            type="primary"
+            onClick={() => {
+              navigate("/annonce/" + record.id);
+            }}
+          >
+            Détails
+          </Button>
         </>
       ),
     },
   ];
-  if(filteredAnnonces) console.log(filteredAnnonces);
+  if (filteredAnnonces) console.log(filteredAnnonces);
 
   //recherche
   const [form] = useForm();
@@ -211,7 +217,7 @@ const Annonce = ({ currentUser }) => {
     },
   ];
   return (
-    <>
+    <div className="px-4 py-6">
       <Typography.Title level={3}>Annonces</Typography.Title>
       <Form form={form} onValuesChange={handleChange} className="flex mb-10">
         <Form.Item name="search">
@@ -245,7 +251,7 @@ const Annonce = ({ currentUser }) => {
         </Form.Item>
       </Form>
       <Table dataSource={filteredAnnonces} columns={nettoyageColumns} />
-    </>
+    </div>
   );
 };
 

@@ -6,6 +6,7 @@ import {
   Typography,
   Button,
   Radio,
+  message,
 } from "antd";
 import React, { useEffect, useState } from "react";
 import TextArea from "antd/es/input/TextArea";
@@ -51,10 +52,11 @@ const CreateAnnonce = ({ notify }) => {
   const creerAnnonce = async () => {
     try {
       await createAnnonce(annonce);
-      navigate("/");
-      notify("Notification", "Annonce créée ", "info");
+      navigate("/annonce");
+      //notify("Notification", "Annonce créée ", "info");
+      message.success("Annonce créée avec succès");
     } catch (error) {
-      notify("Notification", "Invalid", "error");
+      message.error("Erreur");
       console.log(error);
     }
   };

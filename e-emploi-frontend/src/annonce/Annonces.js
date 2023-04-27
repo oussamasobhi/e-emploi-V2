@@ -8,7 +8,7 @@ import AnnonceRoute from "./AnnonceRoute";
 const Annonces = ({ notify, currentUser }) => {
   return (
     <Routes>
-      <Route path="/*" element={<LayoutAnnonce />}>
+      <Route path="/*" element={<LayoutAnnonce currentUser={currentUser} />}>
         <Route path="create" element={<CreateAnnonce notify={notify} />} />
         <Route index element={<Annonce currentUser={currentUser} />} />
         <Route path=":id/*" element={<AnnonceRoute currentUser={currentUser} />} />

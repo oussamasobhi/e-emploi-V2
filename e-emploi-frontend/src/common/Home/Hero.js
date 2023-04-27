@@ -1,5 +1,5 @@
 import React from 'react'
-
+import {Link} from "react-router-dom";
 const Hero = () => {
     return (
         <div className='h-114 pt-12 bg-hero-bg bg-cover bg-left bg-origin-border'>
@@ -10,7 +10,7 @@ const Hero = () => {
                         <p className='text-4xl bg-cyan text-white italic px-5 font-extrabold w-fit'>Décrivez-nous votre besoin</p>
                     </div>
                     <div className='flex flex-col justify-center items-end pt-12'>
-                        <button className='text-cyan font-semibold bg-lime mb-8 p-4 text-xl w-fit hover:bg-slate-50 transition-colors duration-300 ease-in-out'>Trouvez votre femme de ménage</button>
+                        <button className='text-cyan font-semibold bg-lime mb-8 p-4 text-xl w-fit hover:bg-slate-50 transition-colors duration-300 ease-in-out'><Link to="/annonce"> Voir toutes les annocnes</Link></button>
                         <button className='text-cyan font-semibold bg-lime p-4 text-xl w-fit hover:bg-slate-50 transition-colors duration-300 ease-in-out'>Trouvez votre artisan</button>
                     </div>
                 </div>
@@ -19,4 +19,4 @@ const Hero = () => {
     )
 }
 
-export default Hero
+export default Hero;
