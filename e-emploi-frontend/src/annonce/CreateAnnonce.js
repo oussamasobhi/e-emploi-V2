@@ -63,13 +63,11 @@ const CreateAnnonce = ({ notify }) => {
   const [form] = useForm();
 
   return (
-    <>
-      <div className="mx-auto px-auto">
-        <Typography.Title level={3} className="text-center">
-          Créer une annonce
-        </Typography.Title>
+    <div className="w-auto">
+      <div className="mx-auto px-auto bg-gray-100 flex flex-col items-center justify-center">
+      <Typography className="text-3xl text-center font-caption py-2 font-bold">Créer une annonce</Typography>
         <Form
-          className="flex-none"
+          className="flex-none w-88 bg-white py-6 rounded-lg shadow-lg px-4"
           form={form}
           onValuesChange={handleChange}
           labelCol={{
@@ -80,6 +78,7 @@ const CreateAnnonce = ({ notify }) => {
           }}
           style={{
             maxWidth: 600,
+            width: 500
           }}
         >
           <Form.Item
@@ -106,15 +105,10 @@ const CreateAnnonce = ({ notify }) => {
           >
             <TextArea rows={5} />
           </Form.Item>
-          <Form.Item label="Tarif de départ" name="tarif_depart">
+          <Form.Item label="Tarif" name="tarif_depart">
             <InputNumber className="w-full" />
           </Form.Item>
-          {/*<Form.Item label="Tarif final" name="tarif_final">
-            <InputNumber className="w-full" />
-          </Form.Item>
-          <Form.Item label="Date de fin de l'annonce" name="date_fin_annonce">
-            <DatePicker className="w-full" />
-          </Form.Item>*/}
+          
           <Form.Item label="Catégorie" name="id_categorieAnnonce">
             <Select className="w-full">
               {categories?.map((categorie, index) => (
@@ -172,7 +166,7 @@ const CreateAnnonce = ({ notify }) => {
           </Form.Item>
         </Form>
       </div>
-    </>
+    </div>
   );
 };
 

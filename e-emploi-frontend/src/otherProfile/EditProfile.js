@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Input, Typography, Form, DatePicker, Space, Upload } from "antd";
+import { Button, Input, Typography, Form, DatePicker, Space, Upload, message } from "antd";
 import { useNavigate } from "react-router";
 import { getCurrentUser, updateProfil, uploadFile } from "../util/APIUtils";
 import DeleteFromProfil from "./DeleteFromProfil";
@@ -37,7 +37,8 @@ const EditProfile = ({
       const _user = await getCurrentUser();
       setCurrentUser(_user);
 
-      notify("Notification", "Profil modifié avec succès", "success");
+      //notify("Notification", "Profil modifié avec succès", "success");
+      message.success("Profil modifié")
       reset(e);
     } catch (error) {
       console.log(error);

@@ -6,6 +6,9 @@ module.exports = {
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
         roboto: ["Roboto", "sans-serif"],
+        caption : ['PT Sans Caption', 'sans-serif'],
+        mukta : ['Mukta', "sans-serif"],
+        archivo : ['Archivo Black', 'sans-serif']
       },
       height: {
         114: "28rem",

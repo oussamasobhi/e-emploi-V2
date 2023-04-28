@@ -1,0 +1,4 @@
+.ant-menu-item:hover, 
+.ant-menu-item-active {
+  border-bottom: none;
+}

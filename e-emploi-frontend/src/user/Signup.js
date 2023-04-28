@@ -24,7 +24,7 @@ const Signup = ({ onSignup }) => {
     username: "",
     email: "",
     password: "",
-    roleName:""
+    roleName: "",
   });
 
   useEffect(() => {
@@ -60,7 +60,7 @@ const Signup = ({ onSignup }) => {
           "Désolé, ce nom d'utilisateur est déjà associé à un compte"
         );
       }
-    };
+    }
     fetchData();
   }, [user.username]);
 
@@ -212,21 +212,21 @@ const Signup = ({ onSignup }) => {
   };
 
   return (
-    <div className="flex flex-col w-auto items-center">
+    <div className="flex flex-col w-auto items-center bg-gray-100">
       <div className="bg-inherit w-auto">
-        <h1 className="text-3xl font-bold pb-6 text-center">
+        <h1 className="text-3xl font-bold font-caption text-center">
           Créer votre compte
         </h1>
-        <div className="flex flex-col p-6 border rounded-md bg-white">
+        <div className="flex flex-col p-6 border rounded-md bg-white shadow-md">
           <form
             onSubmit={(e) => onSignup(e, user, goToLogin)}
             className="flex flex-col  rounded-md bg-white"
           >
             <div className="flex pb-1">
               <div className="flex flex-col pr-5">
-                <label className="font-bold text-gray-800 mb-2">Nom</label>
+                <label className="font-mukta text-lg text-gray-600">Nom</label>
                 <input
-                  className="border border-gray-400 px-5 py-3 rounded-md outline-none focus:border-blue-600"
+                  className="border font-poppins border-gray-400 px-5 py-3 rounded-md outline-none focus:border-blue-600"
                   type="text"
                   name="nom"
                   id="nom"
@@ -235,9 +235,11 @@ const Signup = ({ onSignup }) => {
                 />
               </div>
               <div className="flex flex-col">
-                <label className="font-bold text-gray-800 mb-2">Prénoms</label>
+                <label className="font-mukta text-lg text-gray-600">
+                  Prénoms
+                </label>
                 <input
-                  className="border border-gray-400 px-5 py-3 rounded-md outline-none focus:border-blue-600"
+                  className="border font-poppins border-gray-400 px-5 py-3 rounded-md outline-none focus:border-blue-600"
                   type="text"
                   name="prenom"
                   id="prenom"
@@ -247,18 +249,22 @@ const Signup = ({ onSignup }) => {
               </div>
             </div>
 
-            <p className="text-base text-red-600 bg-red-50 w-full mb-2 px-2 truncate flex">              
-              {nomError}
-            </p>
-            <p className="text-base text-red-600 bg-red-50 w-full mb-2 px-2">
-              {prenomError}
-            </p>
+            {nomError && (
+              <p className="text-sm font-roboto text-red-600 w-full mb-2 px-2 truncate flex">
+                {nomError}
+              </p>
+            )}
+            {prenomError && (
+              <p className="text-sm font-roboto text-red-600w-full mb-2 px-2">
+                {prenomError}
+              </p>
+            )}
 
-            <label className="font-bold text-gray-800 mb-2">
+            <label className="font-mukta text-lg text-gray-600">
               Nom d'utilisateur
             </label>
             <input
-              className="border border-gray-400 px-5 py-3 rounded-md outline-none focus:border-blue-600"
+              className="border font-poppins border-gray-400 px-5 py-3 rounded-md outline-none focus:border-blue-600 focus:outline-2"
               type="text"
               name="username"
               id="username"
@@ -266,38 +272,46 @@ const Signup = ({ onSignup }) => {
               onBlur={checkUsernameAvailability}
               onChange={(e) => handleChange(e, validateUsername)}
             />
-            <p className="text-base text-red-600 bg-red-50 w-full mb-1 px-2">
-              {usernameError}
-            </p>
-            <label className="font-bold text-gray-800 mb-2">Email</label>
+            {usernameError && (
+              <p className="text-sm font-roboto text-red-600 w-full mb-1 px-2">
+                {usernameError}
+              </p>
+            )}
+            <label className="font-mukta text-lg text-gray-600">Email</label>
             <input
-              className="border border-gray-400 px-5 py-3 rounded-md mb-3 outline-none focus:border-blue-600"
+              className="border font-poppins border-gray-400 px-5 py-3 rounded-md mb-3 outline-none focus:border-blue-600"
               type="email"
               name="email"
               id="email"
               value={user.email}
-             onBlur={checkEmailAvailability}
+              onBlur={checkEmailAvailability}
               onChange={(e) => handleChange(e, validateEmail)}
             />
-            <p className="text-base text-red-600 bg-red-50 w-full mb-2 px-2">
-              {emailError}
-            </p>
-            <label className="font-bold text-gray-800 mb-2">Mot de passe</label>
+            {emailError && (
+              <p className="text-sm font-roboto text-red-600 w-full mb-2 px-2">
+                {emailError}
+              </p>
+            )}
+            <label className="font-mukta text-lg text-gray-600">
+              Mot de passe
+            </label>
             <input
-              className="border border-gray-400 px-5 py-3 rounded-md mb-3 outline-none focus:border-blue-600"
+              className="border font-poppins border-gray-400 px-5 py-3 rounded-md outline-none focus:border-blue-600"
               type="password"
               name="password"
               id="password"
               value={user.password}
               onChange={(e) => handleChange(e, validatePassword)}
             />
-            <p className="text-base text-red-600 bg-red-50 w-full mb-2 px-2">
-              {passwordError}
-            </p>
-            <p className="mb-3">Critères sur le mot de passe ...</p>
+            {passwordError && (
+              <p className="text-sm font-roboto text-red-600 w-full px-2">
+                {passwordError}
+              </p>
+            )}
+            {/*<p className="mb-3">Critères sur le mot de passe ...</p>*/}
             <button
               type="submit"
-              className="text-white rounded-md font-bold py-3 hover:bg-blue-700 bg-blue-600"
+              className="text-white rounded-md font-bold mt-6 py-2 text-lg border-none hover:bg-blue-600 bg-blue-500"
             >
               Créer un compte
             </button>

@@ -149,10 +149,10 @@ const LayoutOtherProfile = ({ setUser, setCurrentUser, currentUser, user }) => {
   else
     return localStorage.getItem("token") ? (
       <>
-        <div className="grid grid-cols-3 font-roboto h-full ">
-          <div className="flex flex-col p-4 overflow-y-auto ">
-            <div className="flex flex-col items-center">
-              <div className="bg-white w-56 border rounded-md py-4 flex flex-col items-center">
+        <div className="grid grid-cols-3 font-roboto h-full">
+          <div className="flex flex-col py-4 overflow-y-auto bg-gray-100">
+            <div className="flex flex-col items-center ">
+              <div className="w-56 border py-4 flex flex-col items-center">
                 <div className="pb-6 w-3/4 text-center flex justify-center items-center ">
                   {!isCurrentUser && (
                     <>
@@ -161,7 +161,7 @@ const LayoutOtherProfile = ({ setUser, setCurrentUser, currentUser, user }) => {
                           size={128}
                           icon={<UserOutlined />}
                           onClick={handleAvatar}
-                          className="hover:cursor-pointer"
+                          className="hover:cursor-pointer outline-2"
                         />
                       )}
                       {imagePath && (
@@ -189,7 +189,7 @@ const LayoutOtherProfile = ({ setUser, setCurrentUser, currentUser, user }) => {
                           size={128}
                           src={imagePath}
                           onClick={handleAvatar}
-                          className="hover:cursor-pointer"
+                          className="hover:cursor-pointer border-4 border-white shadow-md"
                         />
                       )}
                     </Popover>
@@ -199,36 +199,54 @@ const LayoutOtherProfile = ({ setUser, setCurrentUser, currentUser, user }) => {
                   <Typography>{user.prenom + " " + user.nom}</Typography>
                 )}
                 {isCurrentUser && (
-                  <Typography>
+                  <Typography className="font-mukta text-2xl">
                     {currentUser.prenom + " " + currentUser.nom}
                   </Typography>
                 )}
                 {user.role === "ROLE_ADMIN" && (
-                  <Tag color="red" className="mt-3">
+                  <Tag color="gold" className="mt-3">
                     Administrateur
                   </Tag>
                 )}
                 {user.role === "ROLE_STANDARD" && (
-                  <Tag color="red" className="mt-3">
+                  <Tag color="gold" className="mt-3">
                     Standard
                   </Tag>
                 )}
                 {user.role === "ROLE_CONDIDAT" && (
-                  <Tag color="red" className="mt-3">
+                  <Tag color="gold" className="mt-3">
                     Candidat
                   </Tag>
                 )}
                 {user.role === "ROLE_Pro" && (
-                  <Tag color="red" className="mt-3">
+                  <Tag color="gold" className="mt-3">
                     Professionnel
                   </Tag>
                 )}
                 {/*  <p className="text-neutral-500"><Button onClick={() => addFile()} >Ajouter fichier</Button> </p>*/}
               </div>
             </div>
-            <div className="flex flex-col items-center mt-6">
-              <Menu items={sideMenuItems} mode="inline" className="w-56" />
-            </div>
+            {
+              <div className="flex flex-col items-center mt-6">
+                {/*<Menu items={sideMenuItems} mode="inline" className="w-56" />*/}
+                
+                  <Link to={"/"+user.username} className="text-center hover:bg-gray-50 hover:font-semibold focus:font-semibold focus:bg-gray-50 transition-colors ease-in-out  no-underline text-blue-600 text-lg font-poppins w-full py-2">
+                    <span className="px-6">Profil</span> 
+                  </Link>
+                  <Link className="text-center hover:bg-gray-50 hover:font-semibold focus:font-semibold focus:bg-gray-50 transition-colors ease-in-out  no-underline text-blue-600 text-lg font-poppins w-full py-2"to={"/" + user.username + "/address"}>
+                    <span className="px-6">Adresses</span> 
+                  </Link>
+                  <Link to={"/" + user.username + "/company"} className="text-center hover:bg-gray-50 hover:font-semibold focus:font-semibold focus:bg-gray-50 transition-colors ease-in-out  no-underline text-blue-600 text-lg font-poppins w-full py-2">
+                  <span className="px-6">Société</span> 
+                  </Link>
+                  <Link to={"/" + user.username + "/skills"} className="text-center hover:bg-gray-50 hover:font-semibold focus:font-semibold focus:bg-gray-50 transition-colors ease-in-out  no-underline text-blue-600 text-lg font-poppins w-full py-2">
+                  <span className="px-6">Compétences</span> 
+                  </Link>
+                  <Link to={"/" + user.username + "/annonce"} className="text-center hover:bg-gray-50 hover:font-semibold focus:font-semibold focus:bg-gray-50 transition-colors ease-in-out  no-underline text-blue-600 text-lg font-poppins w-full py-2">
+                  <span className="px-6">Annonces</span> 
+                  </Link>
+              </div>
+            }
           </div>
 
           <div className="py-4 col-span-2 overflow-y-auto">

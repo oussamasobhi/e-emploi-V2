@@ -11,12 +11,13 @@ import {
 } from "../util/APIUtils";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
-import { Button, Image, Tag, Typography } from "antd";
+import { Button, Image, Tag, Typography, message } from "antd";
 import {
   MessageFilled,
   MessageOutlined,
   PlusCircleOutlined,
 } from "@ant-design/icons";
+import AnnonceUser from "./AnnonceUser";
 var relativeTime = require("dayjs/plugin/relativeTime");
 dayjs.extend(relativeTime);
 
@@ -45,7 +46,7 @@ const AnnonceDetail = ({ currentUser }) => {
       try {
         const res = await getPostuleFiles(annonce.id, currentUser.id);
         console.log(res);
-        //setMyFiles(res);
+        setMyFiles(res);
       } catch (error) {
         console.log(error);
       }
@@ -105,7 +106,20 @@ const AnnonceDetail = ({ currentUser }) => {
       if (currentUser) {
         const res = await addPostuleFile(annonce.id, currentUser.id, formData);
         console.log(res);
+        setFileValue(null);
+        message.success("Fichier ajouté");
+        refreshFiles();
       }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const refreshFiles = async () => {
+    try {
+      const res = await getPostuleFiles(annonce.id, currentUser.id);
+      console.log(res);
+      setMyFiles(res);
     } catch (error) {
       console.log(error);
     }
@@ -114,14 +128,14 @@ const AnnonceDetail = ({ currentUser }) => {
   if (!annonce) return <p>Loading...</p>;
   else
     return (
-      <>
+      <div className="bg-white">
         <div className="px-10 py-2">
           <div className="flex justify-between items-center py-2">
             <Typography className="text-2xl uppercase font-bold">
               {annonce.titre_annonce}
             </Typography>
-            <Typography className="text-3xl text-blue-600">
-              {annonce.tarif_depart} DH
+            <Typography className="text-3xl ">
+              <span>Tarif : </span> <span className="text-red-600 font-bold">{annonce.tarif_depart} DH</span>
             </Typography>
           </div>
           <p className="text-xl">
@@ -130,7 +144,7 @@ const AnnonceDetail = ({ currentUser }) => {
           </p>
           <div className="text-xl">
             {annonce.description}
-            <p className="capitalize text-md text-gray-600 ">
+            <p className="capitalize text-sm text-gray-600 ">
               {dayjs(annonce.createdAt).fromNow()}{" "}
             </p>
           </div>
@@ -176,16 +190,72 @@ const AnnonceDetail = ({ currentUser }) => {
           {currentUser.username !== annonce.userResponse.username && (
             <div className="flex flex-col">
               {/*ajouter fichier*/}
-              <div className="flex justify-between">
-                <input
-                  type="file"
-                  name="document"
-                  onChange={handleFileChange}
-                />
-                <Button type="text" onClick={handleAddFile}>
-                  <PlusCircleOutlined />{" "}
-                </Button>
+              <div className="flex">
+                <label
+                  htmlFor="file-input"
+                  className="relative flex items-center overflow-hidden rounded-md bg-gray-200 text-gray-700 cursor-pointer py-1 px-2 text-sm"
+                >
+                  <span className="block">Ajouter une photo </span>
+                  <span className="file-name absolute inset-0 z-10 hidden"></span>
+                  <input
+                    id="file-input"
+                    type="file"
+                    className="opacity-0 absolute inset-0 z-20 cursor-pointer w-full h-full"
+                    name="document"
+                    onChange={handleFileChange}
+                    accept=".jpg, .png"
+                  />
+                </label>
+                {fileValue && (
+                  <Button
+                    type="primary"
+                    className="mx-3"
+                    onClick={handleAddFile}
+                  >
+                    Enregistrer
+                  </Button>
+                )}
               </div>
+              {myFiles && (
+                <div className="px-2">
+                  {myFiles.length > 0 && (
+                    <div>
+                      <Typography className="font-serif text-xl underline underline-offset-2">
+                        Pièces jointes :{" "}
+                      </Typography>
+                      <div className="flex flex-wrap justify-start">
+                        {myFiles.map((file, index) => (
+                          <Image
+                            key={index}
+                            style={{
+                              objectFit: "cover",
+                              margin: "0.5rem",
+                              width: 120,
+                              height: 120,
+                              "@media screen and (min-width: 640px)": {
+                                objectFit: "cover",
+                                width: 140,
+                                height: 140,
+                              },
+                              "@media screen and (min-width: 768px)": {
+                                objectFit: "cover",
+                                width: 160,
+                                height: 160,
+                              },
+                              "@media screen and (min-width: 1024px)": {
+                                objectFit: "cover",
+                                width: 180,
+                                height: 180,
+                              },
+                            }}
+                            src={require("../public/files/" + file.name)}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
               <div>
                 <Button icon={<MessageOutlined />} type="primary">
                   <Link
@@ -207,19 +277,13 @@ const AnnonceDetail = ({ currentUser }) => {
         {annonce?.userResponse?.username === currentUser.username && (
           <>
             <div className="px-10">
-              {/*<div className="flex justify-between items-start">
-                <input type="file" onChange={handleFileChange} />
-                <Button onClick={addFile}>Ajouter</Button>
-        </div>*/}
-
-              <p className="text-xl font-semibold">Messages</p>
+              <p className="text-xl font-semibold">Les personnes intéressées</p>
               {chatUsers?.map((user) => (
                 <>
                   {user.username !== currentUser.username && (
                     <div>
-                      <Link to={"/annonce/" + id + "/" + user.username}>
-                        {user.prenom} {user.nom}
-                      </Link>
+                      
+                      <AnnonceUser idannonce={id} username={user.username} />
                     </div>
                   )}
                 </>
@@ -227,7 +291,7 @@ const AnnonceDetail = ({ currentUser }) => {
             </div>
           </>
         )}
-      </>
+      </div>
     );
 };
 

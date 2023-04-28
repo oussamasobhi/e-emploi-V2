@@ -1,22 +1,38 @@
-import React from 'react'
-import {Link} from "react-router-dom";
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+
+import { Button, Typography } from "antd";
+
 const Hero = () => {
-    return (
-        <div className='h-114 pt-12 bg-hero-bg bg-cover bg-left bg-origin-border'>
-            <div className='h-full flex flex-col items-center justify-around'>
-                <div className='h-9/12'>
-                    <div className='flex flex-col items-center'>
-                        <p className='text-4xl bg-cyan text-white italic px-5 font-extrabold mb-1'>Pour vous aider à réaliser votre projet</p>
-                        <p className='text-4xl bg-cyan text-white italic px-5 font-extrabold w-fit'>Décrivez-nous votre besoin</p>
-                    </div>
-                    <div className='flex flex-col justify-center items-end pt-12'>
-                        <button className='text-cyan font-semibold bg-lime mb-8 p-4 text-xl w-fit hover:bg-slate-50 transition-colors duration-300 ease-in-out'><Link to="/annonce"> Voir toutes les annocnes</Link></button>
-                        <button className='text-cyan font-semibold bg-lime p-4 text-xl w-fit hover:bg-slate-50 transition-colors duration-300 ease-in-out'>Trouvez votre artisan</button>
-                    </div>
-                </div>
-            </div>
+  return (
+    <div className="h-114 pt-12 ">
+      <div className="h-full flex flex-col items-center justify-around">
+        <div className="h-9/12 w-full">
+          <div className="flex flex-col items-center mb-16">
+            <Typography className="font-archivo text-7xl text-center">
+              Décrivez-nous votre besoin
+            </Typography>
+            <Typography className="font-archivo text-7xl text-center flex justify-center bg-gradient-to-r text-transparent bg-clip-text from-blue-600 to-blue-300">
+              Pour réaliser votre projet
+            </Typography>
+          </div>
+          <p className="text-center px-14 text-gray-600 text-xl font-roboto">La plateforme propose une gestion des compétences, les produits destinés à servir d'autre personne contre une paye.</p>
+          <div className="flex justify-center pt-12">
+            <Link to={"/annonce"}>
+              <button className="cursor-pointer bg-blue-500 hover:bg-blue-600 border-none rounded-md mr-5 text-white no-underline text-lg py-3 px-2 font-semibold transition-colors duration-300 ease-in-out">
+                Voir toutes les annonces
+              </button>
+            </Link>
+            <Link>
+              <button className="cursor-pointer bg-black hover:bg-gray-800 border-none rounded-md text-white no-underline text-lg py-3 px-2 font-semibold transition-colors duration-300 ease-in-out">
+                Trouvez votre artisan
+              </button>
+            </Link>{" "}
+          </div>
         </div>
-    )
-}
+      </div>
+    </div>
+  );
+};
 
 export default Hero;

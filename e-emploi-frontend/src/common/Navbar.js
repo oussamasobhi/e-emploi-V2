@@ -17,7 +17,7 @@ const Navbar = ({ isAuth, currentUser, onLogout, setIsLoading }) => {
   };
 
   return (
-    <div className=" sticky top-0 z-10">
+    <div className="shadow-sm sticky top-0 z-10">
       <NavAnt
         goToHome={goToHome}
         currentUser={currentUser}

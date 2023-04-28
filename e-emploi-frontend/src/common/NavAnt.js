@@ -1,9 +1,9 @@
-import { HomeFilled } from "@ant-design/icons";
-import { Button, Menu } from "antd";
+import { HomeFilled, PlusOutlined, UserOutlined } from "@ant-design/icons";
+import {  Button, Menu } from "antd";
 import { useState } from "react";
 import logo from "../public/image/logo_itako_bsc.jpg";
 import { Link, useNavigate } from "react-router-dom";
-import { Header } from "antd/es/layout/layout";
+import "./Home.css"
 
 const NavAnt = ({ goToHome, currentUser, goToProfile, logout }) => {
   const navigate = useNavigate();
@@ -36,44 +36,48 @@ const NavAnt = ({ goToHome, currentUser, goToProfile, logout }) => {
     label: <span>{currentUser.prenom}</span>,
     key: "prenom_user",
     icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="h-5 w-5"
-        viewBox="0 0 20 20"
-        fill="currentColor"
-      >
-        <path
-          fillRule="evenodd"
-          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
-          clipRule="evenodd"
-        />
-      </svg>
+      <UserOutlined/>
     ),
     children: connectedChildItems,
   };
-  const connItems = [
+  const loginItems =
     JSON.parse(localStorage.getItem("CURRENT_USER")).username.length <= 0
       ? {
-          label: <Link to="/login">Connexion</Link>,
-          key: "connexion",
-          icon: (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"
-                clipRule="evenodd"
-              />
-            </svg>
+          label: (
+            <Link to="/login" className="">
+              Connexion
+            </Link>
           ),
+          key: "connexion",
+          icon: <UserOutlined className="font-bold" />,
         }
-      : connectedItems,
-  ];
+      : connectedItems;
   const menuItems = [
+    {
+      label: (
+        <Link
+          to="/"
+          className="flex justify-center items-center px-2  text-3xl truncate"
+        >
+          <img src={logo} alt="logo_itako" className="h-14 w-14" />
+          <span className="font-bold font-caption text-blue-500">e-emploi</span>
+        </Link>
+      ),
+      key: "app",
+    },
+    {
+      label: !(
+        JSON.parse(localStorage.getItem("CURRENT_USER")).username.length <= 0
+      ) && (
+        <Link to="/annonce/create">
+          <Button icon={<PlusOutlined />} type="primary">
+            Déposer une annonce
+          </Button>
+        </Link>
+      ),
+      key: "add_annonce",
+    },
+    loginItems,
     {
       label: <span onClick={goToHome}>Accueil</span>,
       key: "home",
@@ -138,42 +142,15 @@ const NavAnt = ({ goToHome, currentUser, goToProfile, logout }) => {
   };
 
   return (
-    <>
-      <Header className="bg-white w-full font-roboto">
-        <div className="flex">
-          <Link
-            to="/"
-            className="flex justify-center items-center px-2 text-cyan text-3xl truncate"
-          >
-            <img src={logo} alt="logo_itako" className="h-14 w-14" />
-            e-emploi
-          </Link>
-          <Menu
-            onClick={onClick}
-            selectedKeys={[current]}
-            mode="horizontal"
-            items={connItems}
-            className="flex-auto items-center justify-center"
-          />
-          {!(
-            JSON.parse(localStorage.getItem("CURRENT_USER")).username.length <=
-            0
-          ) && (
-            <Link to="/annonce/create">
-              <Button type="primary">Ajouter une annonce</Button>
-            </Link>
-          )}
-
-          <Menu
-            onClick={onClick}
-            selectedKeys={[current]}
-            mode="horizontal"
-            items={menuItems}
-            className="flex-auto justify-end"
-          />
-        </div>
-      </Header>
-    </>
+    <div className="bg-white w-full font-roboto shwdow-md">
+      <Menu
+        onClick={onClick}
+        selectedKeys={[current]}
+        mode="horizontal"
+        items={menuItems}
+        className="flex-auto justify-between font-caption text-md capitalize"
+      />
+    </div>
   );
 };
 

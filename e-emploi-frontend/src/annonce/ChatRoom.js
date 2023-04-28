@@ -10,6 +10,7 @@ import { List, Button, Input, Typography } from "antd";
 import AlwaysScrollToBottom from "./chatAnnonce/AlwaysScrollToTheBottom";
 import Msg from "./chatAnnonce/Msg";
 import { SendOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 var stompClient = null;
 const ChatRoom = ({currentUser}) => {
@@ -156,7 +157,7 @@ else
     <div className="w-full relative flex flex-col h-full bg-white">
       <div className="w-full h-12 px-10 bg-gray-100 flex justify-between items-center text-2xl absolute top-0">
        <Typography className="text-xl" >{annonce?.titre_annonce} </Typography>
-       <Typography className="text-lg">{receiver?.prenom} {receiver?.nom}</Typography> 
+       <Link to={"/"+receiver.username} className="text-lg">{receiver?.prenom} {receiver?.nom}</Link> 
       </div>
 
       {/* Message */}
