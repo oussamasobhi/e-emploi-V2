@@ -11,12 +11,8 @@ import {
 } from "../util/APIUtils";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
-import { Button, Image, Tag, Typography, message } from "antd";
-import {
-  MessageFilled,
-  MessageOutlined,
-  PlusCircleOutlined,
-} from "@ant-design/icons";
+import { Button, Image, Carousel, Typography, message, Avatar } from "antd";
+import { MessageOutlined, UserOutlined } from "@ant-design/icons";
 import AnnonceUser from "./AnnonceUser";
 var relativeTime = require("dayjs/plugin/relativeTime");
 dayjs.extend(relativeTime);
@@ -125,139 +121,120 @@ const AnnonceDetail = ({ currentUser }) => {
     }
   };
 
+  const contentStyle = {
+    margin: 0,
+    height: "160px",
+    color: "#fff",
+    lineHeight: "160px",
+    textAlign: "center",
+    background: "#364d79",
+  };
+  const onChange = (currentSlide) => {
+    console.log(currentSlide);
+  };
+
   if (!annonce) return <p>Loading...</p>;
   else
     return (
-      <div className="bg-white">
-        <div className="px-10 py-2">
-          <div className="flex justify-between items-center py-2">
-            <Typography className="text-2xl uppercase font-bold">
-              {annonce.titre_annonce}
-            </Typography>
-            <Typography className="text-3xl ">
-              <span>Tarif : </span> <span className="text-red-600 font-bold">{annonce.tarif_depart} DH</span>
-            </Typography>
-          </div>
-          <p className="text-xl">
-            <span className="font-semibold">Type : </span>
-            {annonce.categorie2Annonce}
-          </p>
-          <div className="text-xl">
-            {annonce.description}
-            <p className="capitalize text-sm text-gray-600 ">
-              {dayjs(annonce.createdAt).fromNow()}{" "}
-            </p>
-          </div>
+      <div className=" bg-gray-100 flex flex-col items-center ">
+        <div className="bg-white w-135 rounded-t-md shadow-md overflow-hidden">
+          <Carousel afterChange={onChange}>
+            <div>
+              <h3 style={contentStyle}>Photo 1</h3>
+            </div>
+            <div>
+              <h3 style={contentStyle}>Photo 2</h3>
+            </div>
+            <div>
+              <h3 style={contentStyle}>Photo 3</h3>
+            </div>
+            <div>
+              <h3 style={contentStyle}>Photo 4</h3>
+            </div>
+          </Carousel>
 
-          <div className="flex mb-6 justify-between items-start">
-            <div className="flex flex-col">
-              <Link
-                className="text-lg"
-                to={"/" + annonce.userResponse.username}
-              >
-                {annonce.userResponse.nom} {annonce.userResponse.prenom}
-              </Link>
-              {annonce.userResponse.role === "ROLE_ADMIN" && (
-                <Tag color="red" className="mt-3">
-                  Administrateur
-                </Tag>
-              )}
-              {annonce.userResponse.role === "ROLE_STANDARD" && (
-                <Tag color="red" className="mt-3">
-                  Standard
-                </Tag>
-              )}
-              {annonce.userResponse.role === "ROLE_CONDIDAT" && (
-                <Tag color="red" className="mt-3">
-                  Candidat
-                </Tag>
-              )}
-              {annonce.userResponse.role === "ROLE_Pro" && (
-                <Tag color="red" className="mt-3">
-                  Professionnel
-                </Tag>
-              )}
-            </div>
-            <div className="flex flex-col">
-              <Typography className="text-xl">
-                {annonce.userResponse.num_tel}{" "}
-              </Typography>
-              <Typography className="text-xl">
-                {annonce.userResponse.email}{" "}
-              </Typography>
-            </div>
-          </div>
-          {currentUser.username !== annonce.userResponse.username && (
-            <div className="flex flex-col">
-              {/*ajouter fichier*/}
-              <div className="flex">
-                <label
-                  htmlFor="file-input"
-                  className="relative flex items-center overflow-hidden rounded-md bg-gray-200 text-gray-700 cursor-pointer py-1 px-2 text-sm"
-                >
-                  <span className="block">Ajouter une photo </span>
-                  <span className="file-name absolute inset-0 z-10 hidden"></span>
-                  <input
-                    id="file-input"
-                    type="file"
-                    className="opacity-0 absolute inset-0 z-20 cursor-pointer w-full h-full"
-                    name="document"
-                    onChange={handleFileChange}
-                    accept=".jpg, .png"
-                  />
-                </label>
-                {fileValue && (
-                  <Button
-                    type="primary"
-                    className="mx-3"
-                    onClick={handleAddFile}
-                  >
-                    Enregistrer
-                  </Button>
-                )}
+          <div className="p-2">
+            <div className="flex justify-between items-start py-2">
+              <div className="flex flex-col">
+                <Typography className="text-3xl font-caption text-blue-800 flex-auto">
+                  {annonce.titre_annonce}
+                </Typography>
+                <Typography className="text-sm text-gray-600 font-mukta">
+                  {annonce.categorie2Annonce}
+                </Typography>
               </div>
-              {myFiles && (
-                <div className="px-2">
-                  {myFiles.length > 0 && (
-                    <div>
-                      <Typography className="font-serif text-xl underline underline-offset-2">
-                        Pièces jointes :{" "}
-                      </Typography>
-                      <div className="flex flex-wrap justify-start">
-                        {myFiles.map((file, index) => (
-                          <Image
-                            key={index}
-                            style={{
-                              objectFit: "cover",
-                              margin: "0.5rem",
-                              width: 120,
-                              height: 120,
-                              "@media screen and (min-width: 640px)": {
-                                objectFit: "cover",
-                                width: 140,
-                                height: 140,
-                              },
-                              "@media screen and (min-width: 768px)": {
-                                objectFit: "cover",
-                                width: 160,
-                                height: 160,
-                              },
-                              "@media screen and (min-width: 1024px)": {
-                                objectFit: "cover",
-                                width: 180,
-                                height: 180,
-                              },
-                            }}
-                            src={require("../public/files/" + file.name)}
-                          />
-                        ))}
-                      </div>
-                    </div>
+
+              <Typography className="text-3xl font-roboto text-blue-600 w-fit flex-none">
+                {annonce.tarif_depart} DH
+              </Typography>
+            </div>
+            <div className="flex mb-3 justify-between items-start py-3 border border-gray-400 ">
+              <div className="flex items-center">
+                {!annonce?.userResponse?.photo_profil && (
+                  <Avatar icon={<UserOutlined />} className="mr-2 scale-110" />
+                )}
+                {annonce?.userResponse?.photo_profil && (
+                  <Avatar
+                    src={require("../public/files/" +
+                      annonce.userResponse.photo_profil.name)}
+                    className="mr-2 scale-110"
+                  />
+                )}
+                <div className="flex flex-col">
+                  <Link
+                    className="text-lg text-gray-700 hover:text-gray-700 hover:underline font-caption "
+                    to={"/" + annonce.userResponse.username}
+                  >
+                    {annonce.userResponse.nom} {annonce.userResponse.prenom}
+                  </Link>
+                  {annonce?.userResponse?.email && (
+                    <Typography className="text-sm text-gray-500">
+                      {annonce.userResponse.email}
+                    </Typography>
                   )}
                 </div>
-              )}
-              <div>
-                <Button icon={<MessageOutlined />} type="primary">
+              </div>
+              <Typography className="text-2xl font-poppins text-green-500">
+                {annonce.userResponse.num_tel}0631821328
+              </Typography>
+            </div>
+            <div className="text-xl">
+              <Typography className="font-roboto text-gray-800 text-lg">
+                {annonce.description}
+              </Typography>
+
+              <p className="capitalize text-sm text-gray-500 font-caption">
+                {dayjs(annonce.createdAt).format("DD MMMM YYYY")}
+              </p>
+            </div>
+
+            {currentUser.username !== annonce.userResponse.username && (
+              <div className="flex flex-col">
+                {/*ajouter fichier*/}
+                <div className="flex mb-2 justify-between">
+                  <label
+                    htmlFor="file-input"
+                    className="relative flex items-center overflow-hidden rounded-md bg-gray-200 text-gray-700 cursor-pointer py-1 px-2 text-sm"
+                  >
+                    <span className="block">Ajouter une photo </span>
+                    <span className="file-name absolute inset-0 z-10 hidden"></span>
+                    <input
+                      id="file-input"
+                      type="file"
+                      className="opacity-0 absolute inset-0 z-20 cursor-pointer w-full h-full"
+                      name="document"
+                      onChange={handleFileChange}
+                      accept=".jpg, .png"
+                    />
+                  </label>
+                  {fileValue && (
+                    <button
+                      className="border-0 rounded-md bg-blue-500 hover:bg-blue-600 transition-colors ease-in-out text-white hover:text-white p-2"
+                      onClick={handleAddFile}
+                    >
+                      Enregistrer
+                    </button>
+                  )}
                   <Link
                     to={
                       "/annonce/" +
@@ -265,32 +242,72 @@ const AnnonceDetail = ({ currentUser }) => {
                       "/" +
                       annonce.userResponse.username
                     }
+                    className="border-0 rounded-md bg-indigo-700 hover:bg-indigo-800 transition-colors ease-in-out text-white hover:text-white p-2"
                   >
+                    <MessageOutlined className="mr-2" />
                     Message
                   </Link>
-                </Button>
+                </div>
+                {myFiles && (
+                  <div className="">
+                    {myFiles.length > 0 && (
+                      <div>
+                        <div className="flex flex-wrap justify-start">
+                          {myFiles.map((file, index) => (
+                            <Image
+                              key={index}
+                              style={{
+                                objectFit: "cover",
+                                margin: "0.5rem",
+                                width: 120,
+                                height: 120,
+                                "@media screen and (min-width: 640px)": {
+                                  objectFit: "cover",
+                                  width: 140,
+                                  height: 140,
+                                },
+                                "@media screen and (min-width: 768px)": {
+                                  objectFit: "cover",
+                                  width: 160,
+                                  height: 160,
+                                },
+                                "@media screen and (min-width: 1024px)": {
+                                  objectFit: "cover",
+                                  width: 180,
+                                  height: 180,
+                                },
+                              }}
+                              src={require("../public/files/" + file.name)}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
-            </div>
+            )}
+          </div>
+          {/*test adding file*/}
+          {annonce?.userResponse?.username === currentUser.username && (
+            <>
+              <div className="px-2">
+                <Typography className="text-xl text-gray-800 font-caption font-bold">
+                  Intéressées
+                </Typography>
+                {chatUsers?.map((user) => (
+                  <>
+                    {user.username !== currentUser.username && (
+                      <div>
+                        <AnnonceUser idannonce={id} username={user.username} />
+                      </div>
+                    )}
+                  </>
+                ))}
+              </div>
+            </>
           )}
         </div>
-        {/*test adding file*/}
-        {annonce?.userResponse?.username === currentUser.username && (
-          <>
-            <div className="px-10">
-              <p className="text-xl font-semibold">Les personnes intéressées</p>
-              {chatUsers?.map((user) => (
-                <>
-                  {user.username !== currentUser.username && (
-                    <div>
-                      
-                      <AnnonceUser idannonce={id} username={user.username} />
-                    </div>
-                  )}
-                </>
-              ))}
-            </div>
-          </>
-        )}
       </div>
     );
 };

@@ -6,7 +6,7 @@ import {
 } from "../util/APIUtils";
 import { Image, Typography, Button } from "antd";
 import { Link } from "react-router-dom";
-import { MessageTwoTone } from "@ant-design/icons";
+import { CheckOutlined, MessageTwoTone } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 
 const AnnonceUser = ({ idannonce, username }) => {
@@ -57,24 +57,20 @@ const AnnonceUser = ({ idannonce, username }) => {
     <>
       {myFiles && (
         <div className="px-2">
-          <div className="flex ">
+          <div className="flex justify-between items-center">
             <Link to={"/annonce/" + idannonce + "/"  + user.username} className="text-lg font-semibold">
               {user.prenom} {user.nom}
             </Link>
-            {/*<Button
-              onClick={navigate("/annonce/" + idannonce + "/" + user.username)}
-              icon={<MessageTwoTone />}
-              className="text-lg font-semibold mx-3"
+            <button
+              className="text-sm font-caption mx-3 flex justify-between items-center border-0 bg-orange-500 hover:bg-orange-600 transition-colors ease-in-out cursor-pointer rounded-xl text-white py-1"
             >
-              Message
-            </Button>*/}
+              <CheckOutlined className="mr-2"/>
+              Confirmer 
+            </button>
           </div>
 
           {myFiles.length > 0 && (
-            <div>
-              <Typography className="font-serif text-xl underline underline-offset-2">
-                Pièces jointes :{" "}
-              </Typography>
+            <div className="border border-red border-spacing-2">
               <div className="flex flex-wrap justify-start">
                 {myFiles.map((file, index) => (
                   <Image

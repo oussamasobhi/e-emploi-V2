@@ -6,7 +6,7 @@ import Annonce from "../otherProfile/annonces/Annonce";
 import AnnonceRoute from "./AnnonceRoute";
 
 const Annonces = ({ notify, currentUser }) => {
-  if (localStorage.getItem("token") === "") return <Navigate to="/" />;
+  if (localStorage.getItem("token") === "") return <Navigate to="/login" />;
   else
     return (
       <Routes>

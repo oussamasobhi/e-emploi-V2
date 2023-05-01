@@ -63,7 +63,7 @@ const LayoutAnnonce = ({currentUser}) => {
       </Layout.Sider>*/}
       <Layout.Content>
         {/*Breadcrumb here */}
-        <div className="px-2 py-3">
+        <div className="px-2 py-2">
           <Breadcrumb items={breadcrumbItems} />
         </div>
         <div className="flex-nowrap justify-center w-auto">

@@ -9,10 +9,10 @@ const Hero = () => {
       <div className="h-full flex flex-col items-center justify-around">
         <div className="h-9/12 w-full">
           <div className="flex flex-col items-center mb-16">
-            <Typography className="font-archivo text-7xl text-center">
+            <Typography className="font-archivo text-5xl lg:text-7xl text-center">
               Décrivez-nous votre besoin
             </Typography>
-            <Typography className="font-archivo text-7xl text-center flex justify-center bg-gradient-to-r text-transparent bg-clip-text from-blue-600 to-blue-300">
+            <Typography className="font-archivo text-5xl lg:text-7xl text-center flex justify-center bg-gradient-to-r text-transparent bg-clip-text from-blue-600 to-blue-300">
               Pour réaliser votre projet
             </Typography>
           </div>

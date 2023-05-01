@@ -21,6 +21,7 @@ import {
   SearchOutlined,
 } from "@ant-design/icons";
 import dayjs from "dayjs";
+import AnnonceCarte from "./AnnonceCarte";
 
 const Annonce = ({ currentUser }) => {
   const [annonces, setAnnonces] = useState(null);
@@ -133,11 +134,16 @@ const Annonce = ({ currentUser }) => {
     max: undefined,
     categorie: null,
   });
-  const handleChange = (changedValue, allValues) => {
+  /*const handleChange = (changedValue, allValues) => {
     const key = Object.keys(changedValue)[0];
     setRecherche({ ...recherche, [key]: changedValue[key] });
+  };*/
+  const handleChange = (event) => {
+    const value = event.target.value;
+    setRecherche({ ...recherche, [event.target.name]: value });
   };
   const onSearch = async () => {
+    console.log(recherche)
     try {
       if (recherche.categorie) {
         const res = (
@@ -217,40 +223,80 @@ const Annonce = ({ currentUser }) => {
     },
   ];
   return (
-    <div className="px-4 py-6">
-      <Typography.Title level={3}>Annonces</Typography.Title>
-      <Form form={form} onValuesChange={handleChange} className="flex mb-10">
-        <Form.Item name="search">
-          <Input placeholder="mots clés" />
-        </Form.Item>
-        <Form.Item label="Catégorie" name="categorie">
-          <Select>
-            {categories?.map((categorie, index) => (
-              <Select.Option key={index} value={categorie.id}>
-                {categorie.nom_categorie}
-              </Select.Option>
-            ))}
-          </Select>
-        </Form.Item>
-        <Form.Item label="Tarif min" name="min" className="ml-3">
-          <InputNumber />
-        </Form.Item>
-        <Form.Item label="Tarif max" name="max" className="ml-3">
-          <InputNumber />
-        </Form.Item>
-
-        <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="ml-6"
-            onClick={onSearch}
+    <div className="px-4 bg-white">
+      <Typography className="text-4xl mb-4 text-center font-bold">Annonces</Typography>
+      <div className="flex justify-end items-center mb-6">
+        <div className="flex justify-end w-fit ring-1 ring-gray-300 rounded">
+          <input
+            onChange={handleChange}
+            type="text"
+            name="search"
+            placeholder="mots clés"
+            className="border-0 px-4 h-10 outline-none w-36 md:w-auto"
+          />
+          <select
+          defaultValue={""}
+            onChange={handleChange}
+            name="categorie"
+            placeholder="Catégorie"
+            className="appearance-none h-10 bg-white border-0 border-gray-300 py-2 px-4 leading-tight focus:outline-none focus:shadow-outline-blue focus:border-blue-300"
           >
-            <SearchOutlined />
-          </Button>
-        </Form.Item>
-      </Form>
-      <Table dataSource={filteredAnnonces} columns={nettoyageColumns} />
+            <option value=""  className="text-gray-500">
+              Tous les catégories
+            </option>
+            {categories?.map((categorie, index) => (
+              <option
+                key={index}
+                value={categorie.id}
+                className="hover:bg-white"
+              >
+                {categorie.nom_categorie}
+              </option>
+            ))}
+          </select>
+
+          <input
+            onChange={handleChange}
+            type="number"
+            id="tarif_min"
+            name="min"
+            min="0"
+            max="5000"
+            className="appearance-none border-0 pl-3 h-10 focus:outline-none"
+            placeholder="Tarif min"
+          />
+          <input
+            onChange={handleChange}
+            type="number"
+            id="tarif_max"
+            name="max"
+            min="0"
+            max="5000"
+            className="appearance-none border-0 pl-3 h-10 focus:outline-none"
+            placeholder="Tarif max"
+          />
+          <button
+            onChange={handleChange}
+            onClick={onSearch}
+            className="border-0 transition-colors ease-in-out h-10 cursor-pointer rounded-r flex justify-between items-center font-caption bg-blue-500 hover:bg-blue-600 text-white"
+          >
+            <SearchOutlined className="mr-1" />
+            <Typography className="text-white font-roboto hidden md:block">Rechercher</Typography>
+          </button>
+        </div>
+      </div>
+
+      {/*<Table dataSource={filteredAnnonces} columns={nettoyageColumns} />*/}
+      {!isProfile && <div className="grid md:grid-cols-2 lg:grid-cols-3 grid-cols-1 gap-6 px-10">
+        {filteredAnnonces?.map((annonce, index) => (
+          <AnnonceCarte key={index} annonce={annonce} />
+        ))}
+      </div>}
+      {isProfile && <div className="grid lg:grid-cols-2 grid-cols-1 gap-6 px-10">
+        {filteredAnnonces?.map((annonce, index) => (
+          <AnnonceCarte key={index} annonce={annonce} />
+        ))}
+      </div>}
     </div>
   );
 };

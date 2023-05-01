@@ -15,6 +15,7 @@ import Domicile from "../domicile/Domicile";
 import EmploiService from "../emploi_servce/EmploiService";
 import Annonces from "../annonce/Annonces";
 import OtherProfile from "../otherProfile/OtherProfile";
+import { message } from "antd";
 
 
 function App() {
@@ -60,11 +61,8 @@ function App() {
     e.preventDefault();
     signup(user);
     func();
-    notify(
-      "Succès",
-      "Vous vous êtes bien enregistrés, veuillez vous connecter maintenant !",
-      "success"
-    );
+    //notify("Succès", "Vous vous êtes bien enregistrés, veuillez vous connecter maintenant !", "success");
+    message.success("Vous êtes inscrits dans e-emploi, veuillez vous connecter maintenant !")
   };
 
   const handleLogin = async (e, logReq, func) => {
@@ -75,7 +73,8 @@ function App() {
       localStorage.setItem("token", jwToken.accessToken);
     } catch (error) {
       setIsLoading(false);
-      notify("Erreur", "Nom d'utilisateur ou mot de passe incorrects", "error");
+      //notify("Erreur", "Nom d'utilisateur ou mot de passe incorrects", "error");
+      message.error("Nom d'utilisateur ou mot de passe incorrect !");
 
       throw new Error();
     }
@@ -85,7 +84,8 @@ function App() {
     setIsAuthenticated(true);
     func();
     setIsLoading(false);
-    notify("Succès", "Vous êtes maintenant connectés", "success");
+    //notify("Succès", "Vous êtes maintenant connectés", "success");
+    message.info("Bonjour ! Bienvenue dans e-emploi !")
   };
 
   const loadCurrentUser = async () => {
@@ -103,7 +103,8 @@ function App() {
     setIsAuthenticated(false);
     setIsLoading(false);
     func();
-    notify("Info", "Vous êtes déconnectés !", "info");
+    //notify("Info", "Vous êtes déconnectés !", "info");
+    message.info("Vous êtes déconnectés !")
   };
   const [notification, setNotification] = useState({
     title: "",
