@@ -39,6 +39,11 @@ public class FileDB {
     @JsonIgnore
     private AnnonceUser annonce_user;
 
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    @JoinColumn(name ="id_annonce_post")
+    @JsonIgnore
+    private Annonce annonce;
+
     @ManyToOne(fetch = FetchType.EAGER,optional = true)
     @JoinColumn(name = "idcompetence",nullable = true)
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")

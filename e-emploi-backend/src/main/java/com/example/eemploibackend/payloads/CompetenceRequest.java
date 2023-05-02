@@ -11,4 +11,5 @@ public class CompetenceRequest {
     private String duree_formation;
     private Date date_obtention;
     private String duree_exp;
+    private String description;
 }

@@ -1,14 +1,22 @@
 package com.example.eemploibackend.controller;
 
 import com.example.eemploibackend.config.CurrentUser;
+import com.example.eemploibackend.model.FileDB;
 import com.example.eemploibackend.model.User;
 import com.example.eemploibackend.payloads.*;
 import com.example.eemploibackend.repository.AnnonceRepository;
 import com.example.eemploibackend.services.AnnonceService;
+import com.example.eemploibackend.services.AnnonceUserService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -54,6 +62,27 @@ public class AnnonceController {
     @GetMapping("/{id}")
     public AnnonceResponse getaanoncebyid(@PathVariable(value = "id")Long id){
         return ModelMapper.mapannonceToAnnonceResponse(annonceService.getannoncebyid(id));
+    }
+
+    @PostMapping("/upload/{idannonce}")
+    public ResponseEntity<?> uploadimage(@RequestParam("file") MultipartFile file,
+                                         @PathVariable(value = "idannonce")Long idannonce) throws IOException {
+        if(annonceService.uploadimageAnnonce(idannonce,file))
+            return new ResponseEntity(new ApiResponse(true,"Vous avez uploadé avec succes"), HttpStatus.ACCEPTED);
+        return new ResponseEntity(new ApiResponse(false,"Y a un erreur"),
+                HttpStatus.BAD_REQUEST);
+    }
+    @GetMapping("/download/{idannonce}")
+    public List<FileDB> getfilesbyannonceuser(@PathVariable(value = "idannonce")Long idannonce){
+        Logger log= LoggerFactory.getLogger(AnnonceUserService.class);
+        List<FileDB> files=annonceService.getallfiles(idannonce);
+        return files;
+    }
+    @DeleteMapping("/deletefile/{id}")
+    public ResponseEntity<?> deletepic(@PathVariable(value = "id")Long id){
+        if(annonceService.deletefile(id))
+            return new ResponseEntity(new ApiResponse(true,"Image suprimé"),HttpStatus.OK);
+        return new ResponseEntity(new ApiResponse(true,"id n'existe pas"),HttpStatus.BAD_REQUEST);
     }
 }
 

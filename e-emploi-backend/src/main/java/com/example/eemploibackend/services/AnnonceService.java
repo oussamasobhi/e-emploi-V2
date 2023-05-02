@@ -3,15 +3,15 @@ package com.example.eemploibackend.services;
 import com.example.eemploibackend.exceptions.BadRequestException;
 import com.example.eemploibackend.model.*;
 import com.example.eemploibackend.payloads.*;
-import com.example.eemploibackend.repository.AnnonceRepository;
-import com.example.eemploibackend.repository.AnnonceUserRepository;
-import com.example.eemploibackend.repository.Categorie_2_Annonce_Repository;
-import com.example.eemploibackend.repository.UserRepository;
+import com.example.eemploibackend.repository.*;
 import io.jsonwebtoken.lang.Collections;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,8 +19,9 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class AnnonceService {
-    private final AnnonceUserRepository annonceUserRepository;
+    private final FileDBRepository fileDBRepository;
     private final AnnonceRepository annonceRepository;
+    private final FileStorageService fileStorageService;
     private final Categorie_2_Annonce_Repository categorie2AnnonceRepository;
     private final UserRepository userRepository;
     public Annonce getannoncebyid(Long id){
@@ -95,5 +96,33 @@ public class AnnonceService {
         if(size > 50) {
             throw new BadRequestException("Page size must not be greater than " + 50);
         }
+    }
+
+    // images
+    public Boolean uploadimageAnnonce(Long idannonce, MultipartFile file) throws IOException {
+        Annonce annonce=annonceRepository.findAnnonceById(idannonce);
+        if(annonce==null)
+            return false;
+        FileDB storedfile = fileStorageService.store(file);
+        if (storedfile != null) {
+            storedfile.setAnnonce(annonce);
+            fileDBRepository.save(storedfile);
+        }else {
+            return false;
+        }
+        return true;
+    }
+    public List<FileDB> getallfiles(Long idannonce){
+        List<FileDB> files=fileDBRepository.findfilesbyannonce(idannonce);
+        return files;
+    }
+    public Boolean deletefile(Long idfile){
+        FileDB fileDB=fileDBRepository.findById(idfile).orElseThrow();
+        if(fileDB==null)
+            return false;
+        fileDBRepository.deleteById(idfile);
+        File file=new File(fileDB.getFilepath());
+        file.delete();
+        return true;
     }
 }

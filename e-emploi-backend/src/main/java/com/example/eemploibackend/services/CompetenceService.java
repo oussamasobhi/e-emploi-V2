@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class CompetenceService {
                 .duree_formation(request.getDuree_formation())
                 .niveauscolaire(request.getNiveauscolaire())
                 .duree_exp(request.getDuree_exp())
+                .description(request.getDescription())
                 .build();
     User user=userRepository.findUserById(iduser);
     competence.setUser(user);
@@ -40,6 +42,7 @@ public void modifiercompetence(CompetenceRequest request,Long idcomp){
         competence.setTitre(request.getTitre());
         competence.setDate_obtention(request.getDate_obtention());
         competence.setDuree_formation(request.getDuree_formation());
+        competence.setDescription(request.getDescription());
         competenceRepository.save(competence);
 }
 public void supprimercompetence(Long idcomp){
@@ -68,5 +71,14 @@ public List<Competence> getcompetencebyusername(String username){return competen
         List<FileDB> files=fileDBRepository.findidcompetence(idcompetence);
         return files;
 
+    }
+    public Boolean deleteimage(Long id){
+        FileDB fileDB=fileDBRepository.findById(id).orElseThrow();
+        if(fileDB==null)
+            return false;
+        fileDBRepository.deleteById(id);
+        File file=new File(fileDB.getFilepath());
+        file.delete();
+        return true;
     }
 }

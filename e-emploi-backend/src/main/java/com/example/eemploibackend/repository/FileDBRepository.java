@@ -21,4 +21,6 @@ public interface FileDBRepository extends JpaRepository<FileDB,Long> {
     List<FileDB> findidcompetence(Long idcompetence);
     @Query("SELECT A from FileDB A where  A.annonce_user.annonce.id=?1 and A.annonce_user.user.id=?2")
     List<FileDB> findfilesbyuserandannonce(Long idannonce,Long iduser);
+    @Query("SELECT A from FileDB A where A.annonce.id=?1")
+    List<FileDB> findfilesbyannonce(Long idannonce);
 }
