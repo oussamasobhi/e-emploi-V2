@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import StarRatings from "react-star-ratings";
 import { addReviews } from "../../util/APIUtils";
 
-const AddRating = ({ open, setIsOpen, iduser }) => {
+const AddRating = ({ open, setIsOpen, iduser, refreshRate, initialRate }) => {
   const [review, setReview] = useState({
     avis: "",
     rate: "",
@@ -25,6 +25,7 @@ const AddRating = ({ open, setIsOpen, iduser }) => {
         console.log(error);
     }
     reset();
+    refreshRate(iduser);
   };
   const changeRating = (newRating, name) => {
     console.log(newRating);
@@ -52,7 +53,7 @@ const AddRating = ({ open, setIsOpen, iduser }) => {
           name="rate"
           starRatedColor="rgb(34 197 94)"
           starHoverColor="rgb(74 222 128)"
-          rating={review.rate?review.rate:0}
+          rating={review.rate?review.rate:initialRate}
           changeRating={changeRating}
         />
         <label for="avis">Votre avis </label>

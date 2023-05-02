@@ -19,6 +19,7 @@ import {
   uploadPdp,
   getCurrentUser,
   userGetUserByUsername,
+  getReviews,
 } from "../util/APIUtils";
 import { API_BASE_URL } from "../constant";
 import AddRating from "./review/AddRating";
@@ -26,6 +27,7 @@ import StarRatings from "react-star-ratings";
 
 const LayoutOtherProfile = ({ setUser, setCurrentUser, currentUser, user }) => {
   const [isOpenAddReview, setIsOpenAddReview] = useState(false);
+  const [rate, setRate] = useState(-1);
   const location = useLocation();
   const isCurrentUser = currentUser.username === user.username;
 
@@ -137,12 +139,32 @@ const LayoutOtherProfile = ({ setUser, setCurrentUser, currentUser, user }) => {
 
   const [imagePath, setImagePath] = useState(null);
   useEffect(() => {
+    const loadRate = async () => {
+      try {
+        const res = await getReviews(user.id);
+        setRate(res);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (user) loadRate();
     try {
       setImagePath(require("../public/files/" + user.photo_profil.name));
     } catch (error) {
       console.log(error);
     }
   }, [user]);
+  const loadRate = async (iduser) => {
+    try {
+      const res = await getReviews(iduser);
+      setRate(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    console.log(rate);
+  }, [rate]);
 
   useEffect(() => {
     console.log(imagePath);
@@ -237,14 +259,22 @@ const LayoutOtherProfile = ({ setUser, setCurrentUser, currentUser, user }) => {
                   </div>
                 </div>
                 <div className="text-gray-500 text-center">
-                  <div>note here</div>
-                  <div className="mb-2" onClick={isCurrentUser?() => {} : () => setIsOpenAddReview(true)}>
+                  {rate > 0 && (
+                    <div className="text-gray-600 font-mukta">
+                      {rate.toFixed(1)}
+                    </div>
+                  )}
+                  <div
+                    className="mb-2"
+                    onClick={
+                      isCurrentUser ? () => {} : () => setIsOpenAddReview(true)
+                    }
+                  >
                     <StarRatings
-                      rating={3}
+                      rating={rate}
                       starRatedColor="rgb(34 197 94)"
                       starDimension="20px"
                       starSpacing="3px"
-                      
                     />
                   </div>
                   {/*!isCurrentUser && (
@@ -305,6 +335,8 @@ const LayoutOtherProfile = ({ setUser, setCurrentUser, currentUser, user }) => {
             open={isOpenAddReview}
             setIsOpen={setIsOpenAddReview}
             iduser={user.id}
+            refreshRate={loadRate}
+            initialRate={rate}
           />
         )}
       </>

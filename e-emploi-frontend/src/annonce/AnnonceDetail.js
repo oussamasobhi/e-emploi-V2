@@ -8,11 +8,27 @@ import {
   addAnnonceUser,
   addPostuleFile,
   getPostuleFiles,
+  addFileAnnonce,
+  getAnnonceFiles,
 } from "../util/APIUtils";
+
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
-import { Button, Image, Carousel, Typography, message, Avatar } from "antd";
-import { MessageOutlined, UserOutlined } from "@ant-design/icons";
+import {
+  Button,
+  Image,
+  Carousel,
+  Typography,
+  message,
+  Avatar,
+  Spin,
+} from "antd";
+import {
+  LeftOutlined,
+  MessageOutlined,
+  RightOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import AnnonceUser from "./AnnonceUser";
 var relativeTime = require("dayjs/plugin/relativeTime");
 dayjs.extend(relativeTime);
@@ -22,15 +38,20 @@ const AnnonceDetail = ({ currentUser }) => {
   const [annonce, setAnnonce] = useState(null);
   const [chatUsers, setChatUsers] = useState(null);
   const [myFiles, setMyFiles] = useState(null);
+  const [myAnnonceFiles, setMyAnnonceFiles] = useState(null);
   const [fileValue, setFileValue] = useState(null);
-  const [postuleAnnonce, setPostuleAnnonce] = useState(new Map());
+  const [fileAnnonce, setFileAnnonce] = useState(null);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const loadAnnonce = async () => {
+      setLoading(true);
       console.log(id);
       try {
         const res = await getAnnonceById(id);
         console.log(res);
         setAnnonce(res);
+        setLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -39,23 +60,40 @@ const AnnonceDetail = ({ currentUser }) => {
   }, []);
   useEffect(() => {
     const loadFiles = async () => {
+      setLoading(true);
       try {
         const res = await getPostuleFiles(annonce.id, currentUser.id);
         console.log(res);
         setMyFiles(res);
+        setLoading(false);
       } catch (error) {
         console.log(error);
       }
     };
-    if (annonce) loadFiles();
+    const loadAnnonceFiles = async () => {
+      setLoading(true);
+      try {
+        const res = await getAnnonceFiles(annonce.id);
+        setMyAnnonceFiles(res);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (annonce) {
+      loadFiles();
+      loadAnnonceFiles();
+    }
   }, [annonce, currentUser]);
 
   useEffect(() => {
+    setLoading(true);
     const loadAnnonce = async () => {
       console.log(id);
       try {
         const res = await getAnnonceById(id);
         setAnnonce(res);
+        setLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -64,9 +102,11 @@ const AnnonceDetail = ({ currentUser }) => {
   }, [id]);
   useEffect(() => {
     const loadChatUsers = async () => {
+      setLoading(true);
       try {
         const res = await getChatUsersByAnnonce(id);
         setChatUsers(res);
+        setLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -77,11 +117,13 @@ const AnnonceDetail = ({ currentUser }) => {
   useEffect(() => {
     console.log(chatUsers);
     const createAnnonceUser = async () => {
+      setLoading(true);
       const request = { idannonce: annonce.id };
       try {
         const res = await addAnnonceUser(request);
         console.log(res);
         //setPostuleAnnonce(postuleAnnonce.set(currentUser.username,  ))}
+        setLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -96,6 +138,7 @@ const AnnonceDetail = ({ currentUser }) => {
     setFileValue(event.target.files[0]);
   };
   const handleAddFile = async () => {
+    setLoading(true);
     const formData = new FormData();
     formData.append("file", fileValue);
     try {
@@ -105,6 +148,7 @@ const AnnonceDetail = ({ currentUser }) => {
         setFileValue(null);
         message.success("Fichier ajouté");
         refreshFiles();
+        setLoading(false);
       }
     } catch (error) {
       console.log(error);
@@ -121,44 +165,119 @@ const AnnonceDetail = ({ currentUser }) => {
     }
   };
 
-  const contentStyle = {
-    margin: 0,
-    height: "160px",
-    color: "#fff",
-    lineHeight: "160px",
-    textAlign: "center",
-    background: "#364d79",
+  const handleFileAnnonceChange = (event) => {
+    setFileAnnonce(event.target.files[0]);
   };
-  const onChange = (currentSlide) => {
-    console.log(currentSlide);
+  const handleAddFileAnnonce = async () => {
+    setLoading(true);
+    const formData = new FormData();
+    formData.append("file", fileAnnonce);
+    try {
+      if (currentUser) {
+        const res = await addFileAnnonce(annonce.id, formData);
+        console.log(res);
+        setFileAnnonce(null);
+        message.success("Fichier ajouté");
+        refreshAnnonceFiles();
+      }
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  if (!annonce) return <p>Loading...</p>;
+  const refreshAnnonceFiles = async () => {
+    setLoading(true);
+    try {
+      const res = await getAnnonceFiles(annonce.id);
+      console.log(res);
+      setMyAnnonceFiles(res);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    console.log(myAnnonceFiles);
+  }, [myAnnonceFiles]);
+
+  if (loading)
+    return (
+      <div className="flex justify-center">
+        {" "}
+        <Spin size="large" />
+      </div>
+    );
+  else if (!annonce)
+    return (
+      <div className="flex justify-center">
+        {" "}
+        <Spin size="large" />
+      </div>
+    );
   else
     return (
       <div className=" bg-gray-100 flex flex-col items-center ">
-        <div className="bg-white w-135 rounded-t-md shadow-md overflow-hidden">
-          <Carousel afterChange={onChange}>
-            <div>
-              <h3 style={contentStyle}>Photo 1</h3>
+        <div className="bg-white w-135  rounded-t-md shadow-md overflow-hidden">
+          {!myAnnonceFiles ||
+            (myAnnonceFiles.length <= 0 && (
+              <div className="w-full h-72 bg-gray-500 flex justify-center items-center text-2xl text-white">
+                Photo
+              </div>
+            ))}
+          {myAnnonceFiles && myAnnonceFiles.length > 0 && (
+            <Carousel className="w-full h-72 overflow-hidden bg-gray-300">
+              {myAnnonceFiles?.map((file, index) => (
+                <div key={index} className="flex justify-center items-center">
+                  {file?.name && (
+                    <Image
+                      src={require("../public/files/" + file.name)}
+                      height="auto"
+                      width="100%"
+                      objectFit="cover"
+                      className="mx-auto"
+                    />
+                  )}
+                </div>
+              ))}
+            </Carousel>
+          )}
+          {currentUser.username === annonce?.userResponse?.username && (
+            <div className="flex py-2 px-1 justify-start">
+              <label
+                htmlFor="file-annonce"
+                className="relative flex items-center overflow-hidden rounded-md bg-gray-200 text-gray-700 cursor-pointer py-1 px-2 text-sm"
+              >
+                <span className="block">Ajouter une photo </span>
+                <span className="file-name absolute inset-0 z-10 hidden"></span>
+                <input
+                  id="file-annonce"
+                  type="file"
+                  className="opacity-0 absolute inset-0 z-20 cursor-pointer w-full h-full"
+                  name="document_annonce"
+                  onChange={handleFileAnnonceChange}
+                  accept=".jpg, .png"
+                />
+              </label>
+              {fileAnnonce && (
+                <button
+                  className="border-0 ml-3 rounded-md bg-blue-500 hover:bg-blue-600 transition-colors ease-in-out text-white hover:text-white p-2"
+                  onClick={handleAddFileAnnonce}
+                >
+                  Enregistrer
+                </button>
+              )}
             </div>
-            <div>
-              <h3 style={contentStyle}>Photo 2</h3>
-            </div>
-            <div>
-              <h3 style={contentStyle}>Photo 3</h3>
-            </div>
-            <div>
-              <h3 style={contentStyle}>Photo 4</h3>
-            </div>
-          </Carousel>
+          )}
 
           <div className="p-2">
             <div className="flex justify-between items-start py-2">
               <div className="flex flex-col">
                 <Typography className="text-3xl font-caption text-blue-800 flex-auto">
-                  {annonce.titre_annonce}
+                  {annonce?.titre_annonce}
                 </Typography>
+
                 <Typography className="text-sm text-gray-600 font-mukta">
                   {annonce.categorie2Annonce}
                 </Typography>

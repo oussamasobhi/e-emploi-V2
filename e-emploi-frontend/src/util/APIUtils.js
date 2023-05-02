@@ -356,6 +356,20 @@ export function addAnnonceUser(postuleAnnonce){
   });
 }
 
+export function addFileAnnonce(idannonce, file){
+  return fileRequest({
+    url: API_BASE_URL+"/annonce/upload/"+idannonce,
+    method: "POST",
+    body: file
+  });
+}
+export function getAnnonceFiles(idannonce){
+  return request({
+    url: API_BASE_URL+"/annonce/download/"+idannonce,
+    method:"GET",
+  })
+}
+
 export function addPostuleFile(idannonce, iduser, file){
   return fileRequest({
     url: API_BASE_URL+"/annonceuser/upload/"+idannonce+"/"+iduser,
@@ -391,5 +405,12 @@ export function addReviews (review){
     url: API_BASE_URL+"/reviews/add",
     method: "POST",
     body: JSON.stringify(review)
+  })
+}
+
+export function getReviews (iduser){
+  return request({
+    url: API_BASE_URL+"/reviews/"+iduser,
+    method: "GET"
   })
 }
