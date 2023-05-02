@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { updateSociete, getCurrentUser } from "../../util/APIUtils";
-import { Form, Input, Button, Modal } from "antd";
+import { Form, Input, Button, Modal, message } from "antd";
 
 const EditSociete = ({ open, closeModal, notify, setCurrentUser, societe }) => {
   const [newSociete, setNewSociete] = useState(societe);
@@ -21,7 +21,8 @@ const EditSociete = ({ open, closeModal, notify, setCurrentUser, societe }) => {
       const _user = await getCurrentUser();
       setCurrentUser(_user);
       reset(e);
-      notify("Notification", "Société modifiée avec succès !", "info");
+      //notify("Notification", "Société modifiée avec succès !", "info");
+      message.success("Société modifiée avec succès ");
     } catch (error) {
       console.log(error);
     }

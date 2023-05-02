@@ -3,7 +3,7 @@ import { deleteCurrentUser } from "../util/APIUtils";
 import { useNavigate } from "react-router";
 import { initialUser } from "../constant";
 import { isAvailableUsername } from "../util/APIUtils";
-import { Modal } from "antd";
+import { Modal, message } from "antd";
 
 const DeleteFromProfil = ({
   open,
@@ -33,11 +33,8 @@ const DeleteFromProfil = ({
     setIsLoading(false);
     if (isStillAvailable.available === true) {
       navigate("/");
-      notify(
-        "Notification",
-        "Votre compte a été supprimé avec succès",
-        "success"
-      );
+      //notify(        "Notification",        "Votre compte a été supprimé avec succès",        "success"      );
+      message.success("Votre compte a été supprimé avec succès");
     }
   }
   return (

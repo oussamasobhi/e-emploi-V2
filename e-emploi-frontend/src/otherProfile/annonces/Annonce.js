@@ -223,7 +223,7 @@ const Annonce = ({ currentUser }) => {
     },
   ];
   return (
-    <div className="px-4 bg-white">
+    <div className="px-4 bg-white rounded-md shadow-md">
       <Typography className="text-4xl mb-4 text-center font-bold">Annonces</Typography>
       <div className="flex justify-end items-center mb-6">
         <div className="flex justify-end w-fit ring-1 ring-gray-300 rounded">
@@ -232,7 +232,7 @@ const Annonce = ({ currentUser }) => {
             type="text"
             name="search"
             placeholder="mots clés"
-            className="border-0 px-4 h-10 outline-none w-36 md:w-auto"
+            className={"border-0 h-10 outline-none "+(isProfile?"px-1 w-32":"px-4 w-36 md:w-auto")}
           />
           <select
           defaultValue={""}
@@ -281,7 +281,7 @@ const Annonce = ({ currentUser }) => {
             className="border-0 transition-colors ease-in-out h-10 cursor-pointer rounded-r flex justify-between items-center font-caption bg-blue-500 hover:bg-blue-600 text-white"
           >
             <SearchOutlined className="mr-1" />
-            <Typography className="text-white font-roboto hidden md:block">Rechercher</Typography>
+            <Typography className={"text-white font-roboto " + (isProfile?"hidden":"hidden md:block")}>Rechercher</Typography>
           </button>
         </div>
       </div>
@@ -292,7 +292,7 @@ const Annonce = ({ currentUser }) => {
           <AnnonceCarte key={index} annonce={annonce} />
         ))}
       </div>}
-      {isProfile && <div className="grid lg:grid-cols-2 grid-cols-1 gap-6 px-10">
+      {isProfile && <div className="grid lg:grid-cols-2 grid-cols-1 gap-6 px-4">
         {filteredAnnonces?.map((annonce, index) => (
           <AnnonceCarte key={index} annonce={annonce} />
         ))}

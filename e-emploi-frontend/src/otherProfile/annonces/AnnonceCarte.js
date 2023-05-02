@@ -46,7 +46,7 @@ const AnnonceCarte = ({ annonce }) => {
           {!annonce?.userResponse?.photo_profil && <Avatar icon={<UserOutlined/>}  className="mr-3" /> }
           {annonce?.userResponse?.photo_profil && <Avatar src={require("../../public/files/"+annonce?.userResponse?.photo_profil?.name)} className="mr-3" />}
           <span className="font-roboto mr-3 text-gray-500">Publiée par </span>
-          <Link className="font-caption text-black hover:text-black active:text-black transition-all ease-in-out hover:underline">
+          <Link to={"/"+annonce?.userResponse.username} className="font-caption text-black hover:text-black active:text-black transition-all ease-in-out hover:underline">
             {annonce?.userResponse?.prenom} {annonce?.userResponse?.nom}
           </Link>
         </div>

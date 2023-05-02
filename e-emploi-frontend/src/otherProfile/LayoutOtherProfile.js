@@ -148,121 +148,134 @@ const LayoutOtherProfile = ({ setUser, setCurrentUser, currentUser, user }) => {
   if (!user) return <p>Loading...</p>;
   else
     return localStorage.getItem("token") ? (
-      <>
-        <div className="grid grid-cols-3 font-roboto h-full">
-          <div className="flex flex-col py-4 overflow-y-auto bg-gray-100">
-            <div className="flex flex-col items-center ">
-              <div className="w-56 border py-4 flex flex-col items-center">
-                <div className="pb-6 w-3/4 text-center flex justify-center items-center ">
+      <div className="bg-gray-100 px-12">
+        <div className="flex justify-between items-center py-2 w-full">
+          <Breadcrumb items={breadcrumbItems} />
+        </div>
+        <div className="flex justify-center">
+          <div className="grid grid-cols-3 font-roboto h-full ">
+            <div className="flex flex-col py-4 overflow-y-auto bg-white rounded-md shadow-md mx-4">
+              <div className="flex flex-col items-center ">
+                <div className="w-56 border py-4 flex flex-col items-center">
+                  <div className="pb-6 w-3/4 text-center flex justify-center items-center ">
+                    {!isCurrentUser && (
+                      <>
+                        {!imagePath && (
+                          <Avatar
+                            size={128}
+                            icon={<UserOutlined />}
+                            onClick={handleAvatar}
+                            className="hover:cursor-pointer outline-2"
+                          />
+                        )}
+                        {imagePath && (
+                          <Avatar
+                            size={128}
+                            src={imagePath}
+                            onClick={handleAvatar}
+                            className="hover:cursor-pointer"
+                          />
+                        )}
+                      </>
+                    )}
+                    {isCurrentUser && (
+                      <Popover placement="bottom" content={addPicture}>
+                        {!imagePath && (
+                          <Avatar
+                            size={128}
+                            icon={<UserOutlined />}
+                            onClick={handleAvatar}
+                            className="hover:cursor-pointer"
+                          />
+                        )}
+                        {imagePath && (
+                          <Avatar
+                            size={128}
+                            src={imagePath}
+                            onClick={handleAvatar}
+                            className="hover:cursor-pointer border-4 border-white shadow-md"
+                          />
+                        )}
+                      </Popover>
+                    )}
+                  </div>
                   {!isCurrentUser && (
-                    <>
-                      {!imagePath && (
-                        <Avatar
-                          size={128}
-                          icon={<UserOutlined />}
-                          onClick={handleAvatar}
-                          className="hover:cursor-pointer outline-2"
-                        />
-                      )}
-                      {imagePath && (
-                        <Avatar
-                          size={128}
-                          src={imagePath}
-                          onClick={handleAvatar}
-                          className="hover:cursor-pointer"
-                        />
-                      )}
-                    </>
+                    <Typography className="">
+                      {user.prenom + " " + user.nom}
+                    </Typography>
                   )}
                   {isCurrentUser && (
-                    <Popover placement="bottom" content={addPicture}>
-                      {!imagePath && (
-                        <Avatar
-                          size={128}
-                          icon={<UserOutlined />}
-                          onClick={handleAvatar}
-                          className="hover:cursor-pointer"
-                        />
-                      )}
-                      {imagePath && (
-                        <Avatar
-                          size={128}
-                          src={imagePath}
-                          onClick={handleAvatar}
-                          className="hover:cursor-pointer border-4 border-white shadow-md"
-                        />
-                      )}
-                    </Popover>
+                    <Typography className="font-mukta text-xl lg:text-2xl">
+                      {currentUser.prenom + " " + currentUser.nom}
+                    </Typography>
                   )}
+                  {user.role === "ROLE_ADMIN" && (
+                    <Tag color="gold" className="mt-3">
+                      Administrateur
+                    </Tag>
+                  )}
+                  {user.role === "ROLE_STANDARD" && (
+                    <Tag color="gold" className="mt-3">
+                      Standard
+                    </Tag>
+                  )}
+                  {user.role === "ROLE_CONDIDAT" && (
+                    <Tag color="gold" className="mt-3">
+                      Candidat
+                    </Tag>
+                  )}
+                  {user.role === "ROLE_Pro" && (
+                    <Tag color="gold" className="mt-3">
+                      Professionnel
+                    </Tag>
+                  )}
+                  {/*  <p className="text-neutral-500"><Button onClick={() => addFile()} >Ajouter fichier</Button> </p>*/}
                 </div>
-                {!isCurrentUser && (
-                  <Typography>{user.prenom + " " + user.nom}</Typography>
-                )}
-                {isCurrentUser && (
-                  <Typography className="font-mukta text-2xl">
-                    {currentUser.prenom + " " + currentUser.nom}
-                  </Typography>
-                )}
-                {user.role === "ROLE_ADMIN" && (
-                  <Tag color="gold" className="mt-3">
-                    Administrateur
-                  </Tag>
-                )}
-                {user.role === "ROLE_STANDARD" && (
-                  <Tag color="gold" className="mt-3">
-                    Standard
-                  </Tag>
-                )}
-                {user.role === "ROLE_CONDIDAT" && (
-                  <Tag color="gold" className="mt-3">
-                    Candidat
-                  </Tag>
-                )}
-                {user.role === "ROLE_Pro" && (
-                  <Tag color="gold" className="mt-3">
-                    Professionnel
-                  </Tag>
-                )}
-                {/*  <p className="text-neutral-500"><Button onClick={() => addFile()} >Ajouter fichier</Button> </p>*/}
               </div>
-            </div>
-            {
-              <div className="flex flex-col items-center mt-6">
-                {/*<Menu items={sideMenuItems} mode="inline" className="w-56" />*/}
-                
-                  <Link to={"/"+user.username} className="text-center hover:bg-gray-50 hover:font-semibold focus:font-semibold focus:bg-gray-50 transition-colors ease-in-out  no-underline text-blue-600 text-lg font-poppins w-full py-2">
-                    <span className="px-6">Profil</span> 
-                  </Link>
-                  <Link className="text-center hover:bg-gray-50 hover:font-semibold focus:font-semibold focus:bg-gray-50 transition-colors ease-in-out  no-underline text-blue-600 text-lg font-poppins w-full py-2"to={"/" + user.username + "/address"}>
-                    <span className="px-6">Adresses</span> 
-                  </Link>
-                  <Link to={"/" + user.username + "/company"} className="text-center hover:bg-gray-50 hover:font-semibold focus:font-semibold focus:bg-gray-50 transition-colors ease-in-out  no-underline text-blue-600 text-lg font-poppins w-full py-2">
-                  <span className="px-6">Société</span> 
-                  </Link>
-                  <Link to={"/" + user.username + "/skills"} className="text-center hover:bg-gray-50 hover:font-semibold focus:font-semibold focus:bg-gray-50 transition-colors ease-in-out  no-underline text-blue-600 text-lg font-poppins w-full py-2">
-                  <span className="px-6">Compétences</span> 
-                  </Link>
-                  <Link to={"/" + user.username + "/annonce"} className="text-center hover:bg-gray-50 hover:font-semibold focus:font-semibold focus:bg-gray-50 transition-colors ease-in-out  no-underline text-blue-600 text-lg font-poppins w-full py-2">
-                  <span className="px-6">Annonces</span> 
-                  </Link>
-              </div>
-            }
-          </div>
+              {
+                <div className="flex flex-col items-center mt-6">
+                  {/*<Menu items={sideMenuItems} mode="inline" className="w-56" />*/}
 
-          <div className="py-4 col-span-2 overflow-y-auto">
-            <div className="container ">
-              <div className="border bg-white rounded-md px-3 w-10/12">
-                <div className="pb-6">
-                  <div className="flex justify-between  w-full">
-                    <Breadcrumb items={breadcrumbItems} />
-                  </div>
-                  <Outlet />
+                  <Link
+                    to={"/" + user.username}
+                    className="text-center hover:bg-gray-50 hover:font-semibold focus:font-semibold focus:bg-gray-50 transition-colors ease-in-out  no-underline text-blue-600 text-lg font-poppins w-full py-2"
+                  >
+                    <span className="px-6">Profil</span>
+                  </Link>
+                  <Link
+                    className="text-center hover:bg-gray-50 hover:font-semibold focus:font-semibold focus:bg-gray-50 transition-colors ease-in-out  no-underline text-blue-600 text-lg font-poppins w-full py-2"
+                    to={"/" + user.username + "/address"}
+                  >
+                    <span className="px-6">Adresses</span>
+                  </Link>
+                  <Link
+                    to={"/" + user.username + "/company"}
+                    className="text-center hover:bg-gray-50 hover:font-semibold focus:font-semibold focus:bg-gray-50 transition-colors ease-in-out  no-underline text-blue-600 text-lg font-poppins w-full py-2"
+                  >
+                    <span className="px-6">Société</span>
+                  </Link>
+                  <Link
+                    to={"/" + user.username + "/skills"}
+                    className="text-center hover:bg-gray-50 hover:font-semibold focus:font-semibold focus:bg-gray-50 transition-colors ease-in-out  no-underline text-blue-600 text-lg font-poppins w-full py-2"
+                  >
+                    <span className="px-6">Compétences</span>
+                  </Link>
+                  <Link
+                    to={"/" + user.username + "/annonce"}
+                    className="text-center hover:bg-gray-50 hover:font-semibold focus:font-semibold focus:bg-gray-50 transition-colors ease-in-out  no-underline text-blue-600 text-lg font-poppins w-full py-2"
+                  >
+                    <span className="px-6">Annonces</span>
+                  </Link>
                 </div>
-              </div>
+              }
+            </div>
+
+            <div className="col-span-2 overflow-y-auto">
+              <Outlet />
             </div>
           </div>
         </div>
-      </>
+      </div>
     ) : (
       <Navigate to="/" />
     );

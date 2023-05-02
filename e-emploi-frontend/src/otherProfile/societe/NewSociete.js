@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Button, Modal, Input } from "antd";
+import { Form, Button, Modal, Input, message } from "antd";
 import { addSociete, getCurrentUser } from "../../util/APIUtils";
 
 const NewSociete = ({ open, closeModal, setCurrentUser, notify }) => {
@@ -32,7 +32,8 @@ const NewSociete = ({ open, closeModal, setCurrentUser, notify }) => {
       const _user = await getCurrentUser();
       setCurrentUser(_user);
       reset(e);
-      notify("Notification", "Société ajoutée avec succès !", "success");
+     // notify("Notification", "Société ajoutée avec succès !", "success");
+     message.success("Société ajoutée avec succès !");
     } catch (error) {
       console.log(error);
     }

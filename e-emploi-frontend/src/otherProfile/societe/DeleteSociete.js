@@ -1,6 +1,6 @@
 import React from "react";
 import { deleteSociete, getCurrentUser } from "../../util/APIUtils";
-import { Modal } from "antd";
+import { Modal, message } from "antd";
 
 const DeleteSociete = ({
   open,
@@ -15,7 +15,8 @@ const DeleteSociete = ({
       const _user = await getCurrentUser();
       setCurrentUser(_user);
       closeModal();
-      notify("Notification", "Société supprimée avec succès !", "success");
+      //notify("Notification", "Société supprimée avec succès !", "success");
+      message.success("Société supprimée avec succès")
     } catch (error) {
       console.log(error);
     }

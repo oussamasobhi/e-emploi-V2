@@ -28,7 +28,7 @@ const Competences = ({ notify, currentUser, user }) => {
   const refreshSkills = async () => {
     try {
       const res = await getSkills();
-      console.log(res)
+      console.log(res);
       setCompetences(res);
     } catch (error) {
       console.log(error);
@@ -37,17 +37,22 @@ const Competences = ({ notify, currentUser, user }) => {
 
   return (
     <>
-      <div className="border-b">
-        <div className="flex justify-between items-center">
-          <Typography.Title level={3} className="uppercase text-center">
+      <div className="border-b overflow-hidden rounded-md">
+        <div className="flex justify-between items-center bg-gray-200  px-2 text-gray-800 ">
+          <Typography className="font-poppins text-2xl px-2 py-2 text-center">
             Compétences
-          </Typography.Title>
+          </Typography>
           {isCurrentUser && (
-            <Button icon={<PlusOutlined/>} type="primary" onClick={ajouterCompetence}>
+            <Button
+              icon={<PlusOutlined />}
+              type="primary"
+              onClick={ajouterCompetence}
+            >
               Ajouter
             </Button>
           )}
         </div>
+
         {competences?.map((competence, index) => (
           <CompetenceItem
             competence={competence}

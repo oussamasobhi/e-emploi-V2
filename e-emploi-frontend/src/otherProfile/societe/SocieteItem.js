@@ -18,7 +18,7 @@ const SocieteItem = ({ societe, notify, setCurrentUser, isCurrentUser }) => {
   };
   
   return (
-    <>
+    <div className="px-2">
       <Descriptions title={societe.nom_societe} className="mt-4">
         <Descriptions.Item label="Téléphone">
           {societe.num_tel}
@@ -85,7 +85,7 @@ const SocieteItem = ({ societe, notify, setCurrentUser, isCurrentUser }) => {
           />
         </>
       )}
-    </>
+    </div>
   );
 };
 

@@ -16,7 +16,7 @@ const AddressItem = ({ address, notify, setCurrentUser, isCurrentUser }) => {
   };
   return (
     <>
-      <div className="flex my-10 border-b-2">
+      <div className="flex p-2 border-b-2">
         <div className="flex-auto flex flex-col">
           <Typography.Text strong className="text-lg">
             {address.libelle_adr}

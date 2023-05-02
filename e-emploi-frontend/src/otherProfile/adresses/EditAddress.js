@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import { editAddress, getCurrentUser } from "../../util/APIUtils";
-import { Modal, Form, Input, Button } from "antd";
+import { Modal, Form, Input, Button, message } from "antd";
 
 const EditAddress = ({ open, closeModal, notify, setCurrentUser, address }) => {
   const [newAddress, setNewAddress] = useState(address);
@@ -20,9 +20,10 @@ const EditAddress = ({ open, closeModal, notify, setCurrentUser, address }) => {
       const res = await getCurrentUser();
       setCurrentUser(res);
       closeModal();
-      notify("Notification", "Addresse modifié avec succès !", "success");
+      message.success("Addresse modifié avec succès !");
     } catch (error) {
       console.log(error);
+      message.error("Erreur")
     }
   };
   return (

@@ -261,17 +261,17 @@ const AnnonceDetail = ({ currentUser }) => {
                                 margin: "0.5rem",
                                 width: 120,
                                 height: 120,
-                                "@media screen and (min-width: 640px)": {
+                                "@media screen and (minWidth: 640px)": {
                                   objectFit: "cover",
                                   width: 140,
                                   height: 140,
                                 },
-                                "@media screen and (min-width: 768px)": {
+                                "@media screen and (minWidth: 768px)": {
                                   objectFit: "cover",
                                   width: 160,
                                   height: 160,
                                 },
-                                "@media screen and (min-width: 1024px)": {
+                                "@media screen and (minWidth: 1024px)": {
                                   objectFit: "cover",
                                   width: 180,
                                   height: 180,

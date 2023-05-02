@@ -3,7 +3,7 @@ import SocieteItem from "./SocieteItem";
 import NewSociete from "./NewSociete";
 import { Typography, Button } from "antd";
 
-const Societe = ({user, currentUser, notify, setCurrentUser }) => {
+const Societe = ({ user, currentUser, notify, setCurrentUser }) => {
   const [isOpenAdd, setIsOpenAdd] = useState(false);
   const ajouterSociete = () => {
     setIsOpenAdd(true);
@@ -11,18 +11,17 @@ const Societe = ({user, currentUser, notify, setCurrentUser }) => {
   const isCurrentUser = currentUser.username === user.username;
   return (
     <>
-      <div className="border-b">
-        <div className="flex justify-between items-center">
-          <Typography.Title level={3} className="uppercase text-center">
+      <div className="border-b overflow-hidden bg-white rounded-md shadow-md">
+        <div className="flex justify-between items-center bg-gray-200  px-2 text-gray-800 ">
+          <Typography className="font-poppins text-2xl px-2 py-2 text-center">
             Société
-          </Typography.Title>
+          </Typography>
           {isCurrentUser && !currentUser.societe && (
             <Button type="primary" onClick={ajouterSociete}>
               Ajouter
             </Button>
           )}
         </div>
-
         {isCurrentUser && currentUser.societe && (
           <SocieteItem
             societe={currentUser.societe}

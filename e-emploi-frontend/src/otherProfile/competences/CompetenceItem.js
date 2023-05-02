@@ -6,12 +6,6 @@ import {
   uploadCompetenceFile,
 } from "../../util/APIUtils";
 import EditCompetence from "./EditCompetence";
-import {
-  FileAddFilled,
-  PlusOutlined,
-  SaveFilled,
-  SaveOutlined,
-} from "@ant-design/icons";
 
 const CompetenceItem = ({ competence, refresh, notify, isCurrentUser }) => {
   const [isOpenDelete, setIsOpenDelete] = useState(false);
@@ -78,8 +72,8 @@ const CompetenceItem = ({ competence, refresh, notify, isCurrentUser }) => {
 
   return (
     <>
-      <div className="shadow-lg rounded-md mb-6 pb-4">
-        <div className="flex justify-between items-start mb-3 font-roboto font-semibold bg-slate-200 px-2  py-3">
+      <div className="shadow-lg rounded-md mb-6 pb-4 bg-white">
+        <div className="flex justify-between items-start mb-3 font-roboto font-semibold px-2  py-3">
           <Typography className="uppercase font-serif font-semibold texet-center text-2xl ">
             {competence.titre}
           </Typography>
@@ -186,17 +180,17 @@ const CompetenceItem = ({ competence, refresh, notify, isCurrentUser }) => {
                         margin: "0.5rem",
                         width: 120,
                         height: 120,
-                        "@media screen and (min-width: 640px)": {
+                        "@media screen and (minWidth: 640px)": {
                           objectFit: "cover",
                           width: 140,
                           height: 140,
                         },
-                        "@media screen and (min-width: 768px)": {
+                        "@media screen and (minWidth: 768px)": {
                           objectFit: "cover",
                           width: 160,
                           height: 160,
                         },
-                        "@media screen and (min-width: 1024px)": {
+                        "@media screen and (minWidth: 1024px)": {
                           objectFit: "cover",
                           width: 180,
                           height: 180,

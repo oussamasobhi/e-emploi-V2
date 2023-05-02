@@ -1,6 +1,6 @@
 import React from 'react';
 import { deleteAddress, getCurrentUser } from '../../util/APIUtils';
-import { Modal } from 'antd';
+import { Modal, message } from 'antd';
 
 const DeleteAddress = ({
   open,
@@ -15,7 +15,8 @@ const DeleteAddress = ({
       const res = await getCurrentUser();
       setCurrentUser(res);
       closeModal();
-      notify("Notification", "Addresse supprimé avec succès !", "success");
+      //notify("Notification", "Addresse supprimé avec succès !", "success");
+      message.success("Addresse supprimé avec succès !");
     } catch (error) {
       console.log(error);
     }
