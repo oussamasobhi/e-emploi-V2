@@ -39,8 +39,8 @@ public class FileDB {
     @JsonIgnore
     private AnnonceUser annonce_user;
 
-    @ManyToOne(fetch = FetchType.LAZY,optional = false)
-    @JoinColumn(name ="id_annonce_post")
+    @ManyToOne(fetch = FetchType.LAZY,optional = true)
+    @JoinColumn(name ="id_annonce_post", nullable = true)
     @JsonIgnore
     private Annonce annonce;
 
