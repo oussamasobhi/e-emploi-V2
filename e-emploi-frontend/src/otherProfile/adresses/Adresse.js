@@ -17,7 +17,7 @@ const Adresse = ({ notify, setCurrentUser, currentUser, user }) => {
         <div className="bg-white rounded-md shadow-md overflow-hidden">
           <div className="flex justify-between items-center bg-gray-200  px-2 text-gray-800 ">
             <Typography className="font-poppins text-2xl px-2 py-2 text-center">
-              Modifier Profil
+              Adresses
             </Typography>
             {isCurrentUser && currentUser.adresses.length < 2 && (
               <Button type="primary" onClick={ajouterAddresse}>
