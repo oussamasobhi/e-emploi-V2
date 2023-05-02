@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Modal, Button, Form, Input } from 'antd';
+import { Modal, Button, Form, Input, message } from 'antd';
 import { getCurrentUser, addAddress} from '../../util/APIUtils';
 
 const NewAddress = ({open, closeModal, setCurrentUser, notify}) => {
@@ -35,7 +35,8 @@ const NewAddress = ({open, closeModal, setCurrentUser, notify}) => {
             lib_addre: "",
           });
           closeModal();
-          notify("Notification", "Adresse ajouté avec succès !", "success");
+          //notify("Notification", "Adresse ajouté avec succès !", "success");
+          message.success("Adresse ajouté avec succès");
         } catch (error) {
           console.log(error);
         }

@@ -385,3 +385,11 @@ export function getCompetenceFiles(idcomp){
     method: "GET",
   })
 }
+
+export function addReviews (review){
+  return request({
+    url: API_BASE_URL+"/reviews/add",
+    method: "POST",
+    body: JSON.stringify(review)
+  })
+}

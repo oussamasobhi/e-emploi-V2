@@ -195,7 +195,7 @@ const AnnonceDetail = ({ currentUser }) => {
                 </div>
               </div>
               <Typography className="text-2xl font-poppins text-green-500">
-                {annonce.userResponse.num_tel}0631821328
+                {annonce.userResponse.num_tel}
               </Typography>
             </div>
             <div className="text-xl">
