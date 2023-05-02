@@ -26,8 +26,8 @@ public class Annonce extends DateAudit {
     private double tarif_depart;
     private double tarif_final;
     private Date date_fin_annonce;
-//    @OneToMany(mappedBy = "annonce",cascade = CascadeType.ALL)
-//    private List<Review> reviews;
+    @OneToMany(mappedBy = "annonce",cascade = CascadeType.ALL)
+    private List<FileDB> documents;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_Categorie_2", nullable = false)
     @JsonIgnore

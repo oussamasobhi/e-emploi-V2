@@ -102,15 +102,15 @@ public class UserService {
         }
         return true;
     }
-    private final String FOLDER_PATH="C:\\Users\\oussa\\Desktop\\PFA\\e-emploi_project\\e-emploi-backend\\src\\main\\resources\\static";
+    // à changer selon l'emplacement ou voulez stocker vos images
+  //  private final String FOLDER_PATH="C:\\Users\\oussa\\Desktop\\PFA\\e-emploi_project\\e-emploi-backend\\src\\main\\resources\\static";
     public void supprimerpic(String filename){
         FileDB fileDB= fileDBRepository.findByName(filename).orElseThrow();
         User user=fileDBRepository.findbyfilename(filename);
         user.setImage(null);
         userRepository.save(user);
         fileDBRepository.deleteById(fileDB.getId());
-        String filePath=FOLDER_PATH+"\\"+filename;
-        File file=new File(filePath);
+        File file=new File(fileDB.getFilepath());
         file.delete();
     }
     public FileDB getfilebyuserid(Long userid){

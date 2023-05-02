@@ -78,5 +78,11 @@ public class DatabaseInitializer implements ApplicationRunner {
                 .nom_categorie("produits")
                 .build();
         categoryRepository.save(produit);
+
+        Categorie_2_Annonce produits= Categorie_2_Annonce.builder()
+                .categorieAnnonce(produit)
+                .nom_sous_categorie("produits")
+                .build();
+        categorie2AnnonceRepository.save(produits);
     }
 }

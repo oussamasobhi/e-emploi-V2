@@ -25,6 +25,7 @@ public class Competence {
     private String duree_formation;
     private Date date_obtention;
     private String duree_exp;
+    private String description;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_user", nullable = false)
     @JsonIgnore

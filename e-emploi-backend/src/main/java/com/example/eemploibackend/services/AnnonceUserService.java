@@ -81,4 +81,46 @@ public class AnnonceUserService {
         List<FileDB> files=fileDBRepository.findfilesbyuserandannonce(idannonce,iduser);
         return files;
     }
+    public Boolean deletefile(Long idfile){
+        FileDB fileDB=fileDBRepository.findById(idfile).orElseThrow();
+        if(fileDB==null)
+            return false;
+        fileDBRepository.deleteById(idfile);
+        File file=new File(fileDB.getFilepath());
+        file.delete();
+        return true;
+    }
+    public Boolean passeAdiscussionEngage(Long idannonce,Long iduser){
+        AnnonceUser annonceUser=annonceUserRepository.findbyuserandannonce(idannonce,iduser);
+        if(annonceUser==null){
+            return false;
+        }
+        else
+        {
+            annonceUser.setStatusAnnonce(StatusAnnonce.Discussion_engagé);
+        }
+        return true;
+    }
+    public Boolean passeAaccordEtablie(Long idannonce,Long iduser){
+        AnnonceUser annonceUser=annonceUserRepository.findbyuserandannonce(idannonce,iduser);
+        if(annonceUser==null){
+            return false;
+        }
+        else
+        {
+            annonceUser.setStatusAnnonce(StatusAnnonce.Accord_Etablie);
+        }
+        return true;
+    }
+    public Boolean passeAtermine(Long idannonce,Long iduser){
+        AnnonceUser annonceUser=annonceUserRepository.findbyuserandannonce(idannonce,iduser);
+        if(annonceUser==null){
+            return false;
+        }
+        else
+        {
+            annonceUser.setStatusAnnonce(StatusAnnonce.Terminé);
+        }
+        return true;
+    }
 }

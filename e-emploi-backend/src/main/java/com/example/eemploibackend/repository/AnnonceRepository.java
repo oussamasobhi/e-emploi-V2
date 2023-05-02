@@ -17,4 +17,6 @@ public interface AnnonceRepository extends JpaRepository<Annonce,Long> {
     Page<Annonce> findByTitreOrDescription(String search,double max_tarif_dep,double min_tarif_dep,Pageable pageable);
     @Query("SELECT A from Annonce A where A.tarif_depart<?1 AND A.tarif_depart>?2")
     Page<Annonce> findByTarifdepart(double max_tarif_dep,double min_tarif_dep,Pageable pageable);
+    @Query("SELECT A from Annonce A where A.id=?1")
+    Annonce findAnnonceById(Long idannonce);
 }

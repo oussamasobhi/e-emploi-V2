@@ -62,4 +62,34 @@ public class AnnonceUserController {
         }
         return files;
     }
+    @DeleteMapping("/deletefile/{id}")
+    public ResponseEntity<?> deletepic(@PathVariable(value = "id")Long id){
+        if(annonceUserService.deletefile(id))
+            return new ResponseEntity(new ApiResponse(true,"Image suprimé"),HttpStatus.OK);
+        return new ResponseEntity(new ApiResponse(true,"id n'existe pas"),HttpStatus.BAD_REQUEST);
+    }
+    @PutMapping("/updateStatus/discussionEngage/{idannonce}/{iduser}")
+    public ResponseEntity<?> updatestatustodiscussion(@PathVariable(name = "idannonce")Long idannonce,
+                                          @PathVariable(name = "iduser")Long iduser){
+        if(annonceUserService.passeAdiscussionEngage(idannonce, iduser)){
+            return new ResponseEntity(new ApiResponse(true,"status modifié"),HttpStatus.OK);
+        }
+        return new ResponseEntity(new ApiResponse(true,"erreur"),HttpStatus.BAD_REQUEST);
+    }
+    @PutMapping("/updateStatus/accordetablie/{idannonce}/{iduser}")
+    public ResponseEntity<?> updatestatustoaccord(@PathVariable(name = "idannonce")Long idannonce,
+                                          @PathVariable(name = "iduser")Long iduser){
+        if(annonceUserService.passeAaccordEtablie(idannonce, iduser)){
+            return new ResponseEntity(new ApiResponse(true,"status modifié"),HttpStatus.OK);
+        }
+        return new ResponseEntity(new ApiResponse(true,"erreur"),HttpStatus.BAD_REQUEST);
+    }
+    @PutMapping("/updateStatus/termine/{idannonce}/{iduser}")
+    public ResponseEntity<?> updatestatustotermine(@PathVariable(name = "idannonce")Long idannonce,
+                                          @PathVariable(name = "iduser")Long iduser){
+        if(annonceUserService.passeAtermine(idannonce, iduser)){
+            return new ResponseEntity(new ApiResponse(true,"status modifié"),HttpStatus.OK);
+        }
+        return new ResponseEntity(new ApiResponse(true,"erreur"),HttpStatus.BAD_REQUEST);
+    }
 }

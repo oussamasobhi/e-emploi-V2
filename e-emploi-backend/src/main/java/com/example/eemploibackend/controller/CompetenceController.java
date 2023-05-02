@@ -57,4 +57,11 @@ public class CompetenceController {
     public List<FileDB> recuperefile(@PathVariable(value = "idcompetence")Long idcompetence){
         return competenceService.recupererfile(idcompetence);
     }
+    @DeleteMapping("/deletefile/{id}")
+    public ResponseEntity<?> deleteimage(@PathVariable(name = "id")Long id){
+        if(competenceService.deleteimage(id))
+            return new ResponseEntity(new ApiResponse(true,"image supprimé"),HttpStatus.ACCEPTED);
+        return new ResponseEntity(new ApiResponse(true,"erreur"),HttpStatus.BAD_REQUEST);
+
+    }
 }
