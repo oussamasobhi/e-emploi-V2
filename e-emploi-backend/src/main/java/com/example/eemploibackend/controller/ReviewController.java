@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/reviews")
+@CrossOrigin
 public class ReviewController {
     private final ReviewService reviewService;
     @PostMapping("/add")
