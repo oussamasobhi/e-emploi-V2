@@ -269,14 +269,6 @@ export function getAnnonceById(id) {
   })
 }
 
-export function addAnnonceuser(annonceuser){
-  return request({
-    url: API_BASE_URL+"/annonceuser/add",
-    method: "POST",
-    body: JSON.stringify(annonceuser)
-  })
-}
-
 export function saveMessage(message){
   return request({
     url: API_BASE_URL+"/message/add",
@@ -375,6 +367,34 @@ export function addPostuleFile(idannonce, iduser, file){
     url: API_BASE_URL+"/annonceuser/upload/"+idannonce+"/"+iduser,
     method: "POST",
     body: file
+  })
+}
+
+export function getAnnonceUser(idannonce, iduser){
+  return request({
+    url: API_BASE_URL+"/annonceuser/"+idannonce+"/"+iduser,
+    method: "GET"
+  })
+}
+
+export function goToDiscussionEngagee(idannonce, iduser){
+  return request({
+    url: API_BASE_URL+"/annonceuser/updateStatus/discussionEngage/"+idannonce+"/"+iduser,
+    method: "PUT"
+  })
+}
+
+export function goToAccordEtabli(idannonce, iduser){
+  return request({
+    url: API_BASE_URL+"/annonceuser/updateStatus/accordetablie/"+idannonce+"/"+iduser,
+    method: "PUT"
+  })
+}
+
+export function goToTermine(idannonce, iduser){
+  return request({
+    url: API_BASE_URL+"/annonceuser/updateStatus/termine/"+idannonce+"/"+iduser,
+    method: "PUT"
   })
 }
 

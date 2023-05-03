@@ -178,8 +178,8 @@ const LayoutOtherProfile = ({ setUser, setCurrentUser, currentUser, user }) => {
           <div className="flex justify-between items-center py-2 w-full">
             <Breadcrumb items={breadcrumbItems} />
           </div>
-          <div className="flex justify-center">
-            <div className="grid grid-cols-3 font-roboto h-full ">
+          <div className="flex justify-center ">
+            <div className="grid grid-cols-3 font-roboto h-full lg:w-mw">
               <div className="flex flex-col py-4 overflow-y-auto bg-white rounded-md shadow-md mx-4">
                 <div className="flex flex-col items-center ">
                   <div className="w-56 border py-4 flex flex-col items-center">

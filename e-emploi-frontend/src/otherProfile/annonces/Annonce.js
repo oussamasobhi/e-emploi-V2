@@ -289,10 +289,10 @@ const Annonce = ({ currentUser }) => {
       {/*<Table dataSource={filteredAnnonces} columns={nettoyageColumns} />*/}
       {!isProfile && <div className="grid md:grid-cols-2 lg:grid-cols-3 grid-cols-1 gap-6 px-10">
         {filteredAnnonces?.map((annonce, index) => (
-          <AnnonceCarte key={index} annonce={annonce} />
+          <AnnonceCarte isProfile={isProfile} key={index} annonce={annonce} />
         ))}
       </div>}
-      {isProfile && <div className="grid lg:grid-cols-2 grid-cols-1 gap-6 px-4">
+      {isProfile && <div className="px-4">
         {filteredAnnonces?.map((annonce, index) => (
           <AnnonceCarte key={index} annonce={annonce} />
         ))}

@@ -6,8 +6,10 @@ import {
   Input,
   Space,
   DatePicker,
+  message,
 } from "antd";
 import { addSkill } from "../../util/APIUtils";
+import TextArea from "antd/es/input/TextArea";
 
 const AddCompetence = ({ open, closeModal, refresh, notify }) => {
   const initCompetence = {
@@ -23,6 +25,7 @@ const AddCompetence = ({ open, closeModal, refresh, notify }) => {
     duree_formation: "",
     date_obtention: "",
     duree_exp: "",
+    description: ""
   });
   const handleChange = (changedValue, allValues) => {
     const key = Object.keys(changedValue)[0];
@@ -36,6 +39,7 @@ const AddCompetence = ({ open, closeModal, refresh, notify }) => {
       duree_formation: "",
       date_obtention: "",
       duree_exp: "",
+      description:""
     });
     closeModal();
   };
@@ -46,7 +50,8 @@ const AddCompetence = ({ open, closeModal, refresh, notify }) => {
       await addSkill(competence);
       refresh();
       reset(event);
-      notify("Notification", "Nouvelle compétence ajoutée", "success");
+      //notify("Notification", "Nouvelle compétence ajoutée", "success");
+      message.success("Compétence ajoutée");
     } catch (error) {
       console.log(error);
     }
@@ -90,6 +95,18 @@ const AddCompetence = ({ open, closeModal, refresh, notify }) => {
             initialValue={initCompetence.titre}
           >
             <Input />
+          </Form.Item>
+          <Form.Item
+            label="Description"
+            name="description"
+            rules={[
+              {
+                required: false
+              },
+            ]}
+            initialValue={initCompetence.description}
+          >
+            <TextArea />
           </Form.Item>
           <Form.Item
             label="Niveau scolaire"

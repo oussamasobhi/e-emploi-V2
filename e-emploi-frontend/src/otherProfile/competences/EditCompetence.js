@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Button, Input, Form, Modal, Space, DatePicker } from "antd";
+import { Button, Input, Form, Modal, Space, DatePicker, message } from "antd";
 import { updateSkill } from "../../util/APIUtils";
+import TextArea from "antd/es/input/TextArea";
 
 import dayjs from "dayjs";
 import { dateFormat } from "../../constant";
@@ -22,7 +23,8 @@ const EditCompetence = ({competence, open, refresh, closeModal, notify}) => {
           await updateSkill(competence.id, newCompetence);
           refresh();
           reset(event);
-          notify("Notification", "Compétence modifiée avec succès", "success");
+          //notify("Notification", "Compétence modifiée avec succès", "success");
+          message.info("Compétence modifiée");
         } catch (error) {
           console.log(error);
         }
@@ -66,6 +68,18 @@ const EditCompetence = ({competence, open, refresh, closeModal, notify}) => {
             initialValue={competence.titre}
           >
             <Input />
+          </Form.Item>
+          <Form.Item
+            label="Description"
+            name="description"
+            rules={[
+              {
+                required: false
+              },
+            ]}
+            initialValue={competence.description}
+          >
+            <TextArea />
           </Form.Item>
           <Form.Item
             label="Niveau scolaire"

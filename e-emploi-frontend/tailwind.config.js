@@ -21,10 +21,14 @@ module.exports = {
         121: "30rem",
         128: "32rem",
         135: "34rem",
+        mw: "52rem"
       },
       colors: {
         lime: "#e0fd2c",
         cyan: "#035772",
+      },
+      maxWidth:{
+        mw: "52rem"
       },
       backgroundImage: {
         "hero-bg": "url('public/image/hero-bg.jpg')",

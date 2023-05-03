@@ -7,6 +7,9 @@ import {
   getAnnonceById,
   saveMessage,
   getMessages,
+  goToDiscussionEngagee,
+  getAnnonceUser,
+  addAnnonceUser,
 } from "../util/APIUtils";
 import { over } from "stompjs";
 import SockJS from "sockjs-client";
@@ -30,8 +33,58 @@ const ChatRoom = ({ currentUser }) => {
     connected: false,
     message: "",
   });
+  const [annonceUser, setAnnonceUser] = useState(null);
+  const [postulant, setPostulant] = useState(null);
   const [privateChats, setPrivateChats] = useState([]);
+  useEffect(() => {
+    const loadAnnonceUser = async () => {
+      try{
+        const res = await getAnnonceUser(annonce.id, currentUser.id);
+        setAnnonceUser(res);
+      }catch(error){
+        console.log(error);
+      }
+    }
+    const createAnnonceUser = async () => {
 
+      const request = { idannonce: annonce?.id };
+      try {
+        const res = await addAnnonceUser(request);
+        console.log(res);
+        //setPostuleAnnonce(postuleAnnonce.set(currentUser.username,  ))}
+
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    const toDiscussionEngagee = async () => {
+      console.log("To discussion engagée............???")
+      try {
+        const res = await goToDiscussionEngagee(annonce.id, postulant.id);
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if(annonce?.userResponse?.username !== currentUser.username){
+      loadAnnonceUser();
+    }
+    if(privateChats.length===1){
+      createAnnonceUser();
+    }
+    privateChats.map((obj) => {
+      console.log(obj.sendername)
+      if(obj.sendername === annonce?.userResponse.username){
+          if(postulant)toDiscussionEngagee();
+          return;
+        }
+    })
+  }, [annonce, currentUser, privateChats])
+  useEffect(() => {
+    console.log(annonceUser)
+  }, [annonceUser])
+  
+  
   useEffect(() => {
     const loadReceiver = async () => {
       try {
@@ -105,7 +158,36 @@ const ChatRoom = ({ currentUser }) => {
   const onPrivateMessage = (payload) => {
     console.log(payload);
     loadMessages();
+    privateChats.map((obj) => {
+      console.log(obj.sendername)
+      if(obj.sendername === annonce?.userResponse.username){
+          if(postulant)toDiscussionEngagee();
+          return;
+        }
+    })
   };
+  const toDiscussionEngagee = async () => {
+    console.log("To discussion engagée............???")
+    try {
+      const res = await goToDiscussionEngagee(annonce.id, postulant.id);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    if (privateChats && receiver && annonce) {
+      setPostulant(
+        annonce?.userResponse.username === currentUser.username ? receiver : currentUser
+      );
+    }
+  }, [privateChats, annonce, receiver]);
+
+  useEffect(() => {
+   console.log(postulant);
+  }, [postulant])
+  
+  
 
   const handleChange = (event) => {
     const value = event.target.value;
@@ -137,7 +219,8 @@ const ChatRoom = ({ currentUser }) => {
   };
   const storeMessage = async (message) => {
     try {
-      await saveMessage(message);
+      const res = await saveMessage(message);
+      console.log(res);
     } catch (error) {
       console.log(error);
     }

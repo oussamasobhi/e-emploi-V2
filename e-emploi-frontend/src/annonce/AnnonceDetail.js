@@ -10,25 +10,13 @@ import {
   getPostuleFiles,
   addFileAnnonce,
   getAnnonceFiles,
+  getAnnonceUser,
 } from "../util/APIUtils";
 
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
-import {
-  Button,
-  Image,
-  Carousel,
-  Typography,
-  message,
-  Avatar,
-  Spin,
-} from "antd";
-import {
-  LeftOutlined,
-  MessageOutlined,
-  RightOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import { Image, Carousel, Typography, message, Avatar, Spin } from "antd";
+import { MessageOutlined, UserOutlined } from "@ant-design/icons";
 import AnnonceUser from "./AnnonceUser";
 var relativeTime = require("dayjs/plugin/relativeTime");
 dayjs.extend(relativeTime);
@@ -42,6 +30,7 @@ const AnnonceDetail = ({ currentUser }) => {
   const [fileValue, setFileValue] = useState(null);
   const [fileAnnonce, setFileAnnonce] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [annonceUser, setAnnonceUser] = useState(null);
 
   useEffect(() => {
     const loadAnnonce = async () => {
@@ -116,23 +105,20 @@ const AnnonceDetail = ({ currentUser }) => {
 
   useEffect(() => {
     console.log(chatUsers);
-    const createAnnonceUser = async () => {
+    
+    const loadAnnonceUser = async () => {
       setLoading(true);
-      const request = { idannonce: annonce.id };
-      try {
-        const res = await addAnnonceUser(request);
-        console.log(res);
-        //setPostuleAnnonce(postuleAnnonce.set(currentUser.username,  ))}
-        setLoading(false);
-      } catch (error) {
+      try{
+        const res = await getAnnonceUser(annonce.id, currentUser.id);
+        setAnnonceUser(res);
+      }catch(error){
         console.log(error);
       }
-    };
-    if (!chatUsers?.some((obj) => obj.username === currentUser.username))
-      if (annonce?.userResponse?.username !== currentUser.username) {
-        createAnnonceUser();
-      }
-  }, [chatUsers, annonce, currentUser]);
+    }
+    if(annonce?.userResponse?.username !== currentUser.username){
+      loadAnnonceUser();
+    }
+  }, [chatUsers, annonce, currentUser]); 
 
   const handleFileChange = (event) => {
     setFileValue(event.target.files[0]);
@@ -218,8 +204,8 @@ const AnnonceDetail = ({ currentUser }) => {
     );
   else
     return (
-      <div className=" bg-gray-100 flex flex-col items-center ">
-        <div className="bg-white w-135  rounded-t-md shadow-md overflow-hidden">
+      <div className=" bg-gray-100 flex flex-col items-center rounded-t-md shadow-lg overflow-hidden">
+        <div className="bg-white w-135 rounded-t-md overflow-hidden">
           {!myAnnonceFiles ||
             (myAnnonceFiles.length <= 0 && (
               <div className="w-full h-72 bg-gray-500 flex justify-center items-center text-2xl text-white">
@@ -235,7 +221,7 @@ const AnnonceDetail = ({ currentUser }) => {
                       src={require("../public/files/" + file.name)}
                       height="auto"
                       width="100%"
-                      objectFit="cover"
+                      objectfit="cover"
                       className="mx-auto"
                     />
                   )}
@@ -321,10 +307,34 @@ const AnnonceDetail = ({ currentUser }) => {
               <Typography className="font-roboto text-gray-800 text-lg">
                 {annonce.description}
               </Typography>
-
-              <p className="capitalize text-sm text-gray-500 font-caption">
-                {dayjs(annonce.createdAt).format("DD MMMM YYYY")}
-              </p>
+              <div className="flex justify-between py-3">
+                <Typography className="capitalize text-sm text-gray-500 font-caption">
+                  {dayjs(annonce.createdAt).format("DD MMMM YYYY")}
+                </Typography>
+                {annonceUser &&
+                  annonceUser.statusAnnonce === "Demande_Envoyé" && (
+                    <Typography className="text-red-500 font-archivo">
+                      Demande envoyée
+                    </Typography>
+                  )}
+                {annonceUser &&
+                  annonceUser.statusAnnonce === "Discussion_engagé" && (
+                    <Typography className="text-red-500 font-archivo">
+                      Discussion engagée
+                    </Typography>
+                  )}
+                {annonceUser &&
+                  annonceUser.statusAnnonce === "Accord_Etablie" && (
+                    <Typography className="text-red-500 font-archivo">
+                      Accord établi
+                    </Typography>
+                  )}
+                {annonceUser && annonceUser.statusAnnonce === "Terminé" && (
+                  <Typography className="text-red-500 font-archivo">
+                    Terminé
+                  </Typography>
+                )}
+              </div>
             </div>
 
             {currentUser.username !== annonce.userResponse.username && (
@@ -411,15 +421,15 @@ const AnnonceDetail = ({ currentUser }) => {
           {annonce?.userResponse?.username === currentUser.username && (
             <>
               <div className="px-2">
-                <Typography className="text-xl text-gray-800 font-caption font-bold">
+                <Typography className="text-xl text-gray-800 font-poppins font-bold">
                   Intéressées
                 </Typography>
-                {chatUsers?.map((user) => (
+                {chatUsers?.map((user, index) => (
                   <>
                     {user.username !== currentUser.username && (
-                      <div>
+                      
                         <AnnonceUser idannonce={id} username={user.username} />
-                      </div>
+                      
                     )}
                   </>
                 ))}

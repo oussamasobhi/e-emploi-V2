@@ -20,7 +20,7 @@ const Msg = ({ message, currentUser, receiver }) => {
           src={require("../../public/files/" + currentUser.photo_profil.name)}
         />
       )}
-      {sendername === currentUser.username && !currentUser.photo_profil && (
+      {sendername === currentUser?.username && !currentUser?.photo_profil && (
         <Avatar className="mx-2" icon={<UserOutlined />} />
       )}
       {sendername !== currentUser.username && !receiver.photo_profil && (

@@ -1,4 +1,4 @@
-import { Typography, Button, Modal, Image, Row, Col } from "antd";
+import { Typography, Button, Modal, Image, Row, Col, message } from "antd";
 import React, { useEffect, useState } from "react";
 import {
   deleteSkill,
@@ -25,7 +25,8 @@ const CompetenceItem = ({ competence, refresh, notify, isCurrentUser }) => {
       await deleteSkill(competence.id);
       refresh();
       setIsOpenDelete(false);
-      notify("Notification", "Compétence supprimée avec succès");
+      //notify("Notification", "Compétence supprimée avec succès");
+      message.info("Compétence supprimée")
     } catch (error) {
       console.log(error);
     }
@@ -72,9 +73,9 @@ const CompetenceItem = ({ competence, refresh, notify, isCurrentUser }) => {
 
   return (
     <>
-      <div className="shadow-lg rounded-md mb-6 pb-4 bg-white">
-        <div className="flex justify-between items-start mb-3 font-roboto font-semibold px-2  py-3">
-          <Typography className="uppercase font-serif font-semibold texet-center text-2xl ">
+      <div className="pb-4 bg-white">
+        <div className="flex justify-between items-start mb-3 font-roboto font-semibold px-2 py-3 overflow-auto">
+          <Typography className="font-poppins text-red-600 text-2xl ">
             {competence.titre}
           </Typography>
           {isCurrentUser && (
@@ -92,12 +93,12 @@ const CompetenceItem = ({ competence, refresh, notify, isCurrentUser }) => {
             </div>
           )}
         </div>
-
+        {competence.description && <div className="px-2 pb-2 max-w-full">{competence.description}</div>}
         <div className="flex justify-between px-2 ">
           <div className="w-1/2">
             {competence.date_obtention && (
               <div className="">
-                <span className="text-gray-500 font-poppins text-lg">
+                <span className="text-gray-500 font-poppins text-md">
                   Obtention :{" "}
                 </span>
                 <span className="font-poppins text-lg">
@@ -107,7 +108,7 @@ const CompetenceItem = ({ competence, refresh, notify, isCurrentUser }) => {
             )}
             {competence.duree_exp && (
               <div className="">
-                <span className="text-gray-500 font-poppins text-lg">
+                <span className="text-gray-500 font-poppins text-md">
                   Expérience :{" "}
                 </span>
                 <span className="font-poppins text-lg">
@@ -119,7 +120,7 @@ const CompetenceItem = ({ competence, refresh, notify, isCurrentUser }) => {
           <div className="w-1/2">
             {competence.duree_formation && (
               <div className="">
-                <span className="text-gray-500 font-poppins text-lg">
+                <span className="text-gray-500 font-poppins text-md">
                   Durée de formation :{" "}
                 </span>
                 <span className="font-poppins text-lg">
@@ -129,7 +130,7 @@ const CompetenceItem = ({ competence, refresh, notify, isCurrentUser }) => {
             )}
             {competence.niveauscolaire && (
               <div className="">
-                <span className="text-gray-500 font-poppins text-lg">
+                <span className="text-gray-500 font-poppins text-md">
                   Niveau scolaire :{" "}
                 </span>
                 <span className="font-poppins text-lg">
@@ -167,14 +168,12 @@ const CompetenceItem = ({ competence, refresh, notify, isCurrentUser }) => {
         {allFiles && (
           <div className="px-2">
             {allFiles.length > 0 && (
-              <div>
-                <Typography className="font-serif text-xl underline underline-offset-2">
-                  Pièces justificatives :{" "}
-                </Typography>
+              <div className="bg-gray-200 rounded-md">
                 <div className="flex flex-wrap justify-start">
                   {allFiles.map((file, index) => (
                     <Image
                       key={index}
+                      className="rounded-md shadow-md"
                       style={{
                         objectFit: "cover",
                         margin: "0.5rem",
