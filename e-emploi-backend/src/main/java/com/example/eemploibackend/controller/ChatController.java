@@ -2,11 +2,14 @@ package com.example.eemploibackend.controller;
 
 import com.example.eemploibackend.model.Message;
 import com.example.eemploibackend.model.User;
+import com.example.eemploibackend.payloads.ApiResponse;
 import com.example.eemploibackend.payloads.MessageRequest;
 import com.example.eemploibackend.payloads.UserResponse;
 import com.example.eemploibackend.services.ChatService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -27,8 +30,9 @@ public class ChatController {
         return message;
     }
     @PostMapping("/message/add")
-    public void addmessage(@RequestBody MessageRequest request){
+    public ResponseEntity<?> addmessage(@RequestBody MessageRequest request){
             chatService.addmessage(request);
+            return new ResponseEntity(new ApiResponse(true,"Message envoyé"), HttpStatus.OK);
     }
 //    @GetMapping("/chat-users/{username}")
 //    public List<UserResponse> getchatusersofausername(@PathVariable(value = "username")String username){

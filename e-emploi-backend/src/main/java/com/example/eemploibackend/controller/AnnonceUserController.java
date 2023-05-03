@@ -1,6 +1,7 @@
 package com.example.eemploibackend.controller;
 
 import com.example.eemploibackend.config.CurrentUser;
+import com.example.eemploibackend.model.AnnonceUser;
 import com.example.eemploibackend.model.FileDB;
 import com.example.eemploibackend.model.User;
 import com.example.eemploibackend.payloads.ApiResponse;
@@ -91,5 +92,10 @@ public class AnnonceUserController {
             return new ResponseEntity(new ApiResponse(true,"status modifié"),HttpStatus.OK);
         }
         return new ResponseEntity(new ApiResponse(true,"erreur"),HttpStatus.BAD_REQUEST);
+    }
+    @GetMapping("/{idannonce}/{iduser}")
+    public ResponseEntity<AnnonceUser> getAnnonceUser(@PathVariable(name = "idannonce") Long idannonce,
+                                                      @PathVariable(name = "iduser") Long iduser){
+        return ResponseEntity.ok(annonceUserService.getAnnonceUser(idannonce, iduser));
     }
 }

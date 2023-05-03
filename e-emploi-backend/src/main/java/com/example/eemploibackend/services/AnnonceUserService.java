@@ -1,7 +1,6 @@
 package com.example.eemploibackend.services;
 
 import com.example.eemploibackend.exceptions.BadRequestException;
-import com.example.eemploibackend.exceptions.ResourceNotFoundException;
 import com.example.eemploibackend.model.*;
 import com.example.eemploibackend.payloads.FilesResponse;
 import com.example.eemploibackend.payloads.PostuleAnnonceRequest;
@@ -98,6 +97,7 @@ public class AnnonceUserService {
         else
         {
             annonceUser.setStatusAnnonce(StatusAnnonce.Discussion_engagé);
+            annonceUserRepository.save(annonceUser);
         }
         return true;
     }
@@ -109,6 +109,7 @@ public class AnnonceUserService {
         else
         {
             annonceUser.setStatusAnnonce(StatusAnnonce.Accord_Etablie);
+            annonceUserRepository.save(annonceUser);
         }
         return true;
     }
@@ -120,7 +121,11 @@ public class AnnonceUserService {
         else
         {
             annonceUser.setStatusAnnonce(StatusAnnonce.Terminé);
+            annonceUserRepository.save(annonceUser);
         }
         return true;
+    }
+    public AnnonceUser getAnnonceUser(Long idannonce, Long iduser){
+        return annonceUserRepository.findbyuserandannonce(idannonce, iduser);
     }
 }

@@ -1,5 +1,9 @@
 package com.example.eemploibackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,10 +25,12 @@ public class AnnonceUser {
     private  AnnonceUserID id;
     @ManyToOne(fetch = FetchType.EAGER)
     @MapsId("idannonce")
+    @JsonIgnore
     private Annonce annonce;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @MapsId("iduser")
+    @JsonIgnore
     private User user;
     private double duree_propose_real;
     private double duree_valide_real;
@@ -32,6 +38,7 @@ public class AnnonceUser {
     private double tarif_nego;
     private StatusAnnonce statusAnnonce;
     @OneToMany(mappedBy = "annonce_user",cascade = CascadeType.ALL)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private List<FileDB> documents;
     @Override
     public boolean equals(Object o) {
