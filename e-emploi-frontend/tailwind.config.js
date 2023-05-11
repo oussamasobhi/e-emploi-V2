@@ -23,10 +23,6 @@ module.exports = {
         135: "34rem",
         mw: "52rem"
       },
-      colors: {
-        lime: "#e0fd2c",
-        cyan: "#035772",
-      },
       maxWidth:{
         mw: "52rem"
       },

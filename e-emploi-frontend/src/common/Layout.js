@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
+import Header from "./Header";
 
 const Layout = ({
   setIsLoading,
@@ -11,18 +12,14 @@ const Layout = ({
   onClick,
 }) => {
   return (
-    <div className="font-poppins flex flex-col h-screen">
-      <Navbar
-        setIsLoading={setIsLoading}
-        isAuth={isAuth}
+    <div className="font-poppins flex flex-col h-screen relative">
+      <Header
+        logout={onLogout}
         currentUser={currentUser}
-        onLogout={onLogout}
-        current={current}
-        setCurrent={setCurrent}
-        onClick={onClick}
         className="flex-none"
       />
-      <div className="min-w-full shrink max-h-135 overflow-y-auto grow-0">
+
+      <div className="min-w-full shrink max-h-135 overflow-y-auto grow-0 absolute top-16">
         <Outlet />
       </div>
     </div>
