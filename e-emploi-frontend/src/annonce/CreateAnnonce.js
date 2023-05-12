@@ -52,9 +52,16 @@ const CreateAnnonce = () => {
   const creerAnnonce = async () => {
     try {
       await createAnnonce(annonce);
+      console.log("notif lancé");
+      //message.success("Annonce créée avec succès");
+      message.success({
+        content: "Annonce créée avec succès",
+        className: "relative top-16",
+        duration: 3
+      })
+      console.log("notif terminé");
       navigate("/annonce");
-      //notify("Notification", "Annonce créée ", "info");
-      message.success("Annonce créée avec succès");
+      
     } catch (error) {
       message.error("Erreur");
       console.log(error);

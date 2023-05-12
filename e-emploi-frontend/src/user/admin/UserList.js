@@ -103,9 +103,10 @@ const UserList = ({ notify }) => {
 
   return (
     <>
-      <div className="overflow-x-auto flex flex-col justify-center">
+      <div className="flex flex-col justify-center">
         {users ? (
           <Table
+            className="max-w-full"
             dataSource={users}
             columns={columns}
             onRow={(record, rowIndex) => {

@@ -65,7 +65,11 @@ function App() {
     signup(user);
     func();
     //notify("Succès", "Vous vous êtes bien enregistrés, veuillez vous connecter maintenant !", "success");
-    message.success("Vous êtes inscrits dans e-emploi, veuillez vous connecter maintenant !")
+    //message.success("Vous êtes inscrits dans e-emploi, veuillez vous connecter maintenant !")
+    message.success({
+      content: "Vous êtes inscrits dans e-emploi, veuillez vous connecter maintenant ",
+      className: "relative top-16"
+    })
   };
 
   const handleLogin = async (e, logReq, func) => {
@@ -77,7 +81,12 @@ function App() {
     } catch (error) {
       setIsLoading(false);
       //notify("Erreur", "Nom d'utilisateur ou mot de passe incorrects", "error");
-      message.error("Nom d'utilisateur ou mot de passe incorrect !");
+      //message.error("Nom d'utilisateur ou mot de passe incorrect !");
+      message.error({
+        content: "Nom d'utilisateur ou mot de passe incorrect ",
+        className: "relative top-16",
+        duration: 3
+      })
 
       throw new Error();
     }
@@ -88,7 +97,12 @@ function App() {
     func();
     setIsLoading(false);
     //notify("Succès", "Vous êtes maintenant connectés", "success");
-    message.info("Bonjour ! Bienvenue dans e-emploi !")
+    //message.info("Bonjour ! Bienvenue dans e-emploi !")
+    message.info({
+      content: "Bonjour, bienvenue dans e-emploi",
+      className: "relative top-16",
+      duration: 3
+    })
   };
 
   const loadCurrentUser = async () => {
@@ -107,7 +121,12 @@ function App() {
     setIsLoading(false);
     func();
     //notify("Info", "Vous êtes déconnectés !", "info");
-    message.info("Vous êtes déconnectés !")
+    //message.info("Vous êtes déconnectés !")
+    message.info({
+      content: "Vous êtes déconnectés",
+      className: "relative top-16",
+      duration: 3
+    })
   };
   const [notification, setNotification] = useState({
     title: "",

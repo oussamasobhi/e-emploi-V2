@@ -1,23 +1,26 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import {
   getAnnonceById,
   getChatUsersByAnnonce,
-  addAnnonceUser,
   addPostuleFile,
   getPostuleFiles,
   addFileAnnonce,
   getAnnonceFiles,
   getAnnonceUser,
+  deleteAnnonce,
 } from "../util/APIUtils";
 
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
-import { Image, Carousel, Typography, message, Avatar, Spin } from "antd";
+import { Image, Typography, message, Avatar, Spin, Modal } from "antd";
 import { MessageOutlined, UserOutlined } from "@ant-design/icons";
 import AnnonceUser from "./AnnonceUser";
+import MyCarousel from "../common/MyCarousel";
+import { MoreHoriz } from "@mui/icons-material";
+import { Button, Menu, MenuItem } from "@mui/material";
 var relativeTime = require("dayjs/plugin/relativeTime");
 dayjs.extend(relativeTime);
 
@@ -31,6 +34,7 @@ const AnnonceDetail = ({ currentUser }) => {
   const [fileAnnonce, setFileAnnonce] = useState(null);
   const [loading, setLoading] = useState(true);
   const [annonceUser, setAnnonceUser] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loadAnnonce = async () => {
@@ -138,6 +142,8 @@ const AnnonceDetail = ({ currentUser }) => {
       }
     } catch (error) {
       console.log(error);
+    }finally{
+      setLoading(false);
     }
   };
 
@@ -188,6 +194,30 @@ const AnnonceDetail = ({ currentUser }) => {
     console.log(myAnnonceFiles);
   }, [myAnnonceFiles]);
 
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const [isOpenDelete, setIsOpenDelete] = useState(false);
+  const supprimerAnnonce = async () => {
+    try {
+      await deleteAnnonce(annonce.id);
+      setIsOpenDelete(false);
+     navigate("/annonce");
+      message.success({
+        content: "Annonce supprimée",
+        className: "relative top-16",
+      });
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   if (loading)
     return (
       <div className="flex justify-center">
@@ -205,7 +235,52 @@ const AnnonceDetail = ({ currentUser }) => {
   else
     return (
       <div className=" bg-gray-100 flex flex-col items-center overflow-hidden">
-        <div className="bg-white w-w1  overflow-hidden pt-8 shadow-md">
+        <div className="bg-white w-w1 relative overflow-hidden pt-8 shadow-md">
+          {annonce?.userResponse.username === currentUser.username && (
+            <div className="absolute top-0 right-0">
+              <Button
+                variant="text"
+                sx={{ marginLeft: "auto", color: "inherit" }}
+                aria-controls={open ? "demo-positioned-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? "true" : undefined}
+                onClick={handleClick}
+              >
+                <MoreHoriz sx={{ color: "#444444" }} />
+              </Button>
+              <Menu
+                id="demo-positioned-menu"
+                aria-labelledby="demo-positioned-button"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+              >
+                <MenuItem
+                  onClick={(e) => {
+                    handleClose();
+                  }}
+                >
+                  Modifier l'annonce
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    setIsOpenDelete(true);
+                    handleClose();
+                  }}
+                >
+                  Supprimer l'annonce
+                </MenuItem>
+              </Menu>
+            </div>
+          )}
           <div className="flex flex-col items-center">
             <Typography className="text-green-500 text-lg font-roboto">
               {annonce.categorie2Annonce}
@@ -219,53 +294,20 @@ const AnnonceDetail = ({ currentUser }) => {
               {annonce.userResponse.prenom + " " + annonce.userResponse.nom}{" "}
             </Typography>
           </div>
-          {!myAnnonceFiles ||
-            (myAnnonceFiles.length <= 0 && (
-              <div className="w-full h-96 bg-gray-500 flex justify-center items-center text-2xl text-white relative z-0">
-                Photo
-                <div className="rounded-full shadow-md bg-white absolute -bottom-12 z-40 flex justify-center items-center overflow-hidden">
-                  {!annonce?.userResponse?.photo_profil && (
-                    <Avatar size={128} icon={<UserOutlined />} />
-                  )}
-                  {annonce?.userResponse?.photo_profil && (
-                    <Avatar
-                      size={120}
-                      src={require("../public/files/" +
-                        annonce.userResponse.photo_profil.name)}
-                      className="border-4 border-white shadow-md"
-                    />
-                  )}
-                </div>
-                <div className="absolute z-40 top-0 right-0 w-fit bg-red-600 rounded-l-xl px-3 py-1">
-                  <Typography className="text-xl font-poppins text-white flex-none ">
-                    {annonce.tarif_depart} DH
-                  </Typography>
-                </div>
-              </div>
-            ))}
-          {myAnnonceFiles && myAnnonceFiles.length > 0 && (
+          {myAnnonceFiles && (
             <div className="relative z-0 flex justify-center items-center flex-col">
-              <Carousel className="w-full h-96 overflow-hidden bg-gray-300 ">
-                {myAnnonceFiles?.map((file, index) => (
-                  <div
-                    key={index}
-                    className="flex justify-center items-center "
-                  >
-                    {file?.name && (
-                      <Image
-                        src={require("../public/files/" + file.name)}
-                        height="auto"
-                        width="100%"
-                        objectfit="cover"
-                        className="mx-auto"
-                      />
-                    )}
-                  </div>
-                ))}
-              </Carousel>
+              <MyCarousel
+                loading={loading}
+                setLoading={setLoading}
+                images={myAnnonceFiles}
+              />
               <div className="rounded-full shadow-md bg-white absolute -bottom-12 z-40 flex justify-center items-center overflow-hidden">
                 {!annonce?.userResponse?.photo_profil && (
-                  <Avatar size={120} icon={<UserOutlined />} className="border-4 border-white shadow-md"/>
+                  <Avatar
+                    size={120}
+                    icon={<UserOutlined />}
+                    className="border-4 border-white shadow-md"
+                  />
                 )}
                 {annonce?.userResponse?.photo_profil && (
                   <Avatar
@@ -311,7 +353,14 @@ const AnnonceDetail = ({ currentUser }) => {
             </div>
           )}
 
-          <div className={"p-2 "+(currentUser.username !== annonce?.userResponse?.username ? "mt-12":"" )}>
+          <div
+            className={
+              "p-2 " +
+              (currentUser.username !== annonce?.userResponse?.username
+                ? "mt-12"
+                : "")
+            }
+          >
             <div className="flex justify-center items-center">
               <span className="text-gray-400 text-lg">Ajouté par &nbsp;</span>
               <Link
@@ -325,10 +374,8 @@ const AnnonceDetail = ({ currentUser }) => {
               <Typography className="font-poppins px-3 text-gray-700 text-lg">
                 {annonce.description}
               </Typography>
-              <div className="flex justify-between py-3">
-                <Typography className="capitalize text-sm text-gray-500 font-caption">
-                  {dayjs(annonce.createdAt).format("DD MMMM YYYY")}
-                </Typography>
+              <div className="flex justify-end py-3">
+                
                 {annonceUser &&
                   annonceUser.statusAnnonce === "Demande_Envoyé" && (
                     <Typography className="text-red-500 font-archivo">
@@ -453,6 +500,14 @@ const AnnonceDetail = ({ currentUser }) => {
             </>
           )}
         </div>
+        <Modal
+          title="Voulez vous vraiment supprimer cette annonce?"
+          open={isOpenDelete}
+          onOk={() => supprimerAnnonce()}
+          onCancel={() => setIsOpenDelete(false)}
+          okText="Supprimer"
+          cancelText="Annuler"
+        ></Modal>
       </div>
     );
 };

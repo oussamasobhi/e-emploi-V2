@@ -262,6 +262,13 @@ export function createAnnonce(annonce) {
   });
 }
 
+export function deleteAnnonce(id){
+  return request({
+    url: API_BASE_URL+"/annonce/delete/"+id,
+    method: "DELETE"
+  });
+}
+
 export function getAnnonceById(id) {
   return request({
     url: API_BASE_URL+"/annonce/"+id,

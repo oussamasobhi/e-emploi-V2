@@ -1,8 +1,10 @@
 import { Modal, Typography } from "antd";
 import React, {useEffect} from "react";
 import { goToAccordEtabli } from "../util/APIUtils";
+import {useNavigate} from "react-router-dom";
 
 const ConfirmAnnonce = ({ open, setIsOpen, id }) => {
+  const navigate = useNavigate()
   const reset = () => {
     setIsOpen(false);
   };
@@ -13,6 +15,7 @@ const ConfirmAnnonce = ({ open, setIsOpen, id }) => {
     } catch (error) {
       console.log(error);
     }
+    navigate("/annonce"+id);
     setIsOpen(false);
   };
 

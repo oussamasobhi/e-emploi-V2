@@ -34,7 +34,7 @@ const AnnonceCarte = ({ annonce, isProfile }) => {
         )}
         {!myAnnonceFiles ||
           (myAnnonceFiles.length <= 0 && (
-            <Typography className="text-white text-2xl">Photo</Typography>
+            <Typography className="text-white text-2xl">Sans photo</Typography>
           ))}
       </div>
 

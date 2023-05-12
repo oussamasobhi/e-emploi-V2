@@ -24,3 +24,7 @@ body::-moz-scrollbar {
 .ant-menu-item-active {
   border-bottom: none;
 }
+
+.modal .ant-message {
+  z-index: 2000;
+}

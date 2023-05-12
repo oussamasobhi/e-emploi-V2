@@ -14,7 +14,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { ExpandMore } from "@mui/icons-material";
 
 let PAGES = [
@@ -37,6 +37,7 @@ let PAGES = [
 ];
 
 const DrawerComp = ({ currentUser, logout, goToLogin, goToProfile }) => {
+  const navigate = useNavigate()
   const [openDrawer, setOpenDrawer] = useState(false);
   useEffect(() => {
     if (localStorage.getItem("token") === "")
@@ -69,6 +70,14 @@ const DrawerComp = ({ currentUser, logout, goToLogin, goToProfile }) => {
                     <ListItemText>Profil</ListItemText>
                   </ListItemIcon>
                 </ListItemButton>
+                {JSON.parse(localStorage.getItem("CURRENT_USER")).role ===
+                  "ROLE_ADMIN" && (
+                  <ListItemButton onClick={(e) => navigate("/dashboard")}>
+                    <ListItemIcon>
+                      <ListItemText>Dashboard</ListItemText>
+                    </ListItemIcon>
+                  </ListItemButton>
+                )}
                 <ListItemButton
                   onClick={(e) => {
                     setOpenDrawer(false);

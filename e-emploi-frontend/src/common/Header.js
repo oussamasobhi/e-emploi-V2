@@ -151,6 +151,7 @@ const Header = ({ logout, currentUser  }) => {
                         goToProfile();
                         }}>Mon profil</MenuItem>
                     <MenuItem onClick={handleClose}>Menu 1</MenuItem>
+                    {JSON.parse(localStorage.getItem("CURRENT_USER")).role==="ROLE_ADMIN" && <MenuItem onClick={()=>navigate("/dashboard")} >Dashboard</MenuItem>}
                     <MenuItem
                       onClick={(e) => {
                         handleClose();

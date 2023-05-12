@@ -85,15 +85,6 @@ const LayoutOtherProfile = ({ setUser, setCurrentUser, currentUser, user }) => {
       title: <Link to="/">Home</Link>,
     },
   ].concat(extraBreadcrumbItems);
-  /*const [file, setFile] = useState("");
-  const addFile = async () => {
-    try{
-      const _file = await uploadFile(`D:/MULTIMEDIA/SARY/a.jpg`);
-      setFile(_file);
-    }catch(error){
-      console.log(error);
-    }
-  }*/
   const handleAvatar = () => {
     console.log("avatar clicked !");
   };

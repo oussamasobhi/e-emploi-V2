@@ -110,12 +110,12 @@ const AnnonceUser = ({ idannonce, username }) => {
                     Terminé
                   </Typography>)}
             </div>
-            <div className="w-fit justify-self-end">
+            {(annonceUser.statusAnnonce !== "Terminé" && annonceUser.statusAnnonce !== "Accord_Etablie") && <div className="w-fit justify-self-end">
               <button onClick={() => setIsOpenConfirm(true)} className="text-sm font-caption mx-3 flex justify-between items-center border-0 bg-orange-500 hover:bg-orange-600 transition-colors ease-in-out cursor-pointer rounded-xl text-white py-1">
                 <CheckOutlined className="mr-2" />
                 Confirmer
               </button>
-            </div>
+            </div>}
           </div>
 
           {myFiles.length > 0 && (
