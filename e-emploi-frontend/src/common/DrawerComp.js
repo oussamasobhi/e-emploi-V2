@@ -36,7 +36,6 @@ let PAGES = [
   },
 ];
 
-
 const DrawerComp = ({ currentUser, logout, goToLogin, goToProfile }) => {
   const [openDrawer, setOpenDrawer] = useState(false);
   useEffect(() => {
@@ -46,24 +45,10 @@ const DrawerComp = ({ currentUser, logout, goToLogin, goToProfile }) => {
         url: "/login",
       });
   }, [localStorage.getItem("token")]);
-  
+
   return (
     <Fragment>
       <Drawer open={openDrawer} onClose={() => setOpenDrawer(false)}>
-        <List>
-          {PAGES.map((page, index) => (
-            <ListItemButton
-              key={index}
-              onClick={() => setOpenDrawer(false)}
-              LinkComponent={Link}
-              to={page.url}
-            >
-              <ListItemIcon>
-                <ListItemText>{page.label}</ListItemText>
-              </ListItemIcon>
-            </ListItemButton>
-          ))}
-        </List>
         {localStorage.getItem("token") !== "" && (
           <Accordion>
             <AccordionSummary
@@ -94,10 +79,24 @@ const DrawerComp = ({ currentUser, logout, goToLogin, goToProfile }) => {
                     <ListItemText>Déconnexion</ListItemText>
                   </ListItemIcon>
                 </ListItemButton>
-                </List>
+              </List>
             </AccordionDetails>
           </Accordion>
         )}
+        <List>
+          {PAGES.map((page, index) => (
+            <ListItemButton
+              key={index}
+              onClick={() => setOpenDrawer(false)}
+              LinkComponent={Link}
+              to={page.url}
+            >
+              <ListItemIcon>
+                <ListItemText>{page.label}</ListItemText>
+              </ListItemIcon>
+            </ListItemButton>
+          ))}
+        </List>
       </Drawer>
       <IconButton
         onClick={() => setOpenDrawer(!openDrawer)}

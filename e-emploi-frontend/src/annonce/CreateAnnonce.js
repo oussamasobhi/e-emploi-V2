@@ -127,9 +127,11 @@ const CreateAnnonce = () => {
               </Select>
             </FormControl>
           </div>
-          <Button  variant="contained" onClick={creerAnnonce}>
+          <div className="flex justify-end">
+          <Button  variant="contained" onClick={creerAnnonce} sx={{ backgroundColor:"#F3580C", ":hover":{backgroundColor:"#C2410C"}}}>
               Ajouter
             </Button>
+            </div>
         </Box>
         
       </div>

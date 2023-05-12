@@ -239,8 +239,8 @@ const Signup = ({ onSignup }) => {
   return (
     <div className="flex flex-col w-auto items-center bg-gray-100">
       <div className="bg-inherit w-auto">
-        <h1 className="text-3xl font-bold font-caption text-center">
-          Créer votre compte
+        <h1 className="text-3xl font-poppins text-my-blue text-center">
+          Inscription
         </h1>
         <div className="flex flex-col p-6 border rounded-md bg-white shadow-md">
           <form
@@ -260,7 +260,7 @@ const Signup = ({ onSignup }) => {
                 variant="standard"
                 label="Prénom"
                 name="prenom"
-                id="nom"
+                id="prenom"
                 value={user.prenom}
                 onChange={(e) => handleChange(e, validatePrenom)}
                 sx={{ marginLeft: "5px" }}
@@ -317,6 +317,7 @@ const Signup = ({ onSignup }) => {
               id="password2"
               value={user.password2}
               onChange={(e) => handleChange(e, validatePassword)}
+              onBlur={isMatchPassword}
               sx={{ marginBottom: "10px" }}
             />
             <TextField
@@ -334,7 +335,6 @@ const Signup = ({ onSignup }) => {
                 {passwordError}
               </p>
             )}
-            {/*<p className="mb-3">Critères sur le mot de passe ...</p>*/}
             <button
             onClick={inscription}
               className="text-white rounded-md font-bold mt-6 py-2 text-lg border-none hover:bg-orange-600 bg-orange-500 transition-colors ease-in-out cursor-pointer "
@@ -343,12 +343,8 @@ const Signup = ({ onSignup }) => {
             </button>
           </form>
           <div className="py-3 text-center">
-            <p className="font-caption">Vous avez déjà un compte? <Link to="/login" className="text-blue-500 no-underline hover:text-blue-600 hover:font-bold font-caption">S'inscrire</Link></p>
+            <p className="font-caption">Vous avez déjà un compte? <Link to="/login" className="text-blue-500 no-underline hover:underline hover:text-blue-600 font-caption">Se connecter</Link></p>
           </div>
-          {/*<p className="text-center pt-5">OR</p>
-          <div className="py-5 text-center">
-            Sign up sur google et facebook ...
-            </div>*/}
         </div>
       </div>
     </div>

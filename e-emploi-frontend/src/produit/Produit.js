@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation } from "react-router";
+import { Navigate, useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { Breadcrumb } from "antd";
 import { useEffect } from "react";
@@ -74,7 +74,7 @@ const Produit = () => {
       title: <Link to="/">Home</Link>,
     },
   ].concat(extraBreadcrumbItems);
-  return (
+  return localStorage.getItem("token")!=="" ? (
     <div className="flex bg-gray-100 ">
       <div className="flex-auto px-5">
         <div className="flex items-center border-b border-b-gray-400 py-2">
@@ -130,7 +130,8 @@ const Produit = () => {
         </div>
       </div>
     </div>
-  );
+  ) : (<Navigate to="/login" />)
+   ;
 };
 
 export default Produit;

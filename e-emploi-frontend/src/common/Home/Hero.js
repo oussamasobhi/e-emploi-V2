@@ -12,7 +12,7 @@ const Hero = () => {
             <Typography className="font-archivo text-5xl lg:text-7xl text-center">
               Décrivez-nous votre besoin
             </Typography>
-            <Typography className="font-archivo text-5xl lg:text-7xl text-center flex justify-center bg-gradient-to-r text-transparent bg-clip-text from-orange-700 to-orange-400">
+            <Typography className="font-archivo text-5xl lg:text-7xl text-center flex justify-center bg-gradient-to-r text-transparent bg-clip-text from-my-blue to-sky-300">
               Pour réaliser votre projet
             </Typography>
           </div>
@@ -21,12 +21,12 @@ const Hero = () => {
             destinés à servir d'autre personne contre une paie.
           </p>
           <div className="grid grid-cols-2 pt-12">
-            <button className="cursor-pointer bg-orange-600 hover:bg-orange-700 border-none rounded-lg mr-5 text-lg py-4 px-2 font-semibold justify-self-end transition-colors duration-300 ease-in-out w-52 ">
-              <Link to={"/annonce"} className="text-white no-underline" >Voir les annonces</Link>
+            <button className="cursor-pointer bg-my-blue border-none rounded-md mr-5 text-lg py-4 px-2 font-roboto uppercase justify-self-end transition-colors duration-300 ease-in-out w-52 ">
+              <Link to={"/annonce"} className="text-orange-500 no-underline" >Voir les annonces</Link>
             </button>
 
-            <button className="cursor-pointer bg-blue-800 hover:bg-blue-900 border-none rounded-lg text-lg py-4 px-2 font-semibold transition-colors duration-300 ease-in-out w-52">
-              <Link className="text-white no-underline" >Contacter</Link>
+            <button className="cursor-pointer bg-my-blue border-none rounded-md text-lg py-4 px-2 font-roboto uppercase transition-colors duration-300 ease-in-out w-52">
+              <Link className="text-orange-500 no-underline" >Contacter</Link>
             </button>
           </div>
         </div>
