@@ -1,34 +1,23 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { getListAnnonces } from "../../util/APIUtils";
+import { getListAnnonces, getSousCategories } from "../../util/APIUtils";
 import {
-  Typography,
-  Table,
-  Input,
-  Button,
-  InputNumber,
-  Form,
-  Tag,
-  Select,
+  Typography
 } from "antd";
-import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import { useForm } from "antd/es/form/Form";
 import {
-  DeleteOutlined,
-  EditOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
-import dayjs from "dayjs";
 import AnnonceCarte from "./AnnonceCarte";
+import { FormControl, InputLabel, MenuItem, OutlinedInput, Select } from "@mui/material";
 
 const Annonce = ({ currentUser }) => {
   const [annonces, setAnnonces] = useState(null);
   const [filteredAnnonces, setFilteredAnnonces] = useState(null);
   const { username } = useParams();
   const [isProfile, setIsProfile] = useState(false);
-  const navigate = useNavigate();
+  const [categories, setCategories] = useState(null);
   useEffect(() => {
     if (username) {
       setIsProfile(true);
@@ -38,12 +27,7 @@ const Annonce = ({ currentUser }) => {
   useEffect(() => {
     if (annonces) {
       if (isProfile) {
-        /* {
         let annoncesToShow = annonces.filter(function (annonce) {
-          return annonce.userResponse.username !== currentUser.username;
-        });
-        setFilteredAnnonces(annoncesToShow);
-      } else*/ let annoncesToShow = annonces.filter(function (annonce) {
           return annonce.userResponse.username === username;
         });
         setFilteredAnnonces(annoncesToShow);
@@ -59,85 +43,22 @@ const Annonce = ({ currentUser }) => {
       const res2 = (await getListAnnonces(2)).content;
       const res3 = (await getListAnnonces(3)).content;
       const res4 = (await getListAnnonces(4)).content;
-      setAnnonces(res1.concat(res2).concat(res3).concat(res4));
+      const res5 = (await getListAnnonces(5)).content;
+      setAnnonces(res1.concat(res2).concat(res3).concat(res4).concat(res5));
     };
     loadAnnonces();
   }, []);
 
-  const nettoyageColumns = [
-    {
-      title: "Titre",
-      dataIndex: "titre_annonce",
-      key: "titre",
-    },
-    {
-      title: "Description",
-      dataIndex: "description",
-      key: "description",
-    },
-    {
-      title: "Date de création",
-      dataIndex: "createdAt",
-      key: "createdAt",
-      render: (_, record) => dayjs(record.createdAt).format("YYYY-MM-DD"),
-    },
-    /*{
-      title: "Utilisateur",
-      dataIndex: "userResponse",
-      key: "utilisateur",
-      render: (_, record) => (
-        <>
-          <Link to={"/" + record.userResponse.username}>
-            {" "}
-            {record.userResponse.prenom} {record.userResponse.nom}
-          </Link>
-        </>
-      ),
-    },*/
-    {
-      title: "Tarif",
-      dataIndex: "tarif_depart",
-      key: "tarif_depart",
-    },
-    {
-      title: "Catégorie",
-      dataIndex: "categorie2Annonce",
-      key: "souscategorie",
-      render: (_, record) => (
-        <Tag color="green">{record.categorie2Annonce}</Tag>
-      ),
-    },
-    {
-      title: "Consulter",
-      key: "action",
-      render: (_, record) => (
-        <>
-          <Button
-            type="primary"
-            onClick={() => {
-              navigate("/annonce/" + record.id);
-            }}
-          >
-            Détails
-          </Button>
-        </>
-      ),
-    },
-  ];
+ 
   if (filteredAnnonces) console.log(filteredAnnonces);
 
   //recherche
-  const [form] = useForm();
   const [recherche, setRecherche] = useState({
     search: "",
     min: undefined,
     max: undefined,
     categorie: null,
   });
-  /*const handleChange = (changedValue, allValues) => {
-    const key = Object.keys(changedValue)[0];
-    setRecherche({ ...recherche, [key]: changedValue[key] });
-  };*/
   const handleChange = (event) => {
     const value = event.target.value;
     setRecherche({ ...recherche, [event.target.name]: value });
@@ -198,35 +119,37 @@ const Annonce = ({ currentUser }) => {
             recherche.max
           )
         ).content;
-        setAnnonces(res1.concat(res2).concat(res3).concat(res4));
+        const res5 = (
+          await getListAnnonces(
+            5,
+            undefined,
+            undefined,
+            recherche.search,
+            recherche.min,
+            recherche.max
+          )
+        ).content;
+        setAnnonces(res1.concat(res2).concat(res3).concat(res4).concat(res5));
       }
     } catch (error) {
       console.log(error);
     }
   };
-  const categories = [
-    {
-      id: 1,
-      nom_categorie: "Nettoyage",
-    },
-    {
-      id: 2,
-      nom_categorie: "Artisan",
-    },
-    {
-      id: 3,
-      nom_categorie: "Emploi",
-    },
-    {
-      id: 4,
-      nom_categorie: "Service",
-    },
-  ];
+  useEffect(() => {
+    const loadCategories = async () => {
+      const _souscat1 = await getSousCategories (1);
+      const _souscat2 = await getSousCategories(2);
+      const _souscat3 = await getSousCategories(3);
+      setCategories(_souscat1.concat(_souscat2).concat(_souscat3));
+    };
+    loadCategories();
+  }, []);
+
   return (
-    <div className="px-4 bg-white rounded-md shadow-md">
-      <Typography className="text-4xl mb-4 text-center font-bold">Annonces</Typography>
-      <div className="flex justify-end items-center mb-6">
-        <div className="flex justify-end w-fit ring-1 ring-gray-300 rounded">
+    <div className="px-4 bg-gray-100 rounded-md  shadow-md">
+      
+      <div className="flex justify-center items-center mb-6">
+        <div className="flex justify-center w-fit ring-1 ring-gray-300 rounded-xl overflow-hidden">
           <input
             onChange={handleChange}
             type="text"
@@ -250,7 +173,7 @@ const Annonce = ({ currentUser }) => {
                 value={categorie.id}
                 className="hover:bg-white"
               >
-                {categorie.nom_categorie}
+                {categorie.nom_sous_categorie}
               </option>
             ))}
           </select>

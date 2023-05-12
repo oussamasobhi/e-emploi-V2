@@ -24,8 +24,8 @@ const AnnonceCarte = ({ annonce, isProfile }) => {
   }, [myAnnonceFiles]);
 
   return (
-    <div className="flex flex-col mb-4">
-      <div className="h-44 w-full overflow-hidden rounded-md bg-gray-400 flex items-center justify-center">
+    <div className="flex flex-col mb-4 bg-white shadow-md">
+      <div className="h-44 w-full overflow-hidden bg-gray-400 flex items-center justify-center">
         {myAnnonceFiles && myAnnonceFiles.length > 0 && (
           <img
             src={require("../../public/files/" + myAnnonceFiles[0].name)}
@@ -38,7 +38,7 @@ const AnnonceCarte = ({ annonce, isProfile }) => {
           ))}
       </div>
 
-      <div className="flex flex-col">
+      <div className="flex flex-col mx-2">
         <div className="pt-3 flex justify-between items-start">
           <button
             onClick={() => {

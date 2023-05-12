@@ -10,6 +10,9 @@ import {
   PASSWORD_MIN_LENGTH,
 } from "../constant";
 import { isAvailableEmail, isAvailableUsername } from "../util/APIUtils";
+import { TextField } from "@mui/material";
+import { message } from "antd";
+import { Link } from "react-router-dom";
 const Signup = ({ onSignup }) => {
   const navigate = useNavigate();
   const [prenomError, setPrenomError] = useState("");
@@ -24,6 +27,7 @@ const Signup = ({ onSignup }) => {
     username: "",
     email: "",
     password: "",
+    password2: "",
     roleName: "",
   });
 
@@ -189,6 +193,12 @@ const Signup = ({ onSignup }) => {
     }
   };
 
+  const isMatchPassword = () => {
+    if (user.password !== user.password2) {
+      setPasswordError("Mos de passe différent");
+    }
+  };
+
   const checkUsernameAvailability = async (e) => {
     e.preventDefault();
     const res = await isAvailableUsername(e.target.value);
@@ -211,6 +221,21 @@ const Signup = ({ onSignup }) => {
     navigate("/login");
   };
 
+  const inscription = (e) => {
+    if (
+      emailError ||
+      passwordError ||
+      emailError ||
+      nomError ||
+      prenomError
+    ) {
+      message.error("Formulaire invalide");
+    } else {
+      onSignup(e, user, goToLogin);
+        message.success("Inscription réussie");
+    }
+  }
+
   return (
     <div className="flex flex-col w-auto items-center bg-gray-100">
       <div className="bg-inherit w-auto">
@@ -219,34 +244,27 @@ const Signup = ({ onSignup }) => {
         </h1>
         <div className="flex flex-col p-6 border rounded-md bg-white shadow-md">
           <form
-            onSubmit={(e) => onSignup(e, user, goToLogin)}
             className="flex flex-col  rounded-md bg-white"
           >
-            <div className="flex pb-1">
-              <div className="flex flex-col pr-5">
-                <label className="font-mukta text-lg text-gray-600">Nom</label>
-                <input
-                  className="border font-poppins border-gray-400 px-5 py-3 rounded-md outline-none focus:border-blue-600"
-                  type="text"
-                  name="nom"
-                  id="nom"
-                  value={user.nom}
-                  onChange={(e) => handleChange(e, validateName)}
-                />
-              </div>
-              <div className="flex flex-col">
-                <label className="font-mukta text-lg text-gray-600">
-                  Prénoms
-                </label>
-                <input
-                  className="border font-poppins border-gray-400 px-5 py-3 rounded-md outline-none focus:border-blue-600"
-                  type="text"
-                  name="prenom"
-                  id="prenom"
-                  value={user.prenom}
-                  onChange={(e) => handleChange(e, validatePrenom)}
-                />
-              </div>
+            <div className="flex pb-1 mb-2">
+              <TextField
+                variant="standard"
+                label="Nom"
+                name="nom"
+                id="nom"
+                value={user.nom}
+                onChange={(e) => handleChange(e, validateName)}
+                sx={{ marginRight: "5px" }}
+              />
+              <TextField
+                variant="standard"
+                label="Prénom"
+                name="prenom"
+                id="nom"
+                value={user.prenom}
+                onChange={(e) => handleChange(e, validatePrenom)}
+                sx={{ marginLeft: "5px" }}
+              />
             </div>
 
             {nomError && (
@@ -260,48 +278,56 @@ const Signup = ({ onSignup }) => {
               </p>
             )}
 
-            <label className="font-mukta text-lg text-gray-600">
-              Nom d'utilisateur
-            </label>
-            <input
-              className="border font-poppins border-gray-400 px-5 py-3 rounded-md outline-none focus:border-blue-600 focus:outline-2"
-              type="text"
+            <TextField
+              label="Username"
+              variant="standard"
               name="username"
               id="username"
               value={user.username}
               onBlur={checkUsernameAvailability}
               onChange={(e) => handleChange(e, validateUsername)}
+              sx={{ marginBottom: "10px" }}
             />
             {usernameError && (
               <p className="text-sm font-roboto text-red-600 w-full mb-1 px-2">
                 {usernameError}
               </p>
             )}
-            <label className="font-mukta text-lg text-gray-600">Email</label>
-            <input
-              className="border font-poppins border-gray-400 px-5 py-3 rounded-md mb-3 outline-none focus:border-blue-600"
-              type="email"
+            <TextField
+              variant="standard"
+              label="Email"
               name="email"
               id="email"
               value={user.email}
               onBlur={checkEmailAvailability}
               onChange={(e) => handleChange(e, validateEmail)}
+              sx={{ marginBottom: "10px" }}
             />
+
             {emailError && (
               <p className="text-sm font-roboto text-red-600 w-full mb-2 px-2">
                 {emailError}
               </p>
             )}
-            <label className="font-mukta text-lg text-gray-600">
-              Mot de passe
-            </label>
-            <input
-              className="border font-poppins border-gray-400 px-5 py-3 rounded-md outline-none focus:border-blue-600"
+            <TextField
+              variant="standard"
+              label="Mot de passe"
+              type="password"
+              name="password2"
+              id="password2"
+              value={user.password2}
+              onChange={(e) => handleChange(e, validatePassword)}
+              sx={{ marginBottom: "10px" }}
+            />
+            <TextField
+              variant="standard"
+              label="Confirmer mot de passe"
               type="password"
               name="password"
               id="password"
               value={user.password}
               onChange={(e) => handleChange(e, validatePassword)}
+              onBlur={isMatchPassword}
             />
             {passwordError && (
               <p className="text-sm font-roboto text-red-600 w-full px-2">
@@ -310,16 +336,19 @@ const Signup = ({ onSignup }) => {
             )}
             {/*<p className="mb-3">Critères sur le mot de passe ...</p>*/}
             <button
-              type="submit"
-              className="text-white rounded-md font-bold mt-6 py-2 text-lg border-none hover:bg-blue-600 bg-blue-500"
+            onClick={inscription}
+              className="text-white rounded-md font-bold mt-6 py-2 text-lg border-none hover:bg-orange-600 bg-orange-500 transition-colors ease-in-out cursor-pointer "
             >
               Créer un compte
             </button>
           </form>
-          <p className="text-center pt-5">OR</p>
+          <div className="py-3 text-center">
+            <p className="font-caption">Vous avez déjà un compte? <Link to="/login" className="text-blue-500 no-underline hover:text-blue-600 hover:font-bold font-caption">S'inscrire</Link></p>
+          </div>
+          {/*<p className="text-center pt-5">OR</p>
           <div className="py-5 text-center">
             Sign up sur google et facebook ...
-          </div>
+            </div>*/}
         </div>
       </div>
     </div>

@@ -16,6 +16,9 @@ import EmploiService from "../emploi_servce/EmploiService";
 import Annonces from "../annonce/Annonces";
 import OtherProfile from "../otherProfile/OtherProfile";
 import { message } from "antd";
+import Produit from "../produit/Produit";
+import { ThemeProvider } from "@mui/material";
+import { myTheme } from "../theme";
 
 
 function App() {
@@ -122,7 +125,7 @@ function App() {
   };
 
   return (
-    <>
+    <ThemeProvider theme={myTheme} >
       <Notification
         title={notification.title}
         message={notification.message}
@@ -198,6 +201,7 @@ function App() {
             />
             <Route path="domicile/*" element={<Domicile currentUser={currentUser} />} />
             <Route path="emp_serv/*" element={<EmploiService currentUser={currentUser} />} />
+            <Route path="produit" element={<Produit currentUser={currentUser} />} />
             <Route path="annonce/*" element={<Annonces notify={notify} currentUser={currentUser} />} />
             <Route path="*" element={<NotFound />} />
             <Route
@@ -215,7 +219,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
-    </>
+    </ThemeProvider>
   );
 }
 

@@ -105,20 +105,20 @@ const AnnonceDetail = ({ currentUser }) => {
 
   useEffect(() => {
     console.log(chatUsers);
-    
+
     const loadAnnonceUser = async () => {
       setLoading(true);
-      try{
+      try {
         const res = await getAnnonceUser(annonce.id, currentUser.id);
         setAnnonceUser(res);
-      }catch(error){
+      } catch (error) {
         console.log(error);
       }
-    }
-    if(annonce?.userResponse?.username !== currentUser.username){
+    };
+    if (annonce?.userResponse?.username !== currentUser.username) {
       loadAnnonceUser();
     }
-  }, [chatUsers, annonce, currentUser]); 
+  }, [chatUsers, annonce, currentUser]);
 
   const handleFileChange = (event) => {
     setFileValue(event.target.files[0]);
@@ -204,30 +204,84 @@ const AnnonceDetail = ({ currentUser }) => {
     );
   else
     return (
-      <div className=" bg-gray-100 flex flex-col items-center rounded-t-md shadow-lg overflow-hidden">
-        <div className="bg-white w-135 rounded-t-md overflow-hidden">
+      <div className=" bg-gray-100 flex flex-col items-center overflow-hidden">
+        <div className="bg-white w-w1  overflow-hidden pt-8 shadow-md">
+          <div className="flex flex-col items-center">
+            <Typography className="text-green-500 text-lg font-roboto">
+              {annonce.categorie2Annonce}
+            </Typography>
+            <Typography className="font-poppins text-4xl text-my-blue ">
+              {annonce.titre_annonce}
+            </Typography>
+            <Typography className="font-roboto text-gray-400 my-3">
+              {dayjs(annonce.createdAt).format("DD MMMM YYYY")}{" "}
+              <span className="text-lg font-bold">.</span> par{" "}
+              {annonce.userResponse.prenom + " " + annonce.userResponse.nom}{" "}
+            </Typography>
+          </div>
           {!myAnnonceFiles ||
             (myAnnonceFiles.length <= 0 && (
-              <div className="w-full h-72 bg-gray-500 flex justify-center items-center text-2xl text-white">
+              <div className="w-full h-96 bg-gray-500 flex justify-center items-center text-2xl text-white relative z-0">
                 Photo
-              </div>
-            ))}
-          {myAnnonceFiles && myAnnonceFiles.length > 0 && (
-            <Carousel className="w-full h-72 overflow-hidden bg-gray-300">
-              {myAnnonceFiles?.map((file, index) => (
-                <div key={index} className="flex justify-center items-center">
-                  {file?.name && (
-                    <Image
-                      src={require("../public/files/" + file.name)}
-                      height="auto"
-                      width="100%"
-                      objectfit="cover"
-                      className="mx-auto"
+                <div className="rounded-full shadow-md bg-white absolute -bottom-12 z-40 flex justify-center items-center overflow-hidden">
+                  {!annonce?.userResponse?.photo_profil && (
+                    <Avatar size={128} icon={<UserOutlined />} />
+                  )}
+                  {annonce?.userResponse?.photo_profil && (
+                    <Avatar
+                      size={120}
+                      src={require("../public/files/" +
+                        annonce.userResponse.photo_profil.name)}
+                      className="border-4 border-white shadow-md"
                     />
                   )}
                 </div>
-              ))}
-            </Carousel>
+                <div className="absolute z-40 top-0 right-0 w-fit bg-red-600 rounded-l-xl px-3 py-1">
+                  <Typography className="text-xl font-poppins text-white flex-none ">
+                    {annonce.tarif_depart} DH
+                  </Typography>
+                </div>
+              </div>
+            ))}
+          {myAnnonceFiles && myAnnonceFiles.length > 0 && (
+            <div className="relative z-0 flex justify-center items-center flex-col">
+              <Carousel className="w-full h-96 overflow-hidden bg-gray-300 ">
+                {myAnnonceFiles?.map((file, index) => (
+                  <div
+                    key={index}
+                    className="flex justify-center items-center "
+                  >
+                    {file?.name && (
+                      <Image
+                        src={require("../public/files/" + file.name)}
+                        height="auto"
+                        width="100%"
+                        objectfit="cover"
+                        className="mx-auto"
+                      />
+                    )}
+                  </div>
+                ))}
+              </Carousel>
+              <div className="rounded-full shadow-md bg-white absolute -bottom-12 z-40 flex justify-center items-center overflow-hidden">
+                {!annonce?.userResponse?.photo_profil && (
+                  <Avatar size={120} icon={<UserOutlined />} className="border-4 border-white shadow-md"/>
+                )}
+                {annonce?.userResponse?.photo_profil && (
+                  <Avatar
+                    size={120}
+                    src={require("../public/files/" +
+                      annonce.userResponse.photo_profil.name)}
+                    className="border-4 border-white shadow-md"
+                  />
+                )}
+              </div>
+              <div className="absolute z-40 top-0 right-0 w-fit bg-red-600 rounded-l-xl px-3 py-1">
+                <Typography className="text-xl font-poppins text-white flex-none ">
+                  {annonce.tarif_depart} DH
+                </Typography>
+              </div>
+            </div>
           )}
           {currentUser.username === annonce?.userResponse?.username && (
             <div className="flex py-2 px-1 justify-start">
@@ -257,54 +311,18 @@ const AnnonceDetail = ({ currentUser }) => {
             </div>
           )}
 
-          <div className="p-2">
-            <div className="flex justify-between items-start py-2">
-              <div className="flex flex-col">
-                <Typography className="text-3xl font-caption text-blue-800 flex-auto">
-                  {annonce?.titre_annonce}
-                </Typography>
-
-                <Typography className="text-sm text-gray-600 font-mukta">
-                  {annonce.categorie2Annonce}
-                </Typography>
-              </div>
-
-              <Typography className="text-3xl font-roboto text-blue-600 w-fit flex-none">
-                {annonce.tarif_depart} DH
-              </Typography>
+          <div className={"p-2 "+(currentUser.username !== annonce?.userResponse?.username ? "mt-12":"" )}>
+            <div className="flex justify-center items-center">
+              <span className="text-gray-400 text-lg">Ajouté par &nbsp;</span>
+              <Link
+                className="text-lg text-red-700 hover:text-red-700 hover:underline font-caption "
+                to={"/" + annonce.userResponse.username}
+              >
+                {annonce.userResponse.nom} {annonce.userResponse.prenom}
+              </Link>
             </div>
-            <div className="flex mb-3 justify-between items-start py-3 border border-gray-400 ">
-              <div className="flex items-center">
-                {!annonce?.userResponse?.photo_profil && (
-                  <Avatar icon={<UserOutlined />} className="mr-2 scale-110" />
-                )}
-                {annonce?.userResponse?.photo_profil && (
-                  <Avatar
-                    src={require("../public/files/" +
-                      annonce.userResponse.photo_profil.name)}
-                    className="mr-2 scale-110"
-                  />
-                )}
-                <div className="flex flex-col">
-                  <Link
-                    className="text-lg text-gray-700 hover:text-gray-700 hover:underline font-caption "
-                    to={"/" + annonce.userResponse.username}
-                  >
-                    {annonce.userResponse.nom} {annonce.userResponse.prenom}
-                  </Link>
-                  {annonce?.userResponse?.email && (
-                    <Typography className="text-sm text-gray-500">
-                      {annonce.userResponse.email}
-                    </Typography>
-                  )}
-                </div>
-              </div>
-              <Typography className="text-2xl font-poppins text-green-500">
-                {annonce.userResponse.num_tel}
-              </Typography>
-            </div>
-            <div className="text-xl">
-              <Typography className="font-roboto text-gray-800 text-lg">
+            <div className="mt-8">
+              <Typography className="font-poppins px-3 text-gray-700 text-lg">
                 {annonce.description}
               </Typography>
               <div className="flex justify-between py-3">
@@ -427,9 +445,7 @@ const AnnonceDetail = ({ currentUser }) => {
                 {chatUsers?.map((user, index) => (
                   <>
                     {user.username !== currentUser.username && (
-                      
-                        <AnnonceUser idannonce={id} username={user.username} />
-                      
+                      <AnnonceUser idannonce={id} username={user.username} />
                     )}
                   </>
                 ))}

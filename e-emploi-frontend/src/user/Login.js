@@ -52,18 +52,18 @@ const Login = ({ onLogin }) => {
             </div>
             <button
               type="submit"
-              className="text-white text-lg rounded-md font-bold py-2 hover:bg-blue-600 bg-blue-500 border-none transition-colors duration-300 ease-in-out cursor-pointer"
+              className="text-white text-lg rounded-md font-bold py-2 hover:bg-orange-600 bg-orange-500 border-none transition-colors duration-300 ease-in-out cursor-pointer"
             >
               Se connecter
             </button>
           </form>
-          <div className="py-5 text-center">
+          <div className="py-2 text-center">
             <p>Vous n'avez pas de compte? <Link to="/signup" className="text-blue-500 no-underline hover:text-blue-600 hover:font-bold">S'inscrire</Link></p>
           </div>
-          <p className=" pb-5 text-center">OR</p>
+          {/*<p className=" pb-5 text-center">OR</p>
           <div className="pb-5 text-center">
             Se connecter avec google / facebook ...
-          </div>
+  </div>*/}
 
         </div>
       </div>

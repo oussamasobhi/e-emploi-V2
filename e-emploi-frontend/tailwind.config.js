@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        poppins: ["Poppins", "sans-serif"],
+        poppins: ['Poppins', "sans-serif"],
         roboto: ["Roboto", "sans-serif"],
         caption : ['PT Sans Caption', 'sans-serif'],
         mukta : ['Mukta', "sans-serif"],
@@ -21,6 +21,7 @@ module.exports = {
         121: "30rem",
         128: "32rem",
         135: "34rem",
+        w1: "46rem",
         mw: "52rem"
       },
       maxWidth:{
@@ -29,6 +30,9 @@ module.exports = {
       backgroundImage: {
         "hero-bg": "url('public/image/hero-bg.jpg')",
       },
+      colors:{
+        'my-blue': '#063970'
+      }
     },
   },
   plugins: [],

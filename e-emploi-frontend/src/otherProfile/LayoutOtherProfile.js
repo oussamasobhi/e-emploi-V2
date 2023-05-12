@@ -199,7 +199,7 @@ const LayoutOtherProfile = ({ setUser, setCurrentUser, currentUser, user }) => {
                               size={128}
                               src={imagePath}
                               onClick={handleAvatar}
-                              className="hover:cursor-pointer"
+                              className="hover:cursor-pointer border-4 border-white shadow-md"
                             />
                           )}
                         </>

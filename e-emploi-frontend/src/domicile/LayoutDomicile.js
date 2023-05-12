@@ -1,20 +1,16 @@
-import { Breadcrumb, Menu } from "antd";
-import React from "react";
+import { Breadcrumb } from "antd";
+import React, {useState} from "react";
 import { Outlet } from "react-router";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router";
+import { Button, Tab, Tabs } from "@mui/material";
 
+const MENU = [
+  {label:"Nettoyages", url:"/domicile/nettoyage"},
+  {label:"Artisans", url:"/domicile/artisan"}
+]
 const LayoutDomicile = () => {
-  const sideMenuItems = [
-    {
-      key: "nettoyage",
-      label: <Link to="/domicile/nettoyage">Services Nettoyages</Link>,
-    },
-    {
-      key: "artisan",
-      label: <Link to="/domicile/artisan">Services Artisans</Link>,
-    },
-  ];
+  const [value, setValue] = useState();
   //Breadcrumbs
   const itemsNameMap = {
     "/domicile": "Domicile",
@@ -35,21 +31,27 @@ const LayoutDomicile = () => {
     },
   ].concat(extraBreadcrumbItems);
   return (
-    <div className="flex py-6">
-      <div className="w-56 px-3">
-        <Menu
-          mode="inline"
-          defaultSelectedKeys="nettoyage"
-          items={sideMenuItems}
-          style={{
-            height: "100%",
-            borderRight: 0,
-          }}
-        />
-      </div>
-
-      <div className="flex-auto pl-10">
+    <div className="flex bg-gray-100 ">
+        <div className="flex-auto px-5">
+        <div className="flex items-center border-b border-b-gray-400">
         <Breadcrumb items={breadcrumbItems} />
+        <Tabs
+                sx={{ marginLeft: "auto" }}
+                textColor="inherit"
+                value={value}
+                onChange={(e, value) => setValue(value)}
+                indicatorColor="#f3580c"
+              >
+                {MENU.map((menu, index) => (
+                  <Tab
+                    key={index}
+                    label={menu.label}
+                    LinkComponent={Link}
+                    to={menu.url}
+                />
+                ))}
+              </Tabs>
+        </div>
 
         <Outlet />
       </div>

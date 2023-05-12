@@ -1,7 +1,7 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 
-import { Button, Typography } from "antd";
+import { Typography } from "antd";
 
 const Hero = () => {
   return (
@@ -12,22 +12,22 @@ const Hero = () => {
             <Typography className="font-archivo text-5xl lg:text-7xl text-center">
               Décrivez-nous votre besoin
             </Typography>
-            <Typography className="font-archivo text-5xl lg:text-7xl text-center flex justify-center bg-gradient-to-r text-transparent bg-clip-text from-blue-600 to-blue-300">
+            <Typography className="font-archivo text-5xl lg:text-7xl text-center flex justify-center bg-gradient-to-r text-transparent bg-clip-text from-orange-700 to-orange-400">
               Pour réaliser votre projet
             </Typography>
           </div>
-          <p className="text-center px-14 text-gray-600 text-xl font-roboto">La plateforme propose une gestion des compétences, les produits destinés à servir d'autre personne contre une paye.</p>
-          <div className="flex justify-center pt-12">
-            <Link to={"/annonce"}>
-              <button className="cursor-pointer bg-blue-500 hover:bg-blue-600 border-none rounded-md mr-5 text-white no-underline text-lg py-3 px-2 font-semibold transition-colors duration-300 ease-in-out">
-                Voir toutes les annonces
-              </button>
-            </Link>
-            <Link>
-              <button className="cursor-pointer bg-black hover:bg-gray-800 border-none rounded-md text-white no-underline text-lg py-3 px-2 font-semibold transition-colors duration-300 ease-in-out">
-                Trouvez votre artisan
-              </button>
-            </Link>{" "}
+          <p className="text-center px-14 text-gray-600 text-xl font-roboto">
+            La plateforme propose une gestion des compétences, les produits
+            destinés à servir d'autre personne contre une paie.
+          </p>
+          <div className="grid grid-cols-2 pt-12">
+            <button className="cursor-pointer bg-orange-600 hover:bg-orange-700 border-none rounded-lg mr-5 text-lg py-4 px-2 font-semibold justify-self-end transition-colors duration-300 ease-in-out w-52 ">
+              <Link to={"/annonce"} className="text-white no-underline" >Voir les annonces</Link>
+            </button>
+
+            <button className="cursor-pointer bg-blue-800 hover:bg-blue-900 border-none rounded-lg text-lg py-4 px-2 font-semibold transition-colors duration-300 ease-in-out w-52">
+              <Link className="text-white no-underline" >Contacter</Link>
+            </button>
           </div>
         </div>
       </div>

@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import { Modal, Button, Form, Input, message } from 'antd';
 import { getCurrentUser, addAddress} from '../../util/APIUtils';
+import { pays } from '../../constant/pays';
+import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 
 const NewAddress = ({open, closeModal, setCurrentUser, notify}) => {
     const [address, setAddress] = useState({
@@ -9,9 +11,9 @@ const NewAddress = ({open, closeModal, setCurrentUser, notify}) => {
         lib_addre: "",
       });
 
-      const handleChange = (changedValue, allValues) => {
-        const key = Object.keys(changedValue)[0];
-        setAddress({ ...address, [key]: changedValue[key] });
+      const handleChange = (event) => {
+        const value =event.target.value;
+        setAddress({ ...address, [event.target.name]: value });
       };
 
       const reset = (e) => {
@@ -55,43 +57,28 @@ const NewAddress = ({open, closeModal, setCurrentUser, notify}) => {
           <Button onClick={reset}>Fermer</Button>,
         ]}
       >
-        <Form onValuesChange={handleChange}>
-          <div className="mt-2">
-            <Form.Item
-              label="Rue"
-              name="lib_addre"
-              rules={[
-                {
-                  required: false,
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              label="Ville"
-              name="ville"
-              rules={[
-                {
-                  required: false,
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              label="Pays"
-              name="pays"
-              rules={[
-                {
-                  required: false,
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          </div>
-        </Form>
+        <div className='grid grid-cols-2'>
+        <FormControl variant="standard" sx={{ marginRight:"5px", minWidth: 120 }}>
+              <InputLabel>Pays</InputLabel>
+              <Select
+                value={address.pays}
+                defaultValue=""
+                onChange={handleChange}
+                label="Pays"
+                name="pays"
+              >
+                {pays?.map((pays, index) => (
+                  <MenuItem key={index} value={pays}>
+                    {pays}
+                  </MenuItem>
+                ))}
+              </Select>
+        </FormControl>
+        <TextField variant='standard' fullWidth label="Ville" value={address.ville} name='ville' onChange={handleChange} sx={{marginBottom:"10px", marginLeft:"5px"}} />
+        </div>
+        <TextField variant='standard' fullWidth label="Rue" value={address.lib_addre} name='lib_addre' onChange={handleChange} sx={{marginBottom:"10px"}} />
+
+        
       </Modal>
   )
 }

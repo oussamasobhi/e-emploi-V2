@@ -16,6 +16,7 @@ import DrawerComp from "./DrawerComp";
 import { Link, useNavigate } from "react-router-dom";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
+
 const PAGES = [
   {
     label: "Domicile",
@@ -27,7 +28,7 @@ const PAGES = [
   },
   {
     label: "Produits",
-    url: "#",
+    url: "/produit",
   },
   {
     label: "FAQ",
@@ -70,7 +71,7 @@ const Header = ({ logout, currentUser  }) => {
                 E-EMPLOI
               </Typography>
               {localStorage.getItem("token") !== "" && (
-                <Button variant="contained" sx={{ marginLeft: "auto" }}>
+                <Button variant="contained" sx={{ marginLeft: "auto", backgroundColor:"#F3580C", ":hover":{backgroundColor:"#C2410C"}}}  >
                   <Link
                     to="/annonce/create"
                     className="no-underline text-white"
@@ -84,7 +85,7 @@ const Header = ({ logout, currentUser  }) => {
           ) : (
             <>
               {localStorage.getItem("token") !== "" && (
-                <Button variant="contained" sx={{ marginLeft: "auto" }}>
+                <Button variant="contained" sx={{ marginLeft: "auto", backgroundColor:"#f3580c", ":hover":{backgroundColor:"#C2410C"} }} >
                   <Link
                     to="/annonce/create"
                     className="no-underline text-white"
@@ -111,10 +112,9 @@ const Header = ({ logout, currentUser  }) => {
               </Tabs>
 
               {localStorage.getItem("token") === "" ? (
-                <Button variant="contained" sx={{ marginLeft: "auto" }}>
-                  <Link to={"/login"} className="no-underline text-white">
-                    Connexion
-                  </Link>
+                <Button onClick={()=>goToLogin()} variant="text"   sx={{ marginLeft: "auto", color: "inherit" }} className="flex justify-between">
+                    <AccountCircleIcon/>
+                    <Typography sx={{marginLeft:"6px"}} className="capitalize">Connexion</Typography>
                 </Button>
               ) : (
                 <>

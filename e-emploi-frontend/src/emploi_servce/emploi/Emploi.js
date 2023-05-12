@@ -1,36 +1,24 @@
-import React, {useEffect, useState} from "react";
-import {Typography, Table, Input, Button, InputNumber, Form, } from "antd";
+import React from "react";
+import { useEffect } from "react";
+import { useState } from "react";
 import { getListAnnonces } from "../../util/APIUtils";
-import { Link, useParams } from "react-router-dom";
-import { useForm } from "antd/es/form/Form";
-import {DeleteOutlined, EditOutlined, SearchOutlined} from "@ant-design/icons";
+import { Typography } from "antd";
+import {  SearchOutlined} from "@ant-design/icons";
+import AnnonceCarte from "../../otherProfile/annonces/AnnonceCarte";
 
-const Emploi = ({currentUser}) => {
+const Emploi = ({ currentUser }) => {
   const [annonces, setAnnonces] = useState(null);
   const [filteredAnnonces, setFilteredAnnonces] = useState(null);
-  const { username } = useParams();
-  const [isProfile, setIsProfile] = useState(false);
-  useEffect(() => {
-    if (username) {
-      setIsProfile(true);
-    }
-  }, [username]);
-
   useEffect(() => {
     if (annonces) {
-      if (!isProfile) {
-        let annoncesToShow = annonces.filter(function (annonce) {
-          return annonce.userResponse.username !== currentUser.username;
-        });
-        setFilteredAnnonces(annoncesToShow);
-      }else{
-        let annoncesToShow = annonces.filter(function (annonce) {
-          return annonce.userResponse.username === username;
-        });
-        setFilteredAnnonces(annoncesToShow);
-      }
+        setFilteredAnnonces(annonces);
     }
-  }, [annonces, currentUser.username, username, isProfile]);
+  }, [annonces]);
+  useEffect(() => {
+    console.log(filteredAnnonces)
+  }, [filteredAnnonces])
+  
+
   useEffect(() => {
     const loadAnnonces = async () => {
       const res = (await getListAnnonces(3)).content;
@@ -39,108 +27,88 @@ const Emploi = ({currentUser}) => {
     loadAnnonces();
   }, []);
 
-  const emploiColumns = [
-    {
-      title: "Titre",
-      dataIndex: "titre_annonce",
-      key: "titre",
-    },
-    {
-      title: "Description",
-      dataIndex: "description",
-      key: "description",
-    },
-    {
-      title: "Utilisateur",
-      dataIndex: "userResponse",
-      key: "utilisateur",
-      render: ((_,record) => (
-        <>
-        <Link to={"/"+record.userResponse.username} > {record.userResponse.prenom} {record.userResponse.nom}</Link>
-        </>
-      ))
-    },
-    {
-      title: "Tarif",
-      dataIndex: "tarif_depart",
-      key: "tarif_depart",
-    },
-    {
-      title: "Action",
-      key: "action",
-      render: () => (
-        <>
-          {!isProfile && <Button type="primary">Postuler</Button>}
-          {(isProfile && currentUser.username !== username ) && <Button type="primary">Postuler</Button>}
-          {(isProfile && currentUser.username === username ) && (
-            <>
-             <Button ><EditOutlined/> </Button>
-              <Button danger className="ml-3" ><DeleteOutlined/> </Button>
-            </>
-          )}
-        </>
-      ),
-    },
-  ];
 
-  //recherche
-  const [form] = useForm();
   const [recherche, setRecherche] = useState({
     search: "",
     min: undefined,
     max: undefined,
   });
-  const handleChange = (changedValue, allValues) => {
-    const key = Object.keys(changedValue)[0];
-    setRecherche({ ...recherche, [key]: changedValue[key] });
+  const handleChange = (event) => {
+    const value = event.target.value;
+    setRecherche({ ...recherche, [event.target.name]: value });
   };
   const onSearch = async () => {
-    console.log(recherche);
+    console.log(recherche)
     try {
-      const _search = (
-        await getListAnnonces(
-          3,
-          undefined,
-          undefined,
-          recherche.search,
-          recherche.min,
-          recherche.max
-        )
-      ).content;
-      setAnnonces(_search);
-    } catch (error) {
+        const res = (
+          await getListAnnonces(
+            3,
+            undefined,
+            undefined,
+            recherche.search,
+            recherche.min,
+            recherche.max
+          )
+        ).content;
+        setAnnonces(res);
+      }
+     catch (error) {
       console.log(error);
     }
   };
-  
-
   return (
     <>
-      <Typography.Title level={3}>Emplois</Typography.Title>
-      <Form form={form} onValuesChange={handleChange} className="flex mb-10">
-          <Form.Item name="search">
-            <Input placeholder="mots clés" />
-          </Form.Item>
-          <Form.Item label="Tarif min" name="min" className="ml-3">
-            <InputNumber />
-          </Form.Item>
-          <Form.Item label="Tarif max" name="max" className="ml-3">
-            <InputNumber />
-          </Form.Item>
-          <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              className="ml-6"
-              onClick={onSearch}
-            >
-              <SearchOutlined />
-            </Button>
-          </Form.Item>
-        </Form>
-      <Table dataSource={filteredAnnonces} columns={emploiColumns} />
+      <div className="flex justify-center items-center mb-6">
+        <div className="flex justify-center w-fit ring-1 ring-gray-300 rounded-xl overflow-hidden">
+          <input
+            onChange={handleChange}
+            type="text"
+            name="search"
+            placeholder="mots clés"
+            className={"border-0 h-10 outline-none px-4 w-36 md:w-auto"}
+          />
+          <input
+            onChange={handleChange}
+            type="number"
+            id="tarif_min"
+            name="min"
+            min="0"
+            max="5000"
+            className="appearance-none border-0 pl-3 h-10 focus:outline-none"
+            placeholder="Tarif min"
+          />
+          <input
+            onChange={handleChange}
+            type="number"
+            id="tarif_max"
+            name="max"
+            min="0"
+            max="5000"
+            className="appearance-none border-0 pl-3 h-10 focus:outline-none"
+            placeholder="Tarif max"
+          />
+          <button
+            onChange={handleChange}
+            onClick={onSearch}
+            className="border-0 transition-colors ease-in-out h-10 cursor-pointer rounded-r flex justify-between items-center font-caption bg-blue-500 hover:bg-blue-600 text-white"
+          >
+            <SearchOutlined className="mr-1" />
+            <Typography className={"text-white font-roboto hidden md:block"}>
+              Rechercher
+            </Typography>
+          </button>
+        </div>
+      </div>
+      {/*<Typography.Title level={3}>Domicile</Typography.Title>*/}
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 grid-cols-1 gap-6 px-10">
+        {filteredAnnonces?.map((annonce, index) => (
+          <AnnonceCarte isProfile={false} key={index} annonce={annonce} />
+        ))}
+      </div>
     </>
   );
 };
+
+
 
 export default Emploi;
