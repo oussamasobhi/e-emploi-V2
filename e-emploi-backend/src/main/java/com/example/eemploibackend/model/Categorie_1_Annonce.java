@@ -7,21 +7,22 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Builder
-@Table(name = "adresse_societe")
-public class Adresse_societe {
+@Table(name = "categorie_1_annonce")
+public class Categorie_1_Annonce {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Long id;
-    private String pays;
-    private String ville;
-    private String libelle_adr;
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_societe", nullable = false)
+    private Long id;
+    private String nom_sous_categorie;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_categorie", nullable = false)
     @JsonIgnore
-    private Societe societe;
+    private CategorieAnnonce categorieAnnonce;
+
 }

@@ -3,8 +3,6 @@ package com.example.eemploibackend.services;
 import com.example.eemploibackend.exceptions.AppException;
 import com.example.eemploibackend.model.*;
 import com.example.eemploibackend.payloads.*;
-import com.example.eemploibackend.exceptions.ResourceNotFoundException;
-import com.example.eemploibackend.repository.AdresseRepository;
 import com.example.eemploibackend.repository.FileDBRepository;
 import com.example.eemploibackend.repository.RoleRepository;
 import com.example.eemploibackend.repository.UserRepository;
@@ -24,7 +22,6 @@ import java.util.*;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final AdresseRepository adresseRepository;
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
     private  final FileDBRepository fileDBRepository;
@@ -73,13 +70,11 @@ public class UserService {
     }
     public UserSummary mapusertoSummary(User user){
         UserSummary userSummary=new UserSummary();
-        List<Adresse> adresseList=userRepository.findaddressesbyuserid(user.getId());
         userSummary.setId((user.getId()));
-        userSummary.setAdresses(adresseList);
+
         userSummary.setNom(user.getNom());
         userSummary.setEmail(user.getEmail());
         userSummary.setCIN(user.getCIN());
-        userSummary.setSociete(user.getSociete());
         userSummary.setUsername(user.getUsername());
         userSummary.setPrenom(user.getPrenom());
         userSummary.setNum_tel(user.getNum_tel());

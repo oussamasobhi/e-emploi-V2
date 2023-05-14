@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -18,10 +20,10 @@ public class Categorie_2_Annonce {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nom_sous_categorie;
-    private double tarif_moy_categorie;
-    private double duree_moy_realisation;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_categorie", nullable = false)
+    @JoinColumn(name = "id_categorie_1", nullable = false)
     @JsonIgnore
-    private CategorieAnnonce categorieAnnonce;
+    private Categorie_1_Annonce categorie_1_Annonce;
+    @ManyToMany(mappedBy = "competences")
+    List<User> users;
 }

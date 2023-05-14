@@ -27,25 +27,9 @@ public class FileDB {
 
     private String type;
     private String filepath;
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumns({
-            @JoinColumn(
-                    name = "user_id",
-                    referencedColumnName = "user_id"),
-            @JoinColumn(
-                    name = "annonce_id",
-                    referencedColumnName = "annonce_id")
-    })
-    @JsonIgnore
-    private AnnonceUser annonce_user;
-
     @ManyToOne(fetch = FetchType.LAZY,optional = true)
     @JoinColumn(name ="id_annonce_post", nullable = true)
     @JsonIgnore
     private Annonce annonce;
 
-    @ManyToOne(fetch = FetchType.EAGER,optional = true)
-    @JoinColumn(name = "idcompetence",nullable = true)
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    private Competence competence;
 }

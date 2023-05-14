@@ -2,6 +2,7 @@ package com.example.eemploibackend;
 
 import com.example.eemploibackend.model.*;
 import com.example.eemploibackend.repository.*;
+import jdk.jfr.Category;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -14,22 +15,19 @@ import org.springframework.stereotype.Component;
 @Order(1)
 public class DatabaseInitializer implements ApplicationRunner {
     private final RoleRepository roleRepository;
-    private final AdresseRepository adresseRepository;
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
     private final Categorie_2_Annonce_Repository categorie2AnnonceRepository;
-
+    private final Categorie_1_AnnonceRepository categorie1AnnonceRepository;
     private final BCryptPasswordEncoder encoder;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
         Role roleadmin= Role.builder().name(RoleName.ROLE_ADMIN).build();
         Role rolestandard=Role.builder().name(RoleName.ROLE_STANDARD).build();
-        Role rolecondidat=Role.builder().name(RoleName.ROLE_CONDIDAT).build();
         Role rolepro=Role.builder().name(RoleName.ROLE_Pro).build();
            roleRepository.save(roleadmin);
            roleRepository.save(rolestandard);
-           roleRepository.save(rolecondidat);
            roleRepository.save(rolepro);
         User admin=new User();
                 admin.setNom("sobhi");
@@ -39,50 +37,301 @@ public class DatabaseInitializer implements ApplicationRunner {
                 admin.setPassword(encoder.encode("admin"));
         admin.setRole(roleadmin);
         userRepository.save(admin);
-        // categorie 1 : DOMICILE
-        CategorieAnnonce domicile= CategorieAnnonce.builder()
-                .nom_categorie("Domicile")
-                .build();
-        categoryRepository.save(domicile);
-        Categorie_2_Annonce servicenettoyage= Categorie_2_Annonce.builder()
-                .categorieAnnonce(domicile)
-                .nom_sous_categorie("Service nettoyage")
-                .duree_moy_realisation(4)
-                .tarif_moy_categorie(300)
-                .build();
-        categorie2AnnonceRepository.save(servicenettoyage);
-        Categorie_2_Annonce serviceartisans= Categorie_2_Annonce.builder()
-                .categorieAnnonce(domicile)
-                .nom_sous_categorie("Service artisans")
-                .duree_moy_realisation(3)
-                .tarif_moy_categorie(200)
-                .build();
-        categorie2AnnonceRepository.save(serviceartisans);
-        //categorie: Emplois et services
-        CategorieAnnonce emplois_comp= CategorieAnnonce.builder()
-                .nom_categorie("Emplois et services")
-                .build();
-        categoryRepository.save(emplois_comp);
-        Categorie_2_Annonce offresemploi= Categorie_2_Annonce.builder()
-                .categorieAnnonce(emplois_comp)
-                .nom_sous_categorie("offres emplois")
-                .build();
-        categorie2AnnonceRepository.save(offresemploi);
-        Categorie_2_Annonce services= Categorie_2_Annonce.builder()
-                .categorieAnnonce(emplois_comp)
-                .nom_sous_categorie("services")
-                .build();
-        categorie2AnnonceRepository.save(services);
-        //categorie 3 : PRODUITS
-        CategorieAnnonce produit= CategorieAnnonce.builder()
-                .nom_categorie("produits")
-                .build();
-        categoryRepository.save(produit);
 
-        Categorie_2_Annonce produits= Categorie_2_Annonce.builder()
-                .categorieAnnonce(produit)
-                .nom_sous_categorie("produits")
+        CategorieAnnonce cat1= CategorieAnnonce.builder()
+                .nom_categorie("Bricolage")
                 .build();
-        categorie2AnnonceRepository.save(produits);
+        categoryRepository.save(cat1);
+        CategorieAnnonce cat2= CategorieAnnonce.builder()
+                .nom_categorie("Animaux")
+                .build();
+        categoryRepository.save(cat2);
+        CategorieAnnonce cat3= CategorieAnnonce.builder()
+                .nom_categorie("Jardinage")
+                .build();
+        categoryRepository.save(cat3);
+        CategorieAnnonce cat4= CategorieAnnonce.builder()
+                .nom_categorie("Informatique")
+                .build();
+        categoryRepository.save(cat4);
+        CategorieAnnonce cat5= CategorieAnnonce.builder()
+                .nom_categorie("Déménagement")
+                .build();
+        categoryRepository.save(cat5);
+        CategorieAnnonce cat6= CategorieAnnonce.builder()
+                .nom_categorie("Aide à domicile")
+                .build();
+        categoryRepository.save(cat6);
+        CategorieAnnonce cat7= CategorieAnnonce.builder()
+                .nom_categorie("Ménage")
+                .build();
+        categoryRepository.save(cat7);
+        // SOUS categorie 1
+        Categorie_1_Annonce souscat1= Categorie_1_Annonce.builder()
+                .categorieAnnonce(cat1)
+                .nom_sous_categorie("Ameublement")
+                .build();
+        categorie1AnnonceRepository.save(souscat1);
+        Categorie_1_Annonce souscat2= Categorie_1_Annonce.builder()
+                .categorieAnnonce(cat1)
+                .nom_sous_categorie("Pose et fixation")
+                .build();
+        categorie1AnnonceRepository.save(souscat2);
+        Categorie_1_Annonce souscat3= Categorie_1_Annonce.builder()
+                .categorieAnnonce(cat1)
+                .nom_sous_categorie("Plomberie")
+                .build();
+        categorie1AnnonceRepository.save(souscat3);
+        Categorie_1_Annonce souscat4= Categorie_1_Annonce.builder()
+                .categorieAnnonce(cat1)
+                .nom_sous_categorie("Electricité")
+                .build();
+        categorie1AnnonceRepository.save(souscat4);
+        // Animaux
+        Categorie_1_Annonce sous2cat1= Categorie_1_Annonce.builder()
+                .categorieAnnonce(cat2)
+                .nom_sous_categorie("Garde de chien")
+                .build();
+        categorie1AnnonceRepository.save(sous2cat1);
+        Categorie_1_Annonce sous2cat2= Categorie_1_Annonce.builder()
+                .categorieAnnonce(cat2)
+                .nom_sous_categorie("Garde de chat")
+                .build();
+        categorie1AnnonceRepository.save(sous2cat2);
+        Categorie_1_Annonce sous2cat3= Categorie_1_Annonce.builder()
+                .categorieAnnonce(cat2)
+                .nom_sous_categorie("Faire promener son chien")
+                .build();
+        categorie1AnnonceRepository.save(sous2cat3);
+        // jardinage
+        Categorie_1_Annonce sous3cat1= Categorie_1_Annonce.builder()
+                .categorieAnnonce(cat3)
+                .nom_sous_categorie("Tendre la pelouse")
+                .build();
+        categorie1AnnonceRepository.save(sous3cat1);
+        Categorie_1_Annonce sous3cat2= Categorie_1_Annonce.builder()
+                .categorieAnnonce(cat3)
+                .nom_sous_categorie("Taille de haie")
+                .build();
+        categorie1AnnonceRepository.save(sous3cat2);
+        Categorie_1_Annonce sous3cat3= Categorie_1_Annonce.builder()
+                .categorieAnnonce(cat3)
+                .nom_sous_categorie("Désherbage")
+                .build();
+        categorie1AnnonceRepository.save(sous3cat3);
+        Categorie_1_Annonce sous3cat4= Categorie_1_Annonce.builder()
+                .categorieAnnonce(cat3)
+                .nom_sous_categorie("Entretien de gazon")
+                .build();
+        categorie1AnnonceRepository.save(sous3cat4);
+        Categorie_1_Annonce sous3cat5= Categorie_1_Annonce.builder()
+                .categorieAnnonce(cat3)
+                .nom_sous_categorie("Nettoyage de terrasse")
+                .build();
+        categorie1AnnonceRepository.save(sous3cat5);
+        // informatique
+        Categorie_1_Annonce sous4cat1= Categorie_1_Annonce.builder()
+                .categorieAnnonce(cat4)
+                .nom_sous_categorie("Nettoyer mon ordinateur")
+                .build();
+        categorie1AnnonceRepository.save(sous4cat1);
+        Categorie_1_Annonce sous4cat2= Categorie_1_Annonce.builder()
+                .categorieAnnonce(cat4)
+                .nom_sous_categorie("Cours informatique")
+                .build();
+        categorie1AnnonceRepository.save(sous4cat2);
+        Categorie_1_Annonce sous4cat3= Categorie_1_Annonce.builder()
+                .categorieAnnonce(cat4)
+                .nom_sous_categorie("installer une box WIFI")
+                .build();
+        categorie1AnnonceRepository.save(sous4cat3);
+        // demenagement
+        Categorie_1_Annonce sous5cat1= Categorie_1_Annonce.builder()
+                .categorieAnnonce(cat5)
+                .nom_sous_categorie("Déménagement tout compris")
+                .build();
+        categorie1AnnonceRepository.save(sous5cat1);
+        Categorie_1_Annonce sous5cat2= Categorie_1_Annonce.builder()
+                .categorieAnnonce(cat5)
+                .nom_sous_categorie("Louer un camion avec chauffeur")
+                .build();
+        categorie1AnnonceRepository.save(sous5cat2);
+        Categorie_1_Annonce sous5cat3= Categorie_1_Annonce.builder()
+                .categorieAnnonce(cat5)
+                .nom_sous_categorie("Déplacer un meuble")
+                .build();
+        categorie1AnnonceRepository.save(sous5cat3);
+        Categorie_1_Annonce sous5cat4= Categorie_1_Annonce.builder()
+                .categorieAnnonce(cat5)
+                .nom_sous_categorie("Débarasser des encombrants")
+                .build();
+        categorie1AnnonceRepository.save(sous5cat4);
+        // Aide a domicile
+        Categorie_1_Annonce sous6cat1= Categorie_1_Annonce.builder()
+                .categorieAnnonce(cat6)
+                .nom_sous_categorie("maintien à domicile")
+                .build();
+        categorie1AnnonceRepository.save(sous6cat1);
+        Categorie_1_Annonce sous6cat2= Categorie_1_Annonce.builder()
+                .categorieAnnonce(cat6)
+                .nom_sous_categorie("Livraison de médicaments")
+                .build();
+        categorie1AnnonceRepository.save(sous6cat2);
+        Categorie_1_Annonce sous6cat3= Categorie_1_Annonce.builder()
+                .categorieAnnonce(cat6)
+                .nom_sous_categorie("Livrer des courses")
+                .build();
+        categorie1AnnonceRepository.save(sous6cat3);
+        Categorie_1_Annonce sous6cat4= Categorie_1_Annonce.builder()
+                .categorieAnnonce(cat6)
+                .nom_sous_categorie("Accompagnement en course")
+                .build();
+        categorie1AnnonceRepository.save(sous6cat4);
+     // menage
+        Categorie_1_Annonce sous7cat1= Categorie_1_Annonce.builder()
+                .categorieAnnonce(cat7)
+                .nom_sous_categorie("Ménage à domicile")
+                .build();
+        categorie1AnnonceRepository.save(sous7cat1);
+        Categorie_1_Annonce sous7cat2= Categorie_1_Annonce.builder()
+                .categorieAnnonce(cat7)
+                .nom_sous_categorie("Repassage")
+                .build();
+        categorie1AnnonceRepository.save(sous7cat2);
+        Categorie_1_Annonce sous7cat3= Categorie_1_Annonce.builder()
+                .categorieAnnonce(cat7)
+                .nom_sous_categorie("Lavage automobile")
+                .build();
+        categorie1AnnonceRepository.save(sous7cat3);
+        Categorie_1_Annonce sous7cat4= Categorie_1_Annonce.builder()
+                .categorieAnnonce(cat7)
+                .nom_sous_categorie("Nettoyage des vitres")
+                .build();
+        categorie1AnnonceRepository.save(sous7cat4);
+        // SOUS 2
+        Categorie_2_Annonce sous1sous1cat1= Categorie_2_Annonce.builder()
+                .categorie_1_Annonce(souscat1)
+                .nom_sous_categorie("Montage de meubles IKEA")
+                .build();
+        categorie2AnnonceRepository.save(sous1sous1cat1);
+        Categorie_2_Annonce sous1sous1cat2= Categorie_2_Annonce.builder()
+                .categorie_1_Annonce(souscat1)
+                .nom_sous_categorie("Montage de lit")
+                .build();
+        categorie2AnnonceRepository.save(sous1sous1cat2);
+        Categorie_2_Annonce sous1sous1cat3= Categorie_2_Annonce.builder()
+                .categorie_1_Annonce(souscat1)
+                .nom_sous_categorie("Montage de meubles de cuisine")
+                .build();
+        categorie2AnnonceRepository.save(sous1sous1cat3);
+        Categorie_2_Annonce sous1sous1cat4= Categorie_2_Annonce.builder()
+                .categorie_1_Annonce(souscat1)
+                .nom_sous_categorie("Montage de meubles de salle bain")
+                .build();
+        categorie2AnnonceRepository.save(sous1sous1cat4);
+        Categorie_2_Annonce sous1sous1cat5= Categorie_2_Annonce.builder()
+                .categorie_1_Annonce(souscat1)
+                .nom_sous_categorie("Réparation de meubles")
+                .build();
+        categorie2AnnonceRepository.save(sous1sous1cat5);
+        // Pose et fixation
+        Categorie_2_Annonce sous1sous2cat1= Categorie_2_Annonce.builder()
+                .categorie_1_Annonce(souscat2)
+                .nom_sous_categorie("Pose de tringles à rideaux")
+                .build();
+        categorie2AnnonceRepository.save(sous1sous2cat1);
+        Categorie_2_Annonce sous1sous2cat2= Categorie_2_Annonce.builder()
+                .categorie_1_Annonce(souscat2)
+                .nom_sous_categorie("Fixation d'étagéres")
+                .build();
+        categorie2AnnonceRepository.save(sous1sous2cat2);
+        Categorie_2_Annonce sous1sous2cat3= Categorie_2_Annonce.builder()
+                .categorie_1_Annonce(souscat2)
+                .nom_sous_categorie("Accrocher une TV au mur")
+                .build();
+        categorie2AnnonceRepository.save(sous1sous2cat3);
+        Categorie_2_Annonce sous1sous2cat4= Categorie_2_Annonce.builder()
+                .categorie_1_Annonce(souscat2)
+                .nom_sous_categorie("Pose de paroi de douche")
+                .build();
+        categorie2AnnonceRepository.save(sous1sous2cat4);
+        Categorie_2_Annonce sous1sous2cat5= Categorie_2_Annonce.builder()
+                .categorie_1_Annonce(souscat2)
+                .nom_sous_categorie("Pose de hotte aspirante")
+                .build();
+        categorie2AnnonceRepository.save(sous1sous2cat5);
+        Categorie_2_Annonce sous1sous2cat6= Categorie_2_Annonce.builder()
+                .categorie_1_Annonce(souscat2)
+                .nom_sous_categorie("Remplacer une porte")
+                .build();
+        categorie2AnnonceRepository.save(sous1sous2cat6);
+        Categorie_2_Annonce sous1sous2cat7= Categorie_2_Annonce.builder()
+                .categorie_1_Annonce(souscat2)
+                .nom_sous_categorie("Changer une poignée")
+                .build();
+        categorie2AnnonceRepository.save(sous1sous2cat7);
+        // PLOMBERIE
+        Categorie_2_Annonce sous1sous3cat1= Categorie_2_Annonce.builder()
+                .categorie_1_Annonce(souscat3)
+                .nom_sous_categorie("Réparation de fuite d'eau")
+                .build();
+        categorie2AnnonceRepository.save(sous1sous3cat1);
+        Categorie_2_Annonce sous1sous3cat2= Categorie_2_Annonce.builder()
+                .categorie_1_Annonce(souscat3)
+                .nom_sous_categorie("Changer de chasse d'eau")
+                .build();
+        categorie2AnnonceRepository.save(sous1sous3cat2);
+        Categorie_2_Annonce sous1sous3cat3= Categorie_2_Annonce.builder()
+                .categorie_1_Annonce(souscat3)
+                .nom_sous_categorie("Changer un robinet")
+                .build();
+        categorie2AnnonceRepository.save(sous1sous3cat3);
+        Categorie_2_Annonce sous1sous3cat4= Categorie_2_Annonce.builder()
+                .categorie_1_Annonce(souscat3)
+                .nom_sous_categorie("déboucher un évier")
+                .build();
+        categorie2AnnonceRepository.save(sous1sous3cat4);
+        Categorie_2_Annonce sous1sous3cat5= Categorie_2_Annonce.builder()
+                .categorie_1_Annonce(souscat3)
+                .nom_sous_categorie("Déboucher des WC")
+                .build();
+        categorie2AnnonceRepository.save(sous1sous3cat5);
+        Categorie_2_Annonce sous1sous3cat6= Categorie_2_Annonce.builder()
+                .categorie_1_Annonce(souscat3)
+                .nom_sous_categorie("Faire les joins de la salle de bain")
+                .build();
+        categorie2AnnonceRepository.save(sous1sous3cat6);
+        Categorie_2_Annonce sous1sous3cat7= Categorie_2_Annonce.builder()
+                .categorie_1_Annonce(souscat3)
+                .nom_sous_categorie("Réparer une chasse d'eau")
+                .build();
+        categorie2AnnonceRepository.save(sous1sous3cat7);
+        Categorie_2_Annonce sous1sous3cat8= Categorie_2_Annonce.builder()
+                .categorie_1_Annonce(souscat3)
+                .nom_sous_categorie("Changer un siphon")
+                .build();
+        categorie2AnnonceRepository.save(sous1sous3cat8);
+        Categorie_2_Annonce sous1sous3cat9= Categorie_2_Annonce.builder()
+                .categorie_1_Annonce(souscat3)
+                .nom_sous_categorie("Détartrage de toilettes")
+                .build();
+        categorie2AnnonceRepository.save(sous1sous3cat9);
+       // electricité
+        Categorie_2_Annonce sous1sous4cat1= Categorie_2_Annonce.builder()
+                .categorie_1_Annonce(souscat4)
+                .nom_sous_categorie("Installation de prise électrique")
+                .build();
+        categorie2AnnonceRepository.save(sous1sous4cat1);
+        Categorie_2_Annonce sous1sous4cat2= Categorie_2_Annonce.builder()
+                .categorie_1_Annonce(souscat4)
+                .nom_sous_categorie("Installation d'interrupteur")
+                .build();
+        categorie2AnnonceRepository.save(sous1sous4cat2);
+        Categorie_2_Annonce sous1sous4cat3= Categorie_2_Annonce.builder()
+                .categorie_1_Annonce(souscat4)
+                .nom_sous_categorie("Installation d'un radiateur électrique")
+                .build();
+        categorie2AnnonceRepository.save(sous1sous4cat3);
+        //
     }
 }

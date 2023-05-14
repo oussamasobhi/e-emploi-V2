@@ -1,12 +1,7 @@
 package com.example.eemploibackend.controller;
 
-import com.example.eemploibackend.config.CurrentUser;
 import com.example.eemploibackend.model.CategorieAnnonce;
-import com.example.eemploibackend.model.Societe;
-import com.example.eemploibackend.model.User;
 import com.example.eemploibackend.payloads.ApiResponse;
-import com.example.eemploibackend.payloads.SocieteRequest;
-import com.example.eemploibackend.repository.CategoryRepository;
 import com.example.eemploibackend.services.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

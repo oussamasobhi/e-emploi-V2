@@ -35,64 +35,6 @@ public class AnnonceUserController {
         return new ResponseEntity(new ApiResponse(true,"Vous avez postulé avec succes"),
                 HttpStatus.ACCEPTED);
     }
-    @GetMapping("/documents/{idannonce}/{iduser}")
-    public List<FilesResponse> getalldocs(@PathVariable(value = "idannonce")Long idannonce,
-                                          @PathVariable(value = "iduser")Long iduser){
-        return annonceUserService.recupererfiles(idannonce,iduser);
-    }
-    @PostMapping("/upload/{idannonce}/{iduser}")
-    public ResponseEntity<?> uploadimage(@RequestParam("file")MultipartFile file,
-                                         @PathVariable(value = "idannonce")Long idannonce,
-                                         @PathVariable(value = "iduser")Long iduser) throws IOException {
-        if(annonceUserService.upmoadimageAnnonceUser(idannonce,iduser,file))
-        return new ResponseEntity(new ApiResponse(true,"Vous avez uploadé avec succes"), HttpStatus.ACCEPTED);
-        return new ResponseEntity(new ApiResponse(false,"Y a un erreur"),
-                HttpStatus.BAD_REQUEST);
-    }
-    @GetMapping("/download/{idannonce}/{iduser}")
-    public List<FileDB> getfilesbyannonceuser(@PathVariable(value = "idannonce")Long idannonce,
-                                              @PathVariable(value = "iduser")Long iduser){
-        Logger log= LoggerFactory.getLogger(AnnonceUserService.class);
-        List<FileDB> files=annonceUserService.getallfiles(idannonce,iduser);
-        if(files.size()==0){
-
-            log.info("yeww");
-        }
-        else{
-            log.info("ehooo");
-        }
-        return files;
-    }
-    @DeleteMapping("/deletefile/{id}")
-    public ResponseEntity<?> deletepic(@PathVariable(value = "id")Long id){
-        if(annonceUserService.deletefile(id))
-            return new ResponseEntity(new ApiResponse(true,"Image suprimé"),HttpStatus.OK);
-        return new ResponseEntity(new ApiResponse(true,"id n'existe pas"),HttpStatus.BAD_REQUEST);
-    }
-    @PutMapping("/updateStatus/discussionEngage/{idannonce}/{iduser}")
-    public ResponseEntity<?> updatestatustodiscussion(@PathVariable(name = "idannonce")Long idannonce,
-                                          @PathVariable(name = "iduser")Long iduser){
-        if(annonceUserService.passeAdiscussionEngage(idannonce, iduser)){
-            return new ResponseEntity(new ApiResponse(true,"status modifié"),HttpStatus.OK);
-        }
-        return new ResponseEntity(new ApiResponse(true,"erreur"),HttpStatus.BAD_REQUEST);
-    }
-    @PutMapping("/updateStatus/accordetablie/{idannonce}/{iduser}")
-    public ResponseEntity<?> updatestatustoaccord(@PathVariable(name = "idannonce")Long idannonce,
-                                          @PathVariable(name = "iduser")Long iduser){
-        if(annonceUserService.passeAaccordEtablie(idannonce, iduser)){
-            return new ResponseEntity(new ApiResponse(true,"status modifié"),HttpStatus.OK);
-        }
-        return new ResponseEntity(new ApiResponse(true,"erreur"),HttpStatus.BAD_REQUEST);
-    }
-    @PutMapping("/updateStatus/termine/{idannonce}/{iduser}")
-    public ResponseEntity<?> updatestatustotermine(@PathVariable(name = "idannonce")Long idannonce,
-                                          @PathVariable(name = "iduser")Long iduser){
-        if(annonceUserService.passeAtermine(idannonce, iduser)){
-            return new ResponseEntity(new ApiResponse(true,"status modifié"),HttpStatus.OK);
-        }
-        return new ResponseEntity(new ApiResponse(true,"erreur"),HttpStatus.BAD_REQUEST);
-    }
     @GetMapping("/{idannonce}/{iduser}")
     public ResponseEntity<AnnonceUser> getAnnonceUser(@PathVariable(name = "idannonce") Long idannonce,
                                                       @PathVariable(name = "iduser") Long iduser){

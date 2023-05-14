@@ -1,18 +1,23 @@
 package com.example.eemploibackend.payloads;
 
+import com.example.eemploibackend.model.Adresse;
 import com.example.eemploibackend.model.Categorie_2_Annonce;
+import com.example.eemploibackend.model.FileDB;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.sql.Date;
+import java.io.File;
+import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 public class AnnonceRequest {
-    private String titre_annonce;
-    private String description;
-    private double tarif_depart;
-    private double tarif_final;
-    private Date date_fin_annonce;
+    private String infos_complementaire;
+    private Date date;
+    private String duree;
+    private Adresse adresse;
     private Long id_categorie2Annonce;
+    private List<FileDB> images;
 }

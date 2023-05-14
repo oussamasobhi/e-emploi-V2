@@ -43,20 +43,20 @@ public class User extends DateAudit implements UserDetails{
       private FileDB image;
      private Date date_naissance;
 
+     @ManyToMany
+     @JoinTable(
+             name = "competence_user",
+             joinColumns = @JoinColumn(name = "prestataire_id"),
+             inverseJoinColumns = @JoinColumn(name = "categorie_id"))
+     List<Categorie_2_Annonce> competences;
      @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Review> reviews;
     @OneToMany(mappedBy = "reviewer", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Review> given_reviews;
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
-    private List<Adresse> adresses;
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
-    private List<Competence> competences;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_societe")
-    private Societe societe;
+    @OneToOne
+    private Adresse adresse;
     @OneToOne
     private Role role;
-
     @OneToMany(mappedBy = "user")
     private List<Token> tokens;
     @OneToMany(

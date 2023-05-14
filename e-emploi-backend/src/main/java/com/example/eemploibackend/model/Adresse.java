@@ -15,11 +15,7 @@ public class Adresse {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long id;
-    private String pays;
     private String ville;
-    private String libelle_adr;
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_user", nullable = false)
-    @JsonIgnore
-    private User user;
+    private String quartier;
+    private String suplementaire;
 }

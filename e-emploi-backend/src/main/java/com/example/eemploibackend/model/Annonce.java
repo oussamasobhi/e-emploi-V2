@@ -9,7 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -21,13 +21,13 @@ public class Annonce extends DateAudit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String titre_annonce;
-    private String description;
-    private double tarif_depart;
-    private double tarif_final;
-    private Date date_fin_annonce;
+    private String infos_complementaire;
+    private Date date;
+    private String duree;
+    @OneToOne
+    private Adresse adresse;
     @OneToMany(mappedBy = "annonce",cascade = CascadeType.ALL)
-    private List<FileDB> documents;
+    private List<FileDB> images;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_Categorie_2", nullable = false)
     @JsonIgnore

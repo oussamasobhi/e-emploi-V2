@@ -29,15 +29,13 @@ public class AnnonceService {
     }
     public void ajouterannonce(User user, AnnonceRequest request){
         Categorie_2_Annonce categorie2Annonce=categorie2AnnonceRepository.findCategorie_2_AnnonceById(request.getId_categorie2Annonce());
-        AnnonceUser annonceUser= AnnonceUser.builder()
-                .build();
-
         Annonce annonce= Annonce.builder()
                 .categorie2Annonce(categorie2Annonce)
-                .date_fin_annonce(request.getDate_fin_annonce())
-                .titre_annonce(request.getTitre_annonce())
-                .description(request.getDescription())
-                .tarif_depart(request.getTarif_depart())
+                .duree(request.getDuree())
+                .date(request.getDate())
+                .infos_complementaire(request.getInfos_complementaire())
+                .adresse(request.getAdresse())
+                .images(request.getImages())
                 .user(user)
                 .build();
         annonceRepository.save(annonce);
@@ -55,11 +53,11 @@ public class AnnonceService {
         if(annonce==null)
             return false;
         else{
-            annonce.setTitre_annonce(request.getTitre_annonce());
-            annonce.setDate_fin_annonce(request.getDate_fin_annonce());
-            annonce.setDescription(request.getDescription());
-            annonce.setTarif_depart(request.getTarif_depart());
-            annonce.setTarif_final(request.getTarif_final());
+                    annonce.setDuree(request.getDuree());
+                    annonce.setDate(request.getDate());
+                    annonce.setInfos_complementaire(request.getInfos_complementaire());
+                    annonce.setAdresse(request.getAdresse());
+                    annonce.setImages(request.getImages());
             annonceRepository.save(annonce);
             return true;
         }
@@ -74,7 +72,7 @@ public class AnnonceService {
  //           annonces = annonceRepository.findAll(pageable);
 //        }
  //       else {
-            annonces=annonceRepository.findByTitreOrDescription(search,max_tarif_dep,min_tarif_dep,pageable);
+       //     annonces=annonceRepository.findByTitreOrDescription(search,max_tarif_dep,min_tarif_dep,pageable);
  //        }
         List<Annonce> result = annonces.getContent()
                 .stream()

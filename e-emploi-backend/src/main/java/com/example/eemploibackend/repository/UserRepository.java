@@ -23,8 +23,6 @@ public interface UserRepository extends JpaRepository<User,Long> {
     Boolean existsByUsername(String username);
 
     Boolean existsByEmail(String email);
-    @Query("SELECT a from Adresse a where a.user.id=?1")
-    List<Adresse> findaddressesbyuserid(Long id);
     @Query("SELECT U.image from User U where U.id=?1")
     FileDB getfilebyuserid(Long userid);
 }

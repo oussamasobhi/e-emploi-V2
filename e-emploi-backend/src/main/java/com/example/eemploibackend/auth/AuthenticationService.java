@@ -41,6 +41,9 @@ public class AuthenticationService {
                 .username(request.getUsername())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
+                .competences(request.getCompetences())
+                .num_tel(request.getNum_tel())
+                .CIN(request.getCIN())
                 .build();
         if(repository.existsByUsername(request.getUsername())) {
             return new ResponseEntity(new ApiResponse(false, "Username is already taken!"),
@@ -53,9 +56,15 @@ public class AuthenticationService {
 
             Role userRole = roleRepository.findByName(RoleName.ROLE_STANDARD)
                     .orElseThrow(() -> new AppException("User Role not set."));
-
+        Role ProRole = roleRepository.findByName(RoleName.ROLE_Pro)
+                .orElseThrow(() -> new AppException("User Role not set."));
+        if(request.getIsPRO())
+            {
+                user.setRole(ProRole);
+            }
+        else {
             user.setRole(userRole);
-
+        }
         User result=repository.save(user);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentContextPath().path("/users/{username}")

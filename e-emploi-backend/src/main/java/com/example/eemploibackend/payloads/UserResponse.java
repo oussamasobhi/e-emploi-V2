@@ -19,7 +19,4 @@ public class UserResponse {
     private Date date_naissance;
     private FileDB photo_profil;
     private List<Adresse> adresses;
-    private Societe societe;
-    private List<Competence> competences;
-    private List<Adresse_societe> adresseSocietes;
 }

@@ -7,15 +7,11 @@ import com.example.eemploibackend.model.FileDB;
 import com.example.eemploibackend.model.User;
 import com.example.eemploibackend.payloads.*;
 
-import com.example.eemploibackend.repository.AdresseRepository;
 import com.example.eemploibackend.repository.UserRepository;
-import com.example.eemploibackend.services.FileStorageService;
 import com.example.eemploibackend.services.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,8 +26,6 @@ public class UserController {
     private final UserRepository userRepository;
 
     private final UserService userService;
-    private final AdresseRepository adresseRepository;
-    private final FileStorageService fileStorageService;
 
     @GetMapping("/user/me")
  //   @PreAuthorize("hasAnyAuthority('ROLE_STANDARD','ROLE_CONDIDAT','ROLE_ADMIN','ROLE_Pro')")

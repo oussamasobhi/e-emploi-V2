@@ -2,7 +2,6 @@ package com.example.eemploibackend.payloads;
 
 import com.example.eemploibackend.model.Adresse;
 import com.example.eemploibackend.model.FileDB;
-import com.example.eemploibackend.model.Societe;
 import lombok.Data;
 
 import java.util.Date;
@@ -22,5 +21,4 @@ public class UserSummary {
     private FileDB photo_profil;
     private Date date_naissance;
     List<Adresse> adresses;
-    Societe societe;
 }
