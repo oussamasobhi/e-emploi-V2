@@ -34,6 +34,8 @@ public class SecurityConfiguration {
                 .permitAll()
                 .requestMatchers("/auth/**")
                 .permitAll()
+                .requestMatchers("/category/**")
+                .permitAll()
                 .requestMatchers("/api/users/**")
                 .permitAll()
                 .requestMatchers("/api/user/checkEmailAvailability","/api/user/checkUsernameAvailability")

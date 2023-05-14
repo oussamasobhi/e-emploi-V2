@@ -13,6 +13,6 @@ public interface Categorie_2_Annonce_Repository extends JpaRepository<Categorie_
     Categorie_2_Annonce findCategorie_2_AnnonceById(Long id);
 
     @Query("select sc from Categorie_2_Annonce sc where sc.categorie_1_Annonce.id=?1")
-    List<Categorie_2_Annonce> findAllByCategorieAnnonceId(Long idcategory);
+    List<Categorie_2_Annonce> findAllBySousCategorieId(Long idsouscategory);
 
 }

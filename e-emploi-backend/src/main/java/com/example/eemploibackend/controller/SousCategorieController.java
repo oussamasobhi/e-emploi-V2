@@ -1,28 +1,22 @@
 package com.example.eemploibackend.controller;
 
 import com.example.eemploibackend.exceptions.AppException;
+import com.example.eemploibackend.model.Categorie_1_Annonce;
 import com.example.eemploibackend.model.Categorie_2_Annonce;
 import com.example.eemploibackend.services.SousCategorieService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin
-
+@RequestMapping("/category/souscategory")
 public class SousCategorieController {
     private final SousCategorieService service;
-    @GetMapping("/categorie/{id}/all")
-    public List<Categorie_2_Annonce> getsouscategories(@PathVariable(value = "id")Long id){
-        if(service.getallsouscategorie(id).equals(null)){
-            throw new AppException("id n'existe pas");
-        }
-        else
+    @GetMapping("/{id}")
+    public List<Categorie_1_Annonce> getsouscategories(@PathVariable(value = "id")Long id){
             return service.getallsouscategorie(id);
     }
 }
