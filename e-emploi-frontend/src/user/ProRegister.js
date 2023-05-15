@@ -9,11 +9,11 @@ import {
   PASSWORD_MAX_LENGTH,
   PASSWORD_MIN_LENGTH,
 } from "../constant";
-import { isAvailableEmail, isAvailableUsername } from "../util/APIUtils";
-import { TextField } from "@mui/material";
+import { getCategories, getSousCategories, isAvailableEmail, isAvailableUsername, proSignup } from "../util/APIUtils";
+import { Box, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import { message } from "antd";
 import { Link } from "react-router-dom";
-const Signup = ({ onSignup }) => {
+const ProRegister = () => {
   const navigate = useNavigate();
   const [prenomError, setPrenomError] = useState("");
   const [nomError, setNomError] = useState("");
@@ -28,9 +28,55 @@ const Signup = ({ onSignup }) => {
     email: "",
     password: "",
     password2: "",
-    roleName: "",
-    isPRO : false
+    isPRO: true,
+    num_tel:"",
+    CIN: "",
+    competences:[]
   });
+  const [competence, setCompetence] = useState({
+    categorie:"",
+    souscategorie:[],
+    souscategorie2:[]
+  })
+  const [categorie, setCategorie] = useState(null);
+  const [sousCategorie, setSousCategorie] = useState(null);
+  useEffect(() => {
+    setEmailError("");
+    const loadCategorie = async () => {
+        try{
+            const res = await getCategories();
+            setCategorie(res);
+        }catch(error){
+            console.log(error)
+        }
+    }
+    loadCategorie();    
+  }, [])
+  useEffect(() => {
+    console.log(categorie)
+  }, [categorie])
+  
+  useEffect(() => {
+    const loadSousCategorie = async (id) => {
+        try{
+            const res = await getSousCategories(id);
+            setSousCategorie(res);
+        }catch(error){
+            console.log(error)
+        }
+    };
+    loadSousCategorie(competence.categorie);
+  }, [competence.categorie])
+  
+  useEffect(() => {
+   console.log(categorie)
+  }, [categorie]);
+  useEffect(() => {
+
+    console.log(sousCategorie)
+   }, [sousCategorie]);
+ 
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,10 +88,10 @@ const Signup = ({ onSignup }) => {
 
     const EMAIL_REGEX = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
     setEmailValid(EMAIL_REGEX.test(user.email));
-    if (!user.email) {
+    /*if (!user.email) {
       const errorMsg = "L'adresse email ne peut pas être vide";
       setEmailError(errorMsg);
-    } else if (!emailValid && user.email.length < EMAIL_MAX_LENGTH) {
+    } else*/ if (!emailValid && user.email.length < EMAIL_MAX_LENGTH && user.email.length>0) {
       let errorMsg = "Cet adresse email n'est pas valide";
       setEmailError(errorMsg);
     } else if (user.email.length > EMAIL_MAX_LENGTH) {
@@ -56,6 +102,11 @@ const Signup = ({ onSignup }) => {
       fetchData();
     }
   }, [user.email, emailValid]);
+
+  useEffect(() => {
+    console.log(user);
+  }, [user])
+  
 
   useEffect(() => {
     async function fetchData() {
@@ -69,9 +120,7 @@ const Signup = ({ onSignup }) => {
     fetchData();
   }, [user.username]);
 
-  useEffect(() => {
-    setEmailError("");
-  }, []);
+ 
 
   const handleInputChange = (event) => {
     const value = event.target.value;
@@ -140,14 +189,14 @@ const Signup = ({ onSignup }) => {
   const validateEmail = (email) => {
     const EMAIL_REGEX = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
     setEmailValid(EMAIL_REGEX.test(email));
-    if (!email) {
+    /*if (!email) {
       const errorMsg = "L'adresse email ne peut pas être vide";
       setEmailError(errorMsg);
       return {
         validateStatus: "error",
         errorMsg: "L'adresse email ne peut pas être vide",
       };
-    } else if (!emailValid && email.length < EMAIL_MAX_LENGTH) {
+    } else*/ if (!emailValid && email.length < EMAIL_MAX_LENGTH && email.length>0) {
       let errorMsg = "Cet adresse email n'est pas valide";
       setEmailError(errorMsg);
       return {
@@ -169,6 +218,7 @@ const Signup = ({ onSignup }) => {
       };
     }
   };
+  const [isEmailError, setIsEmailError] = useState(false);
 
   const validatePassword = (password) => {
     if (password.length < PASSWORD_MIN_LENGTH) {
@@ -222,7 +272,8 @@ const Signup = ({ onSignup }) => {
     navigate("/login");
   };
 
-  const inscription = (e) => {
+  const inscription = async (e) => {
+    e.preventDefault()
     if (
       passwordError ||
       emailError ||
@@ -231,23 +282,68 @@ const Signup = ({ onSignup }) => {
     ) {
       message.error("Formulaire invalide");
     } else {
-      onSignup(e, user, goToLogin);
-        message.success("Inscription réussie");
+        try{
+            const res = await proSignup(user);
+            console.log(res);
+            message.success({
+                content:"Inscription réussie",
+                className:"relative top-16"
+            });
+        }catch(error){
+            console.log(error);
+        }       
+        goToLogin();
     }
   }
+  
+  useEffect(() => {
+    setUser({...user, "competences":competence.souscategorie})
+  }, [competence.souscategorie])
+  
+  const [checkedItems, setCheckedItems] = useState([])
+  const handleCompetenceChange = (event) => {
+    const value = event.target.value;
+    setCompetence({...competence, [event.target.name]:value});
+  }
+  const handleSousCatChange = (event) => {
+    const value = event.target.value;
+    const x = sousCategorie.find(option => option.id == value);
+    console.log(sousCategorie, value, x);
+    if (event.target.checked) {
+      setCheckedItems([...checkedItems, x]);
+    } else {
+        const newItems = checkedItems.filter(item => item.id != value);
+      setCheckedItems(newItems);
+    }
+  };
+  useEffect(() => {
+    setCompetence({...competence, 'souscategorie':checkedItems});
+    //console.log(checkedItems);
+  }, [checkedItems])
+  useEffect(() => {
+    setUser({...user, "competences":competence.souscategorie});
+    console.log(competence);
+  },[competence])
+  
 
   return (
     <div className="flex flex-col w-auto items-center bg-gray-100">
       <div className="bg-inherit w-auto">
         <h1 className="text-3xl font-poppins text-my-blue text-center">
-          Inscription
+          Devenir prestataire
         </h1>
-        <div className="flex flex-col p-6 border rounded-md bg-white shadow-md">
+        <Box className="flex flex-col p-6 border rounded-md bg-white shadow-md overflow-y-auto" sx={{height:"420px"}} >
+        
           <form
-            className="flex flex-col  rounded-md bg-white"
+            onSubmit={inscription}
+            className=" rounded-md bg-white"
           >
+            <Box className="flex flex-col" sx={{borderBottom:"1px", paddingBottom:"15px"}} >
+                <Typography sx={{fontSize:"20px", fontWeight:"bold", fontFamily:"Poppins"}}>Coordonnées</Typography>
             <div className="flex pb-1 mb-2">
+               
               <TextField
+
                 variant="standard"
                 label="Nom"
                 name="nom"
@@ -295,6 +391,9 @@ const Signup = ({ onSignup }) => {
             )}
             <TextField
               variant="standard"
+              required
+              error={isEmailError}
+              helperText={isEmailError?"Email ne peux pas être vide":""}
               label="Email"
               name="email"
               id="email"
@@ -309,6 +408,24 @@ const Signup = ({ onSignup }) => {
                 {emailError}
               </p>
             )}
+            <TextField
+              variant="standard"
+              label="Téléphone"
+              name="num_tel"
+              id="num_tel"
+              value={user.num_tel}
+              onChange={handleInputChange}
+              sx={{ marginBottom: "15px" }}
+            />
+            <TextField
+              variant="standard"
+              label="CIN"
+              name="CIN"
+              id="CIN"
+              value={user.cin}
+              onChange={handleInputChange}
+              sx={{ marginBottom: "15px" }}
+            />
             <TextField
               variant="standard"
               label="Mot de passe"
@@ -335,8 +452,32 @@ const Signup = ({ onSignup }) => {
                 {passwordError}
               </p>
             )}
+</Box>
+<Box className="flex flex-col" sx={{borderBottom:"1px", paddingBottom:"15px"}} >
+<Typography sx={{fontSize:"20px", fontWeight:"bold", fontFamily:"Poppins"}}>
+    Compétences
+</Typography>
+<FormControl sx={{marginTop:"10px"}} >
+<InputLabel>Compétence</InputLabel>
+<Select variant="standard" label="Compétence" name="categorie" onChange={handleCompetenceChange} value={competence.categorie} >
+    {categorie?.map((cat, index)=>(
+        <MenuItem key={index} value={cat.id}>{cat.nom_categorie} </MenuItem>
+    )) }
+</Select>
+</FormControl>
+{competence.categorie && <FormControl>
+    <FormLabel>Catégorie</FormLabel>
+    {sousCategorie?.map((item, index)=>(
+        <FormControlLabel
+        control={<Checkbox key={index} value={item.id} onChange={handleSousCatChange} />}
+        label={item.nom_sous_categorie}
+      />
+    )) }
+</FormControl>}
+
+</Box>
             <button
-            onClick={inscription}
+            type="submit"
               className="text-white rounded-md font-bold mt-6 py-2 text-lg border-none hover:bg-orange-600 bg-orange-500 transition-colors ease-in-out cursor-pointer "
             >
               Créer un compte
@@ -345,10 +486,10 @@ const Signup = ({ onSignup }) => {
           <div className="py-3 text-center">
             <p className="font-caption">Vous avez déjà un compte? <Link to="/login" className="text-blue-500 no-underline hover:underline hover:text-blue-600 font-caption">Se connecter</Link></p>
           </div>
-        </div>
+        </Box>
       </div>
     </div>
   );
 };
 
-export default Signup;
+export default ProRegister;

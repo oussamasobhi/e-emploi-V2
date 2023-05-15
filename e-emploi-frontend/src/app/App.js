@@ -19,6 +19,7 @@ import { message } from "antd";
 import Produit from "../produit/Produit";
 import { ThemeProvider } from "@mui/material";
 import { myTheme } from "../theme";
+import ProRegister from "../user/ProRegister";
 
 
 function App() {
@@ -64,8 +65,6 @@ function App() {
     e.preventDefault();
     signup(user);
     func();
-    //notify("Succès", "Vous vous êtes bien enregistrés, veuillez vous connecter maintenant !", "success");
-    //message.success("Vous êtes inscrits dans e-emploi, veuillez vous connecter maintenant !")
     message.success({
       content: "Vous êtes inscrits dans e-emploi, veuillez vous connecter maintenant ",
       className: "relative top-16"
@@ -193,6 +192,16 @@ function App() {
                   <Navigate to="/" />
                 ) : (
                   <Signup onSignup={handleSignup} />
+                )
+              }
+            />
+            <Route
+              path="prosignup"
+              element={
+                localStorage.getItem("token") ? (
+                  <Navigate to="/" />
+                ) : (
+                  <ProRegister />
                 )
               }
             />

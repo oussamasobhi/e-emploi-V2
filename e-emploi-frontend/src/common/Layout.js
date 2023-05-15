@@ -14,7 +14,7 @@ const Layout = ({
         className="flex-none"
       />
 
-      <div className="min-w-full min-h-myHeight overflow-y-auto absolute top-16 flex flex-col justify-between">
+      <div className="min-w-full h-myHeight overflow-y-auto absolute top-16 flex flex-col justify-between">
         <Outlet className="min-h-full " />
         <Footer className="" />
       </div>

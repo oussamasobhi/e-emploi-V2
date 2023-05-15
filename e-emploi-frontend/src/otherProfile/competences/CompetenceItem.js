@@ -1,4 +1,4 @@
-import { Typography, Button, Modal, Image, Row, Col, message } from "antd";
+import { Typography, Button, Modal, Image, message } from "antd";
 import React, { useEffect, useState } from "react";
 import {
   deleteSkill,
@@ -26,7 +26,10 @@ const CompetenceItem = ({ competence, refresh, notify, isCurrentUser }) => {
       refresh();
       setIsOpenDelete(false);
       //notify("Notification", "Compétence supprimée avec succès");
-      message.info("Compétence supprimée")
+      message.info({
+        content:"Compétence supprimée",
+        className:"relative top-16"
+    })
     } catch (error) {
       console.log(error);
     }
@@ -76,7 +79,7 @@ const CompetenceItem = ({ competence, refresh, notify, isCurrentUser }) => {
       <div className="pb-4 bg-white">
         <div className="flex justify-between items-start mb-3 font-roboto font-semibold px-2 py-3 overflow-auto">
           <Typography className="font-poppins text-red-600 text-2xl ">
-            {competence.titre}
+            {competence.nom_sous_categorie}
           </Typography>
           {isCurrentUser && (
             <div>

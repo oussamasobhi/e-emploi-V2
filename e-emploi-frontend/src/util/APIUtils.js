@@ -24,6 +24,13 @@ export function signup(signupRequest) {
     body: JSON.stringify(signupRequest),
   });
 }
+export function proSignup(signupRequest){
+  return request({
+    url: API_BASE_URL + "/auth/signup/pro",
+    method: "POST",
+    body: JSON.stringify(signupRequest),
+  });
+}
 
 export function isAvailableEmail(email) {
   return request({
@@ -243,13 +250,13 @@ export function getListAnnonces(id, page, size, search, min_tarif, max_tarif) {
 
 export function getCategories() {
   return request({
-    url: API_BASE_URL + "/category/",
+    url: API_BASE_URL + "/category",
     method: "GET",
   });
 }
 export function getSousCategories(id) {
   return request({
-    url: API_BASE_URL + "/categorie/" + id + "/all",
+    url: API_BASE_URL + "/category/souscategory/" + id,
     method: "GET",
   });
 }

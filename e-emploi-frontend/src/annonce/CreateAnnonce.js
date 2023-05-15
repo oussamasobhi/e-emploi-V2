@@ -2,6 +2,7 @@ import { message, Typography } from "antd";
 import React, { useEffect, useState } from "react";
 import {
   createAnnonce,
+  getCategories,
   getSousCategories,
 } from "../util/APIUtils";
 import { useNavigate } from "react-router";
@@ -30,10 +31,8 @@ const CreateAnnonce = () => {
 
   useEffect(() => {
     const loadCategories = async () => {
-      const _souscat1 = await getSousCategories(1);
-      const _souscat2 = await getSousCategories(2);
-      const _souscat3 = await getSousCategories(3);
-      setCategories(_souscat1.concat(_souscat2).concat(_souscat3));
+      const res = await getCategories();
+      setCategories(res);
     };
     loadCategories();
   }, []);

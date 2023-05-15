@@ -15,7 +15,7 @@ module.exports = {
         121: "30rem",
         128: "32rem",
         135: "34rem",
-        myHeight: "35rem"
+        myHeight: "40rem"
       },
       minHeight: {
         myHeight: "35rem"

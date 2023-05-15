@@ -4,6 +4,7 @@ import { Link} from "react-router-dom";
 import { Typography } from "antd";
 
 const Hero = () => {
+  
   return (
     <div className="h-114 pt-12 ">
       <div className="h-full flex flex-col items-center justify-around">

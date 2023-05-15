@@ -92,7 +92,7 @@ const DrawerComp = ({ currentUser, logout, goToLogin, goToProfile }) => {
             </AccordionDetails>
           </Accordion>
         )}
-        <List>
+        {/*<List>
           {PAGES.map((page, index) => (
             <ListItemButton
               key={index}
@@ -105,7 +105,7 @@ const DrawerComp = ({ currentUser, logout, goToLogin, goToProfile }) => {
               </ListItemIcon>
             </ListItemButton>
           ))}
-        </List>
+          </List>*/}
       </Drawer>
       <IconButton
         onClick={() => setOpenDrawer(!openDrawer)}

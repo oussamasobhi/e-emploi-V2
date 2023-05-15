@@ -11,6 +11,11 @@ const Competences = ({ notify, currentUser, user }) => {
   const isCurrentUser = currentUser.username === user.username;
 
   useEffect(() => {
+    console.log(competences);
+  }, [competences])
+  
+
+  useEffect(() => {
     const loadSkills = async () => {
       try {
         const res = await getSkillsByUsername(user.username);
