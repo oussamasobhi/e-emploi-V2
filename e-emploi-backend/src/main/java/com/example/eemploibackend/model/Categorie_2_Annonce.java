@@ -24,6 +24,5 @@ public class Categorie_2_Annonce {
     @JoinColumn(name = "id_categorie_1", nullable = false)
     @JsonIgnore
     private Categorie_1_Annonce categorie_1_Annonce;
-    @ManyToMany(mappedBy = "competences")
-    List<User> users;
+
 }

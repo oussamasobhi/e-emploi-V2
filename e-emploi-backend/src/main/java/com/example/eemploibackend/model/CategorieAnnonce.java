@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Builder
 @Data
@@ -17,4 +19,6 @@ public class CategorieAnnonce {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nom_categorie;
+    @ManyToMany(mappedBy = "competences")
+    List<User> users;
 }

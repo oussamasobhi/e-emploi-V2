@@ -1,5 +1,6 @@
 package com.example.eemploibackend.auth;
 
+import com.example.eemploibackend.model.CategorieAnnonce;
 import com.example.eemploibackend.model.Categorie_2_Annonce;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +20,7 @@ public class RegisterRequest {
     private String username;
     private String email;
     private String password;
-    private List<Categorie_2_Annonce> competences;
+    private List<CategorieAnnonce> competences;
     private String num_tel;
     private Boolean isPRO;
  }

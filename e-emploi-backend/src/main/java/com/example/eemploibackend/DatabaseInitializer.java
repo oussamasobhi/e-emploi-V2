@@ -10,6 +10,9 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 @AllArgsConstructor
 @Order(1)
@@ -332,6 +335,104 @@ public class DatabaseInitializer implements ApplicationRunner {
                 .nom_sous_categorie("Installation d'un radiateur électrique")
                 .build();
         categorie2AnnonceRepository.save(sous1sous4cat3);
-        //
+
+
+
+        // filling database with pro users
+        User user=new User();
+        user.setCIN("BL13232");
+        user.setRole(rolepro);
+        user.setEmail("azz@gmail.com");
+        user.setPrenom("azzedine");
+        user.setUsername("azzedine12");
+        user.setPassword(encoder.encode("azzedine"));
+        List<CategorieAnnonce> competences=new ArrayList<>();
+       competences.add(cat1);
+       competences.add(cat2);
+       competences.add(cat3);
+        user.setCompetences(competences);
+        user.setNum_tel("+212 687 784");
+        user.setNom("MOHA");
+
+        User user1=new User();
+        user1.setCIN("LK13232");
+        user1.setRole(rolepro);
+        user1.setEmail("azz148@gmail.com");
+        user1.setPrenom("ALI");
+        user1.setUsername("ali123");
+        user1.setPassword(encoder.encode("azzedine"));
+        List<CategorieAnnonce> competences1=new ArrayList<>();
+        competences1.add(cat1);
+        competences1.add(cat4);
+        competences1.add(cat3);
+        user1.setCompetences(competences1);
+        user1.setNum_tel("+212 687 774");
+        user1.setNom("ALAMI");
+
+        User user2=new User();
+        user2.setCIN("BL1323245");
+        user2.setRole(rolepro);
+        user2.setEmail("azz124@gmail.com");
+        user2.setPrenom("OMAR");
+        user2.setUsername("azzedine1245");
+        user2.setPassword(encoder.encode("azzedine"));
+        List<CategorieAnnonce> competences2=new ArrayList<>();
+        competences2.add(cat7);
+        competences2.add(cat6);
+        competences2.add(cat3);
+        user2.setCompetences(competences2);
+        user2.setNum_tel("+212 645 784");
+        user2.setNom("HASSAN");
+
+        User user3=new User();
+        user3.setCIN("BL13232");
+        user3.setRole(rolepro);
+        user3.setEmail("azz89@gmail.com");
+        user3.setPrenom("azzedine");
+        user3.setUsername("azzedine126");
+        user3.setPassword(encoder.encode("azzedine"));
+        List<CategorieAnnonce> competences3=new ArrayList<>();
+        competences3.add(cat5);
+        competences3.add(cat2);
+        competences3.add(cat6);
+        user3.setCompetences(competences3);
+        user3.setNum_tel("+212 687 784");
+        user3.setNom("MOHA");
+
+        User user4=new User();
+        user4.setCIN("BL1323245");
+        user4.setRole(rolepro);
+        user4.setEmail("azzml@gmail.com");
+        user4.setPrenom("SOBHI");
+        user4.setUsername("azdine124");
+        user4.setPassword(encoder.encode("azzedine"));
+        List<CategorieAnnonce> competences4=new ArrayList<>();
+        competences4.add(cat4);
+        competences4.add(cat5);
+        competences4.add(cat6);
+        user4.setCompetences(competences4);
+        user4.setNum_tel("+212 687 4584");
+        user4.setNom("OUSSAMA");
+
+        User user5=new User();
+        user5.setCIN("BL1323245");
+        user5.setRole(rolepro);
+        user5.setEmail("azz123@gmail.com");
+        user5.setPrenom("RAKONO");
+        user5.setUsername("azzene1245");
+        user5.setPassword(encoder.encode("azzedine"));
+        List<CategorieAnnonce> competences5=new ArrayList<>();
+        competences5.add(cat4);
+        competences5.add(cat7);
+        competences5.add(cat2);
+        user5.setCompetences(competences5);
+        user5.setNum_tel("+212 687 786");
+        user5.setNom("NIRINA");
+        userRepository.save(user);
+        userRepository.save(user1);
+        userRepository.save(user2);
+        userRepository.save(user3);
+        userRepository.save(user4);
+        userRepository.save(user5);
     }
 }

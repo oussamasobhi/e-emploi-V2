@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -100,6 +101,16 @@ public class UserController {
     @GetMapping("/download/{iduser}")
     public FileDB getfilebyuserid(@PathVariable(value = "iduser")Long iduser){
         return userService.getfilebyuserid(iduser);
+    }
+
+    // get four random users dor par page 1
+    @GetMapping("/randompro")
+    public List<UserResponse> randoms(){
+        return userService.getrandomusers();
+    }
+    @GetMapping("/randompro/{id}")
+    public List<UserResponse> randomsbycategory(@PathVariable(name = "id")Long id){
+        return userService.getrandomsbycategory(id);
     }
 }
 

@@ -34,6 +34,7 @@ public class User extends DateAudit implements UserDetails{
     private Long id;
     private String prenom;
     private String nom;
+    private String description;
     private String username;
     private String email;
     private String password;
@@ -48,7 +49,7 @@ public class User extends DateAudit implements UserDetails{
              name = "competence_user",
              joinColumns = @JoinColumn(name = "prestataire_id"),
              inverseJoinColumns = @JoinColumn(name = "categorie_id"))
-     List<Categorie_2_Annonce> competences;
+     List<CategorieAnnonce> competences;
      @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Review> reviews;
     @OneToMany(mappedBy = "reviewer", cascade = CascadeType.ALL, orphanRemoval = true)
