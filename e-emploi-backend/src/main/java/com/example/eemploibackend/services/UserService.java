@@ -3,6 +3,7 @@ package com.example.eemploibackend.services;
 import com.example.eemploibackend.exceptions.AppException;
 import com.example.eemploibackend.model.*;
 import com.example.eemploibackend.payloads.*;
+import com.example.eemploibackend.repository.CategoryRepository;
 import com.example.eemploibackend.repository.FileDBRepository;
 import com.example.eemploibackend.repository.RoleRepository;
 import com.example.eemploibackend.repository.UserRepository;
@@ -26,6 +27,7 @@ public class UserService {
     private final RoleRepository roleRepository;
     private  final FileDBRepository fileDBRepository;
     private final FileStorageService fileStorageService;
+    private final CategoryRepository categoryRepository;
     public void updateuser(Pro_RegisterRequest request,Long iduser){
 
             userRepository.findById(iduser).map(
@@ -110,5 +112,22 @@ public class UserService {
     }
     public FileDB getfilebyuserid(Long userid){
         return userRepository.getfilebyuserid(userid);
+    }
+    public List<UserResponse> getrandomusers(){
+        List<User> users=userRepository.getallusersPRO();
+
+        List<UserResponse> prorandomsresponse=new ArrayList<>();
+        for(int i=0;i<2;i++){
+            prorandomsresponse.add(ModelMapper.mapUserToUserResponse(users.get(i)));
+        }
+        return prorandomsresponse;
+    }
+    public List<UserResponse> getrandomsbycategory(Long idcategory){
+        List<User> users=categoryRepository.getusersbycategory(idcategory);
+        List<UserResponse> prorandomsresponse=new ArrayList<>();
+        for(int i=0;i<2;i++){
+            prorandomsresponse.add(ModelMapper.mapUserToUserResponse(users.get(i)));
+        }
+        return prorandomsresponse;
     }
 }

@@ -1,9 +1,6 @@
 package com.example.eemploibackend.repository;
 
-import com.example.eemploibackend.model.Adresse;
-import com.example.eemploibackend.model.FileDB;
-import com.example.eemploibackend.model.RoleName;
-import com.example.eemploibackend.model.User;
+import com.example.eemploibackend.model.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -25,4 +22,8 @@ public interface UserRepository extends JpaRepository<User,Long> {
     Boolean existsByEmail(String email);
     @Query("SELECT U.image from User U where U.id=?1")
     FileDB getfilebyuserid(Long userid);
+
+    @Query("SELECT U from User U where U.role.id=3")
+    List<User> getallusersPRO();
+
 }

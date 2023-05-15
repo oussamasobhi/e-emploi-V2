@@ -18,5 +18,7 @@ public class UserResponse {
     private String role;
     private Date date_naissance;
     private FileDB photo_profil;
-    private List<Adresse> adresses;
+    private String description;
+   private Adresse adresse;
+   private double rate;
 }
