@@ -289,10 +289,10 @@ const ProRegister = () => {
                 content:"Inscription réussie",
                 className:"relative top-16"
             });
+            navigate("/login");
         }catch(error){
             console.log(error);
         }       
-        goToLogin();
     }
   }
   

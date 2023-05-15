@@ -1,40 +1,32 @@
-import { Navigate } from "react-router";
 import Hero from "./Home/Hero";
-import PhoneNumber from "./Home/PhoneNumber";
+import Categories from "./Home/Categories";
 import Service1 from "./Home/Service1";
 import Service2 from "./Home/Service2";
 import WhyUs from "./Home/WhyUs";
 import { useEffect, useState } from "react";
-import { getCurrentUser } from "../util/APIUtils";
-const Home = () => {
-  const [current, setCurrent] = useState(null);
+import { getCategories } from "../util/APIUtils";
+const Home = ({currentUser}) => {
+  const [categorie, setCategorie] = useState(null);
+  const [sousCategorie, setSousCategorie] = useState(null);
   useEffect(() => {
-    const loadUser = async () => {
-      try{
-        const res = await getCurrentUser();
-        setCurrent(res);
-      }catch(error){
-        console.log(error);
-      }
+    const loadCategorie = async () => {
+        try{
+            const res = await getCategories();
+            setCategorie(res);
+        }catch(error){
+            console.log(error)
+        }
     }
-    loadUser();
+    loadCategorie();    
   }, [])
-  useEffect(() => {
-    console.log(current);
-  }, [current])
-    
-  
   return (
-    current?.roleName === "ROLE_ADMIN"?
-    <Navigate to="dashboard"/>
-    :(
-    <div className="h-auto overflow-y-auto">
+    <div className="h-auto overflow-y-auto">      
       <Hero />
-      <PhoneNumber />
+      <Categories categories={categorie} />
       <WhyUs />
       <Service1 />
       <Service2 />
-    </div>)
+    </div>
 
   );
 };

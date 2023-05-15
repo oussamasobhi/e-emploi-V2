@@ -9,7 +9,7 @@ export const myTheme = createTheme({
             main: "#f97316"
         },
         gris:{
-            main: "#9ca3b3"
+            main: "#555555"
         }
     }
 })

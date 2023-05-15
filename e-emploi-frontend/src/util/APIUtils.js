@@ -31,6 +31,12 @@ export function proSignup(signupRequest){
     body: JSON.stringify(signupRequest),
   });
 }
+export function getProUsers(){
+  return request({
+    url: API_BASE_URL+"/api/pro",
+    method: "GET"
+  })
+}
 
 export function isAvailableEmail(email) {
   return request({
