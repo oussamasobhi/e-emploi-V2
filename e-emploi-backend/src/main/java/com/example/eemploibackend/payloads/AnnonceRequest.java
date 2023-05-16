@@ -17,7 +17,10 @@ public class AnnonceRequest {
     private String infos_complementaire;
     private Date date;
     private String duree;
-    private Adresse adresse;
+    private String ville;
+    private String quartier;
+    private String supplement;
     private Long id_categorie2Annonce;
+    private Long id_categorie1Annonce;
     private List<FileDB> images;
 }

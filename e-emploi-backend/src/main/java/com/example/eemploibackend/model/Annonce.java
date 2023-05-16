@@ -33,6 +33,11 @@ public class Annonce extends DateAudit {
     @JsonIgnore
     private Categorie_2_Annonce categorie2Annonce;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_Categorie_1", nullable = false)
+    @JsonIgnore
+    private Categorie_1_Annonce categorie1Annonce;
+
     @OneToMany(
             mappedBy = "annonce",
             cascade = CascadeType.ALL,

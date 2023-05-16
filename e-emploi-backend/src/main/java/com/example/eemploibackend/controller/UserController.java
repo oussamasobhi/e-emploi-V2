@@ -12,6 +12,7 @@ import com.example.eemploibackend.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,7 +28,7 @@ public class UserController {
     private final UserRepository userRepository;
 
     private final UserService userService;
-
+ //   @PreAuthorize("hasAuthority('ROLE_Pro')")
     @GetMapping("/user/me")
  //   @PreAuthorize("hasAnyAuthority('ROLE_STANDARD','ROLE_CONDIDAT','ROLE_ADMIN','ROLE_Pro')")
     public UserSummary getCurrentUser(@CurrentUser User currentUser) {

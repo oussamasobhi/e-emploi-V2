@@ -23,18 +23,27 @@ public class AnnonceService {
     private final AnnonceRepository annonceRepository;
     private final FileStorageService fileStorageService;
     private final Categorie_2_Annonce_Repository categorie2AnnonceRepository;
-    private final UserRepository userRepository;
+    private final AdresseRepository adresseRepository;
+    private final Categorie_1_AnnonceRepository categorie1AnnonceRepository;
     public Annonce getannoncebyid(Long id){
         return annonceRepository.findById(id).orElseThrow();
     }
     public void ajouterannonce(User user, AnnonceRequest request){
         Categorie_2_Annonce categorie2Annonce=categorie2AnnonceRepository.findCategorie_2_AnnonceById(request.getId_categorie2Annonce());
+        Categorie_1_Annonce categorie1Annonce=categorie1AnnonceRepository.findById(request.getId_categorie1Annonce()).orElseThrow();
+        Adresse adresse= Adresse.builder()
+                .ville(request.getVille())
+                .quartier(request.getQuartier())
+                .suplementaire(request.getSupplement())
+                .build();
+        adresseRepository.save(adresse);
         Annonce annonce= Annonce.builder()
                 .categorie2Annonce(categorie2Annonce)
+                .categorie1Annonce(categorie1Annonce)
                 .duree(request.getDuree())
                 .date(request.getDate())
                 .infos_complementaire(request.getInfos_complementaire())
-                .adresse(request.getAdresse())
+                .adresse(adresse)
                 .images(request.getImages())
                 .user(user)
                 .build();
@@ -53,10 +62,16 @@ public class AnnonceService {
         if(annonce==null)
             return false;
         else{
+            Adresse adresse= Adresse.builder()
+                    .ville(request.getVille())
+                    .quartier(request.getQuartier())
+                    .suplementaire(request.getSupplement())
+                    .build();
+            adresseRepository.save(adresse);
                     annonce.setDuree(request.getDuree());
                     annonce.setDate(request.getDate());
                     annonce.setInfos_complementaire(request.getInfos_complementaire());
-                    annonce.setAdresse(request.getAdresse());
+                    annonce.setAdresse(adresse);
                     annonce.setImages(request.getImages());
             annonceRepository.save(annonce);
             return true;

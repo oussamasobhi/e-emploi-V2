@@ -6,6 +6,7 @@ import com.example.eemploibackend.auth.RegisterRequest;
 import com.example.eemploibackend.config.LogoutService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -28,6 +29,7 @@ public class AuthenticationController {
   ) {
     return ResponseEntity.ok(service.register(request)).getBody();
   }
+
     @PostMapping("/signin")
     @ResponseBody
     public ResponseEntity<?> authenticate(
