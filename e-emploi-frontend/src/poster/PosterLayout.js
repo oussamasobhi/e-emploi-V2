@@ -30,8 +30,8 @@ const PosterLayout = ({ souscategorie, titre, prevUrl, annonce }) => {
         navigate("/postjob/"+souscategorie.id+"/details")
     }
     if(lastElt === "details"){
-        deposerAnnonce();
-        
+        deposerAnnonce();        
+        localStorage.setItem("hasCreated", JSON.stringify(true));
     }
   };
   const prev = () => {
@@ -58,7 +58,8 @@ const PosterLayout = ({ souscategorie, titre, prevUrl, annonce }) => {
             className:"relative top-16"
         });
         navigate("/mesdemandes");
-
+        localStorage.removeItem("cat1");
+        
     }catch(error){
         console.log(error);
     }

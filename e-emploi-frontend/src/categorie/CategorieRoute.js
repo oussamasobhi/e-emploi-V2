@@ -39,11 +39,12 @@ const CategorieRoute = () => {
     console.log(sousCategorie);
   }, [sousCategorie]);
 
-  const sousCatFunction = async (id) => {
+  const sousCatFunction = async (id1) => {
     try{
         localStorage.setItem("prevUrl",JSON.stringify(prevUrl))
-        navigate("/postjob/"+id+"/duree")
-        const res = await getSousCategories2(id);
+        localStorage.setItem("cat1",JSON.stringify(id));
+        navigate("/postjob/"+id1+"/duree")
+        const res = await getSousCategories2(id1);
         setSousCategorie2(res);
     }catch(error){
         console.log(error);
