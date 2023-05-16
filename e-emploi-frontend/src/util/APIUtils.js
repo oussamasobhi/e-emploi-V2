@@ -266,6 +266,19 @@ export function getSousCategories(id) {
     method: "GET",
   });
 }
+export function getSousCategories2(id) {
+  return request({
+    url: API_BASE_URL + "/category/soussouscategory/" + id,
+    method: "GET",
+  });
+}
+export function getAllSousCatagorie(){
+  return request({
+    url: API_BASE_URL + "/category/souscategory",
+    method: "GET"
+  });
+}
+
 
 export function createAnnonce(annonce) {
   return request({
@@ -274,7 +287,6 @@ export function createAnnonce(annonce) {
     body: JSON.stringify(annonce),
   });
 }
-
 export function deleteAnnonce(id){
   return request({
     url: API_BASE_URL+"/annonce/delete/"+id,

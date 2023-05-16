@@ -9,7 +9,7 @@ const Hero = () => {
     <div className="h-myHeight pt-12 ">
       <div className="h-full flex flex-col items-center ">
         <div className="h-9/12 w-full">
-          <div className="flex flex-col items-center my-16">
+          <div className="flex flex-col items-center my-10">
             <Typography className="font-archivo text-5xl lg:text-7xl text-center">
               Décrivez-nous votre besoin
             </Typography>
@@ -17,7 +17,7 @@ const Hero = () => {
               Pour réaliser votre projet
             </Typography>
           </div>
-          <p className="text-center px-14 pt-14 text-gray-600 text-xl font-roboto">
+          <p className="text-center px-14 py-4 text-gray-600 text-xl font-roboto">
             La plateforme propose une gestion des compétences, les produits
             destinés à servir d'autre personne contre une paie.
           </p>

@@ -19,4 +19,8 @@ public class SousCategorieController {
     public List<Categorie_1_Annonce> getsouscategories(@PathVariable(value = "id")Long id){
             return service.getallsouscategorie(id);
     }
+    @GetMapping
+    public List<Categorie_1_Annonce> getSousCategories(){
+        return service.getAll();
+    }
 }

@@ -20,6 +20,9 @@ import Produit from "../produit/Produit";
 import { ThemeProvider } from "@mui/material";
 import { myTheme } from "../theme";
 import ProRegister from "../user/ProRegister";
+import CategorieRoute from "../categorie/CategorieRoute";
+import FindPro from "../poster/FindPro";
+import MesDemandes from "../mesDemandes/MesDemandes";
 
 
 function App() {
@@ -231,6 +234,9 @@ function App() {
             <Route path="emp_serv/*" element={<EmploiService currentUser={currentUser} />} />
             <Route path="produit" element={<Produit currentUser={currentUser} />} />
             <Route path="annonce/*" element={<Annonces notify={notify} currentUser={currentUser} />} />
+            <Route path="categorie/:id" element={<CategorieRoute/> } />
+            <Route path="postjob/:id_souscat/*" element={<FindPro/> } />
+            <Route path="mesdemandes" element={<MesDemandes/> } />
             <Route path="*" element={<NotFound />} />
             <Route
               path="/:username/*"

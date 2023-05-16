@@ -1,6 +1,7 @@
 package com.example.eemploibackend.payloads;
 
 import com.example.eemploibackend.model.Adresse;
+import com.example.eemploibackend.model.Categorie_2_Annonce;
 import com.example.eemploibackend.model.FileDB;
 import lombok.Data;
 

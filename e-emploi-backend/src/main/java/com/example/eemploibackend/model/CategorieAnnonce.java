@@ -1,5 +1,7 @@
 package com.example.eemploibackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,5 +22,6 @@ public class CategorieAnnonce {
     private Long id;
     private String nom_categorie;
     @ManyToMany(mappedBy = "competences")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     List<User> users;
 }

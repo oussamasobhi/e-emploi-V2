@@ -2,7 +2,10 @@ package com.example.eemploibackend.model;
 
 import com.example.eemploibackend.model.audit.DateAudit;
 import com.example.eemploibackend.token.Token;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerator;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -49,6 +52,7 @@ public class User extends DateAudit implements UserDetails{
              name = "competence_user",
              joinColumns = @JoinColumn(name = "prestataire_id"),
              inverseJoinColumns = @JoinColumn(name = "categorie_id"))
+             @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
      List<CategorieAnnonce> competences;
      @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Review> reviews;

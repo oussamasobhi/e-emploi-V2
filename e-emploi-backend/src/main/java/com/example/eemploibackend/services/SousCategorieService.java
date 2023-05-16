@@ -20,4 +20,7 @@ public class SousCategorieService {
         return categorie1AnnonceRepository.findallbycategoryid(idcategory);
       return null;
     }
+    public List<Categorie_1_Annonce> getAll(){
+        return categorie1AnnonceRepository.findAll();
+    }
 }

@@ -15,8 +15,10 @@ const Layout = ({
       />
 
       <div className="min-w-full h-myHeight overflow-y-auto absolute top-16 flex flex-col justify-between">
-        <Outlet className="min-h-full " />
-        <Footer className="" />
+        <div>
+          <Outlet className="min-h-full " />
+        </div>
+        {/*<Footer className="justify-self-end" />*/}
       </div>
       
     </div>
