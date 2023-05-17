@@ -57,7 +57,7 @@ const PosterLayout = ({ souscategorie, titre, prevUrl, annonce }) => {
             content:"Annonce créée",
             className:"relative top-16"
         });
-        navigate("/mesdemandes");
+        navigate("/dboard");
         localStorage.removeItem("cat1");
         
     }catch(error){

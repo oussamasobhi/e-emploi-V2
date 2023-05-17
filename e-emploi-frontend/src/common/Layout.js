@@ -1,27 +1,28 @@
 import { Outlet } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
+import { Box } from "@mui/material";
 
 const Layout = ({
   currentUser,
   onLogout,
 }) => {
   return (
-    <div className="font-poppins flex flex-col h-screen relative bg-gray-100">
+    <Box className="font-poppins flex flex-col h-screen bg-gray-100" sx={{position:"relative"}}>
       <Header
         logout={onLogout}
         currentUser={currentUser}
         className="flex-none"
       />
 
-      <div className="min-w-full h-myHeight overflow-y-auto absolute top-16 flex flex-col justify-between">
+      <Box className="min-w-full h-myHeight overflow-y-auto flex flex-col justify-between" sx={{position:"absolute", top:"70px"}}>
         <div>
           <Outlet className="min-h-full " />
         </div>
         {/*<Footer className="justify-self-end" />*/}
-      </div>
+      </Box>
       
-    </div>
+    </Box>
   );
 };
 

@@ -19,6 +19,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import MenuIcon from '@mui/icons-material/Menu';
 import { ForumOutlined, PersonOutlined } from "@mui/icons-material";
+import DashboardIcon from '@mui/icons-material/Dashboard';
 
 const PAGES = [
   {
@@ -65,7 +66,7 @@ const Header = ({ logout, currentUser }) => {
 
   return (
     <Fragment>
-      <AppBar sx={{ backgroundColor: "#063970" }}>
+      <AppBar sx={{ backgroundColor: "#063970", position:"fixed", zIndex:(theme) => theme.zIndex.drawer+1 }}>
         <Toolbar sx={{height:"70px"}} >
           <Link to={"/"}>
             <img src={logo} alt="logo_itako" className="h-14 w-14" />
@@ -191,7 +192,10 @@ const Header = ({ logout, currentUser }) => {
                   >
                     <Box sx={{borderBottom:"2px", borderColor:theme.palette.gris.main}}  >
                     <MenuItem
-                      onClick={() => { handleClose(); }}
+                      onClick={() => {
+                        navigate("/dboard")
+                         handleClose(); 
+                        }}
                       sx={{display:"flex", justifyContent:"space-between  ", width:"320px",height:"56px"}}
                     >
                       <div className="flex">
@@ -217,7 +221,7 @@ const Header = ({ logout, currentUser }) => {
                       sx={{display:"flex", justifyContent:"space-between", width:"320px",height:"56px"}}
                     >
                         <div className="flex">
-                          <BookmarkBorderIcon sx={{fontSize:"30px", color: theme.palette.primary.main}} />
+                          <DashboardIcon sx={{fontSize:"30px", color: theme.palette.primary.main}} />
                         <Typography sx={{marginLeft:"10px", fontSize:"20px"}} >Dashboard</Typography>
                         </div>
                         <Typography className="justify-self-end text-gray-400">{/*Some Text*/}</Typography>
