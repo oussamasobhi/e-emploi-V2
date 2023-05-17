@@ -8,7 +8,8 @@ module.exports = {
         roboto: ["Roboto", "sans-serif"],
         caption : ['PT Sans Caption', 'sans-serif'],
         mukta : ['Mukta', "sans-serif"],
-        archivo : ['Archivo Black', 'sans-serif']
+        archivo : ['Archivo Black', 'sans-serif'],
+        wix: ['Wix Madefor Display', 'sans-serif']
       },
       height: {
         114: "28rem",

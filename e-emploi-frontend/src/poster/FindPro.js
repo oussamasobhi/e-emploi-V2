@@ -14,8 +14,11 @@ const FindPro = () => {
     const [annonce, setAnnonce] = useState({
         date:"",
         duree:"",
-        adressee:null,
+        ville:"",
+        quartier:"",
+        supplement:"",
         id_categorie2Annonce:id_souscat,
+        id_categorie1Annonce:JSON.parse(localStorage.getItem("cat1")),
         infos_complementaire:""
       })
     useEffect(() => {

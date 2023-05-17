@@ -4,19 +4,19 @@ import { villesMaroc } from '../constant';
 
 
 const Lieu = ({annonce, setAnnonce}) => {
-const [adresse, setAdresse] = useState({
+/*const [adresse, setAdresse] = useState({
     ville:"",
     quartier:"",
-    suplementaire:""
-})
+    supplement:""
+})*/
 const handleChange = (event) => {
     const value = event.target.value;
-    setAdresse({...adresse, [event.target.name]:value});
+    //setAdresse({...adresse, [event.target.name]:value});
+    setAnnonce({...annonce, [event.target.name]:value});
 }
-useEffect(() => {
+/*useEffect(() => {
   console.log(adresse);
-  setAnnonce({...annonce, "adressee":adresse});
-}, [adresse])
+}, [adresse])*/
 
   return (
     <Box className="flex flex-col">
@@ -36,10 +36,10 @@ useEffect(() => {
                 ))}
               </Select>
             </FormControl>
-        <TextField value={adresse.quartier} onChange={handleChange} variant="outlined" className='bg-slate-200'  label="quartier" name="quartier" />
+        <TextField value={annonce.quartier} onChange={handleChange} variant="outlined" className='bg-slate-200'  label="quartier" name="quartier" />
         </Box>
         
-        <TextField value={adresse.suplementaire} onChange={handleChange} variant="outlined" className='bg-slate-200' label="Précision" name="suplementaire"/>
+        <TextField value={annonce.supplement} onChange={handleChange} variant="outlined" className='bg-slate-200' label="Précision" name="supplement"/>
     </Box>
   )
 }
