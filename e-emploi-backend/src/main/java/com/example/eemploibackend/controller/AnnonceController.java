@@ -63,7 +63,7 @@ public class AnnonceController {
 
     // Mes demandes
     @GetMapping("/mesdemandes/{iduser}")
-    public List<Annonce> getAnnonceByUser(@PathVariable(value = "iduser")Long iduser){
+    public List<AnnonceResponse> getAnnonceByUser(@PathVariable(value = "iduser")Long iduser){
         return annonceService.getDemandespariduser(iduser);
     }
     @GetMapping("/{id}")

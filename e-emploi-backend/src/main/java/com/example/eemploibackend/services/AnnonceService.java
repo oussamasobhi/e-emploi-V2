@@ -140,8 +140,13 @@ public class AnnonceService {
         return true;
     }
 
-    public List<Annonce> getDemandespariduser(Long iduser){
-        return annonceRepository.getAllannoncesByuserid(iduser);
+    public List<AnnonceResponse> getDemandespariduser(Long iduser){
+        List<Annonce> annonces=annonceRepository.getAllannoncesByuserid(iduser);
+        List<AnnonceResponse> annonceResponses=new ArrayList<>();
+        for(Annonce a:annonces){
+            annonceResponses.add(ModelMapper.mapannonceToAnnonceResponse(a));
+        }
+        return annonceResponses;
     }
     public void clotureAnnonce(Long idannonce){
         Annonce annonce=annonceRepository.findAnnonceById(idannonce);
