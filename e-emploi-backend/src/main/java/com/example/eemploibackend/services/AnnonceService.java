@@ -138,4 +138,8 @@ public class AnnonceService {
         file.delete();
         return true;
     }
+
+    public List<Annonce> getDemandespariduser(Long iduser){
+        return annonceRepository.getAllannoncesByuserid(iduser);
+    }
 }

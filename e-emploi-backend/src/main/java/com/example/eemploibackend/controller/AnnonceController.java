@@ -1,6 +1,7 @@
 package com.example.eemploibackend.controller;
 
 import com.example.eemploibackend.config.CurrentUser;
+import com.example.eemploibackend.model.Annonce;
 import com.example.eemploibackend.model.FileDB;
 import com.example.eemploibackend.model.User;
 import com.example.eemploibackend.payloads.*;
@@ -59,6 +60,15 @@ public class AnnonceController {
     {
      return annonceService.getaaonnoncesparcategorie(id,page,size,search,max_tarif_dep,min_tarif_dep);
     }
+
+    // Mes demandes
+    @GetMapping("/mesdemandes/{iduser}")
+    public List<Annonce> getAnnonceByUser(@PathVariable(value = "iduser")Long iduser){
+        return annonceService.getDemandespariduser(iduser);
+    }
+
+
+
     @GetMapping("/{id}")
     public AnnonceResponse getaanoncebyid(@PathVariable(value = "id")Long id){
         return ModelMapper.mapannonceToAnnonceResponse(annonceService.getannoncebyid(id));
