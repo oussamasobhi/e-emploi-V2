@@ -45,6 +45,7 @@ public class AnnonceService {
                 .infos_complementaire(request.getInfos_complementaire())
                 .adresse(adresse)
                 .images(request.getImages())
+                .statusAnnonce(StatusAnnonce.EnCours)
                 .user(user)
                 .build();
         annonceRepository.save(annonce);
@@ -141,5 +142,10 @@ public class AnnonceService {
 
     public List<Annonce> getDemandespariduser(Long iduser){
         return annonceRepository.getAllannoncesByuserid(iduser);
+    }
+    public void clotureAnnonce(Long idannonce){
+        Annonce annonce=annonceRepository.findAnnonceById(idannonce);
+        annonce.setStatusAnnonce(StatusAnnonce.Terminé);
+        annonceRepository.save(annonce);
     }
 }

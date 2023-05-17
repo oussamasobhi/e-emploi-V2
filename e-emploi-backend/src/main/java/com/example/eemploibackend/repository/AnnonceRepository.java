@@ -24,4 +24,5 @@ public interface AnnonceRepository extends JpaRepository<Annonce,Long> {
 
     @Query("SELECT A from Annonce A where A.user.id=?1")
     List<Annonce> getAllannoncesByuserid(Long iduser);
+
 }

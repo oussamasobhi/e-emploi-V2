@@ -20,13 +20,17 @@ public class ModelMapper {
                return userResponse;
     }
     public static AnnonceResponse mapannonceToAnnonceResponse(Annonce annonce) {
-        UserResponse userResponse = ModelMapper.mapUserToUserResponse(annonce.getUser());
         AnnonceResponse annonceResponse = new AnnonceResponse();
-        annonceResponse.setId(annonce.getId());
-        annonceResponse.setCreatedAt(annonce.getCreatedAt());
-        annonceResponse.setCategorie2Annonce(annonce.getCategorie2Annonce().getNom_sous_categorie());
-      //  annonceResponse.setCategorieAnnonce(annonce.getCategorie2Annonce().getCategorieAnnonce().getNom_categorie());
-        annonceResponse.setUserResponse(userResponse);
+       annonceResponse.setAnnonceUsers(annonce.getAnnonceUsers());
+       annonceResponse.setCategorie1Annonce(annonce.getCategorie1Annonce());
+       annonceResponse.setCategorie2Annonce(annonce.getCategorie2Annonce());
+       annonceResponse.setDate(annonce.getDate());
+       annonceResponse.setDuree(annonce.getDuree());
+       annonceResponse.setStatusAnnonce(annonce.getStatusAnnonce());
+       annonceResponse.setAdresse(annonce.getAdresse());
+       annonceResponse.setImages(annonce.getImages());
+       annonceResponse.setInfos_complementaire(annonce.getInfos_complementaire());
+       annonceResponse.setUserResponse(ModelMapper.mapUserToUserResponse(annonce.getUser()));
         return annonceResponse;
     }
 }

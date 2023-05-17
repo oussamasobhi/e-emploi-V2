@@ -66,9 +66,6 @@ public class AnnonceController {
     public List<Annonce> getAnnonceByUser(@PathVariable(value = "iduser")Long iduser){
         return annonceService.getDemandespariduser(iduser);
     }
-
-
-
     @GetMapping("/{id}")
     public AnnonceResponse getaanoncebyid(@PathVariable(value = "id")Long id){
         return ModelMapper.mapannonceToAnnonceResponse(annonceService.getannoncebyid(id));
@@ -94,5 +91,6 @@ public class AnnonceController {
             return new ResponseEntity(new ApiResponse(true,"Image suprimé"),HttpStatus.OK);
         return new ResponseEntity(new ApiResponse(true,"id n'existe pas"),HttpStatus.BAD_REQUEST);
     }
+
 }
 
