@@ -91,7 +91,7 @@ const Header = ({ logout, currentUser }) => {
                 >
                   <Link
                     to="/annonce/create"
-                    className="no-underline text-white text-xl"
+                    className="no-underline text-white text-lg"
                   >
                     Demander un service
                   </Link>
@@ -120,7 +120,7 @@ const Header = ({ logout, currentUser }) => {
                 >
                   <Link
                     to="/annonce/create"
-                    className="no-underline text-white text-xl"
+                    className="no-underline text-white text-lg"
                   >
                     Demander un service
                   </Link>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Routes } from 'react-router'
 import TbordLayout from './TbordLayout'
-import MesDemandes from '../mesDemandes/MesDemandes'
+import MesDemandes from '../demande/MesDemandes'
 
 const Tbord = ({logout, currentUser}) => {
   return (

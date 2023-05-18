@@ -27,10 +27,12 @@ module.exports = {
         128: "32rem",
         135: "34rem",
         w1: "46rem",
-        mw: "52rem"
+        mw: "52rem",
+        373:"373px",
       },
       maxWidth:{
-        mw: "52rem"
+        mw: "52rem",
+        620: "620px"
       },
       backgroundImage: {
         "hero-bg": "url('public/image/hero-bg.jpg')",

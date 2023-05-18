@@ -266,6 +266,12 @@ export function getSousCategories(id) {
     method: "GET",
   });
 }
+export function getSousCategory(id){
+  return request({
+    url: API_BASE_URL+"/category/souscategory/this/"+id,
+    method: "GET"
+  })
+}
 export function getSousCategories2(id) {
   return request({
     url: API_BASE_URL + "/category/soussouscategory/" + id,
@@ -302,7 +308,7 @@ export function getAnnonceById(id) {
 }
 export function getAnnoncesByUserId(id){
   return request({
-    url: API_BASE_URL+"/annonce?iduser="+id,
+    url: API_BASE_URL+"/annonce/mesdemandes/"+id,
     method: "GET"
   })
 }

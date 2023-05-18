@@ -82,7 +82,7 @@ const TbordLayout = ({ logout, currentUser }) => {
                   />
                 </ListItemIcon>
                 <Typography sx={{ fontSize: "18px", fontFamily: "Poppins" }}>
-                  Messageris
+                  Messagerie
                 </Typography>
               </ListItemButton>
             </ListItem>

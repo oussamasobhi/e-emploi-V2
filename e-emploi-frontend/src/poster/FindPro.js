@@ -17,8 +17,8 @@ const FindPro = () => {
         ville:"",
         quartier:"",
         supplement:"",
-        id_categorie2Annonce:id_souscat,
-        id_categorie1Annonce:JSON.parse(localStorage.getItem("cat1")),
+        //id_categorie2Annonce:"",
+        id_categorie1Annonce:id_souscat,
         infos_complementaire:""
       })
     useEffect(() => {

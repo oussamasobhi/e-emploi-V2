@@ -22,8 +22,8 @@ import { myTheme } from "../theme";
 import ProRegister from "../user/ProRegister";
 import CategorieRoute from "../categorie/CategorieRoute";
 import FindPro from "../poster/FindPro";
-import MesDemandes from "../mesDemandes/MesDemandes";
 import Tbord from "../dashboard/Tbord";
+import DemandeRoute from "../demande/DemandeRoute";
 
 
 function App() {
@@ -238,6 +238,7 @@ function App() {
             <Route path="categorie/:id" element={<CategorieRoute/> } />
             <Route path="postjob/:id_souscat/*" element={<FindPro/> } />
             <Route path="dboard/*" element={<Tbord logout={handleLogout} currentUser={currentUser} /> } />
+            <Route path="demande/:id/*" element={<DemandeRoute/> }/>
             <Route path="*" element={<NotFound />} />
             <Route
               path="/:username/*"

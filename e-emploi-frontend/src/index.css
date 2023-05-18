@@ -8,6 +8,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Wix+Madefor+Display&display=swap');
 
+
 body {
   margin: 0;
   @apply overflow-y-scroll;

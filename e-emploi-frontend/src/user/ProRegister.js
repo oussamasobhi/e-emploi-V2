@@ -291,6 +291,10 @@ const ProRegister = () => {
             });
             navigate("/login");
         }catch(error){
+          message.error({
+            content:"Echec d'inscription",
+            className:"relative top-16"
+        });
             console.log(error);
         }       
     }
