@@ -23,4 +23,10 @@ public class SousCategorieService {
     public List<Categorie_1_Annonce> getAll(){
         return categorie1AnnonceRepository.findAll();
     }
+    public Categorie_1_Annonce getSousCAtegoryById(Long id){
+        if(categorie1AnnonceRepository.existsById(id)){
+            return categorie1AnnonceRepository.findById(id).get();
+        }
+        return null;
+    }
 }

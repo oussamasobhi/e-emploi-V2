@@ -11,6 +11,7 @@ import java.util.List;
 
 @Data
 public class AnnonceResponse {
+    private Long id;
     private String infos_complementaire;
     private Date date;
     private String duree;

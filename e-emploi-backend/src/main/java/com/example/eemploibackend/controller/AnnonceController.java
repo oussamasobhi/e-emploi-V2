@@ -67,8 +67,8 @@ public class AnnonceController {
         return annonceService.getDemandespariduser(iduser);
     }
     @GetMapping("/{id}")
-    public AnnonceResponse getaanoncebyid(@PathVariable(value = "id")Long id){
-        return ModelMapper.mapannonceToAnnonceResponse(annonceService.getannoncebyid(id));
+    public ResponseEntity<AnnonceResponse> getaanoncebyid(@PathVariable(value = "id")Long id){
+        return ResponseEntity.ok(ModelMapper.mapannonceToAnnonceResponse(annonceService.getannoncebyid(id))) ;
     }
 
     @PostMapping("/upload/{idannonce}")

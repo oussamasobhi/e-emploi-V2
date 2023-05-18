@@ -5,6 +5,7 @@ import com.example.eemploibackend.model.Categorie_1_Annonce;
 import com.example.eemploibackend.model.Categorie_2_Annonce;
 import com.example.eemploibackend.services.SousCategorieService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,5 +23,9 @@ public class SousCategorieController {
     @GetMapping
     public List<Categorie_1_Annonce> getSousCategories(){
         return service.getAll();
+    }
+    @GetMapping("/this/{id}")
+    public ResponseEntity<Categorie_1_Annonce> getSousCategory(@PathVariable("id") Long id){
+        return ResponseEntity.ok(service.getSousCAtegoryById(id)) ;
     }
 }
