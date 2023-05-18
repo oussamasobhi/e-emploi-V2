@@ -22,8 +22,8 @@ public class ModelMapper {
     public static AnnonceResponse mapannonceToAnnonceResponse(Annonce annonce) {
         AnnonceResponse annonceResponse = new AnnonceResponse();
        annonceResponse.setAnnonceUsers(annonce.getAnnonceUsers());
-       annonceResponse.setCategorie1Annonce(annonce.getCategorie1Annonce());
-       annonceResponse.setCategorie2Annonce(annonce.getCategorie2Annonce());
+       annonceResponse.setCategorie1Annonce(annonce.getCategorie1Annonce().getId());
+       annonceResponse.setCategorie2Annonce(annonce.getCategorie2Annonce().getId());
        annonceResponse.setDate(annonce.getDate());
        annonceResponse.setDuree(annonce.getDuree());
        annonceResponse.setStatusAnnonce(annonce.getStatusAnnonce());

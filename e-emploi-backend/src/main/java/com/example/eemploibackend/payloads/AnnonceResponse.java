@@ -16,8 +16,8 @@ public class AnnonceResponse {
     private String duree;
     private Adresse adresse;
     private List<FileDB> images;
-    private Categorie_2_Annonce categorie2Annonce;
-    private Categorie_1_Annonce categorie1Annonce;
+    private Long categorie2Annonce;
+    private Long categorie1Annonce;
     private List<AnnonceUser> annonceUsers;
     private UserResponse userResponse;
     private StatusAnnonce statusAnnonce;
