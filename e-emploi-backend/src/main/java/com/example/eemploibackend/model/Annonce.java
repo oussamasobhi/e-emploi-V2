@@ -29,7 +29,7 @@ public class Annonce extends DateAudit {
     @OneToMany(mappedBy = "annonce",cascade = CascadeType.ALL)
     private List<FileDB> images;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_Categorie_2", nullable = false)
+    @JoinColumn(name = "id_Categorie_2", nullable = true)
     @JsonIgnore
     private Categorie_2_Annonce categorie2Annonce;
 

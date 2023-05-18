@@ -30,7 +30,8 @@ public class AnnonceService {
     }
     public void ajouterannonce(User user, AnnonceRequest request){
         Categorie_2_Annonce categorie2Annonce=categorie2AnnonceRepository.findCategorie_2_AnnonceById(request.getId_categorie2Annonce());
-        Categorie_1_Annonce categorie1Annonce=categorie1AnnonceRepository.findById(request.getId_categorie1Annonce()).orElseThrow();
+        Categorie_1_Annonce categorie1Annonce=categorie1AnnonceRepository.findCategorie_1_AnnonceById(request.getId_categorie1Annonce());
+
         Adresse adresse= Adresse.builder()
                 .ville(request.getVille())
                 .quartier(request.getQuartier())
