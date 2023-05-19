@@ -1,29 +1,72 @@
-import { Box, Breadcrumbs, Typography} from '@mui/material'
-import React from 'react'
-import { Outlet } from 'react-router'
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import { Link } from 'react-router-dom';
+import { Box, Breadcrumbs, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Outlet, useParams } from "react-router";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import { Link } from "react-router-dom";
+import { getAnnonceById, getSousCategory } from "../util/APIUtils";
 
 const DemandeLayout = () => {
-    const breadcrumbs = [
-        <Link to="/dboard" className='font-wix no-underline hover:underline text-black'>
-          Mes demandes
-        </Link>,
-        <Typography sx={{fontFamily:"Wix Madefor Display", color:"gray"}}>
-          Catégorie1 de la demande
-        </Typography>,
-      ];
+  const { id } = useParams();
+  const [demande, setDemande] = useState(null);
+  const [sousCat, setSousCat] = useState(null);
+  
+  useEffect(() => {
+    const loadDemande = async () => {
+     try{
+       const res = await getAnnonceById(id);
+       setDemande(res);
+     }catch(error){
+       console.log(error);
+     }
+    }
+    if(id) loadDemande();
+    console.log(id);
+   }, [id])
+   useEffect(() => {
+     console.log(demande)
+   }, [demande])
+   useEffect(() => {
+    const loadSousCategorie = async () => {
+     try{
+       const res = await getSousCategory(demande.id);
+       setSousCat(res);
+     }catch(error){
+       console.log(error);
+     }
+    }
+    console.log(demande)
+    if(demande) loadSousCategorie();
+   }, [demande])
+     
+   useEffect(() => {
+    console.log(sousCat)
+  }, [sousCat])
+  
+
+   
+  const breadcrumbs = [
+    <Link
+      to="/dboard"
+      className="font-wix no-underline hover:underline text-black"
+    >
+      Mes demandes
+    </Link>,
+    <Typography sx={{ fontFamily: "Wix Madefor Display", color: "gray" }}>
+      {sousCat?.nom_sous_categorie}
+    </Typography>,
+  ];
   return (
-    <Box className='px-10 lg:px-8' sx={{ paddingY:"12px"}} >
-          <Breadcrumbs className='py-2'
+    <Box className="px-10 lg:px-8" sx={{ paddingY: "12px" }}>
+      <Breadcrumbs
+        className="py-2"
         separator={<NavigateNextIcon fontSize="small" />}
         aria-label="breadcrumb"
       >
         {breadcrumbs}
       </Breadcrumbs>
-        <Outlet/>
+      <Outlet />
     </Box>
-  )
-}
+  );
+};
 
-export default DemandeLayout
+export default DemandeLayout;

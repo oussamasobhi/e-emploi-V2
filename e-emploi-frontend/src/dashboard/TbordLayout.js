@@ -63,7 +63,7 @@ const TbordLayout = ({ logout, currentUser }) => {
                     sx={{ fontSize: "30px", color: theme.palette.primary.main }}
                   />
                 </ListItemIcon>
-                <Typography sx={{ fontSize: "18px", fontFamily: "Poppins" }}>
+                <Typography sx={{ fontSize: "16px", color:"#5d636a", fontFamily: "Poppins" }}>
                   Mes demandes
                 </Typography>
               </ListItemButton>
@@ -81,7 +81,7 @@ const TbordLayout = ({ logout, currentUser }) => {
                     sx={{ fontSize: "30px", color: theme.palette.primary.main }}
                   />
                 </ListItemIcon>
-                <Typography sx={{ fontSize: "18px", fontFamily: "Poppins" }}>
+                <Typography sx={{ fontSize: "16px", color:"#5d636a", fontFamily: "Poppins" }}>
                   Messagerie
                 </Typography>
               </ListItemButton>
@@ -106,7 +106,7 @@ const TbordLayout = ({ logout, currentUser }) => {
                       }}
                     />
                   </ListItemIcon>
-                  <Typography sx={{ fontSize: "18px", fontFamily: "Poppins" }}>
+                  <Typography sx={{ fontSize: "16px", color:"#5d636a", fontFamily: "Poppins" }}>
                     Dashboard
                   </Typography>
                 </ListItemButton>
@@ -114,7 +114,7 @@ const TbordLayout = ({ logout, currentUser }) => {
             )}
             <ListItem
               onClick={() => {
-                goToProfile();
+                navigate("/dboard/moncompte")
               }}
               sx={{
                 display: "flex",
@@ -128,7 +128,7 @@ const TbordLayout = ({ logout, currentUser }) => {
                     sx={{ fontSize: "30px", color: theme.palette.primary.main }}
                   />
                 </ListItemIcon>
-                <Typography sx={{ fontSize: "18px", fontFamily: "Poppins" }}>
+                <Typography sx={{ fontSize: "16px", color:"#5d636a", fontFamily: "Poppins" }}>
                   Compte
                 </Typography>
               </ListItemButton>

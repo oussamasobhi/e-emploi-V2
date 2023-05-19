@@ -4,8 +4,6 @@ import {
   Button,
   Menu,
   MenuItem,
-  Tab,
-  Tabs,
   Toolbar,
   Typography,
   useMediaQuery,
@@ -17,7 +15,6 @@ import DrawerComp from "./DrawerComp";
 import { Link, useNavigate } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
-import MenuIcon from '@mui/icons-material/Menu';
 import { ForumOutlined, PersonOutlined } from "@mui/icons-material";
 import DashboardIcon from '@mui/icons-material/Dashboard';
 
@@ -39,7 +36,7 @@ const PAGES = [
     url: "#",
   },
 ];
-const Header = ({ logout, currentUser }) => {
+const Header = ({ logout, currentUser, demander }) => {
   const navigate = useNavigate();
   const [value, setValue] = useState();
   const theme = useTheme();
@@ -53,7 +50,7 @@ const Header = ({ logout, currentUser }) => {
     navigate("/prosignup");
   }
   const goToProfile = () => {
-    navigate("/" + currentUser.username);
+    navigate("/dboard/moncompte");
   };
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -79,6 +76,7 @@ const Header = ({ logout, currentUser }) => {
               </Typography>
               {localStorage.getItem("token") !== "" && (
                 <Button
+                onClick={()=>demander()}
                 size="large"  
                   variant="contained"
                   sx={{
@@ -89,12 +87,7 @@ const Header = ({ logout, currentUser }) => {
                     textTransform:"capitalize"
                   }}
                 >
-                  <Link
-                    to="/annonce/create"
-                    className="no-underline text-white text-lg"
-                  >
                     Demander un service
-                  </Link>
                 </Button>
               )}
               <DrawerComp
@@ -109,6 +102,7 @@ const Header = ({ logout, currentUser }) => {
               {localStorage.getItem("token") !== "" && (
                 <Button
                 size="large"  
+                onClick={()=>demander()}
                 variant="contained"
                   sx={{
                     marginLeft: "auto",
@@ -118,12 +112,9 @@ const Header = ({ logout, currentUser }) => {
                     textTransform:"capitalize"
                   }}
                 >
-                  <Link
-                    to="/annonce/create"
-                    className="no-underline text-white text-lg"
-                  >
+                  
                     Demander un service
-                  </Link>
+                  
                 </Button>
               )}
               {/*<Tabs

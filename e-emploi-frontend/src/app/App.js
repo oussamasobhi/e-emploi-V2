@@ -24,6 +24,7 @@ import CategorieRoute from "../categorie/CategorieRoute";
 import FindPro from "../poster/FindPro";
 import Tbord from "../dashboard/Tbord";
 import DemandeRoute from "../demande/DemandeRoute";
+import Informations from "../compte/Informations";
 
 
 function App() {
@@ -240,6 +241,7 @@ function App() {
             <Route path="dboard/*" element={<Tbord logout={handleLogout} currentUser={currentUser} /> } />
             <Route path="demande/:id/*" element={<DemandeRoute/> }/>
             <Route path="*" element={<NotFound />} />
+            
             <Route
               path="/:username/*"
               element={

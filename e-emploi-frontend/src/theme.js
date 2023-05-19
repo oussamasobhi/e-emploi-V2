@@ -14,6 +14,13 @@ export const myTheme = createTheme({
         blue: {
             main: "#2413FF",
             second: "#0078fa"
+        },
+        purple: {
+            main:"#8043ca",
+            second:"#504385"
+        },
+        green: {
+            main:"#4ade80"
         }
     }
 })

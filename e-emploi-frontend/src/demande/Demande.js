@@ -35,7 +35,7 @@ const Demande = () => {
   useEffect(() => {
    const loadSousCategorie = async () => {
     try{
-      const res = await getSousCategory(demande.id);
+      const res = await getSousCategory(demande.categorie1Annonce);
       setSousCat(res);
     }catch(error){
       console.log(error);
@@ -87,7 +87,7 @@ const Demande = () => {
             <Typography variant='body1' sx={{fontFamily:"Poppins"}}><span className='text-gray-800 '>Adresse</span></Typography>
           </Box>*/}
         </Box>
-        <Box>
+        <Box className="mb-5">
           <Typography variant="subtitle1" gutterBottom><span className='font-bold font-poppins'>Détails de la demande</span></Typography>
           <Typography variant="body2" sx={{fontFamily:"Wix Madefor Display", marginBottom:"18px"}}>{demande.infos_complementaire} </Typography>
           <Typography variant="subtitle1" gutterBottom><span className='font-bold font-poppins'>Données personnelles</span></Typography>
@@ -101,13 +101,14 @@ const Demande = () => {
           </Box>
           <Box className="flex items-start">
           <LocationOnOutlinedIcon sx={{color:myTheme.palette.blue.second, marginRight:"12px"}} />
-          <Box className="flex flex-col">
+         <Box className="flex flex-col">
             <Typography variant="body1" sx={{fontFamily:"Wix Madefor Display"}}>Adresse</Typography>
-            <Typography variant="body1" sx={{fontFamily:"Wix Madefor Display", fontWeight:"bold"}}>
+            {demande.userResponse.adresse && <Typography variant="body1" sx={{fontFamily:"Wix Madefor Display", fontWeight:"bold"}}>
             {demande.userResponse.adresse?.suplementaire!=="" && <span className='text-gray-800 '>{demande.userResponse.adresse?.suplementaire},&nbsp; </span>}
               {demande.userResponse.adresse?.quartier!=="" && <span className='text-gray-800 '>{demande.userResponse.adresse?.quartier},&nbsp; </span>}
               {demande.userResponse.adresse?.ville!=="" && <span className='text-gray-800 '>{demande.userResponse.adresse?.ville} </span>}
-            </Typography>
+            </Typography>}
+            
           </Box>
           </Box>
           </Box>
@@ -126,6 +127,7 @@ const Demande = () => {
         <Box className="lg:mr-2" sx={{width: '96px', // Equivalent to w-24 in Tailwind CSS
     [theme.breakpoints.up('lg')]: {
       width: '80px', // Equivalent to lg:w-16 in Tailwind CSS
+      height: '80px'
     },}}>
         <Avatar
         alt="Photo de profil"        
