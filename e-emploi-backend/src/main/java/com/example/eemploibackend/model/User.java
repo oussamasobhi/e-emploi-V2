@@ -2,10 +2,7 @@ package com.example.eemploibackend.model;
 
 import com.example.eemploibackend.model.audit.DateAudit;
 import com.example.eemploibackend.token.Token;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerator;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -31,6 +28,7 @@ import java.util.stream.Collectors;
         })
 })
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class User extends DateAudit implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,7 +50,7 @@ public class User extends DateAudit implements UserDetails{
              name = "competence_user",
              joinColumns = @JoinColumn(name = "prestataire_id"),
              inverseJoinColumns = @JoinColumn(name = "categorie1_id"))
-             @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+     @JsonIdentityReference(alwaysAsId = true)
      List<Categorie_1_Annonce> competences;
      @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Review> reviews;

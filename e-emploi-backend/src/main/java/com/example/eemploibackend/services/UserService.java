@@ -26,7 +26,17 @@ public class UserService {
     private final FileStorageService fileStorageService;
     private final CategoryRepository categoryRepository;
     private final Categorie_1_AnnonceRepository categorie1AnnonceRepository;
+    private final AdresseRepository adresseRepository;
     public void updateuser(Pro_RegisterRequest request,Long iduser){
+
+        Adresse adresse= new Adresse();
+        if(request.getAdresse()!=null){
+            adresse.setVille(request.getAdresse().getVille());
+            adresse.setQuartier(request.getAdresse().getQuartier());
+            adresse.setSuplementaire(request.getAdresse().getSuplementaire());
+            adresseRepository.save(adresse);
+        }
+
 
             userRepository.findById(iduser).map(
                 USER ->
@@ -48,6 +58,9 @@ public class UserService {
                              USER.setDate_naissance(request.getDate_naissance());
                              USER.setImage(request.getImage());
                              USER.setNum_tel(request.getNum_tel());
+                    if(request.getAdresse()!=null){
+                        USER.setAdresse(adresse);
+                    }
 
              if(!isafieldnull) {
              Role userRole=roleRepository.findByName(RoleName.ROLE_CONDIDAT).orElseThrow(()->new AppException("USER ROLE NOT SET."));
@@ -70,8 +83,8 @@ public class UserService {
     }
     public UserSummary mapusertoSummary(User user){
         UserSummary userSummary=new UserSummary();
-        userSummary.setId((user.getId()));
-
+        userSummary.setId(user.getId());
+        userSummary.setAdresse(user.getAdresse());
         userSummary.setNom(user.getNom());
         userSummary.setEmail(user.getEmail());
         userSummary.setCIN(user.getCIN());

@@ -21,5 +21,5 @@ public class UserSummary {
     private String Role;
     private FileDB photo_profil;
     private Date date_naissance;
-    List<Adresse> adresses;
+    Adresse adresse;
 }
