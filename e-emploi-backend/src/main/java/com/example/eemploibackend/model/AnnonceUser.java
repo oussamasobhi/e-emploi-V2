@@ -32,6 +32,8 @@ public class AnnonceUser {
     @MapsId("iduser")
     @JsonIgnore
     private User user;
+
+    private StatusReservation statusReservation;
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

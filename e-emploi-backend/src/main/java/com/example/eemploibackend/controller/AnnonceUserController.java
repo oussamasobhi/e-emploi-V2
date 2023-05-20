@@ -40,4 +40,11 @@ public class AnnonceUserController {
                                                       @PathVariable(name = "iduser") Long iduser){
         return ResponseEntity.ok(annonceUserService.getAnnonceUser(idannonce, iduser));
     }
+    @PutMapping("/accepterreserve/{idannonce}/{iduser}")
+    public ResponseEntity<?> accepteroffrer(@PathVariable(value = "idannonce")Long idannonce,
+                                            @PathVariable(value = "iduser")Long iduser){
+        annonceUserService.accepterAnnonceUser(idannonce, iduser);
+        return new ResponseEntity(new ApiResponse(true,"Vous avez accepté offre avec succes"),
+                HttpStatus.ACCEPTED);
+    }
 }

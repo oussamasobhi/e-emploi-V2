@@ -12,6 +12,4 @@ import java.util.List;
 public interface CategoryRepository extends JpaRepository<CategorieAnnonce,Long> {
     boolean existsById(Long idcategory);
 
-    @Query("SELECT U.users from CategorieAnnonce U where U.id=?1")
-    List<User> getusersbycategory(Long id);
 }
