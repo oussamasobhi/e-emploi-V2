@@ -38,9 +38,9 @@ const MesDemandes = ({currentUser}) => {
       </Box>
 
 
-      {mesDemandes?.map((demande)=>(
+      {mesDemandes?.map((demande, index)=>(
 
-     <DemandeCarte demande={demande} /> 
+     <DemandeCarte key={index} demande={demande} /> 
       ))}          
     </Box>
 </Box>

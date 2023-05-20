@@ -110,9 +110,14 @@ function App() {
   };
 
   const loadCurrentUser = async () => {
-    const res = await getCurrentUser();
-    setCurrentUser(res);
-    localStorage.setItem("CURRENT_USER", JSON.stringify(currentUser));
+    try{
+      const res = await getCurrentUser();
+      setCurrentUser(res);
+      localStorage.setItem("CURRENT_USER", JSON.stringify(currentUser));
+    }catch(error){
+      console.log(error)
+    }  
+
   };
 
   const handleLogout = (e, func) => {

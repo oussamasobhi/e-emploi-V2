@@ -1,16 +1,17 @@
 import { Outlet } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
-import { Box } from "@mui/material";
-import DemandeModal from "./Home/DemandeModal";
+import { Box, Button, Modal, Typography } from "@mui/material";
 import { useState } from "react";
 
 const Layout = ({
   currentUser,
   onLogout,
 }) => {
-  const [isOpenDemande, setIsOpenDemande] = useState(true);
+  const [isOpenDemande, setIsOpenDemande] = useState(false);
+  
   return (
+    <>
     <Box className="font-poppins flex flex-col h-screen bg-gray-100" sx={{position:"relative"}}>
       <Header
         logout={onLogout}
@@ -25,9 +26,22 @@ const Layout = ({
         </div>
         {/*<Footer className="justify-self-end" />*/}
       </Box>
-      <DemandeModal isOpenDemande={isOpenDemande} setIsOpenDemande={setIsOpenDemande} />
-      
     </Box>
+    
+<Modal
+  open={isOpenDemande}
+  onClose={()=>setIsOpenDemande(false)}
+  aria-labelledby="modal-title"
+  aria-describedby="modal-description"
+>
+  <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', boxShadow: 24, p: 4 }}>
+    <h2 id="modal-title">Modal Title</h2>
+    <p id="modal-description">Modal Content</p>
+    <Button onClick={()=>setIsOpenDemande(false)}>Close</Button>
+  </Box>
+</Modal>
+
+    </>
   );
 };
 

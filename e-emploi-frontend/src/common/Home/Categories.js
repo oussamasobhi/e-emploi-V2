@@ -20,8 +20,8 @@ const Categories = ({categories}) => {
       </Box>
       <Box className="py-5 grid md:grid-cols-3 gap-6">
         {categories?.map((categorie,index)=>(
-          <Box sx={{height:"235px"}} className="cursor-pointer" onClick={()=>navigate("/categorie/"+categorie.id)} >
-          <Box sx={{height:"180px"}} className="bg-blue-400 rounded-xl overflow-hidden" key={index}>
+          <Box key={index} sx={{height:"235px"}} className="cursor-pointer" onClick={()=>navigate("/categorie/"+categorie.id)} >
+          <Box sx={{height:"180px"}} className="bg-blue-400 rounded-xl overflow-hidden" >
             <img src={require("../../public/image/categorie"+categorie.id+".jpg")}
             className="h-full w-full object-cover hover:translate-y-1 hover:scale-110 transition-transform"
             alt={categorie.nom_categorie} />

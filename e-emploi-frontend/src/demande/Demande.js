@@ -153,7 +153,7 @@ const Demande = () => {
               et j’ai beaucoup apprécié qu’elle prenne le temps de m’envoyer régulièrement des"
             </Typography>
             <Box className="flex items-center">
-            {x.map(()=>(<StarIcon  sx={{width:"18px", height:"18px", color:'#ffb942'}}  />))}
+            {x.map((index)=>(<StarIcon key={index} sx={{width:"18px", height:"18px", color:'#ffb942'}}  />))}
             <Typography variant="body2" sx={{color:"#62748b", fontFamily:"Wix Madefor Display", marginLeft:"6px"}}>
             Anatole . Il y a 15 jours
             </Typography>
