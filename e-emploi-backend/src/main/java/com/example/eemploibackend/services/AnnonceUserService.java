@@ -34,10 +34,14 @@ public class AnnonceUserService {
                 .id(new AnnonceUserID(iduser, request.getIdannonce()))
                 .annonce(annonce)
                 .user(user)
+                .statusReservation(StatusReservation.Standard)
                 .build();
         annonceUserRepository.save(annonceUser);
     }
-
+    public void accepterAnnonceUser(Long idannonce,Long iduser){
+        AnnonceUser annonceUser=getAnnonceUser(idannonce, iduser);
+        annonceUser.setStatusReservation(StatusReservation.Reservé);
+    }
 
     public AnnonceUser getAnnonceUser(Long idannonce, Long iduser){
         return annonceUserRepository.findbyuserandannonce(idannonce, iduser);

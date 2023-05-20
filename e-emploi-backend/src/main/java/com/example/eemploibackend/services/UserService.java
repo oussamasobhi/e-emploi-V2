@@ -3,10 +3,7 @@ package com.example.eemploibackend.services;
 import com.example.eemploibackend.exceptions.AppException;
 import com.example.eemploibackend.model.*;
 import com.example.eemploibackend.payloads.*;
-import com.example.eemploibackend.repository.CategoryRepository;
-import com.example.eemploibackend.repository.FileDBRepository;
-import com.example.eemploibackend.repository.RoleRepository;
-import com.example.eemploibackend.repository.UserRepository;
+import com.example.eemploibackend.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +25,7 @@ public class UserService {
     private  final FileDBRepository fileDBRepository;
     private final FileStorageService fileStorageService;
     private final CategoryRepository categoryRepository;
+    private final Categorie_1_AnnonceRepository categorie1AnnonceRepository;
     public void updateuser(Pro_RegisterRequest request,Long iduser){
 
             userRepository.findById(iduser).map(
@@ -123,7 +121,7 @@ public class UserService {
         return prorandomsresponse;
     }
     public List<UserResponse> getrandomsbycategory(Long idcategory){
-        List<User> users=categoryRepository.getusersbycategory(idcategory);
+        List<User> users=categorie1AnnonceRepository.getusersBysousCategory(idcategory);
         List<UserResponse> prorandomsresponse=new ArrayList<>();
         for(int i=0;i<2;i++){
             prorandomsresponse.add(ModelMapper.mapUserToUserResponse(users.get(i)));

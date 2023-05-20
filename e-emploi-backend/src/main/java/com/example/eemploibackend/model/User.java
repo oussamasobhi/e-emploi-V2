@@ -51,9 +51,9 @@ public class User extends DateAudit implements UserDetails{
      @JoinTable(
              name = "competence_user",
              joinColumns = @JoinColumn(name = "prestataire_id"),
-             inverseJoinColumns = @JoinColumn(name = "categorie_id"))
+             inverseJoinColumns = @JoinColumn(name = "categorie1_id"))
              @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-     List<CategorieAnnonce> competences;
+     List<Categorie_1_Annonce> competences;
      @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Review> reviews;
     @OneToMany(mappedBy = "reviewer", cascade = CascadeType.ALL, orphanRemoval = true)
