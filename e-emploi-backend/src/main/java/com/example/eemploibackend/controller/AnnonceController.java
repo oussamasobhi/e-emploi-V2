@@ -28,8 +28,12 @@ public class AnnonceController {
     @PostMapping("/add")
     public ResponseEntity<?> addannonce(@RequestBody AnnonceRequest request, @CurrentUser User user){
         annonceService.ajouterannonce(user,request);
-        return new ResponseEntity(new ApiResponse(true,"annonce ajouté"),
+        return new ResponseEntity<>(new ApiResponse(true,"annonce ajouté"),
                 HttpStatus.ACCEPTED);
+    }
+    @GetMapping
+    public ResponseEntity<List<AnnonceResponse>> getAll(){
+        return ResponseEntity.ok(annonceService.getAllAnnonce());
     }
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> suprrimerannonce(@PathVariable(value = "id")Long id,

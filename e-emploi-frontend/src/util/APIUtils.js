@@ -306,6 +306,12 @@ export function getAnnonceById(id) {
     method: "GET"
   })
 }
+export function getAllAnnonces(){
+  return request({
+    url: API_BASE_URL+"/annonce",
+    method:"GET"
+  })
+}
 export function getAnnoncesByUserId(id){
   return request({
     url: API_BASE_URL+"/annonce/mesdemandes/"+id,

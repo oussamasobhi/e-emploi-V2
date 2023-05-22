@@ -24,7 +24,6 @@ import CategorieRoute from "../categorie/CategorieRoute";
 import FindPro from "../poster/FindPro";
 import Tbord from "../dashboard/Tbord";
 import DemandeRoute from "../demande/DemandeRoute";
-import Informations from "../compte/Informations";
 
 
 function App() {

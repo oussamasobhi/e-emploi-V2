@@ -28,6 +28,14 @@ public class AnnonceService {
     public Annonce getannoncebyid(Long id){
         return annonceRepository.findById(id).orElseThrow();
     }
+    public List<AnnonceResponse> getAllAnnonce(){
+        List<Annonce> annonces=annonceRepository.findAll();
+        List<AnnonceResponse> annonceResponses=new ArrayList<>();
+        for(Annonce a:annonces){
+            annonceResponses.add(ModelMapper.mapannonceToAnnonceResponse(a));
+        }
+        return annonceResponses;
+    }
     public void ajouterannonce(User user, AnnonceRequest request){
         Categorie_2_Annonce categorie2Annonce=categorie2AnnonceRepository.findCategorie_2_AnnonceById(request.getId_categorie2Annonce());
         Categorie_1_Annonce categorie1Annonce=categorie1AnnonceRepository.findCategorie_1_AnnonceById(request.getId_categorie1Annonce());

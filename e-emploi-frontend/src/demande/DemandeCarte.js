@@ -48,7 +48,10 @@ const DemandeCarte = ({demande}) => {
           <Box className="rounded-xl bg-blue-100 flex mt-4" sx={{height:"96px"}} >
           </Box>
         </Box>     
-        <Button onClick={()=>gererDemande(demande.id)} variant='contained' sx={{width:"100%", borderRadius: "12px", paddingY:"12px", marginTop:"14px"}} className='mt-4' ><span className='capitalize font-poppins' >Gérer</span><span className='lowercase font-poppins' >ma demande</span></Button>       
+        {demande?.userResponse?.username===JSON.parse(localStorage.getItem("CURRENT_USER")).username &&
+         <Button onClick={()=>gererDemande(demande.id)} variant='contained' sx={{width:"100%", borderRadius: "12px", paddingY:"12px", marginTop:"14px"}} className='mt-4'><span className='capitalize font-poppins' >Gérer&nbsp;</span><span className='lowercase font-poppins' >ma demande</span></Button>}
+          {demande?.userResponse?.username!==JSON.parse(localStorage.getItem("CURRENT_USER")).username &&
+         <Button onClick={()=>{}} variant='contained' sx={{width:"100%", borderRadius: "12px", paddingY:"12px", marginTop:"14px"}} className='mt-4'><span className='capitalize font-poppins' >Postuler</span></Button>}
       </Box>  
   )
 }

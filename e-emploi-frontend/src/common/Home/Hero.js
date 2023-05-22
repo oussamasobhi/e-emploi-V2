@@ -23,11 +23,11 @@ const Hero = () => {
           </p>
           <div className="grid grid-cols-2 pt-20">
             <button className="cursor-pointer bg-my-blue border-none rounded-md mr-5 text-lg py-4 px-2 font-roboto uppercase justify-self-end transition-colors duration-300 ease-in-out w-52 ">
-              <Link to={"/annonce"} className="text-orange-500 no-underline" >Voir les annonces</Link>
+              <Link to={"/annonce"} className="text-orange-500 no-underline capitalize" >Voir les annonces</Link>
             </button>
 
             <button className="cursor-pointer bg-my-blue border-none rounded-md text-lg py-4 px-2 font-roboto uppercase transition-colors duration-300 ease-in-out w-52">
-              <Link className="text-orange-500 no-underline" >Contacter</Link>
+              <Link to={"/dboard/demandes"} className="text-orange-500 no-underline capitalize" >Toutes les demandes</Link>
             </button>
           </div>
         </div>

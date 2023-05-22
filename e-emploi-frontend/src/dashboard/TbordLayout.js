@@ -46,6 +46,27 @@ const TbordLayout = ({ logout, currentUser }) => {
       >
         <List className="" sx={{ position: "relative", top: "70px" }}>
           <Box className="">
+          <ListItem
+          onClick={() => {
+            navigate("/dboard/demandes")
+          }}
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                width: "100%",
+              }}
+            >
+              <ListItemButton sx={{ height:"56px", borderRadius: "10px" }} onClick={() => {}}>
+                <ListItemIcon>
+                <BookmarkBorderIcon
+                    sx={{ fontSize: "30px", color: theme.palette.primary.main }}
+                  />
+                </ListItemIcon>
+                <Typography sx={{ fontSize: "16px", color:"#5d636a", fontFamily: "Poppins" }}>
+                  Demandes
+                </Typography>
+              </ListItemButton>
+            </ListItem>
             <ListItem
               sx={{
                 display: "flex",
