@@ -42,8 +42,10 @@ public class AnnonceUserService {
         AnnonceUser annonceUser=getAnnonceUser(idannonce, iduser);
         annonceUser.setStatusReservation(StatusReservation.Reservé);
     }
-
     public AnnonceUser getAnnonceUser(Long idannonce, Long iduser){
         return annonceUserRepository.findbyuserandannonce(idannonce, iduser);
+    }
+    public List<AnnonceUser> getAllAnnonceUsers(Long iduser){
+        return annonceUserRepository.findByIdUser(iduser);
     }
 }

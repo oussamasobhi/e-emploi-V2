@@ -15,4 +15,6 @@ public interface AnnonceUserRepository extends JpaRepository<AnnonceUser, Annonc
     @Query("SELECT A from AnnonceUser A where A.user.id=?2 and A.annonce.id=?1")
     AnnonceUser findbyuserandannonce(Long idannonce,Long iduser);
 
+    @Query("SELECT A from AnnonceUser A where A.user.id=?1")
+    List<AnnonceUser> findByIdUser(Long iduser);
 }

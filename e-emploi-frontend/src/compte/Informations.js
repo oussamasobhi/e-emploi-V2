@@ -147,7 +147,9 @@ const Informations = () => {
                 {user.adresse?.suplementaire!=="" && <span className='text-gray-800 '>{user.adresse?.suplementaire},&nbsp; </span>}
                 {user.adresse?.quartier!=="" && <span className='text-gray-800 '>{user.adresse?.quartier},&nbsp; </span>}
                 {user.adresse?.ville!=="" && <span className='text-gray-800 '>{user.adresse?.ville} </span>}
-                </>):"Non renseignée"
+                </>
+                )
+                :"Non renseignée"
                 }
                 </Typography>
             </Box>

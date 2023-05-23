@@ -5,6 +5,7 @@ import MesDemandes from '../demande/MesDemandes'
 import MonCompte from '../compte/MonCompte'
 import Informations from '../compte/Informations'
 import Demandes from '../demande/Demandes'
+import Propositions from '../demande/Propositions'
 
 const Tbord = ({logout, currentUser}) => {
   return (
@@ -14,6 +15,7 @@ const Tbord = ({logout, currentUser}) => {
             <Route path="moncompte" element={<MonCompte/> } />
             <Route path="moncompte/informations" element={<Informations/> } />
             <Route path="demandes" element={<Demandes/> } />
+            <Route path="propositions" element={<Propositions/> } />
         </Route>
     </Routes>
   )

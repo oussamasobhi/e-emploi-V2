@@ -40,6 +40,10 @@ public class AnnonceUserController {
                                                       @PathVariable(name = "iduser") Long iduser){
         return ResponseEntity.ok(annonceUserService.getAnnonceUser(idannonce, iduser));
     }
+    @GetMapping("/{iduser}")
+    public ResponseEntity<List<AnnonceUser>> getAllAnnonceUser(@PathVariable(name = "iduser") Long iduser){
+        return ResponseEntity.ok(annonceUserService.getAllAnnonceUsers(iduser));
+    }
     @PutMapping("/accepterreserve/{idannonce}/{iduser}")
     public ResponseEntity<?> accepteroffrer(@PathVariable(value = "idannonce")Long idannonce,
                                             @PathVariable(value = "iduser")Long iduser){

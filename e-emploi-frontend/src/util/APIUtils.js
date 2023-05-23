@@ -427,6 +427,13 @@ export function getAnnonceUser(idannonce, iduser){
   })
 }
 
+export function getAnnonceUserByIdUser(iduser){
+  return request({
+    url: API_BASE_URL+"/annonceuser/"+iduser,
+    method: "GET"
+  })
+}
+
 export function goToDiscussionEngagee(idannonce, iduser){
   return request({
     url: API_BASE_URL+"/annonceuser/updateStatus/discussionEngage/"+idannonce+"/"+iduser,
