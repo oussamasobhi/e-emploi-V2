@@ -70,6 +70,10 @@ public class AnnonceController {
     public List<AnnonceResponse> getAnnonceByUser(@PathVariable(value = "iduser")Long iduser){
         return annonceService.getDemandespariduser(iduser);
     }
+    @GetMapping("/postulations/{iduser}")
+    public ResponseEntity<List<AnnonceResponse>> getPostulationsByUserId(@PathVariable(value = "iduser") Long iduser){
+        return ResponseEntity.ok(annonceService.getPostulationsByUserId(iduser));
+    }
     @GetMapping("/{id}")
     public ResponseEntity<AnnonceResponse> getaanoncebyid(@PathVariable(value = "id")Long id){
         return ResponseEntity.ok(ModelMapper.mapannonceToAnnonceResponse(annonceService.getannoncebyid(id))) ;

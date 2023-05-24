@@ -25,4 +25,7 @@ public interface AnnonceRepository extends JpaRepository<Annonce,Long> {
     @Query("SELECT A from Annonce A where A.user.id=?1")
     List<Annonce> getAllannoncesByuserid(Long iduser);
 
+    @Query("SELECT A FROM Annonce A WHERE A.id IN (SELECT A1.id.idannonce FROM AnnonceUser A1 WHERE A1.user.id=?1)")
+    List<Annonce> getPostulationsByUserId(Long iduser);
+
 }

@@ -162,4 +162,12 @@ public class AnnonceService {
         annonce.setStatusAnnonce(StatusAnnonce.Terminé);
         annonceRepository.save(annonce);
     }
+    public List<AnnonceResponse> getPostulationsByUserId(Long iduser){
+        List<Annonce> annonces=annonceRepository.getPostulationsByUserId(iduser);
+        List<AnnonceResponse> annonceResponses=new ArrayList<>();
+        for(Annonce a:annonces){
+            annonceResponses.add(ModelMapper.mapannonceToAnnonceResponse(a));
+        }
+        return annonceResponses;
+    }
 }
