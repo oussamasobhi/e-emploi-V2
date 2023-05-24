@@ -144,9 +144,9 @@ const Informations = () => {
                 <Typography variant='body1' sx={{fontFamily:"Poppins", fontWeigth:"bold"}}>
                 {user.adresse? (
                 <>
-                {user.adresse?.suplementaire!=="" && <span className='text-gray-800 '>{user.adresse?.suplementaire},&nbsp; </span>}
-                {user.adresse?.quartier!=="" && <span className='text-gray-800 '>{user.adresse?.quartier},&nbsp; </span>}
-                {user.adresse?.ville!=="" && <span className='text-gray-800 '>{user.adresse?.ville} </span>}
+                {(user.adresse?.suplementaire && (user.adresse?.suplementaire!=="" || user.adresse?.suplementaire!==null)) && <span className='text-gray-800 '>{user.adresse?.suplementaire},&nbsp; </span>}
+                {(user.adresse?.quartier && (user.adresse?.quartier!=="" || user.adresse?.quartier!==null)) && <span className='text-gray-800 '>{user.adresse?.quartier},&nbsp; </span>}
+                {(user.adresse?.ville && (user.adresse?.ville!=="" || user.adresse?.ville!==null)) && <span className='text-gray-800 '>{user.adresse?.ville} </span>}
                 </>
                 )
                 :"Non renseignée"

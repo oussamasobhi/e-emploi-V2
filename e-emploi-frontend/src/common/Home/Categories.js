@@ -5,9 +5,6 @@ import { useNavigate } from 'react-router';
 
 const Categories = ({categories}) => {
   const navigate = useNavigate();
-    useEffect(()=>{
-      console.log(categories);
-    }, [categories])
   
   return (
     <Box className="px-10 lg:px-20" >

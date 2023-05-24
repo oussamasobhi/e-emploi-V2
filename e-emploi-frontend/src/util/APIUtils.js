@@ -398,6 +398,13 @@ export function addAnnonceUser(postuleAnnonce){
   });
 }
 
+export function getPostulationsByUserId(iduser){
+  return request({
+    url: API_BASE_URL+"/annonce/postulations/"+iduser,
+    method: "GET"
+  })
+}
+
 export function addFileAnnonce(idannonce, file){
   return fileRequest({
     url: API_BASE_URL+"/annonce/upload/"+idannonce,

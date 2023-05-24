@@ -1,6 +1,6 @@
 import { Box, Button, Toolbar, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { getAnnonceUserByIdUser, getCurrentUser } from '../util/APIUtils';
+import { getAnnonceUserByIdUser, getCurrentUser, getPostulationsByUserId } from '../util/APIUtils';
 import Proposition from './Proposition';
 
 const Propositions = () => {
@@ -20,7 +20,7 @@ const Propositions = () => {
     useEffect(() => {
         const loadPropositions = async () => {
             try{
-                const res = await getAnnonceUserByIdUser(currentUser.id);
+                const res = await getPostulationsByUserId(currentUser.id);
                 setPropositions(res);
             }catch(error){
                 console.log(error);
@@ -29,6 +29,10 @@ const Propositions = () => {
          if(currentUser) loadPropositions();
     }, [currentUser])
     
+
+    useEffect(() => {
+      console.log(propositions)
+    }, [propositions])
 
   return (
     <Box className="w-full flex">
@@ -40,10 +44,31 @@ const Propositions = () => {
         <Button variant="outlined" sx={{borderRadius:"28px", size:"medium"}} >Terminé</Button>
         </Toolbar>
       </Box>
-{/* Contenus (tableau c'est mieux) */} 
-{propositions?.map((prop, index)=>(
-    <Proposition key={index} proposition={prop} />
-))}       
+
+    <table>
+        <thead>
+            <tr>
+                <td>
+                        id
+                </td>
+                <td>
+                    Catégorie
+                </td>
+                <td>
+                    Utilisateur
+                </td>
+                <td>
+                   Status
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+           {propositions?.map((proposition, index) => (
+            <Proposition key={index} proposition={proposition} currentUser={currentUser} />
+           )) }
+        </tbody>
+    </table>
+
     </Box>
 </Box>
   )
