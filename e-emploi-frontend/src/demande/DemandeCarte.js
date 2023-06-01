@@ -2,6 +2,9 @@ import { Box, Button, Divider, Modal, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { getSousCategories, getSousCategory } from '../util/APIUtils';
+import { myTheme } from '../theme';
+import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
+import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
 import { addAnnonceUser } from '../util/APIUtils';
 import { message } from 'antd';
 const options = { day: 'numeric', month: 'long', year: 'numeric', locale: 'fr' };
@@ -32,6 +35,7 @@ const DemandeCarte = ({demande}) => {
         }
         loadSouscategorie();
       }, [demande])
+
       useEffect(() => {
        console.log(sousCat);
       }, [sousCat])
@@ -54,14 +58,19 @@ const DemandeCarte = ({demande}) => {
         }
       }
 
+      useEffect(() => {
+      console.log(demande?.userResponse?.username);
+      console.log(JSON.parse(localStorage.getItem("CURRENT_USER")).username);
+      console.log(demande?.annonceUsers.some(obj => obj?.id?.iduser === JSON.parse(localStorage.getItem("CURRENT_USER")).id));
+      }, [demande])
       
       
-    if(!sousCat || !demande){
+    if(!sousCat || !demande ){
         return <Typography variant='body1' >Loading...</Typography>
     }
   return (
     <>
-    <Box key={demande.id} className='p-8 rounded-md border-1 grid lg:grid-cols-2 gap-6 mb-4' sx={{border:1, borderColor:"#cccccc"}}>
+    <Box key={demande.id} className='p-8 bg-white rounded-md border-1 grid lg:grid-cols-2 gap-6 mb-4' sx={{border:1, borderColor:"#cccccc"}}>
         <Box>
           <Box className="h-40 bg-lime-300 rounded-md flex justify-center items-center">
           photo
@@ -69,17 +78,61 @@ const DemandeCarte = ({demande}) => {
             <Typography variant='h6' sx={{fontFamily:"Poppins", fontWeight:"bold"}} className="mt-2" >{sousCat.nom_sous_categorie} </Typography>
           <Typography variant='body1' sx={{color:'#555555'}} ><span className='font-wix' >{formatter.format(new Date(demande.date))} </span> </Typography>
         </Box>
+        {demande?.userResponse?.username === JSON.parse(localStorage.getItem("CURRENT_USER")).username 
+        &&
         <Box className="mt-3 lg:mt-0">
           <Divider className='lg:hidden' />
           <Typography variant='body1' sx={{ color:'#555555'}} className='py-4' gutterBottom><span className='font-wix'>Vous n'avez pas reservé de prestataire</span> </Typography>
           <Divider/>
-          <Box className="rounded-xl bg-blue-100 flex mt-4" sx={{height:"96px"}} >
+          <Box className="rounded-xl bg-blue-100 flex mt-4 pl-3 text-blue-700 items-center" sx={{height:"96px"}} >
+            Vous avez reçu 5 offres
           </Box>
-        </Box>     
+        </Box> }    
+        {demande?.userResponse?.username !== JSON.parse(localStorage.getItem("CURRENT_USER")).username 
+        &&
+        <Box className="mt-3 lg:mt-0">
+          <Box className="flex items-center mr-6">
+            <Box className="bg-blue-200 rounded-full flex justify-center items-center mr-2" sx={{padding:"6px"}} >
+              <LocationOnRoundedIcon sx={{color:myTheme.palette.blue.second}} />
+            </Box>
+            <Typography variant='body1' sx={{fontFamily:"Poppins"}}>
+              {demande.adresse.suplementaire!=="" && <span className='text-gray-800 '>{demande.adresse.suplementaire},&nbsp; </span>}
+              {demande.adresse.quartier!=="" && <span className='text-gray-800 '>{demande.adresse.quartier},&nbsp; </span>}
+              {demande.adresse.ville!=="" && <span className='text-gray-800 '>{demande.adresse.ville} </span>}
+              </Typography>
+          </Box>
+          <Box className="grid grid-cols-2 gap-2 lg:grid-cols-1">
+          <Box className="my-3">
+            <Typography variant='subtitle1' sx={{fontFamily:"Poppins", fontWeight:"bold"}} >Détails</Typography>
+            <Typography variant='body1'>{demande?.infos_complementaire} </Typography>
+          </Box>
+          <Box className="">
+          <Typography variant="subtitle1" gutterBottom><span className='font-bold font-poppins'>Données personnelles</span></Typography>
+          
+            <Box className="flex items-start">
+            <LocalPhoneOutlinedIcon sx={{color:myTheme.palette.blue.second, marginRight:"12px"}} />
+            <Box className="flex flex-col">
+              <Typography variant="body2" sx={{fontFamily:"Wix Madefor Display"}}>Numéro téléphone</Typography>
+              <Typography variant="body2" sx={{fontFamily:"Wix Madefor Display", fontWeight:"bold"}}>{demande.userResponse.num_tel} </Typography>
+            </Box>
+            </Box>
+          </Box>
+          </Box>
+
+        </Box> } 
         {demande?.userResponse?.username===JSON.parse(localStorage.getItem("CURRENT_USER")).username &&
-         <Button onClick={()=>gererDemande(demande.id)} variant='contained' sx={{width:"100%", borderRadius: "12px", paddingY:"12px", marginTop:"14px"}} className='mt-4'><span className='capitalize font-poppins' >Gérer&nbsp;</span><span className='lowercase font-poppins' >ma demande</span></Button>}
-          {demande?.userResponse?.username!==JSON.parse(localStorage.getItem("CURRENT_USER")).username &&
-         <Button onClick={()=>setIsOpenPostule(true)} variant='contained' sx={{width:"100%", borderRadius: "12px", paddingY:"12px", marginTop:"14px"}} className='mt-4'><span className='capitalize font-poppins' >Postuler</span></Button>}
+         <Button onClick={()=>gererDemande(demande.id)} variant='contained' sx={{width:"100%", borderRadius: "12px", paddingY:"12px", marginTop:"14px"}} className='mt-4'><span className='capitalize font-poppins' >Gérer&nbsp;</span><span className='lowercase font-poppins' >ma demande</span>
+         </Button>
+        }
+        {(demande?.userResponse?.username!==JSON.parse(localStorage.getItem("CURRENT_USER")).username &&
+        (!(demande?.annonceUsers.some(obj => obj?.id?.iduser !== JSON.parse(localStorage.getItem("CURRENT_USER")).id)) || demande?.annonceUsers.length ===0 )) &&
+         <Button onClick={()=>setIsOpenPostule(true)} variant='contained' sx={{width:"100%", borderRadius: "12px", paddingY:"12px", marginTop:"14px"}} className='mt-4'><span className='capitalize font-poppins' >Postuler</span></Button> 
+        }
+        
+         {(demande?.userResponse?.username!==JSON.parse(localStorage.getItem("CURRENT_USER")).username &&
+        demande?.annonceUsers.some(obj => obj?.id?.iduser === JSON.parse(localStorage.getItem("CURRENT_USER")).id) ) &&
+         <Typography variant='body1'><span className='font-wix'>Vous avez déjà postulé à cette annonce.&nbsp; <span onClick={()=>console.log("clicked")} className='font-poppins cursor-pointer font-bold text-blue-700'>Voir discussion</span> </span> </Typography> 
+        }
       </Box>  
       <Modal
         open={isOpenPostule}
@@ -88,7 +141,7 @@ const DemandeCarte = ({demande}) => {
         aria-describedby="modal-description"
       >
           <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', boxShadow: 24, p: 4 }}>
-            <h2 id="modal-title">Postuler sur une demande</h2>
+            <h2 id="modal-title">Postuler à une demande</h2>
             <p id="modal-description">Voulez-vous vraiment postuler à cette demande?</p>
             <Button onClick={()=>setIsOpenPostule(false)}>Fermer</Button>
             <Button onClick={()=>postuler()} >Confirmer</Button>

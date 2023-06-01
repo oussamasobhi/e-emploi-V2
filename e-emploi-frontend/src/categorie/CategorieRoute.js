@@ -35,12 +35,6 @@ const CategorieRoute = () => {
     };
     if (categorie) loadSousCategorie();
   }, [categorie]);
-  useEffect(() => {
-    console.log(sousCategorie);
-  }, [sousCategorie]);
-  useEffect(() => {
-    console.log(sousCategorie2);
-  }, [sousCategorie2]);
 
   const sousCatFunction = async (id1) => {
     try{
@@ -53,14 +47,6 @@ const CategorieRoute = () => {
         console.log(error);
     }
   }
-
-
-
-  useEffect(() => {
-    
-    console.log(sousCategorie2);
-  }, [sousCategorie2])
-  
 
   return !categorie ? (
     <Typography>Loading...</Typography>
@@ -77,10 +63,10 @@ const CategorieRoute = () => {
       <Box className="py-5 grid md:grid-cols-4 gap-6">
         {sousCategorie?.map((item,index)=>(
           <Box key={item.id} sx={{height:"200px"}} className="cursor-pointer" onClick={()=>sousCatFunction(item.id)} >
-          <Box sx={{height:"140px"}} className="bg-blue-400 rounded-xl overflow-hidden" key={index}>
-           
-          </Box>
+          <Box sx={{height:"140px"}} className="px-2 bg-gray-300 hover:bg-gray-400 transition-colors ease-in-out rounded-xl overflow-hidden flex items-center justify-center"  key={index}>
           <Typography variant="body1" fontFamily="Poppins" fontWeight="bold" className='hover:text-gray-800 mt-2' >{item.nom_sous_categorie}</Typography>
+          </Box>
+         
           
           </Box>
         ))}

@@ -35,6 +35,7 @@ const Propositions = () => {
     }, [propositions])
 
   return (
+    <Box className="p-4" >
     <Box className="w-full flex">
     <Box  className="w-full grid grid-cols-1">
       <Typography variant="h4" sx={{fontFamily:"Poppins", fontWeight:"bold"}} >Mes propositions</Typography>
@@ -69,6 +70,7 @@ const Propositions = () => {
         </tbody>
     </table>
 
+    </Box>
     </Box>
 </Box>
   )

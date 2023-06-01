@@ -196,7 +196,7 @@ const Signup = ({ onSignup }) => {
 
   const isMatchPassword = () => {
     if (user.password !== user.password2) {
-      setPasswordError("Mos de passe différent");
+      setPasswordError("Mots de passe différents");
     }
   };
 

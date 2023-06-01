@@ -27,6 +27,7 @@ const MesDemandes = ({currentUser}) => {
   
   
   return (
+    <Box className="p-4" >
     <Box className="w-full flex">
     <Box  className="w-full grid grid-cols-1">
       <Typography variant="h4" sx={{fontFamily:"Poppins", fontWeight:"bold"}} >Mes demandes</Typography>
@@ -43,6 +44,7 @@ const MesDemandes = ({currentUser}) => {
      <DemandeCarte key={index} demande={demande} /> 
       ))}          
     </Box>
+</Box>
 </Box>
   )
 }

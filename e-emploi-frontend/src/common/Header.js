@@ -117,23 +117,6 @@ const Header = ({ logout, currentUser, demander }) => {
                   
                 </Button>
               )}
-              {/*<Tabs
-                sx={{ marginLeft: "auto" }}
-                textColor="inherit"
-                value={value}
-                onChange={(e, value) => setValue(value)}
-                indicatorColor="secondary"
-              >
-                {PAGES.map((page, index) => (
-                  <Tab
-                    key={index}
-                    label={page.label}
-                    LinkComponent={Link}
-                    to={page.url}
-                  />
-                ))}
-                </Tabs>*/}
-
               {localStorage.getItem("token") === "" ? (
                 <Box sx={{display:"flex", justifyContent:"end", marginLeft:"auto"}} >
                 <Button
@@ -196,7 +179,10 @@ const Header = ({ logout, currentUser, demander }) => {
                       <Typography className="justify-self-end text-gray-400">{/**Some text */}</Typography>
                     </MenuItem>
                     <MenuItem
-                      onClick={() => { handleClose(); }}
+                      onClick={() => {
+                        navigate("/dboard/chat")
+                         handleClose(); 
+                        }}
                       sx={{display:"flex", justifyContent:"space-between", width:"320px",height:"56px"}}
                     >
                       <div className="flex">

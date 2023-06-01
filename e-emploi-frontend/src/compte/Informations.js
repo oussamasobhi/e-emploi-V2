@@ -87,7 +87,7 @@ const Informations = () => {
  
     if(!user) return <Typography>Loading...</Typography>
   return (
-    <Box className='md:mr-12'>
+    <Box className='md:mr-12 p-6'>
         <Box className='mb-4' >
         <Breadcrumbs className='py-2'
         separator={<NavigateNextIcon fontSize="small" />}
