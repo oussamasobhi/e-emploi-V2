@@ -41,6 +41,7 @@ public class AnnonceUserService {
     public void accepterAnnonceUser(Long idannonce,Long iduser){
         AnnonceUser annonceUser=getAnnonceUser(idannonce, iduser);
         annonceUser.setStatusReservation(StatusReservation.Reservé);
+        annonceUserRepository.save(annonceUser);
     }
     public AnnonceUser getAnnonceUser(Long idannonce, Long iduser){
         return annonceUserRepository.findbyuserandannonce(idannonce, iduser);
