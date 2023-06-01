@@ -1,5 +1,6 @@
 package com.example.eemploibackend.repository;
 
+import com.example.eemploibackend.model.Annonce;
 import com.example.eemploibackend.model.AnnonceUser;
 import com.example.eemploibackend.model.AnnonceUserID;
 import com.example.eemploibackend.model.FileDB;
@@ -17,4 +18,7 @@ public interface AnnonceUserRepository extends JpaRepository<AnnonceUser, Annonc
 
     @Query("SELECT A from AnnonceUser A where A.user.id=?1")
     List<AnnonceUser> findByIdUser(Long iduser);
+
+    @Query("SELECT A from AnnonceUser  A where A.annonce=?1")
+    List<AnnonceUser> getoffresrecuesauneannonce(Long idannonce);
 }

@@ -38,6 +38,8 @@ public class SecurityConfiguration {
                 .permitAll()
                 .requestMatchers("/api/randompro")
                 .permitAll()
+                .requestMatchers("/swagger-ui/index.html")
+                .permitAll()
                 .requestMatchers("/api/randompro/**")
                 .permitAll()
                 .requestMatchers("/api/users/**")

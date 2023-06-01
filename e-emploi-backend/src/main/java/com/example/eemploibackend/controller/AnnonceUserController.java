@@ -51,4 +51,8 @@ public class AnnonceUserController {
         return new ResponseEntity(new ApiResponse(true,"Vous avez accepté offre avec succes"),
                 HttpStatus.ACCEPTED);
     }
+    @GetMapping("/offresrecues/{idannonce}")
+    public List<AnnonceUser> getoffres(@PathVariable(value = "idannonce") Long idannonce){
+        return annonceUserService.getoffresrecues(idannonce);
+    }
 }
