@@ -49,4 +49,9 @@ public class AnnonceUserService {
     public List<AnnonceUser> getAllAnnonceUsers(Long iduser){
         return annonceUserRepository.findByIdUser(iduser);
     }
+
+    // les offres recus a une annonce
+    public List<AnnonceUser> getoffresrecues(Long idannonce){
+        return annonceUserRepository.getoffresrecuesauneannonce(idannonce);
+    }
 }
