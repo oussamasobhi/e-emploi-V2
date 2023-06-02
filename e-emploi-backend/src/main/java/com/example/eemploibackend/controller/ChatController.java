@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,11 +25,13 @@ import java.util.List;
 public class ChatController {
     private final SimpMessagingTemplate simpMessagingTemplate;
     private final ChatService chatService;
+    @PreAuthorize("hasAnyAuthority('ROLE_Pro','ROLE_ADMIN','ROLE_STANDARD')")
     @MessageMapping("/private-message")
     public Message recMessage(@Payload Message message){
         simpMessagingTemplate.convertAndSendToUser(message.getIdannonce(),"/private",message);
         return message;
     }
+    @PreAuthorize("hasAnyAuthority('ROLE_Pro','ROLE_ADMIN','ROLE_STANDARD')")
     @PostMapping("/message/add")
     public ResponseEntity<?> addmessage(@RequestBody MessageRequest request){
             chatService.addmessage(request);
@@ -38,7 +41,8 @@ public class ChatController {
 //    public List<UserResponse> getchatusersofausername(@PathVariable(value = "username")String username){
 //        return chatService.getallchatusers(username);
 //    }
-    @GetMapping("message/{username}/chat/{idannonce}/{username2}")
+@PreAuthorize("hasAnyAuthority('ROLE_Pro','ROLE_ADMIN','ROLE_STANDARD')")
+@GetMapping("message/{username}/chat/{idannonce}/{username2}")
     public List<Message> getchatoftwousersbyannonce(@PathVariable(value = "username")String username,
                                            @PathVariable(value = "idannonce")String idannonce,
                                                     @PathVariable(value="username2")String username2){
