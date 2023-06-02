@@ -87,21 +87,20 @@ public class AnnonceService {
             return true;
         }
     }
-    public PagedResponse<AnnonceResponse> getaaonnoncesparcategorie(Long idcategory,int page,int size,String search,
-                                                                    double max_tarif_dep,double min_tarif_dep){
+    public PagedResponse<AnnonceResponse> getaaonnoncesparcategorie(SearchRequest request,int page,int size){
         validatePageNumberAndSize(page, size);
         // retrieve all annonces
         Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "createdAt");
        Page<Annonce> annonces=null;
- //       if(search.equals("")) {
- //           annonces = annonceRepository.findAll(pageable);
-//        }
- //       else {
-       //     annonces=annonceRepository.findByTitreOrDescription(search,max_tarif_dep,min_tarif_dep,pageable);
- //        }
+       if(request.getId_categorie_2_annonce()!=null){
+           annonces=annonceRepository.getannonceByCategorie2(request.getId_categorie_2_annonce(),request.getVille(),pageable);
+       }
+       else{
+           annonces=annonceRepository.getannonceByCategorie1(request.getId_categorie_1_annonce(),request.getVille(),pageable);
+       }
+
         List<Annonce> result = annonces.getContent()
                 .stream()
-                .filter(i -> i.getCategorie2Annonce().getId().equals(idcategory))
                 .collect(Collectors.toList());
         Page<Annonce> annoncePage = new PageImpl<Annonce>(result);
         List<AnnonceResponse> allannonces = annoncePage.map((annonce) -> {

@@ -61,11 +61,6 @@ public class UserService {
                     if(request.getAdresse()!=null){
                         USER.setAdresse(adresse);
                     }
-
-             if(!isafieldnull) {
-             Role userRole=roleRepository.findByName(RoleName.ROLE_CONDIDAT).orElseThrow(()->new AppException("USER ROLE NOT SET."));
-                USER.setRole(userRole);
-             }
              userRepository.save(USER);
                     return new ResponseEntity(new ApiResponse(true,
                             "utilisateur modifie bien modifiée"), HttpStatus.ACCEPTED);

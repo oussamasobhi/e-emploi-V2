@@ -21,7 +21,10 @@ public interface AnnonceRepository extends JpaRepository<Annonce,Long> {
 //    Page<Annonce> findByTarifdepart(double max_tarif_dep,double min_tarif_dep,Pageable pageable);
     @Query("SELECT A from Annonce A where A.id=?1")
     Annonce findAnnonceById(Long idannonce);
-
+    @Query("SELECT A from Annonce A where A.categorie2Annonce.id=?1 and A.adresse.ville=?2")
+    Page<Annonce> getannonceByCategorie2(Long idcategorie,String ville,Pageable pageable);
+    @Query("SELECT A from Annonce A where A.categorie1Annonce.id=?1 and A.adresse.ville=?2")
+    Page<Annonce> getannonceByCategorie1(Long idcategorie,String ville,Pageable pageable);
     @Query("SELECT A from Annonce A where A.user.id=?1")
     List<Annonce> getAllannoncesByuserid(Long iduser);
 

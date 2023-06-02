@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,6 +29,8 @@ import java.util.List;
 @RequestMapping("/annonceuser")
 public class AnnonceUserController {
     private final AnnonceUserService annonceUserService;
+
+    @PreAuthorize("hasAnyAuthority('ROLE_Pro','ROLE_ADMIN')")
     @PostMapping("/add")
     public ResponseEntity<?> postulerpourAnnonce(@RequestBody PostuleAnnonceRequest request,
                                                  @CurrentUser User user){
@@ -35,15 +38,18 @@ public class AnnonceUserController {
         return new ResponseEntity(new ApiResponse(true,"Vous avez postulé avec succes"),
                 HttpStatus.ACCEPTED);
     }
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_STANDARD','ROLE_Pro')")
     @GetMapping("/{idannonce}/{iduser}")
     public ResponseEntity<AnnonceUser> getAnnonceUser(@PathVariable(name = "idannonce") Long idannonce,
                                                       @PathVariable(name = "iduser") Long iduser){
         return ResponseEntity.ok(annonceUserService.getAnnonceUser(idannonce, iduser));
     }
+    @PreAuthorize("hasAnyAuthority('ROLE_STANDARD','ROLE_ADMIN','ROLE_Pro')")
     @GetMapping("/{iduser}")
     public ResponseEntity<List<AnnonceUser>> getAllAnnonceUser(@PathVariable(name = "iduser") Long iduser){
         return ResponseEntity.ok(annonceUserService.getAllAnnonceUsers(iduser));
     }
+    @PreAuthorize("hasAnyAuthority('ROLE_STANDARD','ROLE_ADMIN')")
     @PutMapping("/accepterreserve/{idannonce}/{iduser}")
     public ResponseEntity<?> accepteroffrer(@PathVariable(value = "idannonce")Long idannonce,
                                             @PathVariable(value = "iduser")Long iduser){
@@ -51,6 +57,7 @@ public class AnnonceUserController {
         return new ResponseEntity(new ApiResponse(true,"Vous avez accepté offre avec succes"),
                 HttpStatus.ACCEPTED);
     }
+    @PreAuthorize("hasAnyAuthority('ROLE_Pro','ROLE_ADMIN','ROLE_STANDARD')")
     @GetMapping("/offresrecues/{idannonce}")
     public List<AnnonceUser> getoffres(@PathVariable(value = "idannonce") Long idannonce){
         return annonceUserService.getoffresrecues(idannonce);
