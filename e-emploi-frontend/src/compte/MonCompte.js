@@ -36,17 +36,6 @@ const MonCompte = () => {
           <Typography variant="body2" >Some text </Typography>
         </Box>
       </Box>
-      <Box className="p-[16px] h-[93px] bg-blue-100 rounded-xl flex flex-col mb-6" >
-        <Typography variant="subtitle1"  sx={{fontFamily:"Poppins"}}>Statut</Typography>
-        <Typography variant="body2"  sx={{fontFamily:"Wix Madefor Display", color:"gray"}} gutterBottom>Some text</Typography>
-        <Box>
-        <Button variant="contained" sx={{backgroundColor:myTheme.palette.purple.main, color:"white", borderRadius:"16px", 
-        ":hover":{backgroundColor:myTheme.palette.purple.second}
-      }}>
-          <span className="capitalize font-poppins">Découvrir</span>
-        </Button>
-        </Box>
-      </Box>
       <Typography variant="h6" sx={{fontFamily:"Poppins", fontWeight:"bold", paddingY:"10px"}} >Gérer mon compte</Typography>
       <Box  className="grid grid-cols-2 gap-4">
         <Box onClick={() => {navigate("/dboard/moncompte/informations")}} className='flex flex-col cursor-pointer'>

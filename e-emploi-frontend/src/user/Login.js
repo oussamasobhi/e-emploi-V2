@@ -19,7 +19,7 @@ const Login = ({ onLogin }) => {
   };
 
   return (
-    <div className="flex flex-col w-auto items-center bg-gray-100 font-roboto">
+    <div className="flex min-h-[550px] flex-col w-auto items-center bg-gray-100 font-roboto">
       <div className="border w-96 ">
         <h1 className="text-3xl font-poppins text-my-blue text-center">
           Connexion

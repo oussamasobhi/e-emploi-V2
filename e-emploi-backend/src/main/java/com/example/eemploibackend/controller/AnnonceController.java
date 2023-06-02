@@ -100,5 +100,11 @@ public class AnnonceController {
         return new ResponseEntity(new ApiResponse(true,"id n'existe pas"),HttpStatus.BAD_REQUEST);
     }
 
+    @PutMapping("/terminer/{id}")
+    public ResponseEntity<?> terminerAnnonce(@PathVariable("id") Long id){
+        annonceService.terminerAnnonce(id);
+        return new ResponseEntity<>(new ApiResponse(true, "Annonce cloturée"), HttpStatus.OK);
+    }
+
 }
 

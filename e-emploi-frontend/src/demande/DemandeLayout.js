@@ -60,8 +60,8 @@ const DemandeLayout = () => {
       flex: "1 1 auto",
       overflowY: "auto",
       paddingX: "32px",
-      marginY: "32px",
-    }} >
+      marginY: "32px"
+    }} className="" >
     <Box className="px-10 lg:px-8" sx={{ paddingY: "12px" }}>
       <Breadcrumbs
         className="py-2"

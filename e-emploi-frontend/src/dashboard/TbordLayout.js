@@ -10,7 +10,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { Outlet, useNavigate } from "react-router";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import BookmarksRoundedIcon from '@mui/icons-material/BookmarksRounded';
@@ -19,8 +19,9 @@ import { ForumOutlined } from "@mui/icons-material";
 import { PersonOutlined } from "@mui/icons-material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 const drawerWidth = 300;
-const TbordLayout = ({ logout, currentUser }) => {
+const TbordLayout = ({ currentUser }) => {
   const theme = useTheme();
+  const [selectedItem, setSelectedItem] = useState("demandes");
   const navigate = useNavigate();
   const goToLogin = () => {
     navigate("/login");
@@ -31,6 +32,11 @@ const TbordLayout = ({ logout, currentUser }) => {
   const goToProfile = () => {
     navigate("/" + currentUser.username);
   };
+
+  const handleItemClick = (item) => {
+    setSelectedItem(item);
+  };
+
   return (
     <Box className="w-full h-full flex">
       <Drawer
@@ -48,49 +54,6 @@ const TbordLayout = ({ logout, currentUser }) => {
       >
         <List className="" sx={{ position: "relative", top: "70px" }}>
           <Box className="">
-          {/*<ListItem
-          onClick={() => {
-            navigate("/dboard/demandes")
-          }}
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                width: "100%",
-              }}
-            >
-              <ListItemButton sx={{ height:"56px", borderRadius: "10px" }} onClick={() => {}}>
-                <ListItemIcon>
-                <BookmarksRoundedIcon
-                    sx={{ fontSize: "30px", color: theme.palette.primary.main }}
-                  />
-                </ListItemIcon>
-                <Typography sx={{ fontSize: "16px", color:"#5d636a", fontFamily: "Poppins" }}>
-                  Demandes
-                </Typography>
-              </ListItemButton>
-            </ListItem>*/}
-            <ListItem
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                width: "100%",
-              }}
-            >
-              <ListItemButton sx={{ height:"56px", borderRadius: "10px" }}
-                onClick={() => {
-                  navigate("/dboard/propositions");
-                }}
-              >
-                <ListItemIcon>
-                  <BookmarkRoundedIcon
-                    sx={{ fontSize: "30px", color: theme.palette.primary.main }}
-                  />
-                </ListItemIcon>
-                <Typography sx={{ fontSize: "16px", color:"#5d636a", fontFamily: "Poppins" }}>
-                  Mes propositions
-                </Typography>
-              </ListItemButton>
-            </ListItem>
             <ListItem
               sx={{
                 display: "flex",
@@ -99,8 +62,10 @@ const TbordLayout = ({ logout, currentUser }) => {
               }}
             >
               <ListItemButton sx={{ height:"56px", borderRadius: "10px" }} className="active:bg-gray-200"
+                selected={selectedItem === 'demandes'}
                 onClick={() => {
                   navigate("/dboard");
+                  handleItemClick("demandes")
                 }}
               >
                 <ListItemIcon>
@@ -114,16 +79,45 @@ const TbordLayout = ({ logout, currentUser }) => {
               </ListItemButton>
             </ListItem>
             <ListItem
-            onClick={() => {
-              navigate("/dboard/chat")
-            }}
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
                 width: "100%",
               }}
             >
-              <ListItemButton sx={{ height:"56px", borderRadius: "10px" }} onClick={() => {}}>
+              <ListItemButton sx={{ height:"56px", borderRadius: "10px" }}
+              selected={selectedItem === 'propositions'}
+                onClick={() => {
+                  navigate("/dboard/propositions");
+                  handleItemClick('propositions');
+                }}
+              >
+                <ListItemIcon>
+                  <BookmarkRoundedIcon
+                    sx={{ fontSize: "30px", color: theme.palette.primary.main }}
+                  />
+                </ListItemIcon>
+                <Typography sx={{ fontSize: "16px", color:"#5d636a", fontFamily: "Poppins" }}>
+                  Mes propositions
+                </Typography>
+              </ListItemButton>
+            </ListItem>
+            
+            <ListItem
+            
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                width: "100%",
+              }}
+            >
+              <ListItemButton
+              selected={selectedItem === "chat"}
+              onClick={() => {
+                navigate("/dboard/chat");
+                handleItemClick("chat")
+              }}
+              sx={{ height:"56px", borderRadius: "10px" }}>
                 <ListItemIcon>
                   <ForumOutlined
                     sx={{ fontSize: "30px", color: theme.palette.primary.main }}
@@ -145,7 +139,12 @@ const TbordLayout = ({ logout, currentUser }) => {
                   width: "100%",
                 }}
               >
-                <ListItemButton sx={{ height:"56px", borderRadius: "10px" }} onClick={() => {}}>
+                <ListItemButton 
+                selected={selectedItem === "dashboard"}
+                onClick={() => {
+                  handleItemClick("dashboard")
+                }}
+                sx={{ height:"56px", borderRadius: "10px" }} >
                   <ListItemIcon>
                     <DashboardIcon
                       sx={{
@@ -161,16 +160,16 @@ const TbordLayout = ({ logout, currentUser }) => {
               </ListItem>
             )}
             <ListItem
-              onClick={() => {
-                navigate("/dboard/moncompte")
-              }}
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
                 width: "100%",
               }}
             >
-              <ListItemButton sx={{ height:"56px", borderRadius: "10px" }} onClick={() => {}}>
+              <ListItemButton selected={selectedItem==="compte"} sx={{ height:"56px", borderRadius: "10px" }} onClick={() => {
+                 navigate("/dboard/moncompte");
+                handleItemClick("compte");
+              }}>
                 <ListItemIcon>
                   <PersonOutlined
                     sx={{ fontSize: "30px", color: theme.palette.primary.main }}

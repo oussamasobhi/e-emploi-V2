@@ -1,12 +1,12 @@
 import { Avatar, Box, Button, Modal, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import StarIcon from '@mui/icons-material/Star';
+import PersonIcon from '@mui/icons-material/Person';
 import { useTheme } from '@emotion/react';
-import { accepterOffre, userGetUserById} from '../util/APIUtils';
+import { accepterOffre, getAnnonceById, userGetUserById} from '../util/APIUtils';
 import { useNavigate } from 'react-router';
 import { message } from 'antd';
 
-const Offre = ({postulation}) => {
+const Offre = ({postulation, demande, setDemande}) => {
   const theme = useTheme();
   const [isOpenAccept, setIsOpenAccept] = useState(null);
   const [pro, setPro] = useState(null);
@@ -26,6 +26,14 @@ const Offre = ({postulation}) => {
   useEffect(() => {
     console.log(pro)
   }, [pro])
+  const reloadDemande = async () => {
+      try{
+        const res = await getAnnonceById(postulation?.id?.idannonce);
+        setDemande(res);
+      }catch(error){
+        console.log(error);
+      }
+  }
   
   const accepter = async () => {
     try{
@@ -35,11 +43,15 @@ const Offre = ({postulation}) => {
         content: "Vous avez accepté cet offre",
         className: "relative top-16"
       })
+      reloadDemande();
     }catch(error){
       console.log(error);
     }
     setIsOpenAccept(false);
   }
+  useEffect(()=>{
+    console.log(postulation);
+  },[postulation])
 
 
   if(!pro) return <p>Loading...</p>
@@ -54,21 +66,20 @@ const Offre = ({postulation}) => {
            <Avatar
             alt="Photo de profil"        
             sx={{width:"80px", height:"80px"}}
-             >N</Avatar>
+            
+             ><PersonIcon sx={{width:"60%",height:"60%"}} /></Avatar>
           </Box>
           <Box className="grow">
             <Box>
                 <Box className='flex justify-between mb-2' >
                   
-                  <Typography variant="h5" sx={{fontFamily:"Poppins", fontWeight:"bold"}} > {pro.prenom} &nbsp; {pro.nom} </Typography>
-                  <Typography variant="subtitle1" sx={{fontFamily:"Poppins", fontWeight:"bold"}}><span className='text-green-500 font-poppins' >{postulation?.statusReservation} </span></Typography>
-                 
-                  
+                  <Typography variant="h5" sx={{fontFamily:"Poppins", fontWeight:"bold"}} > {pro.prenom} {pro.nom} </Typography>
+                  <Typography variant="subtitle1" sx={{fontFamily:"Poppins", fontWeight:"bold"}}><span className='text-green-500 font-poppins' >{postulation?.statusReservation} </span></Typography>    
               </Box>
               
             </Box>
             <Box className="flex justify-end gap-2">
-              <Button onClick={() => setIsOpenAccept(true)} >Accepter</Button>
+              {postulation?.statusReservation==="Standard" && <Button onClick={() => setIsOpenAccept(true)} >Accepter</Button>}
               <Button onClick={() => navigate("/dboard/chat/"+postulation?.id?.idannonce+"/"+pro?.username)} >Message</Button>
             </Box>
           </Box>

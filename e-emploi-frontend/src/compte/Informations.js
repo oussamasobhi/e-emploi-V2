@@ -118,14 +118,14 @@ const Informations = () => {
           <>
             <Box className="flex flex-col">
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DatePicker
+        <DatePicker
         label="Date de naissance"
         value={selectedDate}
         defaultValue={user.date_naissance}
         onChange={handleBdChange}
         renderInput={(params) => <TextField size='small' variant="standard" {...params} />}
-      />
-    </LocalizationProvider>
+        />
+        </LocalizationProvider>
             </Box>
             <Box  className="flex justify-end gap-3 items-center">
               <Button size='small' onClick={()=>setBdEdit(false)}  className="cursor-pointer" variant="outlined" sx={{fontFamily:"Poppins", fontWeight:"bold",}} >Annuler</Button>            
