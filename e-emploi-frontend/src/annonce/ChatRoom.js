@@ -10,6 +10,7 @@ import {
   goToDiscussionEngagee,
   getAnnonceUser,
   addAnnonceUser,
+  getSousCategory,
 } from "../util/APIUtils";
 import { over } from "stompjs";
 import SockJS from "sockjs-client";
@@ -36,6 +37,7 @@ const ChatRoom = ({ currentUser }) => {
   const [annonceUser, setAnnonceUser] = useState(null);
   const [postulant, setPostulant] = useState(null);
   const [privateChats, setPrivateChats] = useState([]);
+  const [sousCat, setSousCat] = useState(null);
   useEffect(() => {
     const loadAnnonceUser = async () => {
       try{
@@ -45,6 +47,7 @@ const ChatRoom = ({ currentUser }) => {
         console.log(error);
       }
     }
+    
     const createAnnonceUser = async () => {
 
       const request = { idannonce: annonce?.id };
@@ -83,7 +86,18 @@ const ChatRoom = ({ currentUser }) => {
   useEffect(() => {
     console.log(annonceUser)
   }, [annonceUser])
-  
+  useEffect(() => {
+    console.log(annonce);
+    const loadSouscategorie = async () => {
+        try{
+            const res = await getSousCategory(annonce.categorie1Annonce);
+            setSousCat(res);
+        }catch(error){
+            console.log(error);
+        }
+    }
+    loadSouscategorie();
+  }, [annonce])
   
   useEffect(() => {
     const loadReceiver = async () => {
@@ -242,27 +256,20 @@ const ChatRoom = ({ currentUser }) => {
   if (!receiver && !userData.connected) return <p>Loading...</p>;
   else
     return (
-      <div className="flex justify-center">
-        <div className="w-135 relative flex flex-col h-full bg-white  rounded-md shadow-md">
+      <div className="h-[533px] flex justify-center">
+        <div className="w-full relative flex flex-col h-full bg-white  rounded-md shadow-md">
           <div className="flex justify-between items-start p-2 bg-blue-50">
             <div className="flex flex-col ">
-              <Typography className="text-3xl font-caption text-blue-800 flex-auto">
-                {annonce?.titre_annonce}
-              </Typography>
-              <Typography className="text-sm text-gray-600 font-mukta">
-                {annonce?.categorie2Annonce}
+              <Typography className="text-xl font-caption text-blue-800 flex-auto">
+                {sousCat?.nom_sous_categorie}
               </Typography>
             </div>
             <div className="flex flex-col">
-              <Typography className="text-3xl font-roboto text-blue-600 w-fit flex-none">
-                {annonce?.tarif_depart} DH
-              </Typography>
-              <Link
-                to={"/" + receiver?.username}
-                className="text-black hover:text-black font-caption hover:underline"
+              <Typography
+                className="text-xl font-roboto no-underline w-fit flex-none"
               >
                 {receiver?.prenom} {receiver?.nom}{" "}
-              </Link>
+              </Typography>
             </div>
           </div>
 

@@ -28,7 +28,7 @@ const DemandeLayout = () => {
    useEffect(() => {
     const loadSousCategorie = async () => {
      try{
-       const res = await getSousCategory(demande.id);
+       const res = await getSousCategory(demande.categorie1Annonce);
        setSousCat(res);
      }catch(error){
        console.log(error);
@@ -56,6 +56,12 @@ const DemandeLayout = () => {
     </Typography>,
   ];
   return (
+    <Box sx={{
+      flex: "1 1 auto",
+      overflowY: "auto",
+      paddingX: "32px",
+      marginY: "32px",
+    }} >
     <Box className="px-10 lg:px-8" sx={{ paddingY: "12px" }}>
       <Breadcrumbs
         className="py-2"
@@ -65,6 +71,7 @@ const DemandeLayout = () => {
         {breadcrumbs}
       </Breadcrumbs>
       <Outlet />
+    </Box>
     </Box>
   );
 };

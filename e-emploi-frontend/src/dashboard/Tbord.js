@@ -6,6 +6,8 @@ import MonCompte from '../compte/MonCompte'
 import Informations from '../compte/Informations'
 import Demandes from '../demande/Demandes'
 import Propositions from '../demande/Propositions'
+import ChatRoom from '../annonce/ChatRoom'
+import Message from '../message/MessageRoute'
 
 const Tbord = ({logout, currentUser}) => {
   return (
@@ -16,6 +18,7 @@ const Tbord = ({logout, currentUser}) => {
             <Route path="moncompte/informations" element={<Informations/> } />
             <Route path="demandes" element={<Demandes/> } />
             <Route path="propositions" element={<Propositions/> } />
+            <Route path='chat/*' element={<Message currentUser={currentUser} /> } />
         </Route>
     </Routes>
   )

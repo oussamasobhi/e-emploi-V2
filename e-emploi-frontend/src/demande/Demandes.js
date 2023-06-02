@@ -22,7 +22,8 @@ const Demandes = () => {
     
     
   return (
-    <Box className="w-full flex">
+    <Box className="p-4" >
+    <Box className="w-full flex" >
     <Box  className="w-full grid grid-cols-1">
       <Typography variant="h4" sx={{fontFamily:"Poppins", fontWeight:"bold"}} >Demandes</Typography>
       {/*<Box className="my-3">
@@ -36,6 +37,7 @@ const Demandes = () => {
      <DemandeCarte key={index} demande={demande} /> 
       ))}          
     </Box>
+</Box>
 </Box>
   )
 }

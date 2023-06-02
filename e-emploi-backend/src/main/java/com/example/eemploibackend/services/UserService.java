@@ -136,4 +136,9 @@ public class UserService {
         }
         return prorandomsresponse;
     }
+    public UserSummary getUserById(Long id) throws Exception {
+        User user = userRepository.findUserById(id);
+        if(user!=null) return mapusertoSummary(user);
+        else throw new Exception("something went wrong");
+    }
 }

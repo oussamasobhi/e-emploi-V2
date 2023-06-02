@@ -13,6 +13,8 @@ import {
 import React from "react";
 import { Outlet, useNavigate } from "react-router";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import BookmarksRoundedIcon from '@mui/icons-material/BookmarksRounded';
+import BookmarkRoundedIcon from '@mui/icons-material/BookmarkRounded';
 import { ForumOutlined } from "@mui/icons-material";
 import { PersonOutlined } from "@mui/icons-material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
@@ -30,7 +32,7 @@ const TbordLayout = ({ logout, currentUser }) => {
     navigate("/" + currentUser.username);
   };
   return (
-    <Box className="w-full flex">
+    <Box className="w-full h-full flex">
       <Drawer
         sx={{
           marginTop: "70px",
@@ -46,7 +48,7 @@ const TbordLayout = ({ logout, currentUser }) => {
       >
         <List className="" sx={{ position: "relative", top: "70px" }}>
           <Box className="">
-          <ListItem
+          {/*<ListItem
           onClick={() => {
             navigate("/dboard/demandes")
           }}
@@ -58,7 +60,7 @@ const TbordLayout = ({ logout, currentUser }) => {
             >
               <ListItemButton sx={{ height:"56px", borderRadius: "10px" }} onClick={() => {}}>
                 <ListItemIcon>
-                <BookmarkBorderIcon
+                <BookmarksRoundedIcon
                     sx={{ fontSize: "30px", color: theme.palette.primary.main }}
                   />
                 </ListItemIcon>
@@ -66,7 +68,7 @@ const TbordLayout = ({ logout, currentUser }) => {
                   Demandes
                 </Typography>
               </ListItemButton>
-            </ListItem>
+            </ListItem>*/}
             <ListItem
               sx={{
                 display: "flex",
@@ -80,7 +82,7 @@ const TbordLayout = ({ logout, currentUser }) => {
                 }}
               >
                 <ListItemIcon>
-                  <BookmarkBorderIcon
+                  <BookmarkRoundedIcon
                     sx={{ fontSize: "30px", color: theme.palette.primary.main }}
                   />
                 </ListItemIcon>
@@ -96,7 +98,7 @@ const TbordLayout = ({ logout, currentUser }) => {
                 width: "100%",
               }}
             >
-              <ListItemButton sx={{ height:"56px", borderRadius: "10px" }}
+              <ListItemButton sx={{ height:"56px", borderRadius: "10px" }} className="active:bg-gray-200"
                 onClick={() => {
                   navigate("/dboard");
                 }}
@@ -112,6 +114,9 @@ const TbordLayout = ({ logout, currentUser }) => {
               </ListItemButton>
             </ListItem>
             <ListItem
+            onClick={() => {
+              navigate("/dboard/chat")
+            }}
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
@@ -180,13 +185,7 @@ const TbordLayout = ({ logout, currentUser }) => {
         </List>
       </Drawer>
       <Box
-        className="grow"
-        sx={{
-          flex: "1 1 auto",
-          overflowY: "auto",
-          paddingX: "32px",
-          marginY: "32px",
-        }}
+        className="grow h-full "
       >
         <Outlet />
       </Box>

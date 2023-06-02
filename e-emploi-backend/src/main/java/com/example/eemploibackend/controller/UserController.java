@@ -47,6 +47,14 @@ public class UserController {
         UserSummary userSummary=userService.mapusertoSummary(user);
         return userSummary;
     }
+    @GetMapping("/users")
+    public ResponseEntity<?> getUserById(@RequestParam("id") Long id){
+        try{
+            return ResponseEntity.ok(userService.getUserById(id));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @GetMapping("/user/checkUsernameAvailability")
     public UserIdentityAvailability checkUsernameAvailability(
