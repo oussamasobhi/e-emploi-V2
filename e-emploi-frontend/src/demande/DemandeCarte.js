@@ -1,7 +1,7 @@
 import { Box, Button, Divider, Modal, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
-import { getSousCategories, getSousCategory } from '../util/APIUtils';
+import { getAllAnnonces, getSousCategories, getSousCategory } from '../util/APIUtils';
 import { myTheme } from '../theme';
 import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
@@ -11,7 +11,7 @@ import { message } from 'antd';
 const options = { day: 'numeric', month: 'long', year: 'numeric', locale: 'fr' };
 const formatter = new Intl.DateTimeFormat('fr', options);
 
-const DemandeCarte = ({demande}) => {
+const DemandeCarte = ({demande, setDemandes}) => {
     const navigate = useNavigate();
     const [nbOffre, setNbOffre] = useState(null);
     const [postule, setPostule] = useState({
@@ -57,6 +57,7 @@ const DemandeCarte = ({demande}) => {
             content:"Postulation effectuée",
             className:"relative top-16"
           });
+          loadDemandes();
           setIsOpenPostule(false);
         }catch(error){
           message.error({
@@ -64,6 +65,14 @@ const DemandeCarte = ({demande}) => {
             className:"relative top-16"
           });
           console.log(error);
+        }
+      }
+      const loadDemandes = async () => {
+        try{
+            const res = await getAllAnnonces();
+            setDemandes(res);
+        }catch(error){
+            console.log(error);
         }
       }
 

@@ -10,8 +10,8 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@mui/material";
-import React, { useState } from "react";
-import { Outlet, useNavigate } from "react-router";
+import React, { useEffect, useState } from "react";
+import { Outlet, useLocation, useNavigate } from "react-router";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import BookmarksRoundedIcon from '@mui/icons-material/BookmarksRounded';
 import BookmarkRoundedIcon from '@mui/icons-material/BookmarkRounded';
@@ -21,8 +21,10 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 const drawerWidth = 300;
 const TbordLayout = ({ currentUser }) => {
   const theme = useTheme();
-  const [selectedItem, setSelectedItem] = useState("demandes");
+  const [selectedItem, setSelectedItem] = useState("");
+  const location = useLocation();
   const navigate = useNavigate();
+  
   const goToLogin = () => {
     navigate("/login");
   };
@@ -36,6 +38,10 @@ const TbordLayout = ({ currentUser }) => {
   const handleItemClick = (item) => {
     setSelectedItem(item);
   };
+  useEffect(() => {
+    console.log(location.pathname)
+  }, [location])
+  
 
   return (
     <Box className="w-full h-full flex">
@@ -54,7 +60,7 @@ const TbordLayout = ({ currentUser }) => {
       >
         <List className="" sx={{ position: "relative", top: "70px" }}>
           <Box className="">
-            <ListItem
+            {JSON.parse(localStorage.getItem("CURRENT_USER")).role !=="ROLE_Pro" && <ListItem
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
@@ -62,7 +68,7 @@ const TbordLayout = ({ currentUser }) => {
               }}
             >
               <ListItemButton sx={{ height:"56px", borderRadius: "10px" }} className="active:bg-gray-200"
-                selected={selectedItem === 'demandes'}
+                selected={selectedItem === 'demandes' || location.pathname === "/dboard"}
                 onClick={() => {
                   navigate("/dboard");
                   handleItemClick("demandes")
@@ -77,8 +83,8 @@ const TbordLayout = ({ currentUser }) => {
                   Mes demandes
                 </Typography>
               </ListItemButton>
-            </ListItem>
-            <ListItem
+            </ListItem>}
+           {JSON.parse(localStorage.getItem("CURRENT_USER")).role === "ROLE_Pro" && <ListItem
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
@@ -86,7 +92,7 @@ const TbordLayout = ({ currentUser }) => {
               }}
             >
               <ListItemButton sx={{ height:"56px", borderRadius: "10px" }}
-              selected={selectedItem === 'propositions'}
+              selected={selectedItem === 'propositions'|| location.pathname === "/dboard/propositions"}
                 onClick={() => {
                   navigate("/dboard/propositions");
                   handleItemClick('propositions');
@@ -101,7 +107,7 @@ const TbordLayout = ({ currentUser }) => {
                   Mes propositions
                 </Typography>
               </ListItemButton>
-            </ListItem>
+            </ListItem>}
             
             <ListItem
             
@@ -112,7 +118,7 @@ const TbordLayout = ({ currentUser }) => {
               }}
             >
               <ListItemButton
-              selected={selectedItem === "chat"}
+              selected={selectedItem === "chat" || location.pathname === "/dboard/chat"}
               onClick={() => {
                 navigate("/dboard/chat");
                 handleItemClick("chat")
@@ -140,8 +146,9 @@ const TbordLayout = ({ currentUser }) => {
                 }}
               >
                 <ListItemButton 
-                selected={selectedItem === "dashboard"}
+                selected={selectedItem === "dashboard" || location.pathname === "/dboard/admin"}
                 onClick={() => {
+                  navigate("/dboard/admin");
                   handleItemClick("dashboard")
                 }}
                 sx={{ height:"56px", borderRadius: "10px" }} >
@@ -166,7 +173,9 @@ const TbordLayout = ({ currentUser }) => {
                 width: "100%",
               }}
             >
-              <ListItemButton selected={selectedItem==="compte"} sx={{ height:"56px", borderRadius: "10px" }} onClick={() => {
+              <ListItemButton 
+              selected={selectedItem==="compte"|| location.pathname === "/dboard/moncompte"}
+               sx={{ height:"56px", borderRadius: "10px" }} onClick={() => {
                  navigate("/dboard/moncompte");
                 handleItemClick("compte");
               }}>

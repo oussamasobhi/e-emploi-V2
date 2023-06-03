@@ -33,7 +33,10 @@ const MonCompte = () => {
           <Typography variant="h4" sx={{ fontFamily: "Poppins" }}>
             {user.prenom}{" "}
           </Typography>
-          <Typography variant="body2" >Some text </Typography>
+          <Typography variant="body2" sx={{fontFamily:'Wix Madefor Display'}}>
+          {user.role === "ROLE_STANDARD" ? `Utilisateur standard` : 
+                (user.role === "ROLE_ADMIN" ? `Administrateur` : "Prestataire")}
+          </Typography>
         </Box>
       </Box>
       <Typography variant="h6" sx={{fontFamily:"Poppins", fontWeight:"bold", paddingY:"10px"}} >Gérer mon compte</Typography>

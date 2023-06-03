@@ -74,7 +74,7 @@ const Header = ({ logout, currentUser, demander }) => {
               <Typography sx={{ fontSize: "1.5rem", marginLeft: "5%" }}>
                 E-EMPLOI
               </Typography>
-              {localStorage.getItem("token") !== "" && (
+              {(localStorage.getItem("token") !== "" && JSON.parse(localStorage.getItem("CURRENT_USER")).role !== "ROLE_Pro" ) && (
                 <Button
                 onClick={()=>demander()}
                 size="large"  
@@ -99,7 +99,7 @@ const Header = ({ logout, currentUser, demander }) => {
             </>
           ) : (
             <>
-              {localStorage.getItem("token") !== "" && (
+              {(localStorage.getItem("token") !== "" && JSON.parse(localStorage.getItem("CURRENT_USER")).role !== "ROLE_Pro" ) && (
                 <Button
                 size="large"  
                 onClick={()=>demander()}
@@ -165,7 +165,7 @@ const Header = ({ logout, currentUser, demander }) => {
                     sx={{borderRadius:"20px"}}
                   >
                     <Box sx={{borderBottom:"2px", borderColor:theme.palette.gris.main}}  >
-                    <MenuItem
+                    {JSON.parse(localStorage.getItem("CURRENT_USER")).role !=="ROLE_Pro" && <MenuItem
                       onClick={() => {
                         navigate("/dboard")
                          handleClose(); 
@@ -177,7 +177,22 @@ const Header = ({ logout, currentUser, demander }) => {
                       <Typography sx={{marginLeft:"10px", fontSize:"20px"}} >Mes demandes</Typography>
                       </div>
                       <Typography className="justify-self-end text-gray-400">{/**Some text */}</Typography>
-                    </MenuItem>
+                    </MenuItem>}
+                    </Box>
+                    <Box sx={{borderBottom:"2px", borderColor:theme.palette.gris.main}}  >
+                    {JSON.parse(localStorage.getItem("CURRENT_USER")).role ==="ROLE_Pro" && <MenuItem
+                      onClick={() => {
+                        navigate("/dboard/propositions")
+                         handleClose(); 
+                        }}
+                      sx={{display:"flex", justifyContent:"space-between  ", width:"320px",height:"56px"}}
+                    >
+                      <div className="flex">
+                        <BookmarkBorderIcon sx={{fontSize:"30px", color: theme.palette.primary.main}} />
+                      <Typography sx={{marginLeft:"10px", fontSize:"20px"}} >Mes propositions</Typography>
+                      </div>
+                      <Typography className="justify-self-end text-gray-400">{/**Some text */}</Typography>
+                    </MenuItem>}
                     <MenuItem
                       onClick={() => {
                         navigate("/dboard/chat")
@@ -194,7 +209,10 @@ const Header = ({ logout, currentUser, demander }) => {
                     {JSON.parse(localStorage.getItem("CURRENT_USER")).role ===
                       "ROLE_ADMIN" && (
                         <MenuItem
-                      onClick={() => { handleClose(); }}
+                        onClick={() => {
+                          navigate("/dboard/admin")
+                           handleClose(); 
+                          }}
                       sx={{display:"flex", justifyContent:"space-between", width:"320px",height:"56px"}}
                     >
                         <div className="flex">

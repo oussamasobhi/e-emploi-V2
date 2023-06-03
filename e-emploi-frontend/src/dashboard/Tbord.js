@@ -4,10 +4,10 @@ import TbordLayout from './TbordLayout'
 import MesDemandes from '../demande/MesDemandes'
 import MonCompte from '../compte/MonCompte'
 import Informations from '../compte/Informations'
-import Demandes from '../demande/Demandes'
 import Propositions from '../demande/Propositions'
 import ChatRoom from '../annonce/ChatRoom'
 import Message from '../message/MessageRoute'
+import DashBoard2 from '../admin/DashBoard2'
 
 const Tbord = ({logout, currentUser}) => {
   return (
@@ -16,9 +16,9 @@ const Tbord = ({logout, currentUser}) => {
             <Route index element={<MesDemandes currentUser={currentUser} /> } />
             <Route path="moncompte" element={<MonCompte/> } />
             <Route path="moncompte/informations" element={<Informations/> } />
-            <Route path="demandes" element={<Demandes/> } />
             <Route path="propositions" element={<Propositions/> } />
             <Route path='chat/*' element={<Message currentUser={currentUser} /> } />
+            <Route path='admin' element={<DashBoard2/> } />
         </Route>
     </Routes>
   )

@@ -290,6 +290,11 @@ export function getAllSousCatagorie(){
     method: "GET"
   });
 }
+export function getAllPostulations(){
+  return request({
+    url: API_BASE_URL+"/annonceuser"
+  })
+}
 
 
 export function createAnnonce(annonce) {
