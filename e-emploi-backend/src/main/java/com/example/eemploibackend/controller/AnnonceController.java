@@ -109,13 +109,19 @@ public class AnnonceController {
             return new ResponseEntity(new ApiResponse(true,"Image suprimé"),HttpStatus.OK);
         return new ResponseEntity(new ApiResponse(true,"id n'existe pas"),HttpStatus.BAD_REQUEST);
     }
-
+    @PreAuthorize("hasAnyAuthority('ROLE_STANDARD','ROLE_ADMIN')")
+    @PutMapping("/terminer/{id}")
+    public ResponseEntity<?> terminerAnnonce(@PathVariable("id") Long id) {
+        annonceService.terminerAnnonce(id);
+        return new ResponseEntity<>(new ApiResponse(true, "Annonce cloturée"), HttpStatus.OK);
+    }
     // cloturer annonce
     @PreAuthorize("hasAnyAuthority('ROLE_STANDARD','ROLE_ADMIN')")
     @PutMapping("/cloturer/{idannonce}")
     public ResponseEntity<?> cloturerannonce(@PathVariable(value = "idannonce")Long idannonce){
         annonceService.clotureAnnonce(idannonce);
         return new ResponseEntity(new ApiResponse(true,"cloturé avec succés"),HttpStatus.OK);
+
     }
 
 }

@@ -290,6 +290,11 @@ export function getAllSousCatagorie(){
     method: "GET"
   });
 }
+export function getAllPostulations(){
+  return request({
+    url: API_BASE_URL+"/annonceuser"
+  })
+}
 
 
 export function createAnnonce(annonce) {
@@ -304,6 +309,13 @@ export function deleteAnnonce(id){
     url: API_BASE_URL+"/annonce/delete/"+id,
     method: "DELETE"
   });
+}
+
+export function terminerAnnonce(id){
+  return request({
+    url: API_BASE_URL+"/annonce/terminer/"+id,
+    method: "PUT"
+  })
 }
 
 export function getAnnonceById(id) {
@@ -444,6 +456,13 @@ export function accepterOffre(idannonce, iduser){
   return request({
     url: API_BASE_URL+"/annonceuser/accepterreserve/"+idannonce+"/"+iduser,
     method: "PUT"
+  })
+}
+export function upadateAnnonce(idannonce, annonce){
+  return request({
+    url: API_BASE_URL+"/annonce/edit/"+idannonce,
+    method:"PUT",
+    body: JSON.stringify(annonce)
   })
 }
 

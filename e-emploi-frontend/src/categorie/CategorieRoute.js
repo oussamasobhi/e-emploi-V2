@@ -64,10 +64,9 @@ const CategorieRoute = () => {
         {sousCategorie?.map((item,index)=>(
           <Box key={item.id} sx={{height:"200px"}} className="cursor-pointer" onClick={()=>sousCatFunction(item.id)} >
           <Box sx={{height:"140px"}} className="px-2 bg-gray-300 hover:bg-gray-400 transition-colors ease-in-out rounded-xl overflow-hidden flex items-center justify-center"  key={index}>
-          <Typography variant="body1" fontFamily="Poppins" fontWeight="bold" className='hover:text-gray-800 mt-2' >{item.nom_sous_categorie}</Typography>
+            <img src={require("../public/image_sc/sc"+item.id+".jpg")} />
           </Box>
-         
-          
+          <Typography variant="body1" fontFamily="Poppins" fontWeight="bold" className='hover:text-gray-800 mt-2' >{item.nom_sous_categorie}</Typography>
           </Box>
         ))}
       </Box>

@@ -27,7 +27,7 @@ const Layout = ({
 
   return (
     <>
-    <Box className="font-poppins flex flex-col h-screen bg-gray-100" sx={{position:"relative"}}>
+    <Box className="font-poppins flex flex-col h-screen bg-white" sx={{position:"relative"}}>
       <Header
         logout={onLogout}
         currentUser={currentUser}
@@ -35,7 +35,7 @@ const Layout = ({
         demander={()=>setIsOpenDemande(true)}
       />
 
-      <Box className="min-w-full h-myHeight overflow-y-auto flex flex-col justify-between" sx={{position:"absolute", top:"70px"}}>
+      <Box className="min-w-full h-[560px] overflow-y-auto flex flex-col justify-between" sx={{position:"absolute", top:"70px"}}>
         <div>
           <Outlet className="min-h-full " />
         </div>

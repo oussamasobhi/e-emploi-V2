@@ -54,4 +54,7 @@ public class AnnonceUserService {
     public List<AnnonceUser> getoffresrecues(Long idannonce){
         return annonceUserRepository.getoffresrecuesauneannonce(idannonce);
     }
+    public List<AnnonceUser> getAllPostulations(){
+        return annonceUserRepository.findAll();
+    }
 }

@@ -24,19 +24,23 @@ const Demandes = () => {
   return (
     <Box className="p-4" >
     <Box className="w-full flex" >
-    <Box  className="w-full grid grid-cols-1">
-      <Typography variant="h4" sx={{fontFamily:"Poppins", fontWeight:"bold"}} >Demandes</Typography>
-      {/*<Box className="my-3">
-        <Toolbar>
-        <Button variant='outlined' sx={{borderRadius:"28px", size:"medium", marginRight:"14px"}}>En cours</Button>
-        <Buttonn variant="outlined" sx={{borderRadius:"28px", size:"medium"}} >Terminé</Buttonn>
-        </Toolbar>
-      </Box>*/}
+    {JSON.parse(localStorage.getItem("CURRENT_USER")).role ==="ROLE_STANDARD" && <Box  className="w-full grid grid-cols-1">
+      <Typography variant="h4" sx={{fontFamily:"Poppins", fontWeight:"bold", marginY:"16px"}} >Demandes</Typography>
       {demandes?.map((demande, index)=>(
-
      <DemandeCarte key={index} demande={demande} /> 
       ))}          
     </Box>
+    }
+     {JSON.parse(localStorage.getItem("CURRENT_USER")).role !=="ROLE_STANDARD" && 
+     <Box  className="w-full grid">
+      <Typography variant="h4" sx={{fontFamily:"Poppins", fontWeight:"bold", marginY:"16px"}} >Demandes</Typography>
+      <Box className="grid md:grid-cols-2 gap-2">
+      {demandes?.map((demande, index)=>(
+      <DemandeCarte key={index} demande={demande} setDemandes={setDemandes} /> 
+      ))}          
+      </Box>
+    </Box>
+    }
 </Box>
 </Box>
   )

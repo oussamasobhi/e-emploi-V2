@@ -33,18 +33,10 @@ const MonCompte = () => {
           <Typography variant="h4" sx={{ fontFamily: "Poppins" }}>
             {user.prenom}{" "}
           </Typography>
-          <Typography variant="body2" >Some text </Typography>
-        </Box>
-      </Box>
-      <Box className="p-[16px] h-[93px] bg-blue-100 rounded-xl flex flex-col mb-6" >
-        <Typography variant="subtitle1"  sx={{fontFamily:"Poppins"}}>Statut</Typography>
-        <Typography variant="body2"  sx={{fontFamily:"Wix Madefor Display", color:"gray"}} gutterBottom>Some text</Typography>
-        <Box>
-        <Button variant="contained" sx={{backgroundColor:myTheme.palette.purple.main, color:"white", borderRadius:"16px", 
-        ":hover":{backgroundColor:myTheme.palette.purple.second}
-      }}>
-          <span className="capitalize font-poppins">Découvrir</span>
-        </Button>
+          <Typography variant="body2" sx={{fontFamily:'Wix Madefor Display'}}>
+          {user.role === "ROLE_STANDARD" ? `Utilisateur standard` : 
+                (user.role === "ROLE_ADMIN" ? `Administrateur` : "Prestataire")}
+          </Typography>
         </Box>
       </Box>
       <Typography variant="h6" sx={{fontFamily:"Poppins", fontWeight:"bold", paddingY:"10px"}} >Gérer mon compte</Typography>
@@ -54,9 +46,9 @@ const MonCompte = () => {
           <Typography variant="subtitle1" sx={{fontFamily:"Poppins", fontWeight:"bold",color:myTheme.palette.blue.second}} >Informations personnelles</Typography>
           <Typography variant="body1"   sx={{fontFamily:"Wix Madefor Display", color:"gray"}}>Complétez et mettez à jour votre identité pour faciliter les échanges avec vos prestataires.</Typography>
         </Box>
-        {user?.role==="ROLE_Pro" 
+        {user?.role!=="ROLE_STANDARD" 
         && 
-        <Box onClick={() => {console.log("compétence clicked")}} className='flex flex-col cursor-pointer'>
+        <Box onClick={() => {navigate("/dboard/moncompte/competences")}} className='flex flex-col cursor-pointer'>
           <WbIncandescentOutlinedIcon sx={{width:"32px", height:"32px", color: myTheme.palette.blue.second}} /> 
           <Typography variant="subtitle1" sx={{fontFamily:"Poppins", fontWeight:"bold",color:myTheme.palette.blue.second}} >Mes compétences</Typography>
           <Typography variant="body1"   sx={{fontFamily:"Wix Madefor Display", color:"gray"}}>Mettre à jour vos compétences pour postuler à plus de  demande</Typography>

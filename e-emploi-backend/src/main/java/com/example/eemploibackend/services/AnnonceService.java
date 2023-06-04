@@ -169,4 +169,9 @@ public class AnnonceService {
         }
         return annonceResponses;
     }
+    public void terminerAnnonce(Long id){
+        Annonce annonce = annonceRepository.findById(id).get();
+        annonce.setStatusAnnonce(StatusAnnonce.Terminé);
+        annonceRepository.save(annonce);
+    }
 }

@@ -5,6 +5,8 @@ import Service2 from "./Home/Service2";
 import WhyUs from "./Home/WhyUs";
 import { useEffect, useState } from "react";
 import { getCategories } from "../util/APIUtils";
+import Demandes from "../demande/Demandes";
+
 const Home = ({currentUser}) => {
   const [categorie, setCategorie] = useState(null);
   const [sousCategorie, setSousCategorie] = useState(null);
@@ -20,12 +22,22 @@ const Home = ({currentUser}) => {
     loadCategorie();    
   }, [])
   return (
-    <div className="h-auto overflow-y-auto">      
-      <Hero />
-      <Categories categories={categorie} />
-      <WhyUs />
-      <Service1 />
-      <Service2 />
+    <div className="h-auto overflow-y-auto">  
+    {JSON.parse(localStorage.getItem("CURRENT_USER")).role === "ROLE_Pro" && <Demandes/>}
+   {JSON.parse(localStorage.getItem("CURRENT_USER")).role === "ROLE_STANDARD" && <>   
+     <Hero />
+     <Categories categories={categorie} />
+     <WhyUs />
+     <Service1 />
+     <Service2 />
+     </>}
+     {JSON.parse(localStorage.getItem("CURRENT_USER")).role === "ROLE_ADMIN" 
+     &&
+     (<> <Demandes/>
+     <Categories categories={categorie} />
+     </>
+     )}
+   
     </div>
 
   );

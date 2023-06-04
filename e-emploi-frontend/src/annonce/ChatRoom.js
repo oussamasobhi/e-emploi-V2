@@ -259,11 +259,6 @@ const ChatRoom = ({ currentUser }) => {
       <div className="h-[533px] flex justify-center">
         <div className="w-full relative flex flex-col h-full bg-white  rounded-md shadow-md">
           <div className="flex justify-between items-start p-2 bg-blue-50">
-            <div className="flex flex-col ">
-              <Typography className="text-xl font-caption text-blue-800 flex-auto">
-                {sousCat?.nom_sous_categorie}
-              </Typography>
-            </div>
             <div className="flex flex-col">
               <Typography
                 className="text-xl font-roboto no-underline w-fit flex-none"

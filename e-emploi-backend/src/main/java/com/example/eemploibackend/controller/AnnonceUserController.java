@@ -44,6 +44,11 @@ public class AnnonceUserController {
                                                       @PathVariable(name = "iduser") Long iduser){
         return ResponseEntity.ok(annonceUserService.getAnnonceUser(idannonce, iduser));
     }
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    @GetMapping
+    public ResponseEntity<List<AnnonceUser>> getAllPostulations(){
+        return ResponseEntity.ok(annonceUserService.getAllPostulations());
+    }
     @PreAuthorize("hasAnyAuthority('ROLE_STANDARD','ROLE_ADMIN','ROLE_Pro')")
     @GetMapping("/{iduser}")
     public ResponseEntity<List<AnnonceUser>> getAllAnnonceUser(@PathVariable(name = "iduser") Long iduser){
