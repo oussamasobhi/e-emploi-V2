@@ -6,9 +6,9 @@ import { Typography } from "antd";
 const Hero = () => {
   
   return (
-    <div className="h-myHeight pt-12 ">
+    <div className=" pt-12 ">
       <div className="h-full flex flex-col items-center ">
-        <div className="h-9/12 w-full">
+        <div className="w-full">
           <div className="flex flex-col items-center my-10">
             <Typography className="font-archivo text-5xl lg:text-7xl text-center">
               Décrivez-nous votre besoin
@@ -21,7 +21,7 @@ const Hero = () => {
             La plateforme propose une gestion des compétences, les produits
             destinés à servir d'autre personne contre une paie.
           </p>
-          <div className="grid grid-cols-2 pt-20">
+          {/*<div className="grid grid-cols-2 pt-20">
             <button className="cursor-pointer bg-my-blue border-none rounded-md mr-5 text-lg py-4 px-2 font-roboto uppercase justify-self-end transition-colors duration-300 ease-in-out w-52 ">
               <Link to={"/annonce"} className="text-orange-500 no-underline capitalize font-wix" >Voir les annonces</Link>
             </button>
@@ -29,7 +29,7 @@ const Hero = () => {
             <button className="cursor-pointer bg-my-blue border-none rounded-md text-lg py-4 px-2 font-roboto uppercase transition-colors duration-300 ease-in-out w-52">
               <Link to={"/dboard/demandes"} className="text-orange-500 no-underline capitalize font-wix" >Toutes les demandes</Link>
             </button>
-          </div>
+          </div>*/}
         </div>
       </div>
     </div>

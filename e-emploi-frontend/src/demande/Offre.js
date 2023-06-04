@@ -72,8 +72,10 @@ const Offre = ({postulation, demande, setDemande}) => {
           <Box className="grow">
             <Box>
                 <Box className='flex justify-between mb-2' >
-                  
-                  <Typography variant="h5" sx={{fontFamily:"Poppins", fontWeight:"bold"}} > {pro.prenom} {pro.nom} </Typography>
+                  <Box>
+                  <Typography variant="h6" sx={{fontFamily:"Poppins", fontWeight:"bold"}} > {pro.prenom} {pro.nom} </Typography>
+                  <Typography variant="body2" sx={{fontFamily:"Wix Madefor Display"}}><span className='text-gray-600'> {pro.num_tel}</span> </Typography>
+                  </Box>
                   <Typography variant="subtitle1" sx={{fontFamily:"Poppins", fontWeight:"bold"}}><span className='text-green-500 font-poppins' >{postulation?.statusReservation} </span></Typography>    
               </Box>
               

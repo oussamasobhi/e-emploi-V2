@@ -1,13 +1,16 @@
 import { Box, Button, Toolbar, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { getAllSousCatagorie, getAnnonceUserByIdUser, getCurrentUser, getPostulationsByUserId } from '../util/APIUtils';
+import { getAllAnnonces, getAllSousCatagorie, getAnnonceUserByIdUser, getCurrentUser, getPostulationsByUserId } from '../util/APIUtils';
 import Proposition from './Proposition';
 import { DataGrid } from '@mui/x-data-grid';
+const options = { day: 'numeric', month: 'long', year: 'numeric', locale: 'fr' };
+const formatter = new Intl.DateTimeFormat('fr', options);
 
 const Propositions = () => {
     const [propositions, setPropositions] = useState(null);
     const [currentUser, setCurrentUser] = useState(null);
     const [sousCategories, setSousCategories] = useState(null);
+    const [annonces, setAnnonces] = useState(null);
     const [postulation, setPostulation] = useState(null);
     useEffect(() => {
         const loadCurrentUser = async () => {
@@ -28,6 +31,14 @@ const Propositions = () => {
             }
         }
         loadSousCategories(); 
+        const loadAnnonces = async () => {
+            try{
+                const res = await getAllAnnonces();
+                setAnnonces(res);
+            }catch(error){
+                console.log(error);
+            }
+          }
     }, [])
     useEffect(() => {
         const loadPropositions = async () => {
@@ -64,10 +75,16 @@ const Propositions = () => {
             valueGetter: (params) => `${params.row.userResponse.prenom} ${params.row.userResponse.nom}`
         },
         {
+          field: "da",
+          headerName: "Date",
+          width: 170,
+          valueGetter: (params) => formatter.format((annonces?.find(obj => obj.id === params.row.id.idannonce))?.date)
+      },
+        {
             field: "statusRereservation",
             headerName: "Status",
             width: 150,
-            valueGetter: (params) => ( params.row.annonceUsers.find(obj => obj.id.iduser === currentUser?.id)).statusReservation
+            valueGetter: (params) => ( params.row.annonceUsers.find(obj => obj.id.iduser === currentUser?.id))?.statusReservation
         }
     ]
 

@@ -13,6 +13,7 @@ import React, { Fragment, useState } from "react";
 import logo from "../public/image/logo_itako_bsc.jpg";
 import DrawerComp from "./DrawerComp";
 import { Link, useNavigate } from "react-router-dom";
+import BookmarkRoundedIcon from '@mui/icons-material/BookmarkRounded';
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import { ForumOutlined, PersonOutlined } from "@mui/icons-material";
@@ -156,6 +157,7 @@ const Header = ({ logout, currentUser, demander }) => {
                     {currentUser.prenom}
                   </Typography>
                   </Button>
+                  
                   <Menu
                     id="demo-positioned-menu"
                     aria-labelledby="demo-positioned-button"
@@ -165,6 +167,22 @@ const Header = ({ logout, currentUser, demander }) => {
                     sx={{borderRadius:"20px"}}
                   >
                     <Box sx={{borderBottom:"2px", borderColor:theme.palette.gris.main}}  >
+                    {JSON.parse(localStorage.getItem("CURRENT_USER")).role ===
+                      "ROLE_ADMIN" && (
+                        <MenuItem
+                        onClick={() => {
+                          navigate("/dboard/admin")
+                           handleClose(); 
+                          }}
+                      sx={{display:"flex", justifyContent:"space-between", width:"320px",height:"56px"}}
+                    >
+                        <div className="flex">
+                          <DashboardIcon sx={{fontSize:"30px", color: theme.palette.primary.main}} />
+                        <Typography sx={{marginLeft:"10px", fontSize:"20px"}} >Dashboard</Typography>
+                        </div>
+                        <Typography className="justify-self-end text-gray-400">{/*Some Text*/}</Typography>
+                      </MenuItem>
+                    )}
                     {JSON.parse(localStorage.getItem("CURRENT_USER")).role !=="ROLE_Pro" && <MenuItem
                       onClick={() => {
                         navigate("/dboard")
@@ -180,7 +198,7 @@ const Header = ({ logout, currentUser, demander }) => {
                     </MenuItem>}
                     </Box>
                     <Box sx={{borderBottom:"2px", borderColor:theme.palette.gris.main}}  >
-                    {JSON.parse(localStorage.getItem("CURRENT_USER")).role ==="ROLE_Pro" && <MenuItem
+                    {JSON.parse(localStorage.getItem("CURRENT_USER")).role !=="ROLE_STANDARD" && <MenuItem
                       onClick={() => {
                         navigate("/dboard/propositions")
                          handleClose(); 
@@ -188,7 +206,7 @@ const Header = ({ logout, currentUser, demander }) => {
                       sx={{display:"flex", justifyContent:"space-between  ", width:"320px",height:"56px"}}
                     >
                       <div className="flex">
-                        <BookmarkBorderIcon sx={{fontSize:"30px", color: theme.palette.primary.main}} />
+                        <BookmarkRoundedIcon sx={{fontSize:"30px", color: theme.palette.primary.main}} />
                       <Typography sx={{marginLeft:"10px", fontSize:"20px"}} >Mes propositions</Typography>
                       </div>
                       <Typography className="justify-self-end text-gray-400">{/**Some text */}</Typography>
@@ -206,22 +224,7 @@ const Header = ({ logout, currentUser, demander }) => {
                       </div>
                       <Typography className="justify-self-end text-gray-400">{/**Some text */}</Typography>
                     </MenuItem>
-                    {JSON.parse(localStorage.getItem("CURRENT_USER")).role ===
-                      "ROLE_ADMIN" && (
-                        <MenuItem
-                        onClick={() => {
-                          navigate("/dboard/admin")
-                           handleClose(); 
-                          }}
-                      sx={{display:"flex", justifyContent:"space-between", width:"320px",height:"56px"}}
-                    >
-                        <div className="flex">
-                          <DashboardIcon sx={{fontSize:"30px", color: theme.palette.primary.main}} />
-                        <Typography sx={{marginLeft:"10px", fontSize:"20px"}} >Dashboard</Typography>
-                        </div>
-                        <Typography className="justify-self-end text-gray-400">{/*Some Text*/}</Typography>
-                      </MenuItem>
-                    )}
+                    
                     <MenuItem
                       onClick={() => {
                         handleClose();

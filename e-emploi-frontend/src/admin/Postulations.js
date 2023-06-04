@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { getAllAnnonces, getAllPostulations, getAllSousCatagorie, getAllUsers } from '../util/APIUtils';
+
 import { Box, Typography } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { key } from 'localforage';
@@ -60,12 +61,13 @@ const Postulations = ({setNbPostulation}) => {
         {
           field: 'id',
           headerName: 'Prestataire',
+          width:130,
           valueGetter: (params, index) => `${(users?.find(obj => obj.id === params.row.id2.iduser).prenom)} ${(users.find(obj => obj.id === params.row.id2.iduser).nom)}`
         },
         {
             field: "category",
             headerName: "Catégorie",
-            width: 200,
+            width: 170,
             valueGetter: (params) => `${(sousCategories?.find(obj => obj.id === (annonces.find(obj => obj.id===params.row.id2.idannonce)).categorie1Annonce)).nom_sous_categorie}`
         },
         {

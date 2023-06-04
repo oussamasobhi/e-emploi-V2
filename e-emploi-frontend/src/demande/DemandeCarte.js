@@ -144,13 +144,16 @@ const DemandeCarte = ({demande, setDemandes}) => {
          <Button onClick={()=>gererDemande(demande.id)} variant='contained' sx={{width:"100%", borderRadius: "12px", paddingY:"12px", marginTop:"14px"}} className='mt-4'><span className='capitalize font-poppins' >Gérer&nbsp;</span><span className='lowercase font-poppins' >ma demande</span>
          </Button>
         }
-        {(demande?.userResponse?.username!==JSON.parse(localStorage.getItem("CURRENT_USER")).username &&
+        {(demande?.userResponse?.username!==JSON.parse(localStorage.getItem("CURRENT_USER")).username && demande?.statusAnnonce !== "Terminé" &&
         (!(demande?.annonceUsers.some(obj => obj?.id?.iduser == JSON.parse(localStorage.getItem("CURRENT_USER")).id)) || demande?.annonceUsers.length ===0 )) &&
          <Button onClick={()=>setIsOpenPostule(true)} variant='contained' sx={{width:"100%", borderRadius: "12px", paddingY:"12px", marginTop:"14px"}} className='mt-4'><span className='capitalize font-poppins' >Postuler</span></Button> 
         }
-        
+        {(demande?.userResponse?.username!==JSON.parse(localStorage.getItem("CURRENT_USER")).username &&
+        demande?.statusAnnonce === "Terminé") &&
+         <Typography variant='body1'><span className='font-wix text-red-600'>Annonce déjà clôturée</span> </Typography> 
+        }
          {(demande?.userResponse?.username!==JSON.parse(localStorage.getItem("CURRENT_USER")).username &&
-        demande?.annonceUsers.some(obj => obj?.id?.iduser == JSON.parse(localStorage.getItem("CURRENT_USER")).id) ) &&
+        demande?.annonceUsers.some(obj => obj?.id?.iduser == JSON.parse(localStorage.getItem("CURRENT_USER")).id) && demande?.statusAnnonce !== "Terminé" ) &&
          <Typography variant='body1'><span className='font-wix'>Vous avez déjà postulé à cette annonce.&nbsp; <span onClick={()=>navigate("/dboard/chat/"+demande?.id+'/'+demande?.userResponse?.username)} className='font-poppins cursor-pointer font-bold text-blue-700'>Voir discussion</span> </span> </Typography> 
         }
       </Box>  

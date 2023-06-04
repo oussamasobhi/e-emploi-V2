@@ -9,10 +9,12 @@ import {
   PASSWORD_MAX_LENGTH,
   PASSWORD_MIN_LENGTH,
 } from "../constant";
-import { getCategories, getSousCategories, isAvailableEmail, isAvailableUsername, proSignup } from "../util/APIUtils";
+import { getAllSousCatagorie, getCategories, getSousCategories, isAvailableEmail, isAvailableUsername, proSignup } from "../util/APIUtils";
 import { Box, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import { message } from "antd";
 import { Link } from "react-router-dom";
+import Souscat from "./Souscat";
+import { BugReportTwoTone } from "@mui/icons-material";
 const ProRegister = () => {
   const navigate = useNavigate();
   const [prenomError, setPrenomError] = useState("");
@@ -51,22 +53,20 @@ const ProRegister = () => {
         }
     }
     loadCategorie();    
+    const loadSousCategorie = async () => {
+      try{
+          const res = await getAllSousCatagorie();
+          setSousCategorie(res);
+      }catch(error){
+          console.log(error)
+      }
+  };
+  loadSousCategorie();
   }, [])
   useEffect(() => {
     console.log(categorie)
   }, [categorie])
   
-  useEffect(() => {
-    const loadSousCategorie = async (id) => {
-        try{
-            const res = await getSousCategories(id);
-            setSousCategorie(res);
-        }catch(error){
-            console.log(error)
-        }
-    };
-    loadSousCategorie(competence.categorie);
-  }, [competence.categorie])
   
   useEffect(() => {
    console.log(categorie)
@@ -278,7 +278,7 @@ const ProRegister = () => {
       passwordError ||
       emailError ||
       nomError ||
-      prenomError
+      prenomError || user.password2==="" || user.username.length<=USERNAME_MIN_LENGTH
     ) {
       message.error("Formulaire invalide");
     } else {
@@ -331,54 +331,49 @@ const ProRegister = () => {
   
 
   return (
-    <div className="flex flex-col w-auto items-center bg-gray-100">
-      <div className="bg-inherit w-auto">
+    <div>
+      <div>
         <h1 className="text-3xl font-poppins text-my-blue text-center">
           Devenir prestataire
         </h1>
-        <Box className="flex flex-col p-6 border rounded-md bg-white shadow-md overflow-y-auto" sx={{height:"420px"}} >
+        <Box className="px-6 border rounded-md bg-white shadow-md ">
         
           <form
             onSubmit={inscription}
-            className=" rounded-md bg-white"
+            className=" rounded-md bg-white grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
           >
-            <Box className="flex flex-col" sx={{borderBottom:"1px", paddingBottom:"15px"}} >
+            <Box className="flex flex-col col-span-1" sx={{borderBottom:"1px", paddingBottom:"15px"}} >
                 <Typography sx={{fontSize:"20px", fontWeight:"bold", fontFamily:"Poppins"}}>Coordonnées</Typography>
-            <div className="flex pb-1 mb-2">
-               
+                          
               <TextField
-
+                required
+                error={nomError?true:false}
+                helperText={nomError?`Nom trop court (Minimum ${NAME_MIN_LENGTH} caractères nécessaires)`:''}
                 variant="standard"
                 label="Nom"
                 name="nom"
                 id="nom"
                 value={user.nom}
                 onChange={(e) => handleChange(e, validateName)}
-                sx={{ marginRight: "5px" }}
+             
               />
               <TextField
+              required
+              error={prenomError?true:false}
+              helperText={''}
                 variant="standard"
                 label="Prénom"
                 name="prenom"
                 id="prenom"
                 value={user.prenom}
                 onChange={(e) => handleChange(e, validatePrenom)}
-                sx={{ marginLeft: "5px" }}
+               
               />
-            </div>
-
-            {nomError && (
-              <p className="text-sm font-roboto text-red-600 w-full mb-2 px-2 truncate flex">
-                {nomError}
-              </p>
-            )}
-            {prenomError && (
-              <p className="text-sm font-roboto text-red-600w-full mb-2 px-2">
-                {prenomError}
-              </p>
-            )}
 
             <TextField
+              required
+              error={usernameError?true:false}
+              helperText={usernameError?usernameError:""}
               label="Username"
               variant="standard"
               name="username"
@@ -388,16 +383,11 @@ const ProRegister = () => {
               onChange={(e) => handleChange(e, validateUsername)}
               sx={{ marginBottom: "10px" }}
             />
-            {usernameError && (
-              <p className="text-sm font-roboto text-red-600 w-full mb-1 px-2">
-                {usernameError}
-              </p>
-            )}
             <TextField
               variant="standard"
               required
-              error={isEmailError}
-              helperText={isEmailError?"Email ne peux pas être vide":""}
+              error={emailError?true:false}
+              helperText={emailError?emailError:""}
               label="Email"
               name="email"
               id="email"
@@ -406,12 +396,6 @@ const ProRegister = () => {
               onChange={(e) => handleChange(e, validateEmail)}
               sx={{ marginBottom: "10px" }}
             />
-
-            {emailError && (
-              <p className="text-sm font-roboto text-red-600 w-full mb-2 px-2">
-                {emailError}
-              </p>
-            )}
             <TextField
               variant="standard"
               label="Téléphone"
@@ -426,7 +410,7 @@ const ProRegister = () => {
               label="CIN"
               name="CIN"
               id="CIN"
-              value={user.cin}
+              value={user.CIN}
               onChange={handleInputChange}
               sx={{ marginBottom: "15px" }}
             />
@@ -456,39 +440,30 @@ const ProRegister = () => {
                 {passwordError}
               </p>
             )}
-</Box>
-<Box className="flex flex-col" sx={{borderBottom:"1px", paddingBottom:"15px"}} >
-<Typography sx={{fontSize:"20px", fontWeight:"bold", fontFamily:"Poppins"}}>
-    Compétences
-</Typography>
-<FormControl sx={{marginTop:"10px"}} >
-<InputLabel>Compétence</InputLabel>
-<Select variant="standard" label="Compétence" name="categorie" onChange={handleCompetenceChange} value={competence.categorie} >
-    {categorie?.map((cat, index)=>(
-        <MenuItem key={index} value={cat.id}>{cat.nom_categorie} </MenuItem>
-    )) }
-</Select>
-</FormControl>
-{competence.categorie && <FormControl>
-    <FormLabel>Catégorie</FormLabel>
-    {sousCategorie?.map((item, index)=>(
-        <FormControlLabel
-        control={<Checkbox key={index} value={item.id} onChange={handleSousCatChange} />}
-        label={item.nom_sous_categorie}
-      />
-    )) }
-</FormControl>}
+          </Box>
+          <Box className="md:col-span-2 lg:col-span-3">
+          <Typography sx={{fontSize:"20px", fontWeight:"bold", fontFamily:"Poppins"}}>Compétences</Typography>
+          <Box className=" grid grid-cols-3 lg:grid-cols-4">
+          
+          {categorie?.map((cat) => (
+            <Box>
+              <Souscat category={cat} handleSousCatChange={ handleSousCatChange} />
+            </Box>
+          ))}
+</Box></Box>
+          </form>
 
-</Box>
+          <div className="flex flex-col items-end">
+            <Box>
             <button
-            type="submit"
+            onClick={inscription}
               className="text-white rounded-md font-bold mt-6 py-2 text-lg border-none hover:bg-orange-600 bg-orange-500 transition-colors ease-in-out cursor-pointer "
             >
+             
               Créer un compte
-            </button>
-          </form>
-          <div className="py-3 text-center">
+            </button> </Box>
             <p className="font-caption">Vous avez déjà un compte? <Link to="/login" className="text-blue-500 no-underline hover:underline hover:text-blue-600 font-caption">Se connecter</Link></p>
+          
           </div>
         </Box>
       </div>

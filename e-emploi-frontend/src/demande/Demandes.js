@@ -24,19 +24,19 @@ const Demandes = () => {
   return (
     <Box className="p-4" >
     <Box className="w-full flex" >
-    {JSON.parse(localStorage.getItem("CURRENT_USER")).role !=="ROLE_Pro" && <Box  className="w-full grid grid-cols-1">
+    {JSON.parse(localStorage.getItem("CURRENT_USER")).role ==="ROLE_STANDARD" && <Box  className="w-full grid grid-cols-1">
       <Typography variant="h4" sx={{fontFamily:"Poppins", fontWeight:"bold", marginY:"16px"}} >Demandes</Typography>
       {demandes?.map((demande, index)=>(
      <DemandeCarte key={index} demande={demande} /> 
       ))}          
     </Box>
     }
-     {JSON.parse(localStorage.getItem("CURRENT_USER")).role ==="ROLE_Pro" && 
+     {JSON.parse(localStorage.getItem("CURRENT_USER")).role !=="ROLE_STANDARD" && 
      <Box  className="w-full grid">
       <Typography variant="h4" sx={{fontFamily:"Poppins", fontWeight:"bold", marginY:"16px"}} >Demandes</Typography>
       <Box className="grid md:grid-cols-2 gap-2">
       {demandes?.map((demande, index)=>(
-       <DemandeCarte key={index} demande={demande} setDemandes={setDemandes} /> 
+      <DemandeCarte key={index} demande={demande} setDemandes={setDemandes} /> 
       ))}          
       </Box>
     </Box>

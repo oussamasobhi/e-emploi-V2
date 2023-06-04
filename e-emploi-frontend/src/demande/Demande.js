@@ -192,7 +192,7 @@ const Demande = () => {
 >
 <Box className="" sx={{fontFamily:"Poppins"}}>
     <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', boxShadow: 24, p: 4 }}>
-      <h2 id="modal-title">Modifier votre demande</h2>
+      <h2 id="modal-title">Clôturer votre demande</h2>
       <Typography sx={{fontFamily:"Wix Madefor Display"}} >Voulez vous clôturer cette annonce?</Typography>
       <Box className="flex mt-6 justify-end gap-3">
         <Button variant='text' onClick={()=>setIsOpenCloturer(false)} >Fermer</Button>

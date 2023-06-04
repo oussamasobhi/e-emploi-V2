@@ -4,16 +4,13 @@ import {
   Drawer,
   ListItem,
   List,
-  Paper,
   Typography,
   ListItemButton,
   ListItemIcon,
-  ListItemText,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
-import BookmarksRoundedIcon from '@mui/icons-material/BookmarksRounded';
 import BookmarkRoundedIcon from '@mui/icons-material/BookmarkRounded';
 import { ForumOutlined } from "@mui/icons-material";
 import { PersonOutlined } from "@mui/icons-material";
@@ -25,23 +22,9 @@ const TbordLayout = ({ currentUser }) => {
   const location = useLocation();
   const navigate = useNavigate();
   
-  const goToLogin = () => {
-    navigate("/login");
-  };
-  const goToProRegister = () => {
-    navigate("/prosignup");
-  };
-  const goToProfile = () => {
-    navigate("/" + currentUser.username);
-  };
-
   const handleItemClick = (item) => {
     setSelectedItem(item);
   };
-  useEffect(() => {
-    console.log(location.pathname)
-  }, [location])
-  
 
   return (
     <Box className="w-full h-full flex">
@@ -60,6 +43,36 @@ const TbordLayout = ({ currentUser }) => {
       >
         <List className="" sx={{ position: "relative", top: "70px" }}>
           <Box className="">
+          {JSON.parse(localStorage.getItem("CURRENT_USER")).role ===
+              "ROLE_ADMIN" && (
+              <ListItem
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  width: "100%",
+                }}
+              >
+                <ListItemButton 
+                selected={selectedItem === "dashboard"  || location.pathname.startsWith("/dboard/admin")}
+                onClick={() => {
+                  navigate("/dboard/admin");
+                  handleItemClick("dashboard")
+                }}
+                sx={{ height:"56px", borderRadius: "10px" }} >
+                  <ListItemIcon>
+                    <DashboardIcon
+                      sx={{
+                        fontSize: "30px",
+                        color: theme.palette.primary.main,
+                      }}
+                    />
+                  </ListItemIcon>
+                  <Typography sx={{ fontSize: "16px", color:"#5d636a", fontFamily: "Poppins" }}>
+                    Dashboard
+                  </Typography>
+                </ListItemButton>
+              </ListItem>
+            )}
             {JSON.parse(localStorage.getItem("CURRENT_USER")).role !=="ROLE_Pro" && <ListItem
               sx={{
                 display: "flex",
@@ -68,7 +81,7 @@ const TbordLayout = ({ currentUser }) => {
               }}
             >
               <ListItemButton sx={{ height:"56px", borderRadius: "10px" }} className="active:bg-gray-200"
-                selected={selectedItem === 'demandes' || location.pathname === "/dboard"}
+                selected={selectedItem === 'demandes'  || location.pathname === "/dboard"}
                 onClick={() => {
                   navigate("/dboard");
                   handleItemClick("demandes")
@@ -84,7 +97,7 @@ const TbordLayout = ({ currentUser }) => {
                 </Typography>
               </ListItemButton>
             </ListItem>}
-           {JSON.parse(localStorage.getItem("CURRENT_USER")).role === "ROLE_Pro" && <ListItem
+           {JSON.parse(localStorage.getItem("CURRENT_USER")).role !== "ROLE_STANDARD" && <ListItem
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
@@ -92,7 +105,7 @@ const TbordLayout = ({ currentUser }) => {
               }}
             >
               <ListItemButton sx={{ height:"56px", borderRadius: "10px" }}
-              selected={selectedItem === 'propositions'|| location.pathname === "/dboard/propositions"}
+              selected={selectedItem === 'propositions' || location.pathname.startsWith("/dboard/propositions")}
                 onClick={() => {
                   navigate("/dboard/propositions");
                   handleItemClick('propositions');
@@ -118,7 +131,7 @@ const TbordLayout = ({ currentUser }) => {
               }}
             >
               <ListItemButton
-              selected={selectedItem === "chat" || location.pathname === "/dboard/chat"}
+              selected={selectedItem === "chat"  || location.pathname.startsWith("/dboard/chat")}
               onClick={() => {
                 navigate("/dboard/chat");
                 handleItemClick("chat")
@@ -135,37 +148,7 @@ const TbordLayout = ({ currentUser }) => {
               </ListItemButton>
             </ListItem>
 
-            {JSON.parse(localStorage.getItem("CURRENT_USER")).role ===
-              "ROLE_ADMIN" && (
-              <ListItem
-                onClick={() => {}}
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  width: "100%",
-                }}
-              >
-                <ListItemButton 
-                selected={selectedItem === "dashboard" || location.pathname === "/dboard/admin"}
-                onClick={() => {
-                  navigate("/dboard/admin");
-                  handleItemClick("dashboard")
-                }}
-                sx={{ height:"56px", borderRadius: "10px" }} >
-                  <ListItemIcon>
-                    <DashboardIcon
-                      sx={{
-                        fontSize: "30px",
-                        color: theme.palette.primary.main,
-                      }}
-                    />
-                  </ListItemIcon>
-                  <Typography sx={{ fontSize: "16px", color:"#5d636a", fontFamily: "Poppins" }}>
-                    Dashboard
-                  </Typography>
-                </ListItemButton>
-              </ListItem>
-            )}
+            
             <ListItem
               sx={{
                 display: "flex",
@@ -174,7 +157,7 @@ const TbordLayout = ({ currentUser }) => {
               }}
             >
               <ListItemButton 
-              selected={selectedItem==="compte"|| location.pathname === "/dboard/moncompte"}
+              selected={selectedItem==="compte" || location.pathname.startsWith("/dboard/moncompte")}
                sx={{ height:"56px", borderRadius: "10px" }} onClick={() => {
                  navigate("/dboard/moncompte");
                 handleItemClick("compte");

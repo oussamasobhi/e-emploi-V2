@@ -23,21 +23,20 @@ const Home = ({currentUser}) => {
   }, [])
   return (
     <div className="h-auto overflow-y-auto">  
-    {JSON.parse(localStorage.getItem("CURRENT_USER")).role !== "ROLE_Pro"
-    ? 
-    ( <>   
-    <Hero />
-    <Categories categories={categorie} />
-    <WhyUs />
-    <Service1 />
-    <Service2 />
-    </>
-    ) 
-     :
-     (
-      <Demandes />
-     )
-    }
+    {JSON.parse(localStorage.getItem("CURRENT_USER")).role === "ROLE_Pro" && <Demandes/>}
+   {JSON.parse(localStorage.getItem("CURRENT_USER")).role === "ROLE_STANDARD" && <>   
+     <Hero />
+     <Categories categories={categorie} />
+     <WhyUs />
+     <Service1 />
+     <Service2 />
+     </>}
+     {JSON.parse(localStorage.getItem("CURRENT_USER")).role === "ROLE_ADMIN" 
+     &&
+     (<> <Demandes/>
+     <Categories categories={categorie} />
+     </>
+     )}
    
     </div>
 
