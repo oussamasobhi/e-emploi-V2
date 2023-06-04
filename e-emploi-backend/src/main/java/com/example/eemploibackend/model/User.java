@@ -71,6 +71,7 @@ public class User extends DateAudit implements UserDetails{
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<Annonce> annoncescrees;
 
+    private StatusUser statusUser;
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

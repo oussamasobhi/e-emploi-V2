@@ -4,6 +4,7 @@ import com.example.eemploibackend.config.JwtService;
 import com.example.eemploibackend.exceptions.AppException;
 import com.example.eemploibackend.model.Role;
 import com.example.eemploibackend.model.RoleName;
+import com.example.eemploibackend.model.StatusUser;
 import com.example.eemploibackend.model.User;
 import com.example.eemploibackend.payloads.ApiResponse;
 import com.example.eemploibackend.payloads.JwtAuthenticationResponse;
@@ -44,6 +45,7 @@ public class AuthenticationService {
                 .competences(request.getCompetences())
                 .num_tel(request.getNum_tel())
                 .CIN(request.getCIN())
+                .statusUser(StatusUser.Actif)
                 .build();
         if(repository.existsByUsername(request.getUsername())) {
             return new ResponseEntity(new ApiResponse(false, "Username is already taken!"),
@@ -74,6 +76,8 @@ public class AuthenticationService {
     }
 
     public ResponseEntity<?> authenticate(AuthenticationRequest request) {
+
+
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getUsernameOrEmail(),
@@ -82,6 +86,9 @@ public class AuthenticationService {
         );
         var user = repository.findByUsernameOrEmail(request.getUsernameOrEmail(),request.getUsernameOrEmail())
                 .orElseThrow();
+        if(user.getStatusUser().equals(StatusUser.Suspendu)){
+            return new ResponseEntity<>("Utilisateur Suspendu",HttpStatus.BAD_REQUEST);
+        }
         var jwtToken = jwtService.generateToken(user);
         revokeAllUserTokens(user);
         saveUserToken(user, jwtToken);

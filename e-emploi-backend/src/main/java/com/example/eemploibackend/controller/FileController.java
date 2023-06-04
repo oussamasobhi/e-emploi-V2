@@ -14,6 +14,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -28,12 +29,14 @@ import java.util.stream.Collectors;
 public class FileController {
     private final FileStorageService fileStorageService;
     private final FileDBRepository fileDBRepository;
+    @PreAuthorize("hasAnyAuthority('ROLE_Pro','ROLE_ADMIN','ROLE_STANDARD')")
     @PostMapping("/upload")
     public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
         FileDB uploadImage=fileStorageService.store(file);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(uploadImage);
     }
+    @PreAuthorize("hasAnyAuthority('ROLE_Pro','ROLE_ADMIN','ROLE_STANDARD')")
     @GetMapping("/download/{filename}")
     public ResponseEntity<Resource> downloadFile(@PathVariable(value = "filename") String filename) throws Exception
     {

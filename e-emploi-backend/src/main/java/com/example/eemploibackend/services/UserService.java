@@ -4,6 +4,7 @@ import com.example.eemploibackend.exceptions.AppException;
 import com.example.eemploibackend.model.*;
 import com.example.eemploibackend.payloads.*;
 import com.example.eemploibackend.repository.*;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -140,5 +141,20 @@ public class UserService {
         User user = userRepository.findUserById(id);
         if(user!=null) return mapusertoSummary(user);
         else throw new Exception("something went wrong");
+    }
+
+    public User suspendreuser(Long id){
+        User user=userRepository.findUserById(id);
+        user.setStatusUser(StatusUser.Suspendu);
+        userRepository.save(user);
+        return user;
+    }
+    public List<Categorie_1_Annonce> getcompetences(Long id){
+        if(!userRepository.existsById(id)){
+            throw new EntityNotFoundException("user doesnt exist");
+        }
+        else{
+            return userRepository.getcompetncesbyiduser(id);
+        }
     }
 }

@@ -20,4 +20,6 @@ public interface Categorie_1_AnnonceRepository extends JpaRepository<Categorie_1
     @Query("SELECT C.users from Categorie_1_Annonce C where C.categorieAnnonce.id=?1")
     List<User> getusersBysousCategory(Long id);
 
+
+
 }

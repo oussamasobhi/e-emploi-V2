@@ -3,6 +3,7 @@ package com.example.eemploibackend.controller;
 
 import com.example.eemploibackend.config.CurrentUser;
 import com.example.eemploibackend.exceptions.ResourceNotFoundException;
+import com.example.eemploibackend.model.Categorie_1_Annonce;
 import com.example.eemploibackend.model.FileDB;
 import com.example.eemploibackend.model.User;
 import com.example.eemploibackend.payloads.*;
@@ -28,9 +29,8 @@ public class UserController {
     private final UserRepository userRepository;
 
     private final UserService userService;
- //   @PreAuthorize("hasAuthority('ROLE_Pro')")
+
     @GetMapping("/user/me")
- //   @PreAuthorize("hasAnyAuthority('ROLE_STANDARD','ROLE_CONDIDAT','ROLE_ADMIN','ROLE_Pro')")
     public UserSummary getCurrentUser(@CurrentUser User currentUser) {
 
         User user = userRepository.findByUsername(currentUser.getUsername())
@@ -38,7 +38,7 @@ public class UserController {
         UserSummary userSummary=userService.mapusertoSummary(user);
         return userSummary;
     }
-
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_STANDARD','ROLE_Pro')")
     @GetMapping("/users/{username}")
     public UserSummary getUserProfile(@PathVariable(value = "username") String username) {
 
@@ -47,6 +47,7 @@ public class UserController {
         UserSummary userSummary=userService.mapusertoSummary(user);
         return userSummary;
     }
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_STANDARD','ROLE_Pro')")
     @GetMapping("/users")
     public ResponseEntity<?> getUserById(@RequestParam("id") Long id){
         try{
@@ -69,13 +70,13 @@ public class UserController {
         Boolean isAvailable = !userRepository.existsByEmail(email);
         return new UserIdentityAvailability(isAvailable);
     }
-
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_STANDARD','ROLE_Pro')")
     @PutMapping("users/edit")
     public ResponseEntity<?> updateuser(@RequestBody Pro_RegisterRequest request, @CurrentUser User user) {
         userService.updateuser(request, user.getId());
         return new ResponseEntity<>(new ApiResponse(true, "user modifié"), HttpStatus.OK);
     }
-
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_STANDARD','ROLE_Pro')")
     @DeleteMapping("users/delete")
     public ResponseEntity<?> deleteuser(@CurrentUser User user) {
         userRepository.deleteById(user.getId());
@@ -84,6 +85,7 @@ public class UserController {
     }
 
     // reset password
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_STANDARD','ROLE_Pro')")
     @PostMapping("/resetpassword")
     public ResponseEntity<?> resetpassword(@RequestBody ResetPasswordRequest request,@CurrentUser User user){
          Boolean done=userService.resetpassword(request,user.getId());
@@ -95,6 +97,7 @@ public class UserController {
          }
 
     }
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_STANDARD','ROLE_Pro')")
     @PostMapping("/photoprofile/add")
     public ResponseEntity<?> ajouterphotodeprofil(@CurrentUser User user,
                                                   @RequestParam(value = "file") MultipartFile file) throws IOException {
@@ -102,11 +105,13 @@ public class UserController {
         return new ResponseEntity(new ApiResponse(true,"Image ajouté"),HttpStatus.OK);
         return new ResponseEntity(new ApiResponse(true,"ajout a echoué"),HttpStatus.BAD_REQUEST);
     }
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_STANDARD','ROLE_Pro')")
     @DeleteMapping("/photoprofile/delete/{filename}")
     public ResponseEntity<?> deletepic(@PathVariable(value = "filename")String filename){
         userService.supprimerpic(filename);
         return new ResponseEntity(new ApiResponse(true,"Image suprimé"),HttpStatus.OK);
     }
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_STANDARD','ROLE_Pro')")
     @GetMapping("/download/{iduser}")
     public FileDB getfilebyuserid(@PathVariable(value = "iduser")Long iduser){
         return userService.getfilebyuserid(iduser);
@@ -120,6 +125,17 @@ public class UserController {
     @GetMapping("/randompro/{id}")
     public List<UserResponse> randomsbycategory(@PathVariable(name = "id")Long id){
         return userService.getrandomsbycategory(id);
+    }
+
+    @PutMapping("users/suspendre/{id}")
+    public ResponseEntity<?> suspendreuser(@PathVariable(value = "id")Long id){
+        userService.suspendreuser(id);
+        return new ResponseEntity<>("utilisateur suspendu",HttpStatus.OK);
+    }
+    // les competences d'un user
+    @GetMapping("users/{id}/competences")
+    public List<Categorie_1_Annonce> getcompetences(@PathVariable(value = "id")Long id){
+        return userService.getcompetences(id);
     }
 }
 

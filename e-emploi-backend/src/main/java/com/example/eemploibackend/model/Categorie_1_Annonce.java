@@ -29,6 +29,6 @@ public class Categorie_1_Annonce {
     @JsonIgnore
     private CategorieAnnonce categorieAnnonce;
     @ManyToMany(mappedBy = "competences")
-    @JsonIdentityReference(alwaysAsId = true)
+    @JsonIgnore
     List<User> users;
 }

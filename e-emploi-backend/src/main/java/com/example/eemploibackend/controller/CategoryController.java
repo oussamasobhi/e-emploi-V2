@@ -18,7 +18,6 @@ import java.util.List;
 public class CategoryController {
     private final CategoryService categoryService;
 
-    @PreAuthorize("hasAnyAuthority('ROLE_Pro','ROLE_ADMIN','ROLE_STANDARD','ROLE_Guest')")
     @GetMapping("")
     public List<CategorieAnnonce> getallcategories(){
         return categoryService.getallcategories();

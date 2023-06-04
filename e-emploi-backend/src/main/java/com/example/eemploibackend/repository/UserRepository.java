@@ -25,5 +25,6 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     @Query("SELECT U from User U where U.role.id=3")
     List<User> getallusersPRO();
-
+    @Query("SELECT U.competences from User U where U.id=?1")
+    List<Categorie_1_Annonce> getcompetncesbyiduser(Long id);
 }
