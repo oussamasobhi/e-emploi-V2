@@ -83,11 +83,7 @@ const Demandes = () => {
       <Box className="flex justify-between items-end">
       <Typography variant="h4" sx={{fontFamily:"Poppins", fontWeight:"bold", marginBottom:"16px"}} >Demandes</Typography>
       <Box><Button onClick={()=>setIsOpenDrawer(true)} >Filtrer</Button> </Box>
-      </Box>
-      <Box className="h-14 bg-red-300" >
-        
-      </Box>
-      
+      </Box>      
       <Box className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
       {demandes?.map((demande, index)=>(
       <DemandeCarte key={index} demande={demande} setDemandes={setDemandes} /> 

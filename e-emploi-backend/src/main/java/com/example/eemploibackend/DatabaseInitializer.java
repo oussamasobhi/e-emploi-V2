@@ -384,7 +384,7 @@ public class DatabaseInitializer implements ApplicationRunner {
         user2.setStatusUser(StatusUser.Actif);
         user2.setEmail("bran@gmail.com");
         user2.setPrenom("Bran");
-        user2.setUsername("azzedine1245");
+        user2.setUsername("bran");
         user2.setPassword(encoder.encode("123456"));
         List<Categorie_1_Annonce> competences2=new ArrayList<>();
         competences2.add(sous5cat1);
@@ -428,7 +428,7 @@ public class DatabaseInitializer implements ApplicationRunner {
         user5.setEmail("nirinamercia@gmail.com");
         user5.setPrenom("Nirina");
         user5.setUsername("nirina");
-        user5.setPassword(encoder.encode("nirina"));
+        user5.setPassword(encoder.encode("123456"));
         List<Categorie_1_Annonce> competences5=new ArrayList<>();
         competences5.add(sous2cat1);
         competences5.add(sous5cat1);
@@ -436,7 +436,7 @@ public class DatabaseInitializer implements ApplicationRunner {
         competences5.add(sous6cat3);
         competences5.add(sous5cat3);
         user5.setCompetences(competences5);
-        user5.setNum_tel("+212 687 786");
+        user5.setNum_tel("+212 631 821328");
         user5.setNom("Rakotoniary");
         userRepository.save(user);
         userRepository.save(user1);
@@ -449,7 +449,7 @@ public class DatabaseInitializer implements ApplicationRunner {
         user6.setCIN("BL1323245");
         user6.setRole(rolestandard);
         user6.setStatusUser(StatusUser.Actif);
-        user6.setEmail("aryastark.com");
+        user6.setEmail("aryastark@gmail.com");
         user6.setPrenom("Arya");
         user6.setUsername("arya");
         user6.setPassword(encoder.encode("123456"));
