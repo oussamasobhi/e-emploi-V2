@@ -343,11 +343,10 @@ export function getAnnoncesByUserId(id){
   })
 }
 
-export function filtrerAnnonce(searchRequest){
+export function filtrerAnnonce(ville, cat1){
   return request({
-    url: API_BASE_URL+"/annonce/all",
-    method: "GET",
-    body: JSON.stringify(searchRequest)
+    url: API_BASE_URL+"/annonce/all?ville="+ville+"&categorie1annonce="+cat1,
+    method: "GET"
   })
 }
 
