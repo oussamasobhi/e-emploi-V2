@@ -1,7 +1,9 @@
 package com.example.eemploibackend;
 
 import com.example.eemploibackend.model.*;
+import com.example.eemploibackend.payloads.AnnonceRequest;
 import com.example.eemploibackend.repository.*;
+import com.example.eemploibackend.services.AnnonceService;
 import jdk.jfr.Category;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
@@ -10,7 +12,9 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -18,11 +22,14 @@ import java.util.List;
 @Order(1)
 public class DatabaseInitializer implements ApplicationRunner {
     private final RoleRepository roleRepository;
+    private final AnnonceService annonceService;
     private final UserRepository userRepository;
+    private final AdresseRepository adresseRepository;
     private final CategoryRepository categoryRepository;
     private final Categorie_2_Annonce_Repository categorie2AnnonceRepository;
     private final Categorie_1_AnnonceRepository categorie1AnnonceRepository;
     private final BCryptPasswordEncoder encoder;
+    private final AnnonceRepository annonceRepository;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
@@ -38,6 +45,7 @@ public class DatabaseInitializer implements ApplicationRunner {
                 admin.setUsername("osamasobhi");
                 admin.setEmail("oussama@admin.com");
                 admin.setPassword(encoder.encode("admin"));
+                admin.setStatusUser(StatusUser.Actif);
         admin.setRole(roleadmin);
         userRepository.save(admin);
 
@@ -357,82 +365,124 @@ public class DatabaseInitializer implements ApplicationRunner {
         User user1=new User();
         user1.setCIN("LK13232");
         user1.setRole(rolepro);
-        user1.setEmail("azz148@gmail.com");
-        user1.setPrenom("ALI");
-        user1.setUsername("ali123");
-        user1.setPassword(encoder.encode("azzedine"));
+        user1.setEmail("jonsnow@gmail.com");
+        user1.setPrenom("Jon");
+        user1.setUsername("jonsnow");
+        user1.setStatusUser(StatusUser.Actif);
+        user1.setPassword(encoder.encode("123456"));
         List<Categorie_1_Annonce> competences1=new ArrayList<>();
         competences1.add(sous3cat1);
         competences1.add(sous3cat3);
         competences1.add(sous4cat1);
         user1.setCompetences(competences1);
-        user1.setNum_tel("+212 687 774");
-        user1.setNom("ALAMI");
+        user1.setNum_tel("+212 687 774452");
+        user1.setNom("Snow");
 
         User user2=new User();
         user2.setCIN("BL1323245");
         user2.setRole(rolepro);
-        user2.setEmail("azz124@gmail.com");
-        user2.setPrenom("OMAR");
+        user2.setStatusUser(StatusUser.Actif);
+        user2.setEmail("bran@gmail.com");
+        user2.setPrenom("Bran");
         user2.setUsername("azzedine1245");
-        user2.setPassword(encoder.encode("azzedine"));
+        user2.setPassword(encoder.encode("123456"));
         List<Categorie_1_Annonce> competences2=new ArrayList<>();
         competences2.add(sous5cat1);
         competences2.add(sous3cat1);
         competences2.add(sous6cat1);
         user2.setCompetences(competences2);
-        user2.setNum_tel("+212 645 784");
-        user2.setNom("HASSAN");
+        user2.setNum_tel("+212 613 457842");
+        user2.setNom("Stark");
 
         User user3=new User();
         user3.setCIN("BL13232");
-        user3.setRole(rolepro);
-        user3.setEmail("azz89@gmail.com");
-        user3.setPrenom("azzedine");
-        user3.setUsername("azzedine126");
-        user3.setPassword(encoder.encode("azzedine"));
-        List<Categorie_1_Annonce> competences3=new ArrayList<>();
-        competences3.add(sous3cat4);
-        competences3.add(sous4cat2);
-        competences3.add(sous4cat1);
-        user3.setCompetences(competences3);
-        user3.setNum_tel("+212 687 784");
-        user3.setNom("MOHA");
+        user3.setRole(rolestandard);
+        user3.setStatusUser(StatusUser.Actif);
+        user3.setEmail("cristiano@gmail.com");
+        user3.setPrenom("Ronaldo");
+        user3.setUsername("ronaldo");
+        user3.setPassword(encoder.encode("123456"));
+        user3.setNum_tel("+212 687 784452");
+        user3.setNom("Cristiano");
 
         User user4=new User();
         user4.setCIN("BL1323245");
-        user4.setRole(rolepro);
-        user4.setEmail("azzml@gmail.com");
-        user4.setPrenom("SOBHI");
-        user4.setUsername("azdine124");
-        user4.setPassword(encoder.encode("azzedine"));
+        user4.setRole(rolestandard);
+        user4.setStatusUser(StatusUser.Actif);
+        user4.setEmail("hakimi@gmail.com");
+        user4.setPrenom("Hakimi");
+        user4.setUsername("hakimi");
+        user4.setPassword(encoder.encode("123456"));
         List<Categorie_1_Annonce> competences4=new ArrayList<>();
         competences4.add(sous6cat1);
         competences4.add(sous4cat3);
         competences4.add(sous2cat1);
         user4.setCompetences(competences4);
-        user4.setNum_tel("+212 687 4584");
-        user4.setNom("OUSSAMA");
+        user4.setNum_tel("+212 687 458441");
+        user4.setNom("Achraf");
 
         User user5=new User();
-        user5.setCIN("BL1323245");
+        user5.setCIN("A18X30270");
         user5.setRole(rolepro);
-        user5.setEmail("azz123@gmail.com");
-        user5.setPrenom("RAKONO");
-        user5.setUsername("azzene1245");
-        user5.setPassword(encoder.encode("azzedine"));
+        user5.setStatusUser(StatusUser.Actif);
+        user5.setEmail("nirinamercia@gmail.com");
+        user5.setPrenom("Nirina");
+        user5.setUsername("nirina");
+        user5.setPassword(encoder.encode("nirina"));
         List<Categorie_1_Annonce> competences5=new ArrayList<>();
         competences5.add(sous2cat1);
         competences5.add(sous5cat1);
         competences5.add(sous3cat1);
+        competences5.add(sous6cat3);
+        competences5.add(sous5cat3);
         user5.setCompetences(competences5);
         user5.setNum_tel("+212 687 786");
-        user5.setNom("NIRINA");
+        user5.setNom("Rakotoniary");
         userRepository.save(user);
         userRepository.save(user1);
         userRepository.save(user2);
         userRepository.save(user3);
         userRepository.save(user4);
         userRepository.save(user5);
+
+        User user6 = new User();
+        user6.setCIN("BL1323245");
+        user6.setRole(rolestandard);
+        user6.setStatusUser(StatusUser.Actif);
+        user6.setEmail("aryastark.com");
+        user6.setPrenom("Arya");
+        user6.setUsername("arya");
+        user6.setPassword(encoder.encode("123456"));
+        user6.setNum_tel("+212 687 786513");
+        user6.setNom("Stark");
+        userRepository.save(user6);
+
+        Annonce annonce1 = new Annonce();
+        annonce1.setStatusAnnonce(StatusAnnonce.EnCours);
+        annonce1.setDate(new Date());
+        annonce1.setDuree("02h30");
+        Adresse adresse = new Adresse();
+        adresse.setVille("Agadir");
+        adresse.setQuartier("Tilila");
+        adresseRepository.save(adresse);
+        annonce1.setAdresse(adresse);
+        annonce1.setCategorie1Annonce(categorie1AnnonceRepository.findCategorie_1_AnnonceById(4L));
+        annonce1.setInfos_complementaire("Je recherche un éléctricien qui peut arranger le branchement chez moi");
+        annonce1.setUser(user6);
+        annonceRepository.save(annonce1);
+
+        Annonce annonce2 = new Annonce();
+        annonce2.setStatusAnnonce(StatusAnnonce.EnCours);
+        annonce2.setDate(new Date(2023,06,12));
+        annonce2.setDuree("1h30");
+        Adresse adresse1 = new Adresse();
+        adresse1.setVille("Agadir");
+        adresse1.setQuartier("El Houda");
+        adresseRepository.save(adresse1);
+        annonce2.setAdresse(adresse1);
+        annonce2.setCategorie1Annonce(categorie1AnnonceRepository.findCategorie_1_AnnonceById(15L));
+        annonce2.setInfos_complementaire("Je viens de m'installer dans mon nouveau appartement et je dois réinstaller mon Box Wifi le plus vite possible");
+        annonce2.setUser(user3);
+        annonceRepository.save(annonce2);
     }
 }

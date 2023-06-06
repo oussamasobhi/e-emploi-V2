@@ -29,7 +29,7 @@ const Signup = ({ onSignup }) => {
     password: "",
     password2: "",
     roleName: "",
-    isPRO : false
+    isPRO : false,
   });
 
   useEffect(() => {

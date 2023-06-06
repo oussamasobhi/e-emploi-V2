@@ -3,6 +3,7 @@ package com.example.eemploibackend.payloads;
 import com.example.eemploibackend.model.Adresse;
 import com.example.eemploibackend.model.Categorie_2_Annonce;
 import com.example.eemploibackend.model.FileDB;
+import com.example.eemploibackend.model.StatusUser;
 import lombok.Data;
 
 import java.util.Date;
@@ -22,4 +23,5 @@ public class UserSummary {
     private FileDB photo_profil;
     private Date date_naissance;
     Adresse adresse;
+    private StatusUser status;
 }

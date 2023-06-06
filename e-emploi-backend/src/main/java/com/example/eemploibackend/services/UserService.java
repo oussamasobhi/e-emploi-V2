@@ -1,5 +1,6 @@
 package com.example.eemploibackend.services;
 
+import com.example.eemploibackend.auth.RegisterRequest;
 import com.example.eemploibackend.exceptions.AppException;
 import com.example.eemploibackend.model.*;
 import com.example.eemploibackend.payloads.*;
@@ -25,7 +26,6 @@ public class UserService {
     private final RoleRepository roleRepository;
     private  final FileDBRepository fileDBRepository;
     private final FileStorageService fileStorageService;
-    private final CategoryRepository categoryRepository;
     private final Categorie_1_AnnonceRepository categorie1AnnonceRepository;
     private final AdresseRepository adresseRepository;
     public void updateuser(Pro_RegisterRequest request,Long iduser){
@@ -59,12 +59,13 @@ public class UserService {
                              USER.setDate_naissance(request.getDate_naissance());
                              USER.setImage(request.getImage());
                              USER.setNum_tel(request.getNum_tel());
+                             USER.setCompetences(request.getCompetences());
                     if(request.getAdresse()!=null){
                         USER.setAdresse(adresse);
                     }
              userRepository.save(USER);
                     return new ResponseEntity(new ApiResponse(true,
-                            "utilisateur modifie bien modifiée"), HttpStatus.ACCEPTED);
+                            "utilisateur modifie bien modifié"), HttpStatus.ACCEPTED);
                 }        );
     }
 
@@ -90,6 +91,7 @@ public class UserService {
         userSummary.setDate_naissance(user.getDate_naissance());
         userSummary.setPhoto_profil(user.getImage());
         userSummary.setRole(user.getRole().getName().name());
+        userSummary.setStatus(user.getStatusUser());
     return userSummary;
     }
     public Boolean addprofilepic(User user, MultipartFile file) throws IOException {

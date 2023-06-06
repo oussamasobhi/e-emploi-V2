@@ -15,6 +15,7 @@ import BookmarkRoundedIcon from '@mui/icons-material/BookmarkRounded';
 import { ForumOutlined } from "@mui/icons-material";
 import { PersonOutlined } from "@mui/icons-material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
+import HomeIcon from '@mui/icons-material/Home';
 const drawerWidth = 300;
 const TbordLayout = ({ currentUser }) => {
   const theme = useTheme();
@@ -27,7 +28,7 @@ const TbordLayout = ({ currentUser }) => {
   };
 
   return (
-    <Box className="w-full h-full flex">
+    <Box className="w-full h-full flex bg-gray-50">
       <Drawer
         sx={{
           marginTop: "70px",
@@ -73,6 +74,32 @@ const TbordLayout = ({ currentUser }) => {
                 </ListItemButton>
               </ListItem>
             )}
+             {JSON.parse(localStorage.getItem("CURRENT_USER")).role ==="ROLE_Pro" &&
+            <ListItem
+            
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "100%",
+            }}
+          >
+         <ListItemButton
+            selected={selectedItem === "home"  || location.pathname.startsWith("/dboard/home")}
+            onClick={() => {
+              navigate("/dboard/home");
+              handleItemClick("home")
+            }}
+            sx={{ height:"56px", borderRadius: "10px" }}>
+              <ListItemIcon>
+                <HomeIcon
+                  sx={{ fontSize: "30px", color: theme.palette.primary.main }}
+                />
+              </ListItemIcon>
+              <Typography sx={{ fontSize: "16px", color:"#5d636a", fontFamily: "Poppins" }}>
+                Accueil
+              </Typography>
+            </ListItemButton>
+          </ListItem>}
             {JSON.parse(localStorage.getItem("CURRENT_USER")).role !=="ROLE_Pro" && <ListItem
               sx={{
                 display: "flex",

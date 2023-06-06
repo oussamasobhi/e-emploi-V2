@@ -1,6 +1,7 @@
 package com.example.eemploibackend.controller;
 
 
+import com.example.eemploibackend.auth.RegisterRequest;
 import com.example.eemploibackend.config.CurrentUser;
 import com.example.eemploibackend.exceptions.ResourceNotFoundException;
 import com.example.eemploibackend.model.Categorie_1_Annonce;
@@ -77,7 +78,7 @@ public class UserController {
         return new ResponseEntity<>(new ApiResponse(true, "user modifié"), HttpStatus.OK);
     }
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_STANDARD','ROLE_Pro')")
-    @DeleteMapping("users/delete")
+    @DeleteMapping("/users/delete")
     public ResponseEntity<?> deleteuser(@CurrentUser User user) {
         userRepository.deleteById(user.getId());
         return new ResponseEntity(new ApiResponse(true, "user supprimé"),

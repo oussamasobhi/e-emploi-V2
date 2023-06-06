@@ -60,8 +60,7 @@ public class AnnonceController {
                 HttpStatus.BAD_REQUEST);
     }
     @GetMapping("/all")
-    public PagedResponse<AnnonceResponse> getannoncespercartegoryandAdress(@PathVariable(value = "id") Long id,
-                                                                 @RequestParam(value = "page", defaultValue ="0") int page,
+    public PagedResponse<AnnonceResponse> getannoncespercartegoryandAdress(@RequestParam(value = "page", defaultValue ="0") int page,
                                                                  @RequestParam(value = "size", defaultValue = "30") int size,
                                                                  @RequestBody SearchRequest request)
     {

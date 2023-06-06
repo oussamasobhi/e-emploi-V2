@@ -38,7 +38,7 @@ const AddRating = ({ open, setIsOpen, iduser, refreshRate, initialRate }) => {
   };
   return (
     <Modal
-      title="Ajouter avis et note"
+      title="Donner une note"
       open={open}
       footer={[
         <Button type="primary" onClick={ajouterReview}>
@@ -48,7 +48,6 @@ const AddRating = ({ open, setIsOpen, iduser, refreshRate, initialRate }) => {
       ]}
     >
       <div className="flex flex-col">
-        <label for="avis">Note</label>
         <StarRatings
           name="rate"
           starRatedColor="rgb(34 197 94)"
@@ -56,9 +55,6 @@ const AddRating = ({ open, setIsOpen, iduser, refreshRate, initialRate }) => {
           rating={review.rate?review.rate:initialRate}
           changeRating={changeRating}
         />
-        <label for="avis">Votre avis </label>
-        <textarea type="text" name="avis" value={review.avis} onChange={handleChange}
-        className="focus:outline-none border-blue-500 resize-y" />
       </div>
     </Modal>
   );

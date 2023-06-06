@@ -268,14 +268,6 @@ const LayoutOtherProfile = ({ setUser, setCurrentUser, currentUser, user }) => {
                       starSpacing="3px"
                     />
                   </div>
-                  {/*!isCurrentUser && (
-                    <button
-                      className="border-0 py-2 transition-colors ease-in-out cursor-pointer text-white rounded-md shadow-sm bg-blue-500 hover:bg-blue-600 "
-                      onClick={() => setIsOpenAddReview(true)}
-                    >
-                      Donner une note
-                    </button>
-                  )*/}
                 </div>
                 {
                   <div className="flex flex-col items-center mt-6">

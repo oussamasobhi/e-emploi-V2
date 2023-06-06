@@ -37,6 +37,14 @@ const Home = ({currentUser}) => {
      <Categories categories={categorie} />
      </>
      )}
+     {JSON.parse(localStorage.getItem("CURRENT_USER")).username === "" && (
+      <>
+        <Hero/>
+        <WhyUs/>
+        <Service1/>
+        <Service2/>
+      </>
+     )}
    
     </div>
 

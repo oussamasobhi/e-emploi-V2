@@ -195,6 +195,12 @@ export function getSkillsByUsername(username) {
     method: "GET",
   });
 }
+export function getCompetencesByUserId(id){
+  return request({
+    url: API_BASE_URL+"/api/users/"+id+"/competences",
+    method: "GET"
+  })
+}
 
 export function deleteSkill(id) {
   return request({
@@ -334,6 +340,14 @@ export function getAnnoncesByUserId(id){
   return request({
     url: API_BASE_URL+"/annonce/mesdemandes/"+id,
     method: "GET"
+  })
+}
+
+export function filtrerAnnonce(searchRequest){
+  return request({
+    url: API_BASE_URL+"/annonce/all",
+    method: "GET",
+    body: JSON.stringify(searchRequest)
   })
 }
 

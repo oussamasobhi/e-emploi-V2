@@ -1,8 +1,8 @@
-import { Box, Breadcrumbs, Button, Divider, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
+import { Box, Breadcrumbs, Button, Divider, FormControl, InputLabel, MenuItem, Modal, Select, TextField, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import { Link } from 'react-router-dom';
-import { getCurrentUser, updateProfil } from '../util/APIUtils';
+import { Link, useNavigate } from 'react-router-dom';
+import { deleteCurrentUser, deleteUserByUsername, getCurrentUser, updateProfil } from '../util/APIUtils';
 import { myTheme } from '../theme';
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import InfoElement from './InfoElement';
@@ -22,8 +22,10 @@ const breadcrumbs = [
     </Typography>,
   ];
 const Informations = () => {
+  const navigate = useNavigate();
     const [user, setUser] = useState(null);
     const [selectedDate, setSelectedDate] = useState(null);
+    const [isOpenDelete, setIsOpenDelete] = useState(false);
     const [bdEdit, setBdEdit] = useState(false);
     const [adrEdit, setAdrEdit] = useState(false);
     const [adr, setAdr] = useState(null);
@@ -82,11 +84,24 @@ const Informations = () => {
       setUser({...user, "adresse":adr})
     }, [adr])
     
+    const supprimer = async () => {
+      try{
+        const res = await deleteCurrentUser();
+        console.log(res);
+        localStorage.setItem("token", "");
+        navigate("/login");
+      }catch(error){
+        console.log(error);
+      }
+      setIsOpenDelete(false);
+    }
+    
     
 
  
     if(!user) return <Typography>Loading...</Typography>
   return (
+    <>
     <Box className='md:mr-12 p-6'>
         <Box className='mb-4' >
         <Breadcrumbs className='py-2'
@@ -185,8 +200,24 @@ const Informations = () => {
             
         </Box>
         <Divider/>
-
+        {/*<Box className="flex justify-end mt-2">
+          <Button sx={{color:myTheme.palette.red.main}} onClick={()=>setIsOpenDelete(true)} >Supprimer votre compte</Button> 
+        </Box>*/}
     </Box>
+    {/*<Modal
+        open={isOpenDelete}
+        onClose={()=>setIsOpenDelete(false)}
+        aria-labelledby="modal-title"
+        aria-describedby="modal-description"
+      >
+        <Box sx={{position:'absolute', top:"50%", left:'50%', transform: 'translate(-50%, -50%)', bgcolor: 'background.paper', boxShadow: 24, p: 4 }}>
+            <h2 id="modal-title">VOule</h2>
+            <Typography>Voulez-vous supprimer votre compte?</Typography>
+            <Button onClick={()=>setIsOpenDelete(false)}>Fermer</Button>
+            <Button onClick={supprimer} >Confirmer</Button>
+          </Box>
+      </Modal>*/}
+    </>
   )
 }
 

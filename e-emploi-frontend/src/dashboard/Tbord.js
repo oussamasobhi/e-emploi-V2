@@ -8,6 +8,7 @@ import Propositions from '../demande/Propositions'
 import Message from '../message/MessageRoute'
 import DashBoard2 from '../admin/DashBoard2'
 import Competences from '../compte/Competences'
+import Demandes from '../demande/Demandes'
 
 const Tbord = ({logout, currentUser}) => {
   return (
@@ -20,6 +21,7 @@ const Tbord = ({logout, currentUser}) => {
             <Route path="propositions" element={<Propositions/> } />
             <Route path='chat/*' element={<Message currentUser={currentUser} /> } />
             <Route path='admin' element={<DashBoard2/> } />
+            <Route path='home' element={<Demandes/> } />
         </Route>
     </Routes>
   )

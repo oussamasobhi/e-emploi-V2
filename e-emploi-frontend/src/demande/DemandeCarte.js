@@ -5,9 +5,11 @@ import { getAllAnnonces, getSousCategories, getSousCategory } from '../util/APIU
 import { myTheme } from '../theme';
 import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
+import PhoneIcon from '@mui/icons-material/Phone';
 import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
 import { addAnnonceUser } from '../util/APIUtils';
 import { message } from 'antd';
+import { LocationOn } from '@mui/icons-material';
 const options = { day: 'numeric', month: 'long', year: 'numeric', locale: 'fr' };
 const formatter = new Intl.DateTimeFormat('fr', options);
 
@@ -88,7 +90,7 @@ const DemandeCarte = ({demande, setDemandes}) => {
     }
   return (
     <>
-    <Box key={demande.id} className='p-8 bg-white rounded-md border-1 grid lg:grid-cols-2 gap-6 mb-4' sx={{border:1, borderColor:"#cccccc"}}>
+    {demande?.userResponse?.username === JSON.parse(localStorage.getItem("CURRENT_USER")).username && <Box key={demande.id} className='p-8 bg-white rounded-md border-1 grid lg:grid-cols-2 gap-6 mb-4' sx={{border:1, borderColor:"#cccccc"}}>
         <Box>
           <Box className="h-40 bg-lime-300 rounded-md flex justify-center items-center overflow-hidden">
           <img src={require("../public/image_sc/sc"+demande.categorie1Annonce+".jpg")} className="h-full w-full object-cover" />
@@ -106,7 +108,8 @@ const DemandeCarte = ({demande, setDemandes}) => {
             {nbOffre>0 && <span> Vous avez reçu {nbOffre} offre(s)</span>}
             {nbOffre<=0 && <span> Aucune offre reçue jusqu'ici</span>}
           </Box>}
-        </Box> }    
+        </Box> }  
+          
         {demande?.userResponse?.username !== JSON.parse(localStorage.getItem("CURRENT_USER")).username 
         &&
         <Box className="mt-3 lg:mt-0">
@@ -140,23 +143,72 @@ const DemandeCarte = ({demande, setDemandes}) => {
           </Box>
 
         </Box> } 
-        {demande?.userResponse?.username===JSON.parse(localStorage.getItem("CURRENT_USER")).username &&
-         <Button onClick={()=>gererDemande(demande.id)} variant='contained' sx={{width:"100%", borderRadius: "12px", paddingY:"12px", marginTop:"14px"}} className='mt-4'><span className='capitalize font-poppins' >Gérer&nbsp;</span><span className='lowercase font-poppins' >ma demande</span>
+        <Button onClick={()=>gererDemande(demande.id)} variant='contained' sx={{width:"100%", borderRadius: "12px", paddingY:"12px", marginTop:"14px"}} className='mt-4'><span className='capitalize font-poppins' >Gérer&nbsp;</span><span className='lowercase font-poppins' >ma demande</span>
          </Button>
-        }
-        {(demande?.userResponse?.username!==JSON.parse(localStorage.getItem("CURRENT_USER")).username && demande?.statusAnnonce !== "Terminé" &&
-        (!(demande?.annonceUsers.some(obj => obj?.id?.iduser == JSON.parse(localStorage.getItem("CURRENT_USER")).id)) || demande?.annonceUsers.length ===0 )) &&
-         <Button onClick={()=>setIsOpenPostule(true)} variant='contained' sx={{width:"100%", borderRadius: "12px", paddingY:"12px", marginTop:"14px"}} className='mt-4'><span className='capitalize font-poppins' >Postuler</span></Button> 
-        }
-        {(demande?.userResponse?.username!==JSON.parse(localStorage.getItem("CURRENT_USER")).username &&
-        demande?.statusAnnonce === "Terminé") &&
-         <Typography variant='body1'><span className='font-wix text-red-600'>Annonce déjà clôturée</span> </Typography> 
-        }
-         {(demande?.userResponse?.username!==JSON.parse(localStorage.getItem("CURRENT_USER")).username &&
-        demande?.annonceUsers.some(obj => obj?.id?.iduser == JSON.parse(localStorage.getItem("CURRENT_USER")).id) && demande?.statusAnnonce !== "Terminé" ) &&
-         <Typography variant='body1'><span className='font-wix'>Vous avez déjà postulé à cette annonce.&nbsp; <span onClick={()=>navigate("/dboard/chat/"+demande?.id+'/'+demande?.userResponse?.username)} className='font-poppins cursor-pointer font-bold text-blue-700'>Voir discussion</span> </span> </Typography> 
-        }
-      </Box>  
+        
+      </Box> 
+      } 
+
+
+
+
+
+      {demande?.userResponse?.username !== JSON.parse(localStorage.getItem("CURRENT_USER")).username && 
+      <Box key={demande.id} className='bg-white rounded-md overflow-hidden mb-4 shadow-lg flex flex-col'>
+      <Box>
+        <Box className="h-40 bg-lime-300 flex justify-center items-center overflow-hidden">
+        <img src={require("../public/image_sc/sc"+demande.categorie1Annonce+".jpg")} className="h-full w-full object-cover" />
+        </Box>
+          <Typography variant='h6' sx={{fontFamily:"Poppins", fontWeight:"bold", paddingX:"8px"}} className="mt-2" >{sousCat.nom_sous_categorie} </Typography>
+        <Typography variant='body1' sx={{color:'#555555', paddingX:"8px"}} ><span className='font-poppins' >{formatter.format(new Date(demande.date))} ({demande.duree}) </span> </Typography>
+      </Box>
+         
+      
+      <Box className="mt-3 px-2 lg:mt-0">
+        {/*<Box className="flex items-center mr-6">
+          <Box className="bg-blue-200 rounded-full flex justify-center items-center mr-2" sx={{padding:"6px"}} >
+            <LocationOnRoundedIcon sx={{color:myTheme.palette.blue.second}} />
+          </Box>
+          <Typography variant='body1' sx={{fontFamily:"Poppins"}}>
+            {(demande.adresse.suplementaire!=="" || !demande.adresse.suplementaire)  && <span className='text-gray-800 '>{demande.adresse.suplementaire},&nbsp; </span>}
+            {demande.adresse.quartier!=="" && <span className='text-gray-800 '>{demande.adresse.quartier},&nbsp; </span>}
+            {demande.adresse.ville!=="" && <span className='text-gray-800 '>{demande.adresse.ville} </span>}
+            </Typography>
+        </Box>*/}
+        
+          <Typography variant='body2' sx={{fontFamily:"Wix Madefor Display", marginY:"12px"}} >{demande?.infos_complementaire} </Typography>
+            <Box className="flex items-center gap-2">
+            <PhoneIcon fontSize='small' color='gris' />
+            <Typography color={myTheme.palette.gris.main} variant="body1" sx={{fontFamily:"Poppins", fontWeight:"bold"}}>{demande.userResponse.num_tel} </Typography> 
+            </Box>  
+            
+            <Box className="flex items-center gap-2">
+              <LocationOn fontSize='small' color="gris"/>
+              <Typography color={myTheme.palette.gris.main} variant="body1" sx={{fontFamily:"Poppins", fontWeight:"bold"}}>
+            {(demande.adresse.suplementaire && (demande.adresse.suplementaire!=="" || demande.adresse.suplementaire!==null)) && <span>{demande.adresse.suplementaire},&nbsp; </span>}
+                {(demande.adresse.quartier && (demande.adresse.quartier!=="" || demande.adresse.quartier!==null)) && <span>{demande.adresse.quartier},&nbsp; </span>}
+                {(demande.adresse.ville && (demande.adresse.ville!=="" || demande.adresse.ville!==null)) && <span>{demande.adresse.ville} </span>}
+            </Typography> 
+            </Box> 
+          
+      </Box> 
+      
+      <Box className="px-2 my-2 flex justify-center">
+      {(demande?.userResponse?.username!==JSON.parse(localStorage.getItem("CURRENT_USER")).username && demande?.statusAnnonce !== "Terminé" &&
+      (!(demande?.annonceUsers.some(obj => obj?.id?.iduser == JSON.parse(localStorage.getItem("CURRENT_USER")).id)) || demande?.annonceUsers.length ===0 )) &&
+       <Button onClick={()=>setIsOpenPostule(true)} variant='contained' sx={{width:"100%", borderRadius: "12px", paddingY:"12px", marginTop:"14px", height:"48px"}} size='small' className='mt-4'><span className='capitalize font-poppins' >Postuler</span></Button> 
+      }
+      {(demande?.userResponse?.username!==JSON.parse(localStorage.getItem("CURRENT_USER")).username &&
+      demande?.statusAnnonce === "Terminé") &&
+       <Typography variant='body1'><span className='font-wix text-red-600'>Annonce déjà clôturée</span> </Typography> 
+      }
+       {(demande?.userResponse?.username!==JSON.parse(localStorage.getItem("CURRENT_USER")).username &&
+      demande?.annonceUsers.some(obj => obj?.id?.iduser == JSON.parse(localStorage.getItem("CURRENT_USER")).id) && demande?.statusAnnonce !== "Terminé" ) &&
+       <Typography variant='body1' sx={{textAlign:"center"}} ><span className='font-wix'>Postulation déjà envoyé <br/> <span onClick={()=>navigate("/dboard/chat/"+demande?.id+'/'+demande?.userResponse?.username)} className='font-poppins cursor-pointer font-bold text-blue-700'>Voir discussion</span> </span> </Typography> 
+      }
+      </Box>
+    </Box> 
+      }
       <Modal
         open={isOpenPostule}
         onClose={()=>setIsOpenPostule(false)}

@@ -17,6 +17,7 @@ public class ModelMapper {
                userResponse.setPhoto_profil(user.getImage());
                userResponse.setUsername(user.getUsername());
                userResponse.setRole(user.getRole().getName().name());
+               userResponse.setStatus(user.getStatusUser());
                return userResponse;
     }
     public static AnnonceResponse mapannonceToAnnonceResponse(Annonce annonce) {

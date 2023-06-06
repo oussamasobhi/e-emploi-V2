@@ -68,38 +68,7 @@ const Header = ({ logout, currentUser, demander }) => {
         <Toolbar sx={{height:"70px"}} >
           <Link to={"/"}>
             <img src={logo} alt="logo_itako" className="h-14 w-14" />
-          </Link>
-
-          {isMatch ? (
-            <>
-              <Typography sx={{ fontSize: "1.5rem", marginLeft: "5%" }}>
-                E-EMPLOI
-              </Typography>
-              {(localStorage.getItem("token") !== "" && JSON.parse(localStorage.getItem("CURRENT_USER")).role !== "ROLE_Pro" ) && (
-                <Button
-                onClick={()=>demander()}
-                size="large"  
-                  variant="contained"
-                  sx={{
-                    marginLeft: "auto",
-                    backgroundColor: "#F3580C",
-                    borderRadius: "20px",
-                    ":hover": { backgroundColor: "#C2410C" },
-                    textTransform:"capitalize"
-                  }}
-                >
-                    Demander un service
-                </Button>
-              )}
-              <DrawerComp
-                currentUser={currentUser}
-                logout={logout}
-                goToLogin={goToLogin}
-                goToProfile={goToProfile}
-              />
-            </>
-          ) : (
-            <>
+          </Link>                    
               {(localStorage.getItem("token") !== "" && JSON.parse(localStorage.getItem("CURRENT_USER")).role !== "ROLE_Pro" ) && (
                 <Button
                 size="large"  
@@ -180,7 +149,7 @@ const Header = ({ logout, currentUser, demander }) => {
                           <DashboardIcon sx={{fontSize:"30px", color: theme.palette.primary.main}} />
                         <Typography sx={{marginLeft:"10px", fontSize:"20px"}} >Dashboard</Typography>
                         </div>
-                        <Typography className="justify-self-end text-gray-400">{/*Some Text*/}</Typography>
+                        
                       </MenuItem>
                     )}
                     {JSON.parse(localStorage.getItem("CURRENT_USER")).role !=="ROLE_Pro" && <MenuItem
@@ -194,7 +163,7 @@ const Header = ({ logout, currentUser, demander }) => {
                         <BookmarkBorderIcon sx={{fontSize:"30px", color: theme.palette.primary.main}} />
                       <Typography sx={{marginLeft:"10px", fontSize:"20px"}} >Mes demandes</Typography>
                       </div>
-                      <Typography className="justify-self-end text-gray-400">{/**Some text */}</Typography>
+                      
                     </MenuItem>}
                     </Box>
                     <Box sx={{borderBottom:"2px", borderColor:theme.palette.gris.main}}  >
@@ -209,7 +178,7 @@ const Header = ({ logout, currentUser, demander }) => {
                         <BookmarkRoundedIcon sx={{fontSize:"30px", color: theme.palette.primary.main}} />
                       <Typography sx={{marginLeft:"10px", fontSize:"20px"}} >Mes propositions</Typography>
                       </div>
-                      <Typography className="justify-self-end text-gray-400">{/**Some text */}</Typography>
+                      
                     </MenuItem>}
                     <MenuItem
                       onClick={() => {
@@ -222,7 +191,7 @@ const Header = ({ logout, currentUser, demander }) => {
                         <ForumOutlined sx={{fontSize:"30px", color: theme.palette.primary.main}} />
                       <Typography sx={{marginLeft:"10px", fontSize:"20px"}} >Messagerie</Typography>
                       </div>
-                      <Typography className="justify-self-end text-gray-400">{/**Some text */}</Typography>
+                      
                     </MenuItem>
                     
                     <MenuItem
@@ -248,10 +217,8 @@ const Header = ({ logout, currentUser, demander }) => {
                       <Typography sx={{marginLeft:"10px", fontSize:"20px"}} > Déconnexion</Typography>                     
                     </MenuItem>
                   </Menu>
-                </>
+                  </>
               )}
-            </>
-          )}
         </Toolbar>
       </AppBar>
     </Fragment>

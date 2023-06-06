@@ -20,5 +20,6 @@ public class UserResponse {
     private FileDB photo_profil;
     private String description;
    private Adresse adresse;
+   private StatusUser status;
    private double rate;
 }
