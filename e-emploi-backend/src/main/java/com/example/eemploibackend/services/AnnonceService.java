@@ -87,16 +87,17 @@ public class AnnonceService {
             return true;
         }
     }
-    public PagedResponse<AnnonceResponse> getaaonnoncesparcategorie(SearchRequest request,int page,int size){
+    public PagedResponse<AnnonceResponse> getaaonnoncesparcategorie(Long categorie1annonce,Long categorie2annonce,String ville,int page,int size){
         validatePageNumberAndSize(page, size);
         // retrieve all annonces
         Pageable pageable = PageRequest.of(page, size, Sort.Direction.DESC, "createdAt");
        Page<Annonce> annonces=null;
-       if(request.getId_categorie_2_annonce()!=null){
-           annonces=annonceRepository.getannonceByCategorie2(request.getId_categorie_2_annonce(),request.getVille(),pageable);
+
+       if(categorie2annonce!=null){
+           annonces=annonceRepository.getannonceByCategorie2(categorie2annonce,ville,pageable);
        }
        else{
-           annonces=annonceRepository.getannonceByCategorie1(request.getId_categorie_1_annonce(),request.getVille(),pageable);
+           annonces=annonceRepository.getannonceByCategorie1(categorie1annonce,ville,pageable);
        }
 
         List<Annonce> result = annonces.getContent()

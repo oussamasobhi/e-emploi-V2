@@ -62,9 +62,11 @@ public class AnnonceController {
     @GetMapping("/all")
     public PagedResponse<AnnonceResponse> getannoncespercartegoryandAdress(@RequestParam(value = "page", defaultValue ="0") int page,
                                                                  @RequestParam(value = "size", defaultValue = "30") int size,
-                                                                 @RequestBody SearchRequest request)
+                                                                 @RequestParam(value = "ville") String ville,
+                                                                           @RequestParam(value = "categorie1annonce")Long categorie1annonce,
+                                                                 @RequestParam(value = "categorie2annonce",defaultValue = "")Long categorie2annonce )
     {
-        return annonceService.getaaonnoncesparcategorie(request, page, size);
+        return annonceService.getaaonnoncesparcategorie(categorie1annonce,categorie2annonce,ville, page, size);
     }
 
     // Mes annonces ( que j'ai cree)
