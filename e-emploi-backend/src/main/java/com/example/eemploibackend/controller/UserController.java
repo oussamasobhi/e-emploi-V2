@@ -131,7 +131,7 @@ public class UserController {
     @PutMapping("users/suspendre/{id}")
     public ResponseEntity<?> suspendreuser(@PathVariable(value = "id")Long id){
         userService.suspendreuser(id);
-        return new ResponseEntity<>("utilisateur suspendu",HttpStatus.OK);
+        return new ResponseEntity<>(new ApiResponse( true, "utilisateur suspendu"),HttpStatus.OK);
     }
     // les competences d'un user
     @GetMapping("users/{id}/competences")
