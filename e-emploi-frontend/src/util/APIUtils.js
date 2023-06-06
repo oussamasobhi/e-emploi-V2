@@ -77,6 +77,12 @@ export function getUserByUsername(username) {
     method: "GET",
   });
 }
+export function suspendreUserById(id){
+  return request({
+    url: API_BASE_URL+"/api/users/suspendre/"+id,
+    method: "PUT"
+  })
+}
 
 export function userGetUserByUsername(username) {
   return request({

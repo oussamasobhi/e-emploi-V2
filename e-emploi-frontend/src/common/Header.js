@@ -18,6 +18,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import { ForumOutlined, PersonOutlined } from "@mui/icons-material";
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import { message } from "antd";
 
 const PAGES = [
   {
@@ -72,7 +73,18 @@ const Header = ({ logout, currentUser, demander }) => {
               {(localStorage.getItem("token") !== "" && JSON.parse(localStorage.getItem("CURRENT_USER")).role !== "ROLE_Pro" ) && (
                 <Button
                 size="large"  
-                onClick={()=>demander()}
+                onClick={()=>{
+                  if((JSON.parse(localStorage.getItem("CURRENT_USER"))).status=="Actif"){
+                    demander();
+                  }
+                  else {
+                    message.warning({
+                      content : "Vous êtes suspendu",
+                      className: "relative top-16"
+                    });
+                    
+                  }
+                }}
                 variant="contained"
                   sx={{
                     marginLeft: "auto",

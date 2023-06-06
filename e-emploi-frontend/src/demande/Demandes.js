@@ -137,7 +137,7 @@ const Demandes = () => {
       <Box className="flex justify-between items-end">
       <Typography variant="h4" sx={{fontFamily:"Poppins", fontWeight:"bold", marginBottom:"16px"}} >Demandes</Typography>
       <Box>
-        <Button onClick={()=>setIsOpenDrawer(true)} >
+        <Button className="flex gap-2" onClick={()=>setIsOpenDrawer(true)} >
           <FilterListIcon/>
           Filtrer
         </Button> 
@@ -145,6 +145,7 @@ const Demandes = () => {
       </Box>      
       <Box className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
       {demandes?.map((demande, index)=>(
+        demande.userResponse.username !== JSON.parse(localStorage.getItem("CURRENT_USER")).username &&
       <DemandeCarte key={index} demande={demande} setDemandes={setDemandes} /> 
       ))}          
       </Box>
