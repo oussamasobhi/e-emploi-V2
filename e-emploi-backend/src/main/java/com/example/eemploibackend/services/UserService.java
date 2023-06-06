@@ -151,6 +151,12 @@ public class UserService {
         userRepository.save(user);
         return user;
     }
+    public User activeruser(Long id){
+        User user=userRepository.findUserById(id);
+        user.setStatusUser(StatusUser.Actif);
+        userRepository.save(user);
+        return user;
+    }
     public List<Categorie_1_Annonce> getcompetences(Long id){
         if(!userRepository.existsById(id)){
             throw new EntityNotFoundException("user doesnt exist");

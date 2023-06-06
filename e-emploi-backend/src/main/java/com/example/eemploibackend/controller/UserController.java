@@ -133,6 +133,11 @@ public class UserController {
         userService.suspendreuser(id);
         return new ResponseEntity<>(new ApiResponse( true, "utilisateur suspendu"),HttpStatus.OK);
     }
+    @PutMapping("users/activer/{id}")
+    public ResponseEntity<?> activeruser(@PathVariable(value = "id")Long id){
+        userService.activeruser(id);
+        return new ResponseEntity<>("utilisateur activé",HttpStatus.OK);
+    }
     // les competences d'un user
     @GetMapping("users/{id}/competences")
     public List<Categorie_1_Annonce> getcompetences(@PathVariable(value = "id")Long id){

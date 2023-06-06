@@ -36,6 +36,7 @@ public class ChatService {
         messageRepository.save(message);
     }
     public List<UserResponse> getallchatusers(String username){
+        // id annonces
         List<String> receivers=messageRepository.getchatreceivers(username);
         List<String> senders=messageRepository.getchatsenders(username);
        Set<UserResponse> chatusers=new HashSet<>();
@@ -50,6 +51,7 @@ public class ChatService {
     private UserResponse mapusernametouserrespnse(String username){
         return ModelMapper.mapUserToUserResponse(userRepository.findByUsername(username).orElseThrow());
     }
+    // Pour le chat entre deux utilisateurs
     public List<Message> getuserschatmessages(String username,String idannonce, String username2){
         return messageRepository.getchatmessages(username,idannonce,username2);
     }
@@ -60,5 +62,21 @@ public class ChatService {
             senders.add(mapusernametouserrespnse(s));
         }
         return senders;
+    }
+    // tirer tous les id annonce par username
+    public List<String> getallidannoncebyusername(String username){
+        List<String> receivers=messageRepository.getchatreceivers(username);
+        List<String> senders=messageRepository.getchatsenders(username);
+        Set<String> allids=new HashSet<>();
+        for(String i:receivers)
+            allids.add(i);
+        for (String i:senders)
+            allids.add(i);
+        return allids.stream().toList();
+    }
+
+    // get all messages by idannonce and user pour l'afficher dans la barre de tous les annonces
+    public List<Message> getchatByusernameandIdannonce(String idannonce,String username){
+        return messageRepository.getmessageByidannonceanduser(username,idannonce);
     }
 }
