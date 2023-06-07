@@ -55,6 +55,17 @@ function App() {
       setIsAuthenticated(true);
     }
     setIsLoading(false);
+    const loadCurrentUser = async () => {
+      try{
+        const res = await getCurrentUser();
+        setCurrentUser(res);
+        localStorage.setItem("CURRENT_USER", JSON.stringify(currentUser));
+      }catch(error){
+        console.log(error)
+      }  
+  
+    };
+    loadCurrentUser();
   }, []);
 
   useEffect(() => {

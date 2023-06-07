@@ -83,6 +83,12 @@ export function suspendreUserById(id){
     method: "PUT"
   })
 }
+export function activereUserById(id){
+  return request({
+    url: API_BASE_URL+"/api/users/activer/"+id,
+    method: "PUT"
+  })
+}
 
 export function userGetUserByUsername(username) {
   return request({
@@ -371,9 +377,15 @@ export function getMessages(username, idannonce, username2){
   })
 }
 
-export function getChatUsers(username){
+export function getChatAnnonceIds(username){
   return request({
     url: API_BASE_URL+"/chat-users/"+username,
+    method: "GET"
+  })
+}
+export function getDiscussions(idannonce, username){
+  return request({
+    url: API_BASE_URL+"/chat-users/"+idannonce+"/"+username,
     method: "GET"
   })
 }

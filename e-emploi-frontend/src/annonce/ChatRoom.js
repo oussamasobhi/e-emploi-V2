@@ -7,7 +7,6 @@ import {
   getAnnonceById,
   saveMessage,
   getMessages,
-  goToDiscussionEngagee,
   getAnnonceUser,
   addAnnonceUser,
   getSousCategory,
@@ -38,7 +37,7 @@ const ChatRoom = ({ currentUser }) => {
   const [postulant, setPostulant] = useState(null);
   const [privateChats, setPrivateChats] = useState([]);
   const [sousCat, setSousCat] = useState(null);
-  useEffect(() => {
+  /*useEffect(() => {
     const loadAnnonceUser = async () => {
       try{
         const res = await getAnnonceUser(annonce.id, currentUser.id);
@@ -72,17 +71,17 @@ const ChatRoom = ({ currentUser }) => {
     if(annonce?.userResponse?.username !== currentUser.username){
       loadAnnonceUser();
     }
-    if(privateChats.length===1){
+      if(privateChats.length===1){
       createAnnonceUser();
     }
-    privateChats.map((obj) => {
+  privateChats.map((obj) => {
       console.log(obj.sendername)
       if(obj.sendername === annonce?.userResponse.username){
-          if(postulant)toDiscussionEngagee();
+          //if(postulant)toDiscussionEngagee();
           return;
         }
     })
-  }, [annonce, currentUser, privateChats])
+  }, [annonce, currentUser, privateChats])*/
   useEffect(() => {
     console.log(annonceUser)
   }, [annonceUser])
@@ -128,6 +127,7 @@ const ChatRoom = ({ currentUser }) => {
     //if(username, idAnnonce) loadMessages();
     //console.log(receiver);
   }, []);
+  
   useEffect(() => {
     //console.log(username);
     //console.log(idAnnonce);
@@ -172,15 +172,15 @@ const ChatRoom = ({ currentUser }) => {
   const onPrivateMessage = (payload) => {
     console.log(payload);
     loadMessages();
-    privateChats.map((obj) => {
+    /*privateChats.map((obj) => {
       console.log(obj.sendername)
       if(obj.sendername === annonce?.userResponse.username){
           if(postulant)toDiscussionEngagee();
           return;
         }
-    })
+    })*/
   };
-  const toDiscussionEngagee = async () => {
+  /*const toDiscussionEngagee = async () => {
     console.log("To discussion engagée............???")
     try {
       const res = await goToDiscussionEngagee(annonce.id, postulant.id);
@@ -188,7 +188,7 @@ const ChatRoom = ({ currentUser }) => {
     } catch (error) {
       console.log(error);
     }
-  };
+  };*/
   useEffect(() => {
     if (privateChats && receiver && annonce) {
       setPostulant(
@@ -263,14 +263,14 @@ const ChatRoom = ({ currentUser }) => {
               <Typography
                 className="text-xl font-roboto no-underline w-fit flex-none"
               >
-                {receiver?.prenom} {receiver?.nom}{" "}
+                {receiver?.prenom} {receiver?.nom}_{idAnnonce}
               </Typography>
             </div>
           </div>
 
           {/* Message */}
           <List
-            className="overflow-y-auto mb-12 h-96"
+            className="overflow-y-auto mb-12 h-[420px]"
             itemLayout="horizontal"
             dataSource={privateChats}
             locale={{ emptyText: " " }}

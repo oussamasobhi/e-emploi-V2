@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getAllUsers, suspendreUserById } from "../util/APIUtils";
+import { activereUserById, getAllUsers, suspendreUserById } from "../util/APIUtils";
 import { Box, Button, Modal, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { message } from "antd";
@@ -82,23 +82,31 @@ const Users = ({ setNbUser }) => {
       });
       loadUsers();
     }catch(error){
+      message.error({
+        content: "Suspension échouée",
+        className: "relative top-16"
+      })
       console.log(error);
     }
     setIsOpenSuspendre(false);
   }
   const activer = async () => {
-    /*try{
-      const res = await suspendreUserById(selectedRowIds[0]);
+    try{
+      const res = await activereUserById(selectedRowIds[0]);
       console.log(res);
       message.info({
-        content: "Utilisateur suspendu",
+        content: "Utilisateur activé",
         className: "relative top-16"
       });
       loadUsers();
     }catch(error){
+      message.error({
+        content: "Activation échouée",
+        className: "relative top-16"
+      })
       console.log(error);
-    }*/
-    setIsOpenSuspendre(false);
+    }
+    setIsOpenActiver(false);
   }
   const loadUsers = async () => {
     try {
