@@ -23,7 +23,7 @@ public class FileStorageService {
     private final FileDBRepository fileDBRepository;
     //private final String FOLDER_PATH="C:\\Users\\oussa\\Desktop\\PFA\\e-emploi_project\\e-emploi-backend\\src\\main\\resources\\static";
 //    private final String FOLDER_PATH = "D:\\DOCS\\ENSA\\CYCLE INGENIEUR\\PFA PROJET\\e-emploi_project\\e-emploi-backend\\src\\main\\resources\\static";
-    private final String FOLDER_PATH = "D:\\DOCS\\ENSA\\CYCLE INGENIEUR\\PFA PROJET\\e-emploi_project\\e-emploi-frontend\\src\\public\\files";
+    private final String FOLDER_PATH = "D:\\DOCS\\ENSA\\CYCLE INGENIEUR\\PROJET2\\e-emploi-V2\\e-emploi-frontend\\src\\public\\files";
 //    private final String FOLDER_PATH="C:\\Users\\oussa\\Desktop\\PFA\\e-emploi_project\\e-emploi-backend\\src\\main\\files";
     public FileDB store(MultipartFile file) throws IOException {
         String timePrefix = String.valueOf(new Date().getTime());
