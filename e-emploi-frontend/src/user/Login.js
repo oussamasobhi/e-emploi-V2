@@ -15,7 +15,11 @@ const Login = ({ onLogin }) => {
   };
 
   const goToHome = () => {
+    if((JSON.parse(localStorage.getItem("CURRENT_USER"))).role==="ROLE_ADMIN"){
+      navigate("/dboard/admin");
+    }else{
     navigate("/");
+  }
   };
 
   return (

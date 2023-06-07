@@ -118,9 +118,9 @@ const DemandeCarte = ({demande, setDemandes}) => {
               <LocationOnRoundedIcon sx={{color:myTheme.palette.blue.second}} />
             </Box>
             <Typography variant='body1' sx={{fontFamily:"Poppins"}}>
-              {demande.adresse.suplementaire!=="" && <span className='text-gray-800 '>{demande.adresse.suplementaire},&nbsp; </span>}
-              {demande.adresse.quartier!=="" && <span className='text-gray-800 '>{demande.adresse.quartier},&nbsp; </span>}
-              {demande.adresse.ville!=="" && <span className='text-gray-800 '>{demande.adresse.ville} </span>}
+              {demande.adresse?.suplementaire!=="" && <span className='text-gray-800 '>{demande.adresse?.suplementaire},&nbsp; </span>}
+              {demande.adresse?.quartier!=="" && <span className='text-gray-800 '>{demande.adresse?.quartier},&nbsp; </span>}
+              {demande.adresse?.ville!=="" && <span className='text-gray-800 '>{demande.adresse?.ville} </span>}
               </Typography>
           </Box>
           <Box className="grid grid-cols-2 gap-2 lg:grid-cols-1">
@@ -135,7 +135,7 @@ const DemandeCarte = ({demande, setDemandes}) => {
             <LocalPhoneOutlinedIcon sx={{color:myTheme.palette.blue.second, marginRight:"12px"}} />
             <Box className="flex flex-col">
               <Typography variant="body2" sx={{fontFamily:"Wix Madefor Display"}}>Numéro téléphone</Typography>
-              <Typography variant="body2" sx={{fontFamily:"Poppins"}}>{demande.userResponse.num_tel} </Typography>
+              <Typography variant="body2" sx={{fontFamily:"Poppins"}}>{demande.userResponse?.num_tel} </Typography>
             </Box>
             </Box>
            
@@ -170,24 +170,24 @@ const DemandeCarte = ({demande, setDemandes}) => {
             <LocationOnRoundedIcon sx={{color:myTheme.palette.blue.second}} />
           </Box>
           <Typography variant='body1' sx={{fontFamily:"Poppins"}}>
-            {(demande.adresse.suplementaire!=="" || !demande.adresse.suplementaire)  && <span className='text-gray-800 '>{demande.adresse.suplementaire},&nbsp; </span>}
-            {demande.adresse.quartier!=="" && <span className='text-gray-800 '>{demande.adresse.quartier},&nbsp; </span>}
-            {demande.adresse.ville!=="" && <span className='text-gray-800 '>{demande.adresse.ville} </span>}
+            {(demande.adresse?.suplementaire!=="" || !demande.adresse?.suplementaire)  && <span className='text-gray-800 '>{demande.adresse?.suplementaire},&nbsp; </span>}
+            {demande.adresse?.quartier!=="" && <span className='text-gray-800 '>{demande.adresse?.quartier},&nbsp; </span>}
+            {demande.adresse?.ville!=="" && <span className='text-gray-800 '>{demande.adresse?.ville} </span>}
             </Typography>
         </Box>*/}
         
           <Typography variant='body2' sx={{fontFamily:"Wix Madefor Display", marginY:"12px"}} >{demande?.infos_complementaire} </Typography>
             <Box className="flex items-center gap-2">
             <PhoneIcon fontSize='small' color='gris' />
-            <Typography color={myTheme.palette.gris.main} variant="body1" sx={{fontFamily:"Poppins", fontWeight:"bold"}}>{demande.userResponse.num_tel} </Typography> 
+            <Typography color={myTheme.palette.gris.main} variant="body1" sx={{fontFamily:"Poppins", fontWeight:"bold"}}>{demande.userResponse?.num_tel} </Typography> 
             </Box>  
             
             <Box className="flex items-center gap-2">
               <LocationOn fontSize='small' color="gris"/>
               <Typography color={myTheme.palette.gris.main} variant="body1" sx={{fontFamily:"Poppins", fontWeight:"bold"}}>
-            {(demande.adresse.suplementaire && (demande.adresse.suplementaire!=="" || demande.adresse.suplementaire!==null)) && <span>{demande.adresse.suplementaire},&nbsp; </span>}
-                {(demande.adresse.quartier && (demande.adresse.quartier!=="" || demande.adresse.quartier!==null)) && <span>{demande.adresse.quartier},&nbsp; </span>}
-                {(demande.adresse.ville && (demande.adresse.ville!=="" || demande.adresse.ville!==null)) && <span>{demande.adresse.ville} </span>}
+            {(demande.adresse?.suplementaire && (demande.adresse?.suplementaire!=="" || demande.adresse?.suplementaire!==null)) && <span>{demande.adresse?.suplementaire},&nbsp; </span>}
+                {(demande.adresse?.quartier && (demande.adresse?.quartier!=="" || demande.adresse?.quartier!==null)) && <span>{demande.adresse?.quartier},&nbsp; </span>}
+                {(demande.adresse?.ville && (demande.adresse?.ville!=="" || demande.adresse?.ville!==null)) && <span>{demande.adresse?.ville} </span>}
             </Typography> 
             </Box> 
           
@@ -200,7 +200,7 @@ const DemandeCarte = ({demande, setDemandes}) => {
       }
       {(demande?.userResponse?.username!==JSON.parse(localStorage.getItem("CURRENT_USER")).username &&
       demande?.statusAnnonce === "Terminé") &&
-       <Typography variant='body1'><span className='font-wix text-red-600'>Annonce déjà clôturée</span> </Typography> 
+       <Typography variant='body1' sx={{textAlign:"center"}}><span className='font-wix text-red-600'>Annonce déjà clôturée <br/>{demande?.annonceUsers.some(obj => obj?.id?.iduser == JSON.parse(localStorage.getItem("CURRENT_USER")).id) && <span onClick={()=>navigate("/dboard/chat/"+demande?.id+'/'+demande?.userResponse?.username)} className='font-poppins cursor-pointer font-bold text-blue-700'>Voir discussion</span>}</span> </Typography> 
       }
        {(demande?.userResponse?.username!==JSON.parse(localStorage.getItem("CURRENT_USER")).username &&
       demande?.annonceUsers.some(obj => obj?.id?.iduser == JSON.parse(localStorage.getItem("CURRENT_USER")).id) && demande?.statusAnnonce !== "Terminé" ) &&

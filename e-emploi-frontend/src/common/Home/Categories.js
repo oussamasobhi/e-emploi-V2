@@ -7,13 +7,12 @@ const Categories = ({categories}) => {
   const navigate = useNavigate();
   
   return (
-    <Box className="px-4 py-6 lg:px-20" >
-      <Box className="grid grid-cols-2 items-end" >
-        <Box >
+    <Box className="px-4 py-4 lg:px-20" >
+      <Box className="" >
+     
         <Typography variant='h5' fontFamily="Poppins" fontWeight="bold" color="black" >Vous cherchez quel service?</Typography>
         <Typography variant="body" fontFamily='PT Sans Caption' color={myTheme.palette.gris.main} >Pour chaque situation, trouvez le prestataire dont les compétences répondent à vos attentes et à votre niveau d’exigence.</Typography>
-      </Box>
-      <Typography variant="body" fontFamily='PT Sans Caption' color={myTheme.palette.gris.main} className='justify-self-end'></Typography>
+      
       </Box>
       <Box className="py-5 grid md:grid-cols-3 gap-8">
         {categories?.map((categorie,index)=>(

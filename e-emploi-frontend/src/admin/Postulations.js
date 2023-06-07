@@ -62,13 +62,13 @@ const Postulations = ({setNbPostulation}) => {
           field: 'id',
           headerName: 'Prestataire',
           width:130,
-          valueGetter: (params, index) => `${(users?.find(obj => obj.id === params.row.id2.iduser).prenom)} ${(users.find(obj => obj.id === params.row.id2.iduser).nom)}`
+          valueGetter: (params, index) => `${(users?.find(obj => obj.id === params.row.id2.iduser).prenom)} ${(users?.find(obj => obj.id === params.row.id2.iduser).nom)}`
         },
         {
             field: "category",
             headerName: "Catégorie",
             width: 170,
-            valueGetter: (params) => `${(sousCategories?.find(obj => obj.id === (annonces.find(obj => obj.id===params.row.id2.idannonce)).categorie1Annonce)).nom_sous_categorie}`
+            valueGetter: (params) => `${(sousCategories?.find(obj => obj.id === (annonces?.find(obj => obj.id===params.row.id2.idannonce))?.categorie1Annonce)).nom_sous_categorie}`
         },
         {
             field: "statusReservation",

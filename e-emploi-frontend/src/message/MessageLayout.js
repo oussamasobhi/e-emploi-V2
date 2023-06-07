@@ -52,7 +52,7 @@ const MessageLayout = ({currentUser}) => {
   
   return (
     <Box className="flex h-[533px]" >
-        <Box className="h-full w-[200px] lg:w-[300px] bg-white" sx={{borderRight:"1px solid gray"}}>
+        {/*<Box className="h-full w-[200px] lg:w-[300px] bg-white" sx={{borderRight:"1px solid gray"}}>
         <Typography variant='h6' sx={{fontFamily:"Poppins", paddingX:"10px", paddingY:"15px"}}>Discussion</Typography>
       <Divider/>
         
@@ -67,7 +67,7 @@ const MessageLayout = ({currentUser}) => {
               )}
           </Box>
         
-        </Box>
+        </Box>*/}
         <Box className="h-full grow">
            <Outlet/>
         </Box>

@@ -6,6 +6,9 @@ import WhyUs from "./Home/WhyUs";
 import { useEffect, useState } from "react";
 import { getCategories } from "../util/APIUtils";
 import Demandes from "../demande/Demandes";
+import { Navigate } from "react-router";
+import Profil from "./Home/Profil";
+import Profils from "./Home/Profils";
 
 const Home = ({currentUser}) => {
   const [categorie, setCategorie] = useState(null);
@@ -23,9 +26,10 @@ const Home = ({currentUser}) => {
   }, [])
   return (
     <div className="h-auto overflow-y-auto">  
-    {JSON.parse(localStorage.getItem("CURRENT_USER")).role === "ROLE_Pro" && <Demandes/>}
+    {JSON.parse(localStorage.getItem("CURRENT_USER")).role === "ROLE_Pro" && <Navigate to={"/dboard/home"}/>}
    {JSON.parse(localStorage.getItem("CURRENT_USER")).role === "ROLE_STANDARD" && <>   
      <Categories categories={categorie} />
+     <Profils/>
      </>}
      {JSON.parse(localStorage.getItem("CURRENT_USER")).role === "ROLE_ADMIN" 
      &&
@@ -37,9 +41,9 @@ const Home = ({currentUser}) => {
      {JSON.parse(localStorage.getItem("CURRENT_USER")).username === "" && (
       <>
         <Hero/>
-        <WhyUs/>
+        {/*<WhyUs/>
         <Service1/>
-        <Service2/>
+        <Service2/>*/}
       </>
      )}
    

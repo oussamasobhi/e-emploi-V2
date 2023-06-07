@@ -67,9 +67,12 @@ const Header = ({ logout, currentUser, demander }) => {
     <Fragment>
       <AppBar sx={{ backgroundColor: "#063970", position:"fixed", zIndex:(theme) => theme.zIndex.drawer+1 }}>
         <Toolbar sx={{height:"70px"}} >
+          <Box className="flex gap-4 justify-between items-center">
           <Link to={"/"}>
             <img src={logo} alt="logo_itako" className="h-14 w-14" />
-          </Link>                    
+          </Link>   
+          <Typography variant="h5" sx={{fontFamily:"Wix Madefor Display"}} >E-EMPLOI</Typography>
+          </Box>                 
               {(localStorage.getItem("token") !== "" && JSON.parse(localStorage.getItem("CURRENT_USER")).role !== "ROLE_Pro" ) && (
                 <Button
                 size="large"  

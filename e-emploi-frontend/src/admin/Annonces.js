@@ -44,7 +44,7 @@ const Annonces = ({setNbAnnonce}) => {
           editable: true,
           width:240,
           valueGetter: (params) =>
-          (sousCategories?.find(obj => obj.id === params.row.categorie1Annonce))?.nom_sous_categorie          
+          (sousCategories?.find(obj => obj.id === params.row?.categorie1Annonce))?.nom_sous_categorie          
         },
         {
           field: "duree",

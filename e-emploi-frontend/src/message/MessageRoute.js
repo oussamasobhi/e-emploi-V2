@@ -10,6 +10,7 @@ const Message = ({currentUser}) => {
       <Route path='/*' element={<MessageLayout currentUser={currentUser} />}>
         <Route index element={<Box className="h-[510px] flex justify-center items-center p-6" > <Typography variant='h5' sx={{fontFamily:"Wix Madefor Display"}} > Ouvrir une discussion</Typography></Box> }/>
         <Route path=':id/:username' element={<ChatRoom currentUser={currentUser} /> } />
+        <Route path=':useraname' element={<ChatRoom currentUser={currentUser}/>}/>
       </Route>
     </Routes>
   )

@@ -27,7 +27,7 @@ const Layout = ({
 
   return (
     <>
-    <Box className="font-poppins flex flex-col h-screen bg-white" sx={{position:"relative"}}>
+    <Box className="font-poppins flex flex-col h-screen bg-gray-50" sx={{position:"relative"}}>
       <Header
         logout={onLogout}
         currentUser={currentUser}
