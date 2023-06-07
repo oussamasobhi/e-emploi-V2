@@ -48,10 +48,10 @@ public class ChatController {
                                                     @PathVariable(value="username2")String username2){
             return chatService.getuserschatmessages(username,idannonce,username2);
     }
-    @GetMapping("/chat-users/{idannonce}")
-    public List<UserResponse> getchatusersbyannonce(@PathVariable(value = "idannonce")String idannonce){
-        return chatService.getannonceSenders(idannonce);
-    }
+//    @GetMapping("/chat-users/{idannonce}")
+//    public List<UserResponse> getchatusersbyannonce(@PathVariable(value = "idannonce")String idannonce){
+//        return chatService.getannonceSenders(idannonce);
+//    }
 
     @GetMapping("/chat-users/{username}")
     public List<String> getidannnocebyusername(@PathVariable(value = "username")String username){
